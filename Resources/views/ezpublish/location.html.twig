@@ -1,0 +1,9 @@
+{{ render(
+    controller(
+        'ez_content:viewAction', {
+            'contentId': location.APILocation.contentInfo.id,
+            'locationId': location.id,
+            'viewType': 'line'
+        }
+    )
+) }}
