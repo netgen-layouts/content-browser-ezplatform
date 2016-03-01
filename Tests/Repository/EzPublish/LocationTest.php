@@ -23,7 +23,8 @@ class LocationTest extends \PHPUnit_Framework_TestCase
                 )
             ),
             'Name',
-            'Type'
+            'Type',
+            true
         );
     }
 
@@ -46,6 +47,7 @@ class LocationTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(null, $this->location->getThumbnail());
         self::assertEquals('Type', $this->location->getType());
         self::assertEquals(true, $this->location->isVisible());
+        self::assertEquals(true, $this->location->hasChildren());
     }
 
     /**

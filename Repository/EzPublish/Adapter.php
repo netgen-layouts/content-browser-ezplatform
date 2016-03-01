@@ -106,6 +106,24 @@ class Adapter implements AdapterInterface
     }
 
     /**
+     * Returns true if provided location has children.
+     *
+     * @param int|string $locationId
+     *
+     * @return bool
+     */
+    protected function locationHasChildren($locationId)
+    {
+        $query = new LocationQuery();
+        $query->filter = new Criterion\ParentLocationId($locationId);
+        $query->limit = 0;
+
+        $result = $this->searchService->findLocations($query);
+
+        return $result->totalCount > 0;
+    }
+
+    /**
      * Builds the object implementing LocationInterface.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $apiLocation
@@ -124,7 +142,8 @@ class Adapter implements AdapterInterface
                     $apiLocation->contentInfo->contentTypeId
                 ),
                 'getName'
-            )
+            ),
+            $this->locationHasChildren($apiLocation->id)
         );
     }
 }

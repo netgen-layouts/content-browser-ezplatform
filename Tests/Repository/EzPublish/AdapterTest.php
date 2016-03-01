@@ -88,6 +88,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::__construct
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::loadLocation
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::buildDomainLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::locationHasChildren
      */
     public function testLoadLocation()
     {
@@ -96,6 +97,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
 
         $foundLocation = new APILocation(
             array(
+                'id' => 42,
                 'pathString' => '/1/2/42/',
                 'contentInfo' => new ContentInfo(
                     array(
@@ -117,13 +119,26 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects($this->at(0))
             ->method('findLocations')
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
+        $countQuery = new LocationQuery();
+        $countQuery->filter = new Criterion\ParentLocationId(42);
+        $countQuery->limit = 0;
+
+        $countSearchResult = new SearchResult();
+        $countSearchResult->totalCount = 1;
+
+        $this->searchServiceMock
+            ->expects($this->at(1))
+            ->method('findLocations')
+            ->with($this->equalTo($countQuery))
+            ->will($this->returnValue($countSearchResult));
+
         self::assertEquals(
-            new Location($foundLocation, 'Name', 'Type'),
+            new Location($foundLocation, 'Name', 'Type', true),
             $this->adapter->loadLocation(42, array(2, 43, 5))
         );
     }
@@ -187,6 +202,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         $foundLocations = array(
             new APILocation(
                 array(
+                    'id' => 42,
                     'pathString' => '/1/2/42/',
                     'contentInfo' => new ContentInfo(
                         array(
@@ -198,6 +214,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
             ),
             new APILocation(
                 array(
+                    'id' => 24,
                     'pathString' => '/1/2/24/',
                     'contentInfo' => new ContentInfo(
                         array(
@@ -212,21 +229,48 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         $searchResult = $this->buildSearchResult($foundLocations);
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects($this->at(0))
             ->method('findLocations')
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
+        $countQuery1 = new LocationQuery();
+        $countQuery1->filter = new Criterion\ParentLocationId(42);
+        $countQuery1->limit = 0;
+
+        $countSearchResult1 = new SearchResult();
+        $countSearchResult1->totalCount = 0;
+
+        $this->searchServiceMock
+            ->expects($this->at(1))
+            ->method('findLocations')
+            ->with($this->equalTo($countQuery1))
+            ->will($this->returnValue($countSearchResult1));
+
+        $countQuery2 = new LocationQuery();
+        $countQuery2->filter = new Criterion\ParentLocationId(24);
+        $countQuery2->limit = 0;
+
+        $countSearchResult2 = new SearchResult();
+        $countSearchResult2->totalCount = 1;
+
+        $this->searchServiceMock
+            ->expects($this->at(2))
+            ->method('findLocations')
+            ->with($this->equalTo($countQuery2))
+            ->will($this->returnValue($countSearchResult2));
+
         self::assertEquals(
             array(
-                new Location($foundLocations[0], 'Name', 'Type'),
-                new Location($foundLocations[1], 'Name', 'Type')
+                new Location($foundLocations[0], 'Name', 'Type', false),
+                new Location($foundLocations[1], 'Name', 'Type', true)
             ),
             $this->adapter->loadLocationChildren(
                 new Location(
                     new APILocation(array('id' => 2)),
                     'Name',
-                    'Type'
+                    'Type',
+                    true
                 )
             )
         );
