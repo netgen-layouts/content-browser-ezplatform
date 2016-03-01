@@ -84,13 +84,22 @@ class Adapter implements AdapterInterface
      * Loads all children of the provided location.
      *
      * @param \Netgen\Bundle\ContentBrowserBundle\Repository\LocationInterface $location
+     * @param string[] $types
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Repository\LocationInterface[]
      */
-    public function loadLocationChildren(LocationInterface $location)
+    public function loadLocationChildren(LocationInterface $location, array $types = array())
     {
+        $criteria = array(
+            new Criterion\ParentLocationId($location->getId()),
+        );
+
+        if (!empty($types)) {
+            $criteria[] = new Criterion\ContentTypeIdentifier($types);
+        }
+
         $query = new LocationQuery();
-        $query->filter = new Criterion\ParentLocationId($location->getId());
+        $query->filter = new Criterion\LogicalAnd($criteria);
         $result = $this->searchService->findLocations($query);
 
         $locations = array_map(
@@ -108,14 +117,23 @@ class Adapter implements AdapterInterface
     /**
      * Returns true if provided location has children.
      *
-     * @param int|string $locationId
+     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\LocationInterface $location
+     * @param string[] $types
      *
      * @return bool
      */
-    protected function locationHasChildren($locationId)
+    public function hasChildren(LocationInterface $location, array $types = array())
     {
+        $criteria = array(
+            new Criterion\ParentLocationId($location->getId()),
+        );
+
+        if (!empty($types)) {
+            $criteria[] = new Criterion\ContentTypeIdentifier($types);
+        }
+
         $query = new LocationQuery();
-        $query->filter = new Criterion\ParentLocationId($locationId);
+        $query->filter = new Criterion\LogicalAnd($criteria);
         $query->limit = 0;
 
         $result = $this->searchService->findLocations($query);
@@ -142,8 +160,7 @@ class Adapter implements AdapterInterface
                     $apiLocation->contentInfo->contentTypeId
                 ),
                 'getName'
-            ),
-            $this->locationHasChildren($apiLocation->id)
+            )
         );
     }
 }

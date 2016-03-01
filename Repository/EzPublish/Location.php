@@ -34,14 +34,12 @@ class Location implements LocationInterface, EzPublishLocationInterface
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      * @param string $contentName
      * @param string $contentTypeName
-     * @param bool $hasChildren
      */
-    public function __construct(APILocation $location, $contentName, $contentTypeName, $hasChildren)
+    public function __construct(APILocation $location, $contentName, $contentTypeName)
     {
         $this->location = $location;
         $this->contentName = $contentName;
         $this->contentTypeName = $contentTypeName;
-        $this->hasChildren = (bool)$hasChildren;
     }
 
     /**
@@ -115,17 +113,7 @@ class Location implements LocationInterface, EzPublishLocationInterface
     }
 
     /**
-     * Returns if location has children.
-     *
-     * @return bool
-     */
-    public function hasChildren()
-    {
-        return $this->hasChildren;
-    }
-
-    /**
-     * Returns the API location
+     * Returns the API location.
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Location
      */

@@ -88,7 +88,6 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::__construct
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::loadLocation
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::buildDomainLocation
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::locationHasChildren
      */
     public function testLoadLocation()
     {
@@ -124,21 +123,8 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $countQuery = new LocationQuery();
-        $countQuery->filter = new Criterion\ParentLocationId(42);
-        $countQuery->limit = 0;
-
-        $countSearchResult = new SearchResult();
-        $countSearchResult->totalCount = 1;
-
-        $this->searchServiceMock
-            ->expects($this->at(1))
-            ->method('findLocations')
-            ->with($this->equalTo($countQuery))
-            ->will($this->returnValue($countSearchResult));
-
         self::assertEquals(
-            new Location($foundLocation, 'Name', 'Type', true),
+            new Location($foundLocation, 'Name', 'Type'),
             $this->adapter->loadLocation(42, array(2, 43, 5))
         );
     }
@@ -197,7 +183,11 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
     public function testLoadLocationChildren()
     {
         $query = new LocationQuery();
-        $query->filter = new Criterion\ParentLocationId(2);
+        $query->filter = new Criterion\LogicalAnd(
+            array(
+                new Criterion\ParentLocationId(2),
+            )
+        );
 
         $foundLocations = array(
             new APILocation(
@@ -223,7 +213,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
                         )
                     ),
                 )
-            )
+            ),
         );
 
         $searchResult = $this->buildSearchResult($foundLocations);
@@ -234,50 +224,179 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $countQuery1 = new LocationQuery();
-        $countQuery1->filter = new Criterion\ParentLocationId(42);
-        $countQuery1->limit = 0;
-
-        $countSearchResult1 = new SearchResult();
-        $countSearchResult1->totalCount = 0;
-
-        $this->searchServiceMock
-            ->expects($this->at(1))
-            ->method('findLocations')
-            ->with($this->equalTo($countQuery1))
-            ->will($this->returnValue($countSearchResult1));
-
-        $countQuery2 = new LocationQuery();
-        $countQuery2->filter = new Criterion\ParentLocationId(24);
-        $countQuery2->limit = 0;
-
-        $countSearchResult2 = new SearchResult();
-        $countSearchResult2->totalCount = 1;
-
-        $this->searchServiceMock
-            ->expects($this->at(2))
-            ->method('findLocations')
-            ->with($this->equalTo($countQuery2))
-            ->will($this->returnValue($countSearchResult2));
-
         self::assertEquals(
             array(
-                new Location($foundLocations[0], 'Name', 'Type', false),
-                new Location($foundLocations[1], 'Name', 'Type', true)
+                new Location($foundLocations[0], 'Name', 'Type'),
+                new Location($foundLocations[1], 'Name', 'Type'),
             ),
             $this->adapter->loadLocationChildren(
                 new Location(
                     new APILocation(array('id' => 2)),
                     'Name',
-                    'Type',
-                    true
+                    'Type'
                 )
             )
         );
     }
 
     /**
-     * Builds and returns SearchResult object from provided API locations
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::loadLocationChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::buildDomainLocation
+     */
+    public function testLoadLocationChildrenWithNonEmptyTypes()
+    {
+        $query = new LocationQuery();
+        $query->filter = new Criterion\LogicalAnd(
+            array(
+                new Criterion\ParentLocationId(2),
+                new Criterion\ContentTypeIdentifier(array('type')),
+            )
+        );
+
+        $foundLocations = array(
+            new APILocation(
+                array(
+                    'id' => 42,
+                    'pathString' => '/1/2/42/',
+                    'contentInfo' => new ContentInfo(
+                        array(
+                            'id' => 43,
+                            'contentTypeId' => 84,
+                        )
+                    ),
+                )
+            ),
+        );
+
+        $searchResult = $this->buildSearchResult($foundLocations);
+
+        $this->searchServiceMock
+            ->expects($this->at(0))
+            ->method('findLocations')
+            ->with($this->equalTo($query))
+            ->will($this->returnValue($searchResult));
+
+        self::assertEquals(
+            array(
+                new Location($foundLocations[0], 'Name', 'Type'),
+            ),
+            $this->adapter->loadLocationChildren(
+                new Location(
+                    new APILocation(array('id' => 2)),
+                    'Name',
+                    'Type'
+                ),
+                array('type')
+            )
+        );
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::hasChildren
+     */
+    public function testHasChildren()
+    {
+        $query = new LocationQuery();
+        $query->limit = 0;
+        $query->filter = new Criterion\LogicalAnd(
+            array(
+                new Criterion\ParentLocationId(2),
+            )
+        );
+
+        $searchResult = new SearchResult();
+        $searchResult->totalCount = 2;
+
+        $this->searchServiceMock
+            ->expects($this->at(0))
+            ->method('findLocations')
+            ->with($this->equalTo($query))
+            ->will($this->returnValue($searchResult));
+
+        self::assertEquals(
+            true,
+            $this->adapter->hasChildren(
+                new Location(
+                    new APILocation(array('id' => 2)),
+                    'Name',
+                    'Type'
+                )
+            )
+        );
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::hasChildren
+     */
+    public function testHasChildrenWithNonEmptyTypes()
+    {
+        $query = new LocationQuery();
+        $query->limit = 0;
+        $query->filter = new Criterion\LogicalAnd(
+            array(
+                new Criterion\ParentLocationId(2),
+                new Criterion\ContentTypeIdentifier(array('type')),
+            )
+        );
+
+        $searchResult = new SearchResult();
+        $searchResult->totalCount = 2;
+
+        $this->searchServiceMock
+            ->expects($this->at(0))
+            ->method('findLocations')
+            ->with($this->equalTo($query))
+            ->will($this->returnValue($searchResult));
+
+        self::assertEquals(
+            true,
+            $this->adapter->hasChildren(
+                new Location(
+                    new APILocation(array('id' => 2)),
+                    'Name',
+                    'Type'
+                ),
+                array('type')
+            )
+        );
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::hasChildren
+     */
+    public function testHasChildrenReturnsFalse()
+    {
+        $query = new LocationQuery();
+        $query->limit = 0;
+        $query->filter = new Criterion\LogicalAnd(
+            array(
+                new Criterion\ParentLocationId(2),
+            )
+        );
+
+        $searchResult = new SearchResult();
+        $searchResult->totalCount = 0;
+
+        $this->searchServiceMock
+            ->expects($this->at(0))
+            ->method('findLocations')
+            ->with($this->equalTo($query))
+            ->will($this->returnValue($searchResult));
+
+        self::assertEquals(
+            false,
+            $this->adapter->hasChildren(
+                new Location(
+                    new APILocation(array('id' => 2)),
+                    'Name',
+                    'Type'
+                )
+            )
+        );
+    }
+
+    /**
+     * Builds and returns SearchResult object from provided API locations.
      *
      * @param \eZ\Publish\Core\Repository\Values\Content\Location[] $foundLocations
      *
