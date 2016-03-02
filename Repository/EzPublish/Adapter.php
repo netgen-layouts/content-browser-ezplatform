@@ -3,15 +3,11 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish;
 
 use eZ\Publish\API\Repository\SearchService;
-use eZ\Publish\API\Repository\ContentTypeService;
-use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
-use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\OutOfBoundsException;
 use Netgen\Bundle\ContentBrowserBundle\Repository\Location;
-use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Location as EzPublishLocation;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Repository\AdapterInterface;
 
@@ -23,30 +19,22 @@ class Adapter implements AdapterInterface
     protected $searchService;
 
     /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService
+     * @var \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder
      */
-    protected $contentTypeService;
-
-    /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper
-     */
-    protected $translationHelper;
+    protected $locationBuilder;
 
     /**
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\SearchService $searchService
-     * @param \eZ\Publish\API\Repository\ContentTypeService $contentTypeService
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
+     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder $locationBuilder
      */
     public function __construct(
         SearchService $searchService,
-        ContentTypeService $contentTypeService,
-        TranslationHelper $translationHelper
+        LocationBuilder $locationBuilder
     ) {
         $this->searchService = $searchService;
-        $this->contentTypeService = $contentTypeService;
-        $this->translationHelper = $translationHelper;
+        $this->locationBuilder = $locationBuilder;
     }
 
     /**
@@ -74,7 +62,7 @@ class Adapter implements AdapterInterface
         $apiLocation = $result->searchHits[0]->valueObject;
         foreach ($rootLocationIds as $rootLocationId) {
             if (strpos($apiLocation->pathString, '/' . $rootLocationId . '/') !== false) {
-                return $this->buildDomainLocation($apiLocation);
+                return $this->locationBuilder->buildLocation($apiLocation);
             }
         }
 
@@ -105,7 +93,7 @@ class Adapter implements AdapterInterface
 
         $locations = array_map(
             function (SearchHit $searchHit) {
-                return $this->buildDomainLocation(
+                return $this->locationBuilder->buildLocation(
                     $searchHit->valueObject
                 );
             },
@@ -140,40 +128,5 @@ class Adapter implements AdapterInterface
         $result = $this->searchService->findLocations($query);
 
         return $result->totalCount > 0;
-    }
-
-    /**
-     * Builds the location object.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $apiLocation
-     *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\Location
-     */
-    protected function buildDomainLocation(APILocation $apiLocation)
-    {
-        return new EzPublishLocation(
-            $apiLocation,
-            array(
-                'id' => $apiLocation->id,
-                'parentId' => $apiLocation->parentLocationId,
-                'name' => $this->translationHelper->getTranslatedContentNameByContentInfo(
-                    $apiLocation->contentInfo
-                ),
-                'isEnabled' => true,
-                'thumbnail' => null,
-                'type' => $this->translationHelper->getTranslatedByMethod(
-                    $this->contentTypeService->loadContentType(
-                        $apiLocation->contentInfo->contentTypeId
-                    ),
-                    'getName'
-                ),
-                'isVisible' => !$apiLocation->invisible,
-                'owner' => '',
-                'modified' => '',
-                'published' => '',
-                'priority' => $apiLocation->priority,
-                'section' => '',
-            )
-        );
     }
 }
