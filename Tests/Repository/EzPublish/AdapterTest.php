@@ -14,7 +14,8 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType as APIContentType;
 use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter;
-use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Location;
+use Netgen\Bundle\ContentBrowserBundle\Repository\Location;
+use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Location as EzPublishLocation;
 
 class AdapterTest extends \PHPUnit_Framework_TestCase
 {
@@ -124,7 +125,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($searchResult));
 
         self::assertEquals(
-            new Location($foundLocation, 'Name', 'Type'),
+            new EzPublishLocation($foundLocation, array('id' => 42, 'name' => 'Name', 'type' => 'Type')),
             $this->adapter->loadLocation(42, array(2, 43, 5))
         );
     }
@@ -226,15 +227,11 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
 
         self::assertEquals(
             array(
-                new Location($foundLocations[0], 'Name', 'Type'),
-                new Location($foundLocations[1], 'Name', 'Type'),
+                new EzPublishLocation($foundLocations[0], array('id' => 42, 'name' => 'Name', 'type' => 'Type')),
+                new EzPublishLocation($foundLocations[1], array('id' => 24, 'name' => 'Name', 'type' => 'Type')),
             ),
             $this->adapter->loadLocationChildren(
-                new Location(
-                    new APILocation(array('id' => 2)),
-                    'Name',
-                    'Type'
-                )
+                new Location(array('id' => 2))
             )
         );
     }
@@ -278,14 +275,10 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
 
         self::assertEquals(
             array(
-                new Location($foundLocations[0], 'Name', 'Type'),
+                new EzPublishLocation($foundLocations[0], array('id' => 42, 'name' => 'Name', 'type' => 'Type')),
             ),
             $this->adapter->loadLocationChildren(
-                new Location(
-                    new APILocation(array('id' => 2)),
-                    'Name',
-                    'Type'
-                ),
+                new Location(array('id' => 2)),
                 array('type')
             )
         );
@@ -316,11 +309,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(
             true,
             $this->adapter->hasChildren(
-                new Location(
-                    new APILocation(array('id' => 2)),
-                    'Name',
-                    'Type'
-                )
+                new Location(array('id' => 2))
             )
         );
     }
@@ -351,11 +340,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(
             true,
             $this->adapter->hasChildren(
-                new Location(
-                    new APILocation(array('id' => 2)),
-                    'Name',
-                    'Type'
-                ),
+                new Location(array('id' => 2)),
                 array('type')
             )
         );
@@ -386,11 +371,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
         self::assertEquals(
             false,
             $this->adapter->hasChildren(
-                new Location(
-                    new APILocation(array('id' => 2)),
-                    'Name',
-                    'Type'
-                )
+                new Location(array('id' => 2))
             )
         );
     }

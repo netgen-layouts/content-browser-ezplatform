@@ -10,7 +10,8 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\OutOfBoundsException;
-use Netgen\Bundle\ContentBrowserBundle\Repository\LocationInterface;
+use Netgen\Bundle\ContentBrowserBundle\Repository\Location;
+use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Location as EzPublishLocation;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Repository\AdapterInterface;
 
@@ -57,7 +58,7 @@ class Adapter implements AdapterInterface
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If location with provided ID was not found
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\OutOfBoundsException If location is outside of provided root locations
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\LocationInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\Location
      */
     public function loadLocation($locationId, $rootLocationIds)
     {
@@ -83,15 +84,15 @@ class Adapter implements AdapterInterface
     /**
      * Loads all children of the provided location.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\LocationInterface $location
+     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\Location $location
      * @param string[] $types
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\LocationInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\Location[]
      */
-    public function loadLocationChildren(LocationInterface $location, array $types = array())
+    public function loadLocationChildren(Location $location, array $types = array())
     {
         $criteria = array(
-            new Criterion\ParentLocationId($location->getId()),
+            new Criterion\ParentLocationId($location->id),
         );
 
         if (!empty($types)) {
@@ -117,15 +118,15 @@ class Adapter implements AdapterInterface
     /**
      * Returns true if provided location has children.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\LocationInterface $location
+     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\Location $location
      * @param string[] $types
      *
      * @return bool
      */
-    public function hasChildren(LocationInterface $location, array $types = array())
+    public function hasChildren(Location $location, array $types = array())
     {
         $criteria = array(
-            new Criterion\ParentLocationId($location->getId()),
+            new Criterion\ParentLocationId($location->id),
         );
 
         if (!empty($types)) {
@@ -142,24 +143,36 @@ class Adapter implements AdapterInterface
     }
 
     /**
-     * Builds the object implementing LocationInterface.
+     * Builds the location object.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $apiLocation
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\LocationInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\Location
      */
     protected function buildDomainLocation(APILocation $apiLocation)
     {
-        return new Location(
+        return new EzPublishLocation(
             $apiLocation,
-            $this->translationHelper->getTranslatedContentNameByContentInfo(
-                $apiLocation->contentInfo
-            ),
-            $this->translationHelper->getTranslatedByMethod(
-                $this->contentTypeService->loadContentType(
-                    $apiLocation->contentInfo->contentTypeId
+            array(
+                'id' => $apiLocation->id,
+                'parentId' => $apiLocation->parentLocationId,
+                'name' => $this->translationHelper->getTranslatedContentNameByContentInfo(
+                    $apiLocation->contentInfo
                 ),
-                'getName'
+                'isEnabled' => true,
+                'thumbnail' => null,
+                'type' => $this->translationHelper->getTranslatedByMethod(
+                    $this->contentTypeService->loadContentType(
+                        $apiLocation->contentInfo->contentTypeId
+                    ),
+                    'getName'
+                ),
+                'isVisible' => !$apiLocation->invisible,
+                'owner' => '',
+                'modified' => '',
+                'published' => '',
+                'priority' => $apiLocation->priority,
+                'section' => '',
             )
         );
     }
