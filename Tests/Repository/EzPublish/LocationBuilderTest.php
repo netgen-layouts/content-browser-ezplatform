@@ -89,6 +89,8 @@ class LocationBuilderTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder::__construct
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder::buildLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder::getThumbnail
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder::getImageVariation
      */
     public function testBuildLocation()
     {
