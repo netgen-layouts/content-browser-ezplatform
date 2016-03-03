@@ -2,8 +2,10 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Repository\EzPublish;
 
+use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\SPI\Variation\Values\Variation;
 use eZ\Publish\SPI\Variation\VariationHandler;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\Content\Location as APILocation;
@@ -52,13 +54,28 @@ class LocationBuilderTest extends \PHPUnit_Framework_TestCase
             ->with($this->isInstanceOf(APIContentType::class))
             ->will($this->returnValue('Type'));
 
+        $this->translationHelperMock
+            ->expects($this->any())
+            ->method('getTranslatedField')
+            ->will($this->returnValue(new Field()));
+
         $this->fieldHelperMock = $this->getMockBuilder(FieldHelper::class)
             ->disableOriginalConstructor()
             ->getMock();
 
+        $this->translationHelperMock
+            ->expects($this->any())
+            ->method('isFieldEmpty')
+            ->will($this->returnValue(false));
+
         $this->variationHandlerMock = $this->getMockBuilder(VariationHandler::class)
             ->disableOriginalConstructor()
             ->getMock();
+
+        $this->variationHandlerMock
+            ->expects($this->any())
+            ->method('getVariation')
+            ->will($this->returnValue(new Variation(array('uri' => '/image/uri'))));
 
         $this->locationBuilder = new LocationBuilder(
             new RepositoryStub(),
@@ -104,7 +121,7 @@ class LocationBuilderTest extends \PHPUnit_Framework_TestCase
                 'path' => array(2, 42),
                 'name' => 'Name',
                 'isEnabled' => true,
-                'thumbnail' => null,
+                'thumbnail' => '/image/uri',
                 'type' => 'Type',
                 'isVisible' => false,
                 'owner' => 'Name',
