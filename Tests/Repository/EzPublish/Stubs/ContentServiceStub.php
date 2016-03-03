@@ -17,7 +17,7 @@ class ContentServiceStub
     {
         return new Content(
             array(
-                'versionInfo' => new VersionInfo()
+                'versionInfo' => new VersionInfo(),
             )
         );
     }

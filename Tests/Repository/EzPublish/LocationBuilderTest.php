@@ -2,16 +2,13 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Repository\EzPublish;
 
-use eZ\Publish\API\Repository\Values\Content\Field;
-use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
-use eZ\Publish\SPI\Variation\Values\Variation;
-use eZ\Publish\SPI\Variation\VariationHandler;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\Content\Location as APILocation;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType as APIContentType;
 use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Location;
 use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder;
+use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface;
 use Netgen\Bundle\ContentBrowserBundle\Tests\Repository\EzPublish\Stubs\RepositoryStub;
 use DateTime;
 
@@ -23,14 +20,9 @@ class LocationBuilderTest extends \PHPUnit_Framework_TestCase
     protected $translationHelperMock;
 
     /**
-     * @var \eZ\Publish\Core\Helper\FieldHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $fieldHelperMock;
-
-    /**
-     * @var \eZ\Publish\SPI\Variation\VariationHandler|\PHPUnit_Framework_MockObject_MockObject
-     */
-    protected $variationHandlerMock;
+    protected $thumbnailLoaderMock;
 
     /**
      * @var \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder
@@ -54,43 +46,25 @@ class LocationBuilderTest extends \PHPUnit_Framework_TestCase
             ->with($this->isInstanceOf(APIContentType::class))
             ->will($this->returnValue('Type'));
 
-        $this->translationHelperMock
-            ->expects($this->any())
-            ->method('getTranslatedField')
-            ->will($this->returnValue(new Field()));
-
-        $this->fieldHelperMock = $this->getMockBuilder(FieldHelper::class)
+        $this->thumbnailLoaderMock = $this->getMockBuilder(ThumbnailLoaderInterface::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->translationHelperMock
+        $this->thumbnailLoaderMock
             ->expects($this->any())
-            ->method('isFieldEmpty')
-            ->will($this->returnValue(false));
-
-        $this->variationHandlerMock = $this->getMockBuilder(VariationHandler::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->variationHandlerMock
-            ->expects($this->any())
-            ->method('getVariation')
-            ->will($this->returnValue(new Variation(array('uri' => '/image/uri'))));
+            ->method('loadThumbnail')
+            ->will($this->returnValue('/image/uri'));
 
         $this->locationBuilder = new LocationBuilder(
             new RepositoryStub(),
             $this->translationHelperMock,
-            $this->fieldHelperMock,
-            $this->variationHandlerMock,
-            array('image')
+            $this->thumbnailLoaderMock
         );
     }
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder::__construct
      * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder::buildLocation
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder::getThumbnail
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder::getImageVariation
      */
     public function testBuildLocation()
     {
