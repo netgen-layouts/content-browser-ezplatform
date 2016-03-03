@@ -68,8 +68,13 @@ class VariationThumbnailLoader implements ThumbnailLoaderInterface
                 continue;
             }
 
-            $imageVariation = $this->getImageVariation($field, $content->versionInfo);
-            if (!$imageVariation instanceof Variation) {
+            try {
+                $imageVariation = $this->variationHandler->getVariation(
+                    $field,
+                    $content->versionInfo,
+                    'netgen_content_browser'
+                );
+            } catch (Exception $e) {
                 continue;
             }
 
@@ -77,26 +82,5 @@ class VariationThumbnailLoader implements ThumbnailLoaderInterface
         }
 
         return null;
-    }
-
-    /**
-     * Returns the image variation object for $field and $versionInfo.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Field $field
-     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
-     *
-     * @return \eZ\Publish\SPI\Variation\Values\Variation
-     */
-    protected function getImageVariation(Field $field, VersionInfo $versionInfo)
-    {
-        try {
-            return $this->variationHandler->getVariation(
-                $field,
-                $versionInfo,
-                'netgen_content_browser'
-            );
-        } catch (Exception $e) {
-            return null;
-        }
     }
 }
