@@ -52,7 +52,8 @@ class VariationThumbnailLoaderTest extends \PHPUnit_Framework_TestCase
             $this->translationHelperMock,
             $this->fieldHelperMock,
             $this->variationHandlerMock,
-            array('image')
+            array('image'),
+            'netgen_content_browser'
         );
     }
 

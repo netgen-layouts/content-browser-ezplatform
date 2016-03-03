@@ -7,8 +7,6 @@ use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\SPI\Variation\VariationHandler;
 use eZ\Publish\API\Repository\Values\Content\Content;
-use eZ\Publish\API\Repository\Values\Content\VersionInfo;
-use eZ\Publish\SPI\Variation\Values\Variation;
 use Exception;
 
 class VariationThumbnailLoader implements ThumbnailLoaderInterface
@@ -34,23 +32,31 @@ class VariationThumbnailLoader implements ThumbnailLoaderInterface
     protected $imageFields;
 
     /**
+     * @var string
+     */
+    protected $variationName;
+
+    /**
      * Constructor.
      *
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      * @param \eZ\Publish\Core\Helper\FieldHelper $fieldHelper
      * @param \eZ\Publish\SPI\Variation\VariationHandler $variationHandler
      * @param array $imageFields
+     * @param string $variationName
      */
     public function __construct(
         TranslationHelper $translationHelper,
         FieldHelper $fieldHelper,
         VariationHandler $variationHandler,
-        array $imageFields
+        array $imageFields,
+        $variationName
     ) {
         $this->translationHelper = $translationHelper;
         $this->fieldHelper = $fieldHelper;
         $this->variationHandler = $variationHandler;
         $this->imageFields = $imageFields;
+        $this->variationName = $variationName;
     }
 
     /**
@@ -72,7 +78,7 @@ class VariationThumbnailLoader implements ThumbnailLoaderInterface
                 $imageVariation = $this->variationHandler->getVariation(
                     $field,
                     $content->versionInfo,
-                    'netgen_content_browser'
+                    $this->variationName
                 );
             } catch (Exception $e) {
                 continue;
