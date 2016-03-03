@@ -6,7 +6,6 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
-use Netgen\Bundle\ContentBrowserBundle\Exceptions\OutOfBoundsException;
 use Netgen\Bundle\ContentBrowserBundle\Repository\Location;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Repository\AdapterInterface;
@@ -41,14 +40,12 @@ class Adapter implements AdapterInterface
      * Loads the location for provided ID.
      *
      * @param int|string $locationId
-     * @param array $rootLocationIds
      *
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If location with provided ID was not found
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\OutOfBoundsException If location is outside of provided root locations
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Repository\Location
      */
-    public function loadLocation($locationId, $rootLocationIds)
+    public function loadLocation($locationId)
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($locationId);
@@ -58,15 +55,9 @@ class Adapter implements AdapterInterface
             throw new NotFoundException("Location #{$locationId} not found.");
         }
 
-        /** @var \eZ\Publish\API\Repository\Values\Content\Location $apiLocation */
-        $apiLocation = $result->searchHits[0]->valueObject;
-        foreach ($rootLocationIds as $rootLocationId) {
-            if (strpos($apiLocation->pathString, '/' . $rootLocationId . '/') !== false) {
-                return $this->locationBuilder->buildLocation($apiLocation);
-            }
-        }
-
-        throw new OutOfBoundsException("Location #{$locationId} is not inside root locations.");
+        return $this->locationBuilder->buildLocation(
+            $result->searchHits[0]->valueObject
+        );
     }
 
     /**

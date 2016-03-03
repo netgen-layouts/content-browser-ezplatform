@@ -83,6 +83,7 @@ class LocationBuilderTest extends \PHPUnit_Framework_TestCase
         $apiLocation = new APILocation(
             array(
                 'id' => 42,
+                'pathString' => '/1/2/42/',
                 'parentLocationId' => 24,
                 'contentInfo' => new ContentInfo(
                     array(
@@ -100,6 +101,7 @@ class LocationBuilderTest extends \PHPUnit_Framework_TestCase
             array(
                 'id' => 42,
                 'parentId' => 24,
+                'path' => array(2, 42),
                 'name' => 'Name',
                 'isEnabled' => true,
                 'thumbnail' => null,

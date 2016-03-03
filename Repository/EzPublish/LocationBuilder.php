@@ -84,11 +84,16 @@ class LocationBuilder
             $location->contentInfo
         );
 
+        // First element is location ID == 1. We don't need it.
+        $path = $location->path;
+        array_shift($path);
+
         return new Location(
             $location,
             array(
                 'id' => $location->id,
                 'parentId' => $location->parentLocationId,
+                'path' => array_map(function($v) { return (int)$v; }, $path),
                 'name' => $this->translationHelper->getTranslatedContentNameByContentInfo(
                     $location->contentInfo
                 ),

@@ -88,7 +88,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
 
         self::assertEquals(
             $location,
-            $this->adapter->loadLocation(42, array(2, 43, 5))
+            $this->adapter->loadLocation(42)
         );
     }
 
@@ -110,33 +110,7 @@ class AdapterTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $this->adapter->loadLocation(42, array());
-    }
-
-    /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Adapter::loadLocation
-     * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\OutOfBoundsException
-     */
-    public function testLoadLocationThrowsOutOfBoundsException()
-    {
-        $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId(42);
-
-        $foundLocation = new APILocation(
-            array(
-                'pathString' => '/1/50/42/',
-            )
-        );
-
-        $searchResult = $this->buildSearchResult(array($foundLocation));
-
-        $this->searchServiceMock
-            ->expects($this->once())
-            ->method('findLocations')
-            ->with($this->equalTo($query))
-            ->will($this->returnValue($searchResult));
-
-        $this->adapter->loadLocation(42, array(2, 43, 5));
+        $this->adapter->loadLocation(42);
     }
 
     /**
