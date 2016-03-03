@@ -1,0 +1,8 @@
+system:
+    default:
+        image_variations:
+            netgen_content_browser:
+                reference: original
+                filters:
+                    - { name: geometry/scale, params: [200, 200] }
+                    - { name: strip }

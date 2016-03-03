@@ -3,8 +3,15 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish;
 
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\Core\Helper\FieldHelper;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\SPI\Variation\VariationHandler;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
+use eZ\Publish\API\Repository\Values\Content\Field;
+use eZ\Publish\API\Repository\Values\Content\VersionInfo;
+use eZ\Publish\SPI\Variation\Values\Variation;
+use Exception;
 
 class LocationBuilder
 {
@@ -19,17 +26,41 @@ class LocationBuilder
     protected $translationHelper;
 
     /**
+     * @var \eZ\Publish\Core\Helper\FieldHelper
+     */
+    protected $fieldHelper;
+
+    /**
+     * @var \eZ\Publish\SPI\Variation\VariationHandler
+     */
+    protected $variationHandler;
+
+    /**
+     * @var array
+     */
+    protected $imageFields;
+
+    /**
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
+     * @param \eZ\Publish\Core\Helper\FieldHelper $fieldHelper
+     * @param \eZ\Publish\SPI\Variation\VariationHandler $variationHandler
+     * @param array $imageFields
      */
     public function __construct(
         Repository $repository,
-        TranslationHelper $translationHelper
+        TranslationHelper $translationHelper,
+        FieldHelper $fieldHelper,
+        VariationHandler $variationHandler,
+        array $imageFields
     ) {
         $this->repository = $repository;
         $this->translationHelper = $translationHelper;
+        $this->fieldHelper = $fieldHelper;
+        $this->variationHandler = $variationHandler;
+        $this->imageFields = $imageFields;
     }
 
     /**
@@ -49,6 +80,10 @@ class LocationBuilder
             }
         );
 
+        $content = $this->repository->getContentService()->loadContentByContentInfo(
+            $location->contentInfo
+        );
+
         return new Location(
             $location,
             array(
@@ -58,7 +93,7 @@ class LocationBuilder
                     $location->contentInfo
                 ),
                 'isEnabled' => true,
-                'thumbnail' => null,
+                'thumbnail' => $this->getThumbnail($content),
                 'type' => $this->translationHelper->getTranslatedByMethod(
                     $this->repository->getContentTypeService()->loadContentType(
                         $location->contentInfo->contentTypeId
@@ -77,5 +112,52 @@ class LocationBuilder
                 )->name,
             )
         );
+    }
+
+    /**
+     * Returns path to the thumbnail for provided content.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     *
+     * @return string
+     */
+    protected function getThumbnail(Content $content)
+    {
+        foreach ($this->imageFields as $imageField) {
+            $field = $this->translationHelper->getTranslatedField($content, $imageField);
+            if (!$field instanceof Field || $this->fieldHelper->isFieldEmpty($content, $imageField)) {
+                continue;
+            }
+
+            $imageVariation = $this->getImageVariation($field, $content->versionInfo);
+            if (!$imageVariation instanceof Variation) {
+                continue;
+            }
+
+            return $imageVariation->uri;
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the image variation object for $field and $versionInfo.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Field $field
+     * @param \eZ\Publish\API\Repository\Values\Content\VersionInfo $versionInfo
+     *
+     * @return \eZ\Publish\SPI\Variation\Values\Variation
+     */
+    public function getImageVariation(Field $field, VersionInfo $versionInfo)
+    {
+        try {
+            return $this->variationHandler->getVariation(
+                $field,
+                $versionInfo,
+                'netgen_content_browser'
+            );
+        } catch (Exception $e) {
+            return null;
+        }
     }
 }
