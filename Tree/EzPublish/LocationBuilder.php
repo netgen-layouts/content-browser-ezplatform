@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface;
+use DateTime;
 
 class LocationBuilder
 {
@@ -88,8 +89,8 @@ class LocationBuilder
                     'owner' => $this->translationHelper->getTranslatedContentNameByContentInfo(
                         $ownerContentInfo
                     ),
-                    'modified' => $location->contentInfo->modificationDate,
-                    'published' => $location->contentInfo->publishedDate,
+                    'modified' => $location->contentInfo->modificationDate->format(Datetime::ISO8601),
+                    'published' => $location->contentInfo->publishedDate->format(Datetime::ISO8601),
                     'priority' => $location->priority,
                     'section' => $this->repository->getSectionService()->loadSection(
                         $location->contentInfo->sectionId
