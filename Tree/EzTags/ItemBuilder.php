@@ -6,7 +6,7 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use DateTime;
 
-class LocationBuilder
+class ItemBuilder
 {
     /**
      * @var \eZ\Publish\Core\Helper\TranslationHelper
@@ -25,13 +25,13 @@ class LocationBuilder
     }
 
     /**
-     * Builds the browser location from tag.
+     * Builds the browser item from tag.
      *
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
+     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\Location
+     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\Item
      */
-    public function buildLocation(Tag $tag)
+    public function buildItem(Tag $tag)
     {
         $pathString = $tag->pathString;
         if ($tag->id > 0) {
@@ -40,7 +40,7 @@ class LocationBuilder
 
         $path = explode('/', trim($pathString, '/'));
 
-        return new Location(
+        return new Item(
             $tag,
             array(
                 'id' => $tag->id,

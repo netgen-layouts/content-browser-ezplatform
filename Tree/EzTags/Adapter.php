@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzTags;
 
 use Netgen\TagsBundle\API\Repository\TagsService;
-use Netgen\Bundle\ContentBrowserBundle\Tree\Location;
+use Netgen\Bundle\ContentBrowserBundle\Tree\Item;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Tree\AdapterInterface;
@@ -18,22 +18,22 @@ class Adapter implements AdapterInterface
     protected $tagsService;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\LocationBuilder
+     * @var \Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\ItemBuilder
      */
-    protected $locationBuilder;
+    protected $itemBuilder;
 
     /**
      * Constructor.
      *
      * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\LocationBuilder $locationBuilder
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\ItemBuilder $itemBuilder
      */
     public function __construct(
         TagsService $tagsService,
-        LocationBuilder $locationBuilder
+        ItemBuilder $itemBuilder
     ) {
         $this->tagsService = $tagsService;
-        $this->locationBuilder = $locationBuilder;
+        $this->itemBuilder = $itemBuilder;
     }
 
     /**
@@ -50,19 +50,19 @@ class Adapter implements AdapterInterface
     }
 
     /**
-     * Loads the location for provided ID.
+     * Loads the item for provided ID.
      *
-     * @param int|string $locationId
+     * @param int|string $itemId
      *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If location with provided ID was not found
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item with provided ID was not found
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Location
+     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Item
      */
-    public function loadLocation($locationId)
+    public function loadItem($itemId)
     {
-        // Tags have no root location, so we simulate it with location ID == 0
-        if ($locationId == 0) {
-            return $this->locationBuilder->buildLocation(
+        // Tags have no root item, so we simulate it with item ID == 0
+        if ($itemId == 0) {
+            return $this->itemBuilder->buildItem(
                 new Tag(
                     array(
                         'id' => 0,
@@ -79,54 +79,54 @@ class Adapter implements AdapterInterface
         }
 
         try {
-            $tag = $this->tagsService->loadTag($locationId);
+            $tag = $this->tagsService->loadTag($itemId);
         } catch (APINotFoundException $e) {
-            throw new NotFoundException("Location #{$locationId} not found.", 0, $e);
+            throw new NotFoundException("Item #{$itemId} not found.", 0, $e);
         }
 
-        return $this->locationBuilder->buildLocation($tag);
+        return $this->itemBuilder->buildItem($tag);
     }
 
     /**
-     * Loads all children of the provided location.
+     * Loads all children of the provided item.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Location $location
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Item $item
      * @param string[] $types
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Location[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Item[]
      */
-    public function loadLocationChildren(Location $location, array $types = array())
+    public function loadItemChildren(Item $item, array $types = array())
     {
         $tag = null;
-        if ($location->id > 0) {
-            $tag = $this->tagsService->loadTag($location->id);
+        if ($item->id > 0) {
+            $tag = $this->tagsService->loadTag($item->id);
         }
 
-        $locations = array_map(
+        $items = array_map(
             function (Tag $tag) {
-                return $this->locationBuilder->buildLocation(
+                return $this->itemBuilder->buildItem(
                     $tag
                 );
             },
             $this->tagsService->loadTagChildren($tag)
         );
 
-        return $locations;
+        return $items;
     }
 
     /**
-     * Returns true if provided location has children.
+     * Returns true if provided item has children.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Location $location
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Item $item
      * @param string[] $types
      *
      * @return bool
      */
-    public function hasChildren(Location $location, array $types = array())
+    public function hasChildren(Item $item, array $types = array())
     {
         $tag = null;
-        if ($location->id > 0) {
-            $tag = $this->tagsService->loadTag($location->id);
+        if ($item->id > 0) {
+            $tag = $this->tagsService->loadTag($item->id);
         }
 
         return $this->tagsService->getTagChildrenCount($tag) > 0;

@@ -6,7 +6,7 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
-use Netgen\Bundle\ContentBrowserBundle\Tree\Location;
+use Netgen\Bundle\ContentBrowserBundle\Tree\Item;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Tree\AdapterInterface;
 
@@ -18,22 +18,22 @@ class Adapter implements AdapterInterface
     protected $searchService;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\LocationBuilder
+     * @var \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ItemBuilder
      */
-    protected $locationBuilder;
+    protected $itemBuilder;
 
     /**
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\SearchService $searchService
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\LocationBuilder $locationBuilder
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ItemBuilder $itemBuilder
      */
     public function __construct(
         SearchService $searchService,
-        LocationBuilder $locationBuilder
+        ItemBuilder $itemBuilder
     ) {
         $this->searchService = $searchService;
-        $this->locationBuilder = $locationBuilder;
+        $this->itemBuilder = $itemBuilder;
     }
 
     /**
@@ -56,41 +56,41 @@ class Adapter implements AdapterInterface
     }
 
     /**
-     * Loads the location for provided ID.
+     * Loads the item for provided ID.
      *
-     * @param int|string $locationId
+     * @param int|string $itemId
      *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If location with provided ID was not found
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item with provided ID was not found
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Location
+     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Item
      */
-    public function loadLocation($locationId)
+    public function loadItem($itemId)
     {
         $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId($locationId);
+        $query->filter = new Criterion\LocationId($itemId);
         $result = $this->searchService->findLocations($query);
 
         if ($result->totalCount == 0) {
-            throw new NotFoundException("Location #{$locationId} not found.");
+            throw new NotFoundException("Item #{$itemId} not found.");
         }
 
-        return $this->locationBuilder->buildLocation(
+        return $this->itemBuilder->buildItem(
             $result->searchHits[0]->valueObject
         );
     }
 
     /**
-     * Loads all children of the provided location.
+     * Loads all children of the provided item.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Location $location
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Item $item
      * @param string[] $types
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Location[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Item[]
      */
-    public function loadLocationChildren(Location $location, array $types = array())
+    public function loadItemChildren(Item $item, array $types = array())
     {
         $criteria = array(
-            new Criterion\ParentLocationId($location->id),
+            new Criterion\ParentLocationId($item->id),
         );
 
         if (!empty($types)) {
@@ -101,30 +101,30 @@ class Adapter implements AdapterInterface
         $query->filter = new Criterion\LogicalAnd($criteria);
         $result = $this->searchService->findLocations($query);
 
-        $locations = array_map(
+        $items = array_map(
             function (SearchHit $searchHit) {
-                return $this->locationBuilder->buildLocation(
+                return $this->itemBuilder->buildItem(
                     $searchHit->valueObject
                 );
             },
             $result->searchHits
         );
 
-        return $locations;
+        return $items;
     }
 
     /**
-     * Returns true if provided location has children.
+     * Returns true if provided item has children.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Location $location
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Item $item
      * @param string[] $types
      *
      * @return bool
      */
-    public function hasChildren(Location $location, array $types = array())
+    public function hasChildren(Item $item, array $types = array())
     {
         $criteria = array(
-            new Criterion\ParentLocationId($location->id),
+            new Criterion\ParentLocationId($item->id),
         );
 
         if (!empty($types)) {

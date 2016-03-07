@@ -3,10 +3,10 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzTags;
 
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
-use Netgen\Bundle\ContentBrowserBundle\Tree\Location as BaseLocation;
-use Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\LocationInterface as EzTagsLocationInterface;
+use Netgen\Bundle\ContentBrowserBundle\Tree\Item as BaseItem;
+use Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\ItemInterface as EzTagsItemInterface;
 
-class Location extends BaseLocation implements EzTagsLocationInterface
+class Item extends BaseItem implements EzTagsItemInterface
 {
     /**
      * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag

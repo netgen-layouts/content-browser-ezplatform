@@ -4,11 +4,11 @@ namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
-use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface;
 use DateTime;
 
-class LocationBuilder
+class ItemBuilder
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository
@@ -43,13 +43,13 @@ class LocationBuilder
     }
 
     /**
-     * Builds the browser location from API location.
+     * Builds the browser item from API location.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\Location
+     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\Item
      */
-    public function buildLocation(APILocation $location)
+    public function buildItem(Location $location)
     {
         $ownerContentInfo = $this->repository->sudo(
             function (Repository $repository) use ($location) {
@@ -67,7 +67,7 @@ class LocationBuilder
         $path = $location->path;
         array_shift($path);
 
-        return new Location(
+        return new Item(
             $location,
             array(
                 'id' => $location->id,

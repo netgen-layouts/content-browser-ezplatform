@@ -2,7 +2,7 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzTags;
 
-interface LocationInterface
+interface ItemInterface
 {
     /**
      * Returns the API tag.

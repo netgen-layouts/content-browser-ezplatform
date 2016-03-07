@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish;
 
-use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
-use Netgen\Bundle\ContentBrowserBundle\Tree\Location as BaseLocation;
-use Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\LocationInterface as EzPublishLocationInterface;
+use eZ\Publish\API\Repository\Values\Content\Location;
+use Netgen\Bundle\ContentBrowserBundle\Tree\Item as BaseItem;
+use Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ItemInterface as EzPublishItemInterface;
 
-class Location extends BaseLocation implements EzPublishLocationInterface
+class Item extends BaseItem implements EzPublishItemInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
@@ -19,7 +19,7 @@ class Location extends BaseLocation implements EzPublishLocationInterface
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      * @param array $properties
      */
-    public function __construct(APILocation $location, array $properties = array())
+    public function __construct(Location $location, array $properties = array())
     {
         parent::__construct($properties);
 
@@ -31,7 +31,7 @@ class Location extends BaseLocation implements EzPublishLocationInterface
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Location
      */
-    public function getAPILocation()
+    public function getLocation()
     {
         return $this->location;
     }
