@@ -44,14 +44,14 @@ class Adapter implements AdapterInterface
     public function getColumns()
     {
         return array(
-            'thumbnail' => 'netgen_content_browser.columns.thumbnail',
-            'type' => 'netgen_content_browser.columns.type',
-            'visible' => 'netgen_content_browser.columns.visible',
-            'owner' => 'netgen_content_browser.columns.owner',
-            'modified' => 'netgen_content_browser.columns.modified',
-            'published' => 'netgen_content_browser.columns.published',
-            'priority' => 'netgen_content_browser.columns.priority',
-            'section' => 'netgen_content_browser.columns.section',
+            'thumbnail' => 'netgen_content_browser.ezpublish.columns.thumbnail',
+            'type' => 'netgen_content_browser.ezpublish.columns.type',
+            'visible' => 'netgen_content_browser.ezpublish.columns.visible',
+            'owner' => 'netgen_content_browser.ezpublish.columns.owner',
+            'modified' => 'netgen_content_browser.ezpublish.columns.modified',
+            'published' => 'netgen_content_browser.ezpublish.columns.published',
+            'priority' => 'netgen_content_browser.ezpublish.columns.priority',
+            'section' => 'netgen_content_browser.ezpublish.columns.section',
         );
     }
 
