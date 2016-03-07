@@ -76,23 +76,25 @@ class LocationBuilder
                     $location->contentInfo
                 ),
                 'isEnabled' => true,
-                'thumbnail' => $this->thumbnailLoader->loadThumbnail($content),
-                'type' => $this->translationHelper->getTranslatedByMethod(
-                    $this->repository->getContentTypeService()->loadContentType(
-                        $location->contentInfo->contentTypeId
+                'additionalColumns' => array(
+                    'thumbnail' => $this->thumbnailLoader->loadThumbnail($content),
+                    'type' => $this->translationHelper->getTranslatedByMethod(
+                        $this->repository->getContentTypeService()->loadContentType(
+                            $location->contentInfo->contentTypeId
+                        ),
+                        'getName'
                     ),
-                    'getName'
-                ),
-                'isVisible' => !$location->invisible,
-                'owner' => $this->translationHelper->getTranslatedContentNameByContentInfo(
-                    $ownerContentInfo
-                ),
-                'modified' => $location->contentInfo->modificationDate,
-                'published' => $location->contentInfo->publishedDate,
-                'priority' => $location->priority,
-                'section' => $this->repository->getSectionService()->loadSection(
-                    $location->contentInfo->sectionId
-                )->name,
+                    'visible' => !$location->invisible,
+                    'owner' => $this->translationHelper->getTranslatedContentNameByContentInfo(
+                        $ownerContentInfo
+                    ),
+                    'modified' => $location->contentInfo->modificationDate,
+                    'published' => $location->contentInfo->publishedDate,
+                    'priority' => $location->priority,
+                    'section' => $this->repository->getSectionService()->loadSection(
+                        $location->contentInfo->sectionId
+                    )->name,
+                )
             )
         );
     }

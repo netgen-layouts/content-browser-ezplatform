@@ -9,6 +9,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use Netgen\Bundle\ContentBrowserBundle\Repository\Location;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Repository\AdapterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class Adapter implements AdapterInterface
 {
@@ -23,17 +24,44 @@ class Adapter implements AdapterInterface
     protected $locationBuilder;
 
     /**
+     * @var \Symfony\Component\Translation\TranslatorInterface
+     */
+    protected $translator;
+
+    /**
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder $locationBuilder
+     * @param \Symfony\Component\Translation\TranslatorInterface $translator
      */
     public function __construct(
         SearchService $searchService,
-        LocationBuilder $locationBuilder
+        LocationBuilder $locationBuilder,
+        TranslatorInterface $translator
     ) {
         $this->searchService = $searchService;
         $this->locationBuilder = $locationBuilder;
+        $this->translator = $translator;
+    }
+
+    /**
+     * Returns all available columns and their names
+     *
+     * @return array
+     */
+    public function getColumns()
+    {
+        return array(
+            'thumbnail' => $this->translator->trans('netgen_content_browser.columns.thumbnail'),
+            'type' => $this->translator->trans('netgen_content_browser.columns.type'),
+            'visible' => $this->translator->trans('netgen_content_browser.columns.visible'),
+            'owner' => $this->translator->trans('netgen_content_browser.columns.owner'),
+            'modified' => $this->translator->trans('netgen_content_browser.columns.modified'),
+            'published' => $this->translator->trans('netgen_content_browser.columns.published'),
+            'priority' => $this->translator->trans('netgen_content_browser.columns.priority'),
+            'section' => $this->translator->trans('netgen_content_browser.columns.section'),
+        );
     }
 
     /**
