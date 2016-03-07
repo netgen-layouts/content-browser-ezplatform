@@ -1,11 +1,11 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish;
+namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
-use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface;
 
 class LocationBuilder
 {
@@ -20,7 +20,7 @@ class LocationBuilder
     protected $translationHelper;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface
+     * @var \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface
      */
     protected $thumbnailLoader;
 
@@ -29,7 +29,7 @@ class LocationBuilder
      *
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface $thumbnailLoader
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface $thumbnailLoader
      */
     public function __construct(
         Repository $repository,
@@ -46,7 +46,7 @@ class LocationBuilder
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\Location
+     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\Location
      */
     public function buildLocation(APILocation $location)
     {

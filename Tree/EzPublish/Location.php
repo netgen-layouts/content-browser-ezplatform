@@ -1,10 +1,10 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish;
+namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish;
 
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
-use Netgen\Bundle\ContentBrowserBundle\Repository\Location as BaseLocation;
-use Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationInterface as EzPublishLocationInterface;
+use Netgen\Bundle\ContentBrowserBundle\Tree\Location as BaseLocation;
+use Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\LocationInterface as EzPublishLocationInterface;
 
 class Location extends BaseLocation implements EzPublishLocationInterface
 {

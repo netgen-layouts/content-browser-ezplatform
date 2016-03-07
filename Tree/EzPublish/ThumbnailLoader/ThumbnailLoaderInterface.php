@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\ThumbnailLoader;
+namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader;
 
 use eZ\Publish\API\Repository\Values\Content\Content;
 

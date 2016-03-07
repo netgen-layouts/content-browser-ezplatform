@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish;
+namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish;
 
 interface LocationInterface
 {

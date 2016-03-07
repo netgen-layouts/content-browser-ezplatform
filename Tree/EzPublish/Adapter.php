@@ -1,14 +1,14 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish;
+namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish;
 
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
-use Netgen\Bundle\ContentBrowserBundle\Repository\Location;
+use Netgen\Bundle\ContentBrowserBundle\Tree\Location;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
-use Netgen\Bundle\ContentBrowserBundle\Repository\AdapterInterface;
+use Netgen\Bundle\ContentBrowserBundle\Tree\AdapterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class Adapter implements AdapterInterface
@@ -19,7 +19,7 @@ class Adapter implements AdapterInterface
     protected $searchService;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder
+     * @var \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\LocationBuilder
      */
     protected $locationBuilder;
 
@@ -32,7 +32,7 @@ class Adapter implements AdapterInterface
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\SearchService $searchService
-     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\EzPublish\LocationBuilder $locationBuilder
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\LocationBuilder $locationBuilder
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
      */
     public function __construct(
@@ -71,7 +71,7 @@ class Adapter implements AdapterInterface
      *
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If location with provided ID was not found
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\Location
+     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Location
      */
     public function loadLocation($locationId)
     {
@@ -91,10 +91,10 @@ class Adapter implements AdapterInterface
     /**
      * Loads all children of the provided location.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\Location $location
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Location $location
      * @param string[] $types
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Repository\Location[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Location[]
      */
     public function loadLocationChildren(Location $location, array $types = array())
     {
@@ -125,7 +125,7 @@ class Adapter implements AdapterInterface
     /**
      * Returns true if provided location has children.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Repository\Location $location
+     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Location $location
      * @param string[] $types
      *
      * @return bool
