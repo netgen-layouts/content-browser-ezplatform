@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzTags;
+namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags;
 
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
@@ -29,7 +29,7 @@ class ItemBuilder
      *
      * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\Item
+     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags\Item
      */
     public function buildItem(Tag $tag)
     {

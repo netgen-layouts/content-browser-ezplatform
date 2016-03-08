@@ -1,10 +1,10 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzTags;
+namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags;
 
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
-use Netgen\Bundle\ContentBrowserBundle\Tree\Item as BaseItem;
-use Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\ItemInterface as EzTagsItemInterface;
+use Netgen\Bundle\ContentBrowserBundle\Adapter\Item as BaseItem;
+use Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags\ItemInterface as EzTagsItemInterface;
 
 class Item extends BaseItem implements EzTagsItemInterface
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish;
+namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish;
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\API\Repository\Values\Content\Location;
-use Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface;
 use DateTime;
 
 class ItemBuilder
@@ -21,7 +21,7 @@ class ItemBuilder
     protected $translationHelper;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface
+     * @var \Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface
      */
     protected $thumbnailLoader;
 
@@ -30,7 +30,7 @@ class ItemBuilder
      *
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface $thumbnailLoader
+     * @param \Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface $thumbnailLoader
      */
     public function __construct(
         Repository $repository,
@@ -47,7 +47,7 @@ class ItemBuilder
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\Item
+     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\Item
      */
     public function buildItem(Location $location)
     {

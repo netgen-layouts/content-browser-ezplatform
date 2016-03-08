@@ -1,12 +1,12 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzTags;
+namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags;
 
 use Netgen\TagsBundle\API\Repository\TagsService;
-use Netgen\Bundle\ContentBrowserBundle\Tree\Item;
+use Netgen\Bundle\ContentBrowserBundle\Adapter\Item;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
-use Netgen\Bundle\ContentBrowserBundle\Tree\AdapterInterface;
+use Netgen\Bundle\ContentBrowserBundle\Adapter\AdapterInterface;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use DateTime;
 
@@ -18,7 +18,7 @@ class Adapter implements AdapterInterface
     protected $tagsService;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\ItemBuilder
+     * @var \Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags\ItemBuilder
      */
     protected $itemBuilder;
 
@@ -26,7 +26,7 @@ class Adapter implements AdapterInterface
      * Constructor.
      *
      * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\EzTags\ItemBuilder $itemBuilder
+     * @param \Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags\ItemBuilder $itemBuilder
      */
     public function __construct(
         TagsService $tagsService,
@@ -56,7 +56,7 @@ class Adapter implements AdapterInterface
      *
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item with provided ID was not found
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Item
+     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\Item
      */
     public function loadItem($itemId)
     {
@@ -90,10 +90,10 @@ class Adapter implements AdapterInterface
     /**
      * Loads all children of the provided item.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Item $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Adapter\Item $item
      * @param string[] $types
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Tree\Item[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\Item[]
      */
     public function loadItemChildren(Item $item, array $types = array())
     {
@@ -117,7 +117,7 @@ class Adapter implements AdapterInterface
     /**
      * Returns true if provided item has children.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Tree\Item $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Adapter\Item $item
      * @param string[] $types
      *
      * @return bool

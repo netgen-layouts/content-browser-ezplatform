@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish;
+namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish;
 
 interface ItemInterface
 {

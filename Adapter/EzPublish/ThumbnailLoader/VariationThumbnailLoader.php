@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tree\EzPublish\ThumbnailLoader;
+namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\ThumbnailLoader;
 
 use eZ\Publish\API\Repository\Values\Content\Field;
 use eZ\Publish\Core\Helper\FieldHelper;
