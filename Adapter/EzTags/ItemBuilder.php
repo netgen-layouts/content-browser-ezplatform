@@ -4,6 +4,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags;
 
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
 use DateTime;
 
 class ItemBuilder
@@ -29,7 +30,7 @@ class ItemBuilder
      *
      * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags\Item
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item
      */
     public function buildItem(Tag $tag)
     {

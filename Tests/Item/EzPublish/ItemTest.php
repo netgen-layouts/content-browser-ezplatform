@@ -1,14 +1,14 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tests\Adapter\EzPublish;
+namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\EzPublish;
 
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzPublish\Item;
 
 class ItemTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\Item
+     * @var \Netgen\Bundle\ContentBrowserBundle\Item\EzPublish\Item
      */
     protected $item;
 
@@ -18,8 +18,8 @@ class ItemTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\Item::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\Item::getLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\EzPublish\Item::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\EzPublish\Item::getLocation
      */
     public function testGetLocation()
     {

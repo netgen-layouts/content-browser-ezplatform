@@ -10,8 +10,8 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\Adapter;
 use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\ItemBuilder;
-use Netgen\Bundle\ContentBrowserBundle\Adapter\Item;
-use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\Item as EzPublishItem;
+use Netgen\Bundle\ContentBrowserBundle\Item\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzPublish\Item as EzPublishItem;
 
 class AdapterTest extends \PHPUnit_Framework_TestCase
 {

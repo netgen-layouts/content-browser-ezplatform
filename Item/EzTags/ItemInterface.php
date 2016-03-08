@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags;
+namespace Netgen\Bundle\ContentBrowserBundle\Item\EzTags;
 
 interface ItemInterface
 {

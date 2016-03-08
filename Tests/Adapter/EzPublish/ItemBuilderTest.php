@@ -6,7 +6,7 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\ContentType\ContentType as APIContentType;
-use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzPublish\Item;
 use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\ItemBuilder;
 use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface;
 use Netgen\Bundle\ContentBrowserBundle\Tests\Adapter\EzPublish\Stubs\RepositoryStub;

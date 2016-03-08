@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzTags;
 
 use Netgen\TagsBundle\API\Repository\TagsService;
-use Netgen\Bundle\ContentBrowserBundle\Adapter\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\Item;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Adapter\AdapterInterface;
@@ -56,7 +56,7 @@ class Adapter implements AdapterInterface
      *
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item with provided ID was not found
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\Item
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\Item
      */
     public function loadItem($itemId)
     {
@@ -90,10 +90,10 @@ class Adapter implements AdapterInterface
     /**
      * Loads all children of the provided item.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Adapter\Item $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\Item $item
      * @param string[] $types
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\Item[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\Item[]
      */
     public function loadItemChildren(Item $item, array $types = array())
     {
@@ -117,7 +117,7 @@ class Adapter implements AdapterInterface
     /**
      * Returns true if provided item has children.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Adapter\Item $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\Item $item
      * @param string[] $types
      *
      * @return bool

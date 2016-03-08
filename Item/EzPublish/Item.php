@@ -1,12 +1,11 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish;
+namespace Netgen\Bundle\ContentBrowserBundle\Item\EzPublish;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
-use Netgen\Bundle\ContentBrowserBundle\Adapter\Item as BaseItem;
-use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\ItemInterface as EzPublishItemInterface;
+use Netgen\Bundle\ContentBrowserBundle\Item\Item as BaseItem;
 
-class Item extends BaseItem implements EzPublishItemInterface
+class Item extends BaseItem implements ItemInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location

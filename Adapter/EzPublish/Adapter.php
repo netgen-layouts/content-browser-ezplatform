@@ -6,7 +6,7 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
-use Netgen\Bundle\ContentBrowserBundle\Adapter\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\Item;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Adapter\AdapterInterface;
 
@@ -62,7 +62,7 @@ class Adapter implements AdapterInterface
      *
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item with provided ID was not found
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\Item
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\Item
      */
     public function loadItem($itemId)
     {
@@ -82,10 +82,10 @@ class Adapter implements AdapterInterface
     /**
      * Loads all children of the provided item.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Adapter\Item $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\Item $item
      * @param string[] $types
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\Item[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\Item[]
      */
     public function loadItemChildren(Item $item, array $types = array())
     {
@@ -116,7 +116,7 @@ class Adapter implements AdapterInterface
     /**
      * Returns true if provided item has children.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Adapter\Item $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\Item $item
      * @param string[] $types
      *
      * @return bool

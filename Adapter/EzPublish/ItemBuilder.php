@@ -5,6 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\API\Repository\Values\Content\Location;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzPublish\Item;
 use Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\ThumbnailLoader\ThumbnailLoaderInterface;
 use DateTime;
 
@@ -47,7 +48,7 @@ class ItemBuilder
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Adapter\EzPublish\Item
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzPublish\Item
      */
     public function buildItem(Location $location)
     {
