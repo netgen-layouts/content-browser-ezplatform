@@ -77,7 +77,7 @@ class ItemBuilder
                 'name' => $this->translationHelper->getTranslatedContentNameByContentInfo(
                     $location->contentInfo
                 ),
-                'isEnabled' => true,
+                'isSelectable' => true,
                 'additionalColumns' => array(
                     'thumbnail' => $this->thumbnailLoader->loadThumbnail($content),
                     'type' => $this->translationHelper->getTranslatedByMethod(

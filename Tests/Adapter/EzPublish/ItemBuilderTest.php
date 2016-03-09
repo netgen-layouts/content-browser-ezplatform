@@ -96,7 +96,7 @@ class ItemBuilderTest extends \PHPUnit_Framework_TestCase
                 'parentId' => 24,
                 'path' => array(2, 42),
                 'name' => 'Name',
-                'isEnabled' => true,
+                'isSelectable' => true,
                 'additionalColumns' => array(
                     'thumbnail' => '/image/uri',
                     'type' => 'Type',

@@ -51,7 +51,7 @@ class ItemBuilder
                     $tag,
                     'getKeyword'
                 ),
-                'isEnabled' => $tag->id > 0,
+                'isSelectable' => $tag->id > 0,
                 'additionalColumns' => array(
                     'modified' => $tag->modificationDate->format(Datetime::ISO8601),
                     'published' => $tag->modificationDate->format(Datetime::ISO8601),
