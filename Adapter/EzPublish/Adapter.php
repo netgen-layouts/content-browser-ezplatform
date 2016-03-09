@@ -139,4 +139,29 @@ class Adapter implements AdapterInterface
 
         return $result->totalCount > 0;
     }
+
+    /**
+     * Returns items found with search text
+     *
+     * @param string $searchText
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\Item[]
+     */
+    public function search($searchText)
+    {
+        $query = new LocationQuery();
+        $query->filter = new Criterion\FullText($searchText);
+        $result = $this->searchService->findLocations($query);
+
+        $items = array_map(
+            function (SearchHit $searchHit) {
+                return $this->itemBuilder->buildItem(
+                    $searchHit->valueObject
+                );
+            },
+            $result->searchHits
+        );
+
+        return $items;
+    }
 }
