@@ -72,7 +72,7 @@ class ItemBuilder
             $location,
             array(
                 'id' => $location->id,
-                'value' => $location->id,
+                'value' => $location->contentId,
                 'parentId' => $location->parentLocationId,
                 'path' => array_map(function ($v) { return (int)$v; }, $path),
                 'name' => $this->translationHelper->getTranslatedContentNameByContentInfo(
