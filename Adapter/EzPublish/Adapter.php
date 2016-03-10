@@ -44,6 +44,8 @@ class Adapter implements AdapterInterface
     public function getColumns()
     {
         return array(
+            'location_id' => 'netgen_content_browser.ezpublish.columns.location_id',
+            'content_id' => 'netgen_content_browser.ezpublish.columns.content_id',
             'thumbnail' => 'netgen_content_browser.ezpublish.columns.thumbnail',
             'type' => 'netgen_content_browser.ezpublish.columns.type',
             'visible' => 'netgen_content_browser.ezpublish.columns.visible',

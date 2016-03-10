@@ -45,6 +45,7 @@ class ItemBuilder
             $tag,
             array(
                 'id' => $tag->id,
+                'value' => $tag->id,
                 'parentId' => $tag->parentTagId,
                 'path' => array_map(function ($v) { return (int)$v; }, $path),
                 'name' => $this->translationHelper->getTranslatedByMethod(

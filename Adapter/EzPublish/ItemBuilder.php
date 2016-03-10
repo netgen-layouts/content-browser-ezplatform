@@ -72,6 +72,7 @@ class ItemBuilder
             $location,
             array(
                 'id' => $location->id,
+                'value' => $location->id,
                 'parentId' => $location->parentLocationId,
                 'path' => array_map(function ($v) { return (int)$v; }, $path),
                 'name' => $this->translationHelper->getTranslatedContentNameByContentInfo(
@@ -79,6 +80,8 @@ class ItemBuilder
                 ),
                 'isSelectable' => true,
                 'additionalColumns' => array(
+                    'location_id' => $location->id,
+                    'content_id' => $location->contentId,
                     'thumbnail' => $this->thumbnailLoader->loadThumbnail($content),
                     'type' => $this->translationHelper->getTranslatedByMethod(
                         $this->repository->getContentTypeService()->loadContentType(
