@@ -9,16 +9,33 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 
 class EzPublishBackend implements BackendInterface
 {
+    /**
+     * @var \eZ\Publish\API\Repository\SearchService
+     */
     protected $searchService;
 
+    /**
+     * @var array
+     */
     protected $config = array();
 
+    /**
+     * Constructor.
+     *
+     * @param \eZ\Publish\API\Repository\SearchService $searchService
+     * @param array $config
+     */
     public function __construct(SearchService $searchService, array $config)
     {
         $this->searchService = $searchService;
         $this->config = $config;
     }
 
+    /**
+     * Returns the configured sections
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     */
     public function getSections()
     {
         $sections = array();
@@ -29,6 +46,13 @@ class EzPublishBackend implements BackendInterface
         return $sections;
     }
 
+    /**
+     * Loads the item by its ID
+     *
+     * @param int|string $itemId
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     */
     public function loadItem($itemId)
     {
         $query = new LocationQuery();
@@ -38,10 +62,18 @@ class EzPublishBackend implements BackendInterface
         return $result->searchHits[0]->valueObject;
     }
 
-    public function getChildren(array $params = array())
+    /**
+     * Returns the item children.
+     *
+     * @param int|string $itemId
+     * @param array $params
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     */
+    public function getChildren($itemId, array $params = array())
     {
         $criteria = array(
-            new Criterion\ParentLocationId($params['item_id']),
+            new Criterion\ParentLocationId($itemId),
         );
 
         if (!empty($params['types'])) {
@@ -62,10 +94,18 @@ class EzPublishBackend implements BackendInterface
         return $items;
     }
 
-    public function getChildrenCount(array $params = array())
+    /**
+     * Returns the item children count.
+     *
+     * @param int|string $itemId
+     * @param array $params
+     *
+     * @return int
+     */
+    public function getChildrenCount($itemId, array $params = array())
     {
         $criteria = array(
-            new Criterion\ParentLocationId($params['item_id']),
+            new Criterion\ParentLocationId($itemId),
         );
 
         if (!empty($params['types'])) {
@@ -80,10 +120,18 @@ class EzPublishBackend implements BackendInterface
         return $result->totalCount;
     }
 
-    public function search(array $params = array())
+    /**
+     * Searches for items.
+     *
+     * @param string $searchText
+     * @param array $params
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     */
+    public function search($searchText, array $params = array())
     {
         $query = new LocationQuery();
-        $query->filter = new Criterion\FullText($params['search_text']);
+        $query->filter = new Criterion\FullText($searchText);
         $result = $this->searchService->findLocations($query);
 
         $items = array_map(
