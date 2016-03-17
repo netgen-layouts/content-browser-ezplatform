@@ -32,7 +32,7 @@ class EzPublishBackend implements BackendInterface
     }
 
     /**
-     * Returns the configured sections
+     * Returns the configured sections.
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
@@ -47,7 +47,7 @@ class EzPublishBackend implements BackendInterface
     }
 
     /**
-     * Loads the item by its ID
+     * Loads the item by its ID.
      *
      * @param int|string $itemId
      *

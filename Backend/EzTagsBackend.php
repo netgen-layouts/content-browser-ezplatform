@@ -22,7 +22,7 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
-     * Returns the configured sections
+     * Returns the configured sections.
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
@@ -32,7 +32,7 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
-     * Loads the item by its ID
+     * Loads the item by its ID.
      *
      * @param int|string $itemId
      *
