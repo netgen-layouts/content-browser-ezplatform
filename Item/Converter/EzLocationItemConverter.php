@@ -18,6 +18,9 @@ class EzLocationItemConverter implements ConverterInterface
      */
     protected $translationHelper;
 
+    /**
+     * @var array
+     */
     protected $config = array();
 
     /**
@@ -37,21 +40,49 @@ class EzLocationItemConverter implements ConverterInterface
         $this->config = $config;
     }
 
+    /**
+     * Returns the ID of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return int|string
+     */
     public function getId($valueObject)
     {
         return $valueObject->id;
     }
 
+    /**
+     * Returns the parent ID of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return int|string
+     */
     public function getParentId($valueObject)
     {
         return $valueObject->parentLocationId != 1 ? $valueObject->parentLocationId : null;
     }
 
+    /**
+     * Returns the value of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return int|string
+     */
     public function getValue($valueObject)
     {
         return $valueObject->id;
     }
 
+    /**
+     * Returns the name of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return string
+     */
     public function getName($valueObject)
     {
         return $this->translationHelper->getTranslatedContentNameByContentInfo(
@@ -59,6 +90,13 @@ class EzLocationItemConverter implements ConverterInterface
         );
     }
 
+    /**
+     * Returns the selectable flag of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return bool
+     */
     public function getIsSelectable($valueObject)
     {
         if (empty($this->config['types'])) {
@@ -72,6 +110,13 @@ class EzLocationItemConverter implements ConverterInterface
         return in_array($contentType->identifier, $this->config['types']);
     }
 
+    /**
+     * Returns the template variables of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return array
+     */
     public function getTemplateVariables($valueObject)
     {
         return array(
@@ -82,6 +127,13 @@ class EzLocationItemConverter implements ConverterInterface
         );
     }
 
+    /**
+     * Returns the columns of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return array
+     */
     public function getColumns($valueObject)
     {
         $ownerContentInfo = $this->repository->sudo(

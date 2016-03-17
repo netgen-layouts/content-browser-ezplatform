@@ -21,21 +21,49 @@ class EzTagsItemConverter implements ConverterInterface
         $this->translationHelper = $translationHelper;
     }
 
+    /**
+     * Returns the ID of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return int|string
+     */
     public function getId($valueObject)
     {
         return $valueObject->id;
     }
 
+    /**
+     * Returns the parent ID of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return int|string
+     */
     public function getParentId($valueObject)
     {
         return $valueObject->parentTagId != 0 ? $valueObject->parentTagId : null;
     }
 
+    /**
+     * Returns the value of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return int|string
+     */
     public function getValue($valueObject)
     {
         return $valueObject->id;
     }
 
+    /**
+     * Returns the name of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return string
+     */
     public function getName($valueObject)
     {
         return $this->translationHelper->getTranslatedByMethod(
@@ -44,11 +72,25 @@ class EzTagsItemConverter implements ConverterInterface
         );
     }
 
+    /**
+     * Returns the selectable flag of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return bool
+     */
     public function getIsSelectable($valueObject)
     {
         return true;
     }
 
+    /**
+     * Returns the template variables of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return array
+     */
     public function getTemplateVariables($valueObject)
     {
         return array(
@@ -56,6 +98,13 @@ class EzTagsItemConverter implements ConverterInterface
         );
     }
 
+    /**
+     * Returns the columns of the value object.
+     *
+     * @param mixed $valueObject
+     *
+     * @return array
+     */
     public function getColumns($valueObject)
     {
         return array(
