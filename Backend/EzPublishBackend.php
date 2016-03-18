@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
+use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 
 class EzPublishBackend implements BackendInterface
 {
@@ -51,6 +52,8 @@ class EzPublishBackend implements BackendInterface
      *
      * @param int|string $itemId
      *
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
+     *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
      */
     public function loadItem($itemId)
@@ -58,6 +61,10 @@ class EzPublishBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($itemId);
         $result = $this->searchService->findLocations($query);
+
+        if (!isset($result->searchHits[0])) {
+            throw new NotFoundException("Location with ID {$itemId} not found.");
+        }
 
         return $result->searchHits[0]->valueObject;
     }

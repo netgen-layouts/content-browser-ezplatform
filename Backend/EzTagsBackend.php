@@ -2,6 +2,8 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
+use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
@@ -56,7 +58,11 @@ class EzTagsBackend implements BackendInterface
     public function loadItem($itemId)
     {
         if ($itemId > 0) {
-            return $this->tagsService->loadTag($itemId);
+            try {
+                return $this->tagsService->loadTag($itemId);
+            } catch (APINotFoundException $e) {
+                throw new NotFoundException("Tag with ID {$itemId} not found.");
+            }
         }
 
         return new Tag(
