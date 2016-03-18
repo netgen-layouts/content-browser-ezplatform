@@ -86,12 +86,11 @@ class EzTagsBackend implements BackendInterface
      */
     public function getChildren($itemId, array $params = array())
     {
-        $tag = null;
-        if ($itemId > 0) {
-            $tag = $this->tagsService->loadTag($itemId);
-        }
-
-        return $this->tagsService->loadTagChildren($tag);
+        return $this->tagsService->loadTagChildren(
+            !empty($itemId) ?
+                $this->tagsService->loadTag($itemId) :
+                null
+        );
     }
 
     /**
@@ -104,12 +103,11 @@ class EzTagsBackend implements BackendInterface
      */
     public function getChildrenCount($itemId, array $params = array())
     {
-        $tag = null;
-        if ($itemId > 0) {
-            $tag = $this->tagsService->loadTag($itemId);
-        }
-
-        return $this->tagsService->getTagChildrenCount($tag);
+        return $this->tagsService->getTagChildrenCount(
+            !empty($itemId) ?
+                $this->tagsService->loadTag($itemId) :
+                null
+        );
     }
 
     /**
