@@ -3,9 +3,17 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Item\Converter;
 
 use eZ\Publish\Core\Helper\TranslationHelper;
+use DateTime;
+use Netgen\TagsBundle\API\Repository\TagsService;
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
 class EzTagsItemConverter implements ConverterInterface
 {
+    /**
+     * @var \Netgen\TagsBundle\API\Repository\TagsService
+     */
+    protected $tagsService;
+
     /**
      * @var \eZ\Publish\Core\Helper\TranslationHelper
      */
@@ -14,10 +22,12 @@ class EzTagsItemConverter implements ConverterInterface
     /**
      * Constructor.
      *
+     * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      */
-    public function __construct(TranslationHelper $translationHelper)
+    public function __construct(TagsService $tagsService, TranslationHelper $translationHelper)
     {
+        $this->tagsService = $tagsService;
         $this->translationHelper = $translationHelper;
     }
 
@@ -107,9 +117,19 @@ class EzTagsItemConverter implements ConverterInterface
      */
     public function getColumns($valueObject)
     {
+        $parentTag = null;
+        if ($valueObject->parentTagId > 0) {
+            $parentTag = $this->tagsService->loadTag($valueObject->parentTagId);
+        }
+
         if ($valueObject->id > 0) {
             return array(
                 'tag_id' => $valueObject->id,
+                'parent_tag_id' => $valueObject->parentTagId,
+                'parent_tag' => $parentTag instanceof Tag ?
+                    $this->translationHelper->getTranslatedByMethod($parentTag, 'getKeyword') :
+                    '(No parent)',
+                'modified' => $valueObject->modificationDate->format(Datetime::ISO8601)
             );
         }
 
