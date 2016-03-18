@@ -89,7 +89,9 @@ class EzTagsBackend implements BackendInterface
         return $this->tagsService->loadTagChildren(
             !empty($itemId) ?
                 $this->tagsService->loadTag($itemId) :
-                null
+                null,
+            !empty($params['offset']) ? $params['offset'] : 0,
+            !empty($params['limit']) ? $params['limit'] : $this->config['default_limit']
         );
     }
 
@@ -120,6 +122,29 @@ class EzTagsBackend implements BackendInterface
      */
     public function search($searchText, array $params = array())
     {
-        return $this->tagsService->loadTagsByKeyword($searchText, 'eng-GB');
+        return $this->tagsService->loadTagsByKeyword(
+            $searchText,
+            'eng-GB',
+            true,
+            !empty($params['offset']) ? $params['offset'] : 0,
+            !empty($params['limit']) ? $params['limit'] : $this->config['default_limit']
+        );
+    }
+
+    /**
+     * Returns the count of searched items.
+     *
+     * @param string $searchText
+     * @param array $params
+     *
+     * @return int
+     */
+    public function searchCount($searchText, array $params = array())
+    {
+        return $this->tagsService->getTagsByKeywordCount(
+            $searchText,
+            'eng-GB',
+            true
+        );
     }
 }

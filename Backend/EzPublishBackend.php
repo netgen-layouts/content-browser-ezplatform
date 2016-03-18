@@ -89,6 +89,8 @@ class EzPublishBackend implements BackendInterface
 
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd($criteria);
+        $query->offset = !empty($params['offset']) ? $params['offset'] : 0;
+        $query->limit = !empty($params['limit']) ? $params['limit'] : $this->config['default_limit'];
         $result = $this->searchService->findLocations($query);
 
         $items = array_map(
@@ -139,6 +141,8 @@ class EzPublishBackend implements BackendInterface
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\FullText($searchText);
+        $query->offset = !empty($params['offset']) ? $params['offset'] : 0;
+        $query->limit = !empty($params['limit']) ? $params['limit'] : $this->config['default_limit'];
         $result = $this->searchService->findLocations($query);
 
         $items = array_map(
@@ -149,5 +153,23 @@ class EzPublishBackend implements BackendInterface
         );
 
         return $items;
+    }
+
+    /**
+     * Returns the count of searched items.
+     *
+     * @param string $searchText
+     * @param array $params
+     *
+     * @return int
+     */
+    public function searchCount($searchText, array $params = array())
+    {
+        $query = new LocationQuery();
+        $query->limit = 0;
+        $query->filter = new Criterion\FullText($searchText);
+        $result = $this->searchService->findLocations($query);
+
+        return $result->totalCount;
     }
 }
