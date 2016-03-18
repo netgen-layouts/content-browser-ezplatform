@@ -42,7 +42,7 @@ class EzTagsItemConverter implements ConverterInterface
      */
     public function getParentId($valueObject)
     {
-        return $valueObject->parentTagId != 0 ? $valueObject->parentTagId : null;
+        return $valueObject->parentTagId;
     }
 
     /**
@@ -81,7 +81,7 @@ class EzTagsItemConverter implements ConverterInterface
      */
     public function getIsSelectable($valueObject)
     {
-        return true;
+        return $valueObject->id > 0 ? true : false;
     }
 
     /**
@@ -94,7 +94,7 @@ class EzTagsItemConverter implements ConverterInterface
     public function getTemplateVariables($valueObject)
     {
         return array(
-            'tag' => $valueObject,
+            'tag' => $valueObject->id > 0 ? $valueObject : null,
         );
     }
 
@@ -107,8 +107,12 @@ class EzTagsItemConverter implements ConverterInterface
      */
     public function getColumns($valueObject)
     {
-        return array(
-            'tag_id' => $valueObject->id,
-        );
+        if ($valueObject->id > 0) {
+            return array(
+                'tag_id' => $valueObject->id,
+            );
+        }
+
+        return array();
     }
 }

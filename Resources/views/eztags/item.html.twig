@@ -1,1 +1,3 @@
-{{ netgen_tags_tag_keyword( tag ) }}
+{% if tag is not empty %}
+    {{ netgen_tags_tag_keyword( tag ) }}
+{% endif %}

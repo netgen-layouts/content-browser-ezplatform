@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 
 use Netgen\TagsBundle\API\Repository\TagsService;
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
 class EzTagsBackend implements BackendInterface
 {
@@ -12,13 +13,20 @@ class EzTagsBackend implements BackendInterface
     protected $tagsService;
 
     /**
+     * @var array
+     */
+    protected $config;
+
+    /**
      * Constructor.
      *
      * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
+     * @param array $config
      */
-    public function __construct(TagsService $tagsService)
+    public function __construct(TagsService $tagsService, array $config)
     {
         $this->tagsService = $tagsService;
+        $this->config = $config;
     }
 
     /**
@@ -28,7 +36,12 @@ class EzTagsBackend implements BackendInterface
      */
     public function getSections()
     {
-        return array();
+        $sections = array();
+        foreach ($this->config['root_items'] as $rootItemId) {
+            $sections[] = $this->loadItem($rootItemId);
+        }
+
+        return $sections;
     }
 
     /**
@@ -36,11 +49,25 @@ class EzTagsBackend implements BackendInterface
      *
      * @param int|string $itemId
      *
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
+     *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
      */
     public function loadItem($itemId)
     {
-        return $this->tagsService->loadTag($itemId);
+        if ($itemId > 0) {
+            return $this->tagsService->loadTag($itemId);
+        }
+
+        return new Tag(
+            array(
+                'id' => 0,
+                'keywords' => array(
+                    'eng-GB' => 'All tags'
+                ),
+                'mainLanguageCode' => 'eng-GB'
+            )
+        );
     }
 
     /**
