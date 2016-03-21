@@ -1,10 +1,20 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Config;
+namespace Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition;
 
-class EzTagsFieldDefinitionConfigLoader extends FieldDefinitionConfigLoader
+class EzTagsConfigLoader extends ConfigLoader
 {
     const FIELD_TYPE_IDENTIFIER = 'eztags';
+
+    /**
+     * Returns the item type which this config supports.
+     *
+     * @return string
+     */
+    public function getItemType()
+    {
+        return 'eztags';
+    }
 
     /**
      * Loads the configuration by its name
@@ -20,7 +30,6 @@ class EzTagsFieldDefinitionConfigLoader extends FieldDefinitionConfigLoader
         $fieldDefinition = $this->getFieldDefinition($configName);
 
         return array(
-            'item_type' => 'eztags',
             'root_items' => array($fieldDefinition->fieldSettings['subTreeLimit']),
             'max_selected' => $fieldDefinition->fieldSettings['maxTags'],
         );

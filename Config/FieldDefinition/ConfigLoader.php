@@ -1,13 +1,14 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Config;
+namespace Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition;
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
+use Netgen\Bundle\ContentBrowserBundle\Config\NamedConfigLoaderInterface;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\InvalidArgumentException;
 
-abstract class FieldDefinitionConfigLoader implements ConfigLoaderInterface
+abstract class ConfigLoader implements NamedConfigLoaderInterface
 {
     const CONFIG_NAME_PREFIX = 'ez-field-definition-';
 

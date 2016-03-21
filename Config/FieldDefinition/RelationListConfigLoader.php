@@ -1,10 +1,20 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Config;
+namespace Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition;
 
-class RelationListFieldDefinitionConfigLoader extends FieldDefinitionConfigLoader
+class RelationListConfigLoader extends ConfigLoader
 {
     const FIELD_TYPE_IDENTIFIER = 'ezobjectrelationlist';
+
+    /**
+     * Returns the item type which this config supports.
+     *
+     * @return string
+     */
+    public function getItemType()
+    {
+        return 'ezcontent';
+    }
 
     /**
      * Loads the configuration by its name
@@ -20,7 +30,6 @@ class RelationListFieldDefinitionConfigLoader extends FieldDefinitionConfigLoade
         $fieldDefinition = $this->getFieldDefinition($configName);
 
         return array(
-            'item_type' => 'ezcontent',
             'types' => $fieldDefinition->fieldSettings['selectionContentTypes'],
         );
     }
