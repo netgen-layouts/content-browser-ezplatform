@@ -4,7 +4,15 @@ namespace Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition;
 
 class EzTagsConfigLoader extends ConfigLoader
 {
-    const FIELD_TYPE_IDENTIFIER = 'eztags';
+    /**
+     * Returns the field type identifier for this config loader.
+     *
+     * @return string
+     */
+    protected function getFieldTypeIdentifier()
+    {
+        return 'eztags';
+    }
 
     /**
      * Returns the item type which this config supports.

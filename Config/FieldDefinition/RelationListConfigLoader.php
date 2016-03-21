@@ -4,7 +4,15 @@ namespace Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition;
 
 class RelationListConfigLoader extends ConfigLoader
 {
-    const FIELD_TYPE_IDENTIFIER = 'ezobjectrelationlist';
+    /**
+     * Returns the field type identifier for this config loader.
+     *
+     * @return string
+     */
+    protected function getFieldTypeIdentifier()
+    {
+        return 'ezobjectrelationlist';
+    }
 
     /**
      * Returns the item type which this config supports.

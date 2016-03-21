@@ -28,6 +28,28 @@ abstract class ConfigLoader implements NamedConfigLoaderInterface
     }
 
     /**
+     * Returns the field type identifier for this config loader.
+     *
+     * @return string
+     */
+    abstract protected function getFieldTypeIdentifier();
+
+    /**
+     * Returns if the loader supports the config with provided name.
+     *
+     * @param string $configName
+     *
+     * @return bool
+     */
+    public function supports($configName)
+    {
+        return stripos(
+            $configName,
+            static::CONFIG_NAME_PREFIX . $this->getFieldTypeIdentifier() . '-'
+        ) === 0;
+    }
+
+    /**
      * Returns the field definition from provided config name.
      *
      * @param string $configName
@@ -61,20 +83,5 @@ abstract class ConfigLoader implements NamedConfigLoaderInterface
         }
 
         return $fieldDefinition;
-    }
-
-    /**
-     * Returns if the loader supports the config with provided name.
-     *
-     * @param string $configName
-     *
-     * @return bool
-     */
-    public function supports($configName)
-    {
-        return stripos(
-            $configName,
-            static::CONFIG_NAME_PREFIX . static::FIELD_TYPE_IDENTIFIER . '-'
-        ) === 0;
     }
 }
