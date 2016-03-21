@@ -129,7 +129,7 @@ class EzTagsItemConverter implements ConverterInterface
                 'parent_tag' => $parentTag instanceof Tag ?
                     $this->translationHelper->getTranslatedByMethod($parentTag, 'getKeyword') :
                     '(No parent)',
-                'modified' => $valueObject->modificationDate->format(Datetime::ISO8601)
+                'modified' => $valueObject->modificationDate->format(Datetime::ISO8601),
             );
         }
 

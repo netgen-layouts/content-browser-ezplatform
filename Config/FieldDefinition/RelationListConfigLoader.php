@@ -17,7 +17,7 @@ class RelationListConfigLoader extends ConfigLoader
     }
 
     /**
-     * Loads the configuration by its name
+     * Loads the configuration by its name.
      *
      * @param string $configName
      *

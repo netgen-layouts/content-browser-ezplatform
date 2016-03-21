@@ -69,9 +69,9 @@ class EzTagsBackend implements BackendInterface
             array(
                 'id' => 0,
                 'keywords' => array(
-                    'eng-GB' => 'All tags'
+                    'eng-GB' => 'All tags',
                 ),
-                'mainLanguageCode' => 'eng-GB'
+                'mainLanguageCode' => 'eng-GB',
             )
         );
     }

@@ -28,7 +28,7 @@ abstract class ConfigLoader implements NamedConfigLoaderInterface
     }
 
     /**
-     * Returns the field definition from provided config name
+     * Returns the field definition from provided config name.
      *
      * @param string $configName
      *
@@ -42,7 +42,7 @@ abstract class ConfigLoader implements NamedConfigLoaderInterface
 
         $configName = explode('-', $configName);
         if (!isset($configName[2])) {
-            throw new InvalidArgumentException("Config name format for field definition is not valid.");
+            throw new InvalidArgumentException('Config name format for field definition is not valid.');
         }
 
         try {
