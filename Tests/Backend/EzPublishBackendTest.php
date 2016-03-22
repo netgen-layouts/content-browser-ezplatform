@@ -34,7 +34,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
 
         $this->config = array(
             'root_items' => array(1, 43, 5),
-            'default_limit' => 25
+            'default_limit' => 25,
         );
 
         $this->backend = new EzPublishBackend(
@@ -55,7 +55,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
 
             $searchResult = new SearchResult();
             $searchResult->searchHits = array(
-                new SearchHit(array('valueObject' => new Location()))
+                new SearchHit(array('valueObject' => new Location())),
             );
 
             $this->searchServiceMock
@@ -83,7 +83,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => new Location()))
+            new SearchHit(array('valueObject' => new Location())),
         );
 
         $this->searchServiceMock
@@ -127,14 +127,14 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
         $query->limit = $this->config['default_limit'];
         $query->filter = new Criterion\LogicalAnd(
             array(
-                new Criterion\ParentLocationId(1)
+                new Criterion\ParentLocationId(1),
             )
         );
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
             new SearchHit(array('valueObject' => new Location())),
-            new SearchHit(array('valueObject' => new Location()))
+            new SearchHit(array('valueObject' => new Location())),
         );
 
         $this->searchServiceMock
@@ -162,14 +162,14 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\ParentLocationId(1),
-                new Criterion\ContentTypeIdentifier(array('type1', 'type2'))
+                new Criterion\ContentTypeIdentifier(array('type1', 'type2')),
             )
         );
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
             new SearchHit(array('valueObject' => new Location())),
-            new SearchHit(array('valueObject' => new Location()))
+            new SearchHit(array('valueObject' => new Location())),
         );
 
         $this->searchServiceMock
@@ -183,7 +183,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
             array(
                 'offset' => 5,
                 'limit' => 10,
-                'types' => array('type1', 'type2')
+                'types' => array('type1', 'type2'),
             )
         );
 
@@ -202,7 +202,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd(
             array(
-                new Criterion\ParentLocationId(1)
+                new Criterion\ParentLocationId(1),
             )
         );
 
@@ -230,7 +230,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\ParentLocationId(1),
-                new Criterion\ContentTypeIdentifier(array('type1', 'type2'))
+                new Criterion\ContentTypeIdentifier(array('type1', 'type2')),
             )
         );
 
@@ -264,7 +264,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
             new SearchHit(array('valueObject' => new Location())),
-            new SearchHit(array('valueObject' => new Location()))
+            new SearchHit(array('valueObject' => new Location())),
         );
 
         $this->searchServiceMock
@@ -294,7 +294,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
             new SearchHit(array('valueObject' => new Location())),
-            new SearchHit(array('valueObject' => new Location()))
+            new SearchHit(array('valueObject' => new Location())),
         );
 
         $this->searchServiceMock

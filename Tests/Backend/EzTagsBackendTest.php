@@ -30,7 +30,7 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
 
         $this->config = array(
             'root_items' => array(4, 2),
-            'default_limit' => 25
+            'default_limit' => 25,
         );
 
         $this->backend = new EzTagsBackend(
@@ -194,7 +194,7 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
             1,
             array(
                 'offset' => 5,
-                'limit' => 10
+                'limit' => 10,
             )
         );
 
