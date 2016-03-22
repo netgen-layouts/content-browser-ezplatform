@@ -27,6 +27,14 @@ class EzTagsConfigLoaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader::getFieldTypeIdentifier
+     */
+    public function testGetFieldTypeIdentifier()
+    {
+        self::assertEquals('eztags', $this->configLoader->getFieldTypeIdentifier());
+    }
+
+    /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader::getItemType
      */
     public function testGetItemType()
@@ -36,7 +44,6 @@ class EzTagsConfigLoaderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader::loadConfig
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader::getFieldTypeIdentifier
      */
     public function testLoadConfig()
     {

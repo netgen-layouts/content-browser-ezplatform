@@ -11,7 +11,7 @@ class ConfigLoader extends BaseConfigLoader
      *
      * @return string
      */
-    protected function getFieldTypeIdentifier()
+    public function getFieldTypeIdentifier()
     {
         return 'field_type';
     }

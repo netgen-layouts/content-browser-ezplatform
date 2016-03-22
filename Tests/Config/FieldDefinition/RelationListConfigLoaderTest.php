@@ -27,6 +27,14 @@ class RelationListConfigLoaderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader::getFieldTypeIdentifier
+     */
+    public function testGetFieldTypeIdentifier()
+    {
+        self::assertEquals('ezobjectrelationlist', $this->configLoader->getFieldTypeIdentifier());
+    }
+
+    /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader::getItemType
      */
     public function testGetItemType()
