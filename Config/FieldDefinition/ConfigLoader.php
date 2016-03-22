@@ -32,7 +32,7 @@ abstract class ConfigLoader implements NamedConfigLoaderInterface
      *
      * @return string
      */
-    abstract protected function getFieldTypeIdentifier();
+    abstract public function getFieldTypeIdentifier();
 
     /**
      * Returns if the loader supports the config with provided name.

@@ -9,7 +9,7 @@ class EzTagsConfigLoader extends ConfigLoader
      *
      * @return string
      */
-    protected function getFieldTypeIdentifier()
+    public function getFieldTypeIdentifier()
     {
         return 'eztags';
     }

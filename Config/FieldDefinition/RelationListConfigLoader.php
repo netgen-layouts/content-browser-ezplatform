@@ -9,7 +9,7 @@ class RelationListConfigLoader extends ConfigLoader
      *
      * @return string
      */
-    protected function getFieldTypeIdentifier()
+    public function getFieldTypeIdentifier()
     {
         return 'ezobjectrelationlist';
     }
