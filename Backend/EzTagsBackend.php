@@ -76,6 +76,7 @@ class EzTagsBackend implements BackendInterface
                     'eng-GB' => 'All tags',
                 ),
                 'mainLanguageCode' => 'eng-GB',
+                'alwaysAvailable' => true,
             )
         );
     }

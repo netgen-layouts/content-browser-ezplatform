@@ -96,6 +96,7 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
                         'eng-GB' => 'All tags',
                     ),
                     'mainLanguageCode' => 'eng-GB',
+                    'alwaysAvailable' => true,
                 )
             ),
             $tag
