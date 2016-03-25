@@ -150,7 +150,7 @@ class EzLocationItemConverter implements ConverterInterface
 
         $sectionName = $this->repository->sudo(
             function (Repository $repository) use ($valueObject) {
-                $repository->getSectionService()->loadSection(
+                return $repository->getSectionService()->loadSection(
                     $valueObject->contentInfo->sectionId
                 )->name;
             }
