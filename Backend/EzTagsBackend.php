@@ -20,15 +20,22 @@ class EzTagsBackend implements BackendInterface
     protected $config;
 
     /**
+     * @var array
+     */
+    protected $languages;
+
+    /**
      * Constructor.
      *
      * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
      * @param array $config
+     * @param array $languages
      */
-    public function __construct(TagsService $tagsService, array $config)
+    public function __construct(TagsService $tagsService, array $config, array $languages)
     {
         $this->tagsService = $tagsService;
         $this->config = $config;
+        $this->languages = $languages;
     }
 
     /**
@@ -127,9 +134,13 @@ class EzTagsBackend implements BackendInterface
      */
     public function search($searchText, array $params = array())
     {
+        if (empty($this->languages)) {
+            return array();
+        }
+
         return $this->tagsService->loadTagsByKeyword(
             $searchText,
-            'eng-GB',
+            $this->languages[0],
             true,
             !empty($params['offset']) ? $params['offset'] : 0,
             !empty($params['limit']) ? $params['limit'] : $this->config['default_limit']
@@ -146,10 +157,13 @@ class EzTagsBackend implements BackendInterface
      */
     public function searchCount($searchText, array $params = array())
     {
+        if (empty($this->languages)) {
+            return 0;
+        }
+
         return $this->tagsService->getTagsByKeywordCount(
             $searchText,
-            'eng-GB',
-            true
+            $this->languages[0]
         );
     }
 }

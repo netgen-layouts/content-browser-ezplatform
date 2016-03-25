@@ -20,6 +20,11 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
     protected $config = array();
 
     /**
+     * @var array
+     */
+    protected $languages = array();
+
+    /**
      * @var \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend
      */
     protected $backend;
@@ -33,9 +38,12 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
             'default_limit' => 25,
         );
 
+        $this->languages = array('eng-GB', 'cro-HR');
+
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->config
+            $this->config,
+            $this->languages
         );
     }
 
@@ -271,6 +279,26 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::search
      */
+    public function testSearchWithNoLanguages()
+    {
+        $this->backend = new EzTagsBackend(
+            $this->tagsServiceMock,
+            $this->config,
+            array()
+        );
+
+        $this->tagsServiceMock
+            ->expects($this->never())
+            ->method('loadTagsByKeyword');
+
+        $items = $this->backend->search('test');
+
+        self::assertCount(0, $items);
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::search
+     */
     public function testSearchWithParams()
     {
         $this->tagsServiceMock
@@ -314,5 +342,25 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
         $count = $this->backend->searchCount('test');
 
         self::assertEquals(2, $count);
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::searchCount
+     */
+    public function testSearchCountWithNoLanguages()
+    {
+        $this->backend = new EzTagsBackend(
+            $this->tagsServiceMock,
+            $this->config,
+            array()
+        );
+
+        $this->tagsServiceMock
+            ->expects($this->never())
+            ->method('getTagsByKeywordCount');
+
+        $count = $this->backend->searchCount('test');
+
+        self::assertEquals(0, $count);
     }
 }
