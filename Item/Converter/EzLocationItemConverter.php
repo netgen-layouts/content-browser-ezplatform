@@ -144,6 +144,14 @@ class EzLocationItemConverter implements ConverterInterface
             }
         );
 
+        $section = $this->repository->sudo(
+            function (Repository $repository) use ($valueObject) {
+                return $repository->getSectionService()->loadSection(
+                    $valueObject->contentInfo->sectionId
+                );
+            }
+        );
+
         return array(
             'location_id' => $valueObject->id,
             'content_id' => $valueObject->contentId,
@@ -160,9 +168,7 @@ class EzLocationItemConverter implements ConverterInterface
             'modified' => $valueObject->contentInfo->modificationDate->format(Datetime::ISO8601),
             'published' => $valueObject->contentInfo->publishedDate->format(Datetime::ISO8601),
             'priority' => $valueObject->priority,
-            'section' => $this->repository->getSectionService()->loadSection(
-                $valueObject->contentInfo->sectionId
-            )->name,
+            'section' => $section->name,
         );
     }
 }
