@@ -117,18 +117,24 @@ class EzTagsItemConverter implements ConverterInterface
      */
     public function getColumns($valueObject)
     {
-        $parentTag = null;
-        if ($valueObject->parentTagId > 0) {
-            $parentTag = $this->tagsService->loadTag($valueObject->parentTagId);
-        }
+        $parentTagName = $this->tagsService->sudo(
+            function (TagsService $tagsService) use ($valueObject) {
+                if (empty($valueObject->parentTagId)) {
+                    return '(No parent)';
+                }
+
+                return $this->translationHelper->getTranslatedByMethod(
+                    $tagsService->loadTag($valueObject->parentTagId),
+                    'getKeyword'
+                );
+            }
+        );
 
         if ($valueObject->id > 0) {
             return array(
                 'tag_id' => $valueObject->id,
                 'parent_tag_id' => $valueObject->parentTagId,
-                'parent_tag' => $parentTag instanceof Tag ?
-                    $this->translationHelper->getTranslatedByMethod($parentTag, 'getKeyword') :
-                    '(No parent)',
+                'parent_tag' => $parentTagName,
                 'modified' => $valueObject->modificationDate->format(Datetime::ISO8601),
             );
         }
