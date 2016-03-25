@@ -40,7 +40,11 @@ class EzTagsBackend implements BackendInterface
     {
         $sections = array();
         foreach ($this->config['root_items'] as $rootItemId) {
-            $sections[] = $this->loadItem($rootItemId);
+            try {
+                $sections[] = $this->loadItem($rootItemId);
+            } catch (NotFoundException $e) {
+                // Do nothing
+            }
         }
 
         return $sections;
