@@ -136,18 +136,33 @@ class EzLocationItemConverter implements ConverterInterface
      */
     public function getColumns($valueObject)
     {
-        $ownerContentInfo = $this->repository->sudo(
+        $ownerName = $this->repository->sudo(
             function (Repository $repository) use ($valueObject) {
-                return $repository->getContentService()->loadContentInfo(
+                $contentInfo = $repository->getContentService()->loadContentInfo(
                     $valueObject->contentInfo->ownerId
+                );
+
+                return $this->translationHelper->getTranslatedContentNameByContentInfo(
+                    $contentInfo
                 );
             }
         );
 
-        $section = $this->repository->sudo(
+        $sectionName = $this->repository->sudo(
             function (Repository $repository) use ($valueObject) {
-                return $repository->getSectionService()->loadSection(
+                $repository->getSectionService()->loadSection(
                     $valueObject->contentInfo->sectionId
+                )->name;
+            }
+        );
+
+        $contentTypeName = $this->repository->sudo(
+            function (Repository $repository) use ($valueObject) {
+                return $this->translationHelper->getTranslatedByMethod(
+                    $repository->getContentTypeService()->loadContentType(
+                        $valueObject->contentInfo->contentTypeId
+                    ),
+                    'getName'
                 );
             }
         );
@@ -155,20 +170,13 @@ class EzLocationItemConverter implements ConverterInterface
         return array(
             'location_id' => $valueObject->id,
             'content_id' => $valueObject->contentId,
-            'type' => $this->translationHelper->getTranslatedByMethod(
-                $this->repository->getContentTypeService()->loadContentType(
-                    $valueObject->contentInfo->contentTypeId
-                ),
-                'getName'
-            ),
+            'type' => $contentTypeName,
             'visible' => !$valueObject->invisible,
-            'owner' => $this->translationHelper->getTranslatedContentNameByContentInfo(
-                $ownerContentInfo
-            ),
+            'owner' => $ownerName,
             'modified' => $valueObject->contentInfo->modificationDate->format(Datetime::ISO8601),
             'published' => $valueObject->contentInfo->publishedDate->format(Datetime::ISO8601),
             'priority' => $valueObject->priority,
-            'section' => $section->name,
+            'section' => $sectionName,
         );
     }
 }
