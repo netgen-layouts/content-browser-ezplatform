@@ -103,11 +103,15 @@ class EzLocationItemConverter implements ConverterInterface
             return true;
         }
 
-        $contentType = $this->repository->getContentTypeService()->loadContentType(
-            $valueObject->contentInfo->contentTypeId
+        $contentTypeIdentifier = $this->repository->sudo(
+            function (Repository $repository) use ($valueObject) {
+                return $repository->getContentTypeService()->loadContentType(
+                    $valueObject->contentInfo->contentTypeId
+                )->identifier;
+            }
         );
 
-        return in_array($contentType->identifier, $this->config['types']);
+        return in_array($contentTypeIdentifier, $this->config['types']);
     }
 
     /**
@@ -119,10 +123,16 @@ class EzLocationItemConverter implements ConverterInterface
      */
     public function getTemplateVariables($valueObject)
     {
+        $content = $this->repository->sudo(
+            function (Repository $repository) use ($valueObject) {
+                return $repository->getContentService()->loadContentByContentInfo(
+                    $valueObject->contentInfo
+                );
+            }
+        );
+
         return array(
-            'content' => $this->repository->getContentService()->loadContentByContentInfo(
-                $valueObject->contentInfo
-            ),
+            'content' => $content,
             'location' => $valueObject,
         );
     }
