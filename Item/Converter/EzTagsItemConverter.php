@@ -3,9 +3,8 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Item\Converter;
 
 use eZ\Publish\Core\Helper\TranslationHelper;
-use DateTime;
 use Netgen\TagsBundle\API\Repository\TagsService;
-use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use DateTime;
 
 class EzTagsItemConverter implements ConverterInterface
 {
