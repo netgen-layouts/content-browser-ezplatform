@@ -123,8 +123,6 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     public function testGetChildren()
     {
         $query = new LocationQuery();
-        $query->offset = 0;
-        $query->limit = $this->config['default_limit'];
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\ParentLocationId(1),

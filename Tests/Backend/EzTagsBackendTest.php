@@ -143,7 +143,7 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
             ->with(
                 $this->equalTo(new Tag()),
                 $this->equalTo(0),
-                $this->equalTo($this->config['default_limit'])
+                $this->equalTo(-1)
             )
             ->will($this->returnValue(array(new Tag(), new Tag())));
 
@@ -166,7 +166,7 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
             ->with(
                 $this->equalTo(null),
                 $this->equalTo(0),
-                $this->equalTo($this->config['default_limit'])
+                $this->equalTo(-1)
             )
             ->will($this->returnValue(array(new Tag(), new Tag())));
 
