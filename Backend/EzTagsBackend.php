@@ -98,12 +98,20 @@ class EzTagsBackend implements BackendInterface
      */
     public function getChildren($itemId, array $params = array())
     {
+        $offset = 0;
+        $limit = -1;
+
+        if (isset($params['offset']) || isset($params['limit'])) {
+            $offset = !empty($params['offset']) ? $params['offset'] : 0;
+            $limit = !empty($params['limit']) ? $params['limit'] : $this->config['default_limit'];
+        }
+
         return $this->tagsService->loadTagChildren(
             !empty($itemId) ?
                 $this->tagsService->loadTag($itemId) :
                 null,
-            !empty($params['offset']) ? $params['offset'] : 0,
-            !empty($params['limit']) ? $params['limit'] : $this->config['default_limit']
+            $offset,
+            $limit
         );
     }
 

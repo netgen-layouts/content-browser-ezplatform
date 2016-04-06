@@ -92,9 +92,13 @@ class EzPublishBackend implements BackendInterface
         }
 
         $query = new LocationQuery();
+
+        if (isset($params['offset']) || isset($params['limit'])) {
+            $query->offset = !empty($params['offset']) ? $params['offset'] : 0;
+            $query->limit = !empty($params['limit']) ? $params['limit'] : $this->config['default_limit'];
+        }
+
         $query->filter = new Criterion\LogicalAnd($criteria);
-        $query->offset = !empty($params['offset']) ? $params['offset'] : 0;
-        $query->limit = !empty($params['limit']) ? $params['limit'] : $this->config['default_limit'];
         $result = $this->searchService->findLocations($query);
 
         $items = array_map(
