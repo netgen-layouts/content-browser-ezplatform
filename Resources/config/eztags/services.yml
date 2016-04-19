@@ -9,7 +9,7 @@ services:
     # Backends
 
     netgen_content_browser.backend.eztags:
-        class: %netgen_content_browser.backend.eztags.class%
+        class: "%netgen_content_browser.backend.eztags.class%"
         arguments:
             - "@ezpublish.api.service.tags"
             - "@netgen_content_browser.current_config"
@@ -18,7 +18,7 @@ services:
     # Converters
 
     netgen_content_browser.converter.eztags:
-        class: %netgen_content_browser.converter.eztags.class%
+        class: "%netgen_content_browser.converter.eztags.class%"
         arguments:
             - "@ezpublish.api.service.tags"
             - "@ezpublish.translation_helper"
@@ -26,7 +26,7 @@ services:
     # Config loaders
 
     netgen_content_browser.config_loader.field_definition.eztags:
-        class: %netgen_content_browser.config_loader.field_definition.eztags.class%
+        class: "%netgen_content_browser.config_loader.field_definition.eztags.class%"
         parent: netgen_content_browser.config_loader.field_definition
         tags:
             - { name: netgen_content_browser.config_loader }
