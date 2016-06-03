@@ -183,8 +183,8 @@ class EzLocationItemConverter implements ConverterInterface
             'type' => $contentTypeName,
             'visible' => !$valueObject->invisible,
             'owner' => $ownerName,
-            'modified' => $valueObject->contentInfo->modificationDate->format(Datetime::ISO8601),
-            'published' => $valueObject->contentInfo->publishedDate->format(Datetime::ISO8601),
+            'modified' => $valueObject->contentInfo->modificationDate->format(DateTime::ISO8601),
+            'published' => $valueObject->contentInfo->publishedDate->format(DateTime::ISO8601),
             'priority' => $valueObject->priority,
             'section' => $sectionName,
         );

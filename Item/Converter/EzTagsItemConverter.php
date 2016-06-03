@@ -134,7 +134,7 @@ class EzTagsItemConverter implements ConverterInterface
                 'tag_id' => $valueObject->id,
                 'parent_tag_id' => $valueObject->parentTagId,
                 'parent_tag' => $parentTagName,
-                'modified' => $valueObject->modificationDate->format(Datetime::ISO8601),
+                'modified' => $valueObject->modificationDate->format(DateTime::ISO8601),
             );
         }
 
