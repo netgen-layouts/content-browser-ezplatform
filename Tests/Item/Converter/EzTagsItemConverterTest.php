@@ -140,6 +140,29 @@ class EzTagsItemConverterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzTagsItemConverter::getColumns
+     */
+    public function testGetColumnsWithNoParent()
+    {
+        $this->tagsServiceMock
+            ->expects($this->at(0))
+            ->method('sudo')
+            ->will($this->returnValue('(No parent)'));
+
+        self::assertEquals(
+            array(),
+            $this->converter->getColumns(
+                new Tag(
+                    array(
+                        'id' => 0,
+                        'parentTagId' => null,
+                    )
+                )
+            )
+        );
+    }
+
+    /**
      * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
     protected function getValueObject()
