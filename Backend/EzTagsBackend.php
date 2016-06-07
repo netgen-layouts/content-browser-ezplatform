@@ -89,6 +89,24 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
+     * Loads items for provided value IDs.
+     *
+     * @param array $valueIds
+     *
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[]
+     */
+    public function loadItems(array $valueIds = array())
+    {
+        $items = array();
+
+        foreach ($valueIds as $valueId) {
+            $items[] = $this->loadItem($valueId);
+        }
+
+        return $items;
+    }
+
+    /**
      * Returns the item children.
      *
      * @param int|string $itemId

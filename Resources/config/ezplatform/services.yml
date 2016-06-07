@@ -1,5 +1,6 @@
 parameters:
-    netgen_content_browser.backend.ezpublish.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend
+    netgen_content_browser.backend.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend
+    netgen_content_browser.backend.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend
 
     netgen_content_browser.converter.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzContentItemConverter
     netgen_content_browser.converter.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzLocationItemConverter
@@ -10,8 +11,14 @@ parameters:
 services:
     # Backends
 
-    netgen_content_browser.backend.ezpublish:
-        class: "%netgen_content_browser.backend.ezpublish.class%"
+    netgen_content_browser.backend.ezlocation:
+        class: "%netgen_content_browser.backend.ezlocation.class%"
+        arguments:
+            - "@ezpublish.api.service.search"
+            - "@netgen_content_browser.current_config"
+
+    netgen_content_browser.backend.ezcontent:
+        class: "%netgen_content_browser.backend.ezcontent.class%"
         arguments:
             - "@ezpublish.api.service.search"
             - "@netgen_content_browser.current_config"

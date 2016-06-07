@@ -9,9 +9,9 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
-use Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend;
+use Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend;
 
-class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
+class EzLocationBackendTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\SearchService|\PHPUnit_Framework_MockObject_MockObject
@@ -24,7 +24,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     protected $config = array();
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend
+     * @var \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend
      */
     protected $backend;
 
@@ -37,21 +37,21 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
             'default_limit' => 25,
         );
 
-        $this->backend = new EzPublishBackend(
+        $this->backend = new EzLocationBackend(
             $this->searchServiceMock,
             $this->config
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getSections
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSections
      */
     public function testGetSections()
     {
         foreach ($this->config['root_items'] as $index => $rootItemId) {
             $query = new LocationQuery();
-            $query->filter = new Criterion\LocationId($rootItemId);
+            $query->filter = new Criterion\LocationId(array($rootItemId));
 
             $searchResult = new SearchResult();
             $searchResult->searchHits = array(
@@ -74,12 +74,13 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::loadItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItemsById
      */
     public function testLoadItem()
     {
         $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId(1);
+        $query->filter = new Criterion\LocationId(array(1));
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
@@ -98,13 +99,14 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::loadItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItemsById
      * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException
      */
     public function testLoadItemThrowsNotFoundException()
     {
         $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId(1);
+        $query->filter = new Criterion\LocationId(array(1));
 
         $searchResult = new SearchResult();
 
@@ -118,7 +120,37 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
+     */
+    public function testLoadItems()
+    {
+        $query = new LocationQuery();
+        $query->filter = new Criterion\LocationId(array(1, 2));
+
+        $searchResult = new SearchResult();
+        $searchResult->searchHits = array(
+            new SearchHit(array('valueObject' => new Location())),
+            new SearchHit(array('valueObject' => new Location())),
+        );
+
+        $this->searchServiceMock
+            ->expects($this->once())
+            ->method('findLocations')
+            ->with($this->equalTo($query))
+            ->will($this->returnValue($searchResult));
+
+        $items = $this->backend->loadItems(array(1, 2));
+
+        self::assertCount(2, $items);
+        foreach ($items as $item) {
+            self::assertInstanceOf(APILocation::class, $item);
+        }
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
      */
     public function testGetChildren()
     {
@@ -150,7 +182,8 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
      */
     public function testGetChildrenWithParams()
     {
@@ -192,7 +225,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildrenCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildrenCount
      */
     public function testGetChildrenCount()
     {
@@ -219,7 +252,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildrenCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildrenCount
      */
     public function testGetChildrenCountWithParams()
     {
@@ -250,7 +283,8 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
      */
     public function testSearch()
     {
@@ -280,7 +314,8 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
      */
     public function testSearchWithParams()
     {
@@ -313,7 +348,7 @@ class EzPublishBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::searchCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::searchCount
      */
     public function testSearchCount()
     {

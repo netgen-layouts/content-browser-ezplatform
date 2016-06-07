@@ -6,9 +6,10 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 
-class EzPublishBackend implements BackendInterface
+class EzLocationBackend implements BackendInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\SearchService
@@ -62,15 +63,25 @@ class EzPublishBackend implements BackendInterface
      */
     public function loadItem($itemId)
     {
-        $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId($itemId);
-        $result = $this->searchService->findLocations($query);
+        $items = $this->loadItemsById(array($itemId));
 
-        if (!isset($result->searchHits[0])) {
+        if (!isset($items[0])) {
             throw new NotFoundException("Location with ID {$itemId} not found.");
         }
 
-        return $result->searchHits[0]->valueObject;
+        return $items[0];
+    }
+
+    /**
+     * Loads items for provided value IDs.
+     *
+     * @param array $valueIds
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Location[]
+     */
+    public function loadItems(array $valueIds = array())
+    {
+        return $this->loadItemsById($valueIds);
     }
 
     /**
@@ -101,14 +112,7 @@ class EzPublishBackend implements BackendInterface
         $query->filter = new Criterion\LogicalAnd($criteria);
         $result = $this->searchService->findLocations($query);
 
-        $items = array_map(
-            function (SearchHit $searchHit) {
-                return $searchHit->valueObject;
-            },
-            $result->searchHits
-        );
-
-        return $items;
+        return $this->extractValueObjects($result);
     }
 
     /**
@@ -153,14 +157,7 @@ class EzPublishBackend implements BackendInterface
         $query->limit = !empty($params['limit']) ? $params['limit'] : $this->config['default_limit'];
         $result = $this->searchService->findLocations($query);
 
-        $items = array_map(
-            function (SearchHit $searchHit) {
-                return $searchHit->valueObject;
-            },
-            $result->searchHits
-        );
-
-        return $items;
+        return $this->extractValueObjects($result);
     }
 
     /**
@@ -179,5 +176,38 @@ class EzPublishBackend implements BackendInterface
         $result = $this->searchService->findLocations($query);
 
         return $result->totalCount;
+    }
+
+    /**
+     * Loads items for provided IDs.
+     *
+     * @param array $itemIds
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Location[]
+     */
+    protected function loadItemsById(array $itemIds = array())
+    {
+        $query = new LocationQuery();
+        $query->filter = new Criterion\LocationId($itemIds);
+        $result = $this->searchService->findLocations($query);
+
+        return $this->extractValueObjects($result);
+    }
+
+    /**
+     * Extracts value objects from search result and its hits.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
+     *
+     * @return array
+     */
+    protected function extractValueObjects(SearchResult $searchResult)
+    {
+        return array_map(
+            function (SearchHit $searchHit) {
+                return $searchHit->valueObject;
+            },
+            $searchResult->searchHits
+        );
     }
 }
