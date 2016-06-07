@@ -127,6 +127,31 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::loadItems
+     */
+    public function testLoadItems()
+    {
+        $this->tagsServiceMock
+            ->expects($this->at(0))
+            ->method('loadTag')
+            ->with($this->equalTo(1))
+            ->will($this->returnValue(new Tag(array('id' => 1))));
+
+        $this->tagsServiceMock
+            ->expects($this->at(1))
+            ->method('loadTag')
+            ->with($this->equalTo(2))
+            ->will($this->returnValue(new Tag(array('id' => 2))));
+
+        $items = $this->backend->loadItems(array(1, 2));
+
+        self::assertCount(2, $items);
+
+        self::assertEquals(new Tag(array('id' => 1)), $items[0]);
+        self::assertEquals(new Tag(array('id' => 2)), $items[1]);
+    }
+
+    /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getChildren
      */
     public function testGetChildren()
