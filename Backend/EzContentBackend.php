@@ -20,7 +20,7 @@ class EzContentBackend extends EzLocationBackend
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\ContentId($valueIds),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN)
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
             )
         );
 

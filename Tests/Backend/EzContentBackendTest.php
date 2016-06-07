@@ -32,7 +32,7 @@ class EzContentBackendTest extends EzLocationBackendTest
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\ContentId(array(1, 2)),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN)
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
             )
         );
 
