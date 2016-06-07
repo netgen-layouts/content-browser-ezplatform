@@ -1,8 +1,6 @@
 parameters:
     netgen_content_browser.backend.eztags.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend
-
     netgen_content_browser.converter.eztags.class: Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzTagsItemConverter
-
     netgen_content_browser.config_loader.field_definition.eztags.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader
 
 services:
