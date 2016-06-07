@@ -41,7 +41,7 @@ class EzTagsBackend implements BackendInterface
     /**
      * Returns the configured sections.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[]
      */
     public function getSections()
     {
@@ -64,7 +64,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
     public function loadItem($itemId)
     {
@@ -94,7 +94,7 @@ class EzTagsBackend implements BackendInterface
      * @param int|string $itemId
      * @param array $params
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[]
      */
     public function getChildren($itemId, array $params = array())
     {
@@ -138,7 +138,7 @@ class EzTagsBackend implements BackendInterface
      * @param string $searchText
      * @param array $params
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[]
      */
     public function search($searchText, array $params = array())
     {

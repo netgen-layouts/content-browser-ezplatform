@@ -35,7 +35,7 @@ class EzPublishBackend implements BackendInterface
     /**
      * Returns the configured sections.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \eZ\Publish\API\Repository\Values\Content\Location[]
      */
     public function getSections()
     {
@@ -58,7 +58,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     * @return \eZ\Publish\API\Repository\Values\Content\Location
      */
     public function loadItem($itemId)
     {
@@ -79,7 +79,7 @@ class EzPublishBackend implements BackendInterface
      * @param int|string $itemId
      * @param array $params
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \eZ\Publish\API\Repository\Values\Content\Location[]
      */
     public function getChildren($itemId, array $params = array())
     {
@@ -143,7 +143,7 @@ class EzPublishBackend implements BackendInterface
      * @param string $searchText
      * @param array $params
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \eZ\Publish\API\Repository\Values\Content\Location[]
      */
     public function search($searchText, array $params = array())
     {
