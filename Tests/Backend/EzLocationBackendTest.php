@@ -30,7 +30,7 @@ class EzLocationBackendTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->searchServiceMock = self::getMock(SearchService::class);
+        $this->searchServiceMock = $this->createMock(SearchService::class);
 
         $this->config = array(
             'root_items' => array(1, 43, 5),

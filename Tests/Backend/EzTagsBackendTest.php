@@ -31,7 +31,7 @@ class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->tagsServiceMock = self::getMock(TagsService::class);
+        $this->tagsServiceMock = $this->createMock(TagsService::class);
 
         $this->config = array(
             'root_items' => array(4, 2),

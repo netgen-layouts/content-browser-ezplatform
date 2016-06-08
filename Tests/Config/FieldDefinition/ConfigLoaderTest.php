@@ -22,7 +22,7 @@ class ConfigLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->contentTypeServiceMock = self::getMock(ContentTypeService::class);
+        $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
 
         $this->configLoader = new ConfigLoader($this->contentTypeServiceMock);
     }
