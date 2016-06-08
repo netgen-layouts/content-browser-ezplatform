@@ -28,13 +28,9 @@ class EzTagsItemConverterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->tagsServiceMock = self::getMockBuilder(TagsService::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->tagsServiceMock = $this->createMock(TagsService::class);
 
-        $this->translationHelperMock = self::getMockBuilder(TranslationHelper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->translationHelperMock = $this->createMock(TranslationHelper::class);
 
         $this->converter = new EzTagsItemConverter(
             $this->tagsServiceMock,

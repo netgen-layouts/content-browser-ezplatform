@@ -35,13 +35,9 @@ class EzLocationItemConverterTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->repositoryMock = self::getMockBuilder(Repository::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->repositoryMock = $this->createMock(Repository::class);
 
-        $this->translationHelperMock = self::getMockBuilder(TranslationHelper::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->translationHelperMock = $this->createMock(TranslationHelper::class);
 
         $this->config = array('types' => array('type1', 'type2'));
 
