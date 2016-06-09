@@ -10,8 +10,9 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzLocationItemConverter;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\TestCase;
 
-class EzLocationItemConverterTest extends \PHPUnit\Framework\TestCase
+class EzLocationItemConverterTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject

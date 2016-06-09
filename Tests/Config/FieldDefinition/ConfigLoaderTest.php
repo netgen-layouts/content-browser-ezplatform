@@ -7,8 +7,9 @@ use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\Bundle\ContentBrowserBundle\Tests\Config\FieldDefinition\Stubs\ConfigLoader;
+use PHPUnit\Framework\TestCase;
 
-class ConfigLoaderTest extends \PHPUnit\Framework\TestCase
+class ConfigLoaderTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject

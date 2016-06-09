@@ -6,8 +6,9 @@ use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend;
+use PHPUnit\Framework\TestCase;
 
-class EzTagsBackendTest extends \PHPUnit\Framework\TestCase
+class EzTagsBackendTest extends TestCase
 {
     /**
      * @var \Netgen\TagsBundle\API\Repository\TagsService|\PHPUnit_Framework_MockObject_MockObject

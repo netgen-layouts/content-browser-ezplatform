@@ -10,8 +10,9 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend;
+use PHPUnit\Framework\TestCase;
 
-class EzLocationBackendTest extends \PHPUnit\Framework\TestCase
+class EzLocationBackendTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\SearchService|\PHPUnit_Framework_MockObject_MockObject

@@ -8,8 +8,9 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzTagsItemConverter;
 use DateTime;
 use DateTimeZone;
+use PHPUnit\Framework\TestCase;
 
-class EzTagsItemConverterTest extends \PHPUnit\Framework\TestCase
+class EzTagsItemConverterTest extends TestCase
 {
     /**
      * @var \Netgen\TagsBundle\API\Repository\TagsService|\PHPUnit_Framework_MockObject_MockObject

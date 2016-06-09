@@ -6,8 +6,9 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader;
+use PHPUnit\Framework\TestCase;
 
-class EzTagsConfigLoaderTest extends \PHPUnit\Framework\TestCase
+class EzTagsConfigLoaderTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
