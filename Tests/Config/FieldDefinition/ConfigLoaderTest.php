@@ -11,7 +11,7 @@ use Netgen\Bundle\ContentBrowserBundle\Tests\Config\FieldDefinition\Stubs\Config
 class ConfigLoaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $contentTypeServiceMock;
 

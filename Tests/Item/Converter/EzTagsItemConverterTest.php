@@ -12,12 +12,12 @@ use DateTimeZone;
 class EzTagsItemConverterTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Netgen\TagsBundle\API\Repository\TagsService|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Netgen\TagsBundle\API\Repository\TagsService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $tagsServiceMock;
 
     /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper|\PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\Core\Helper\TranslationHelper|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $translationHelperMock;
 

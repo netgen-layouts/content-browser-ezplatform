@@ -14,7 +14,7 @@ use Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend;
 class EzLocationBackendTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\SearchService|\PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\API\Repository\SearchService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $searchServiceMock;
 

@@ -10,7 +10,7 @@ use Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfig
 class RelationListConfigLoaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $contentTypeServiceMock;
 
