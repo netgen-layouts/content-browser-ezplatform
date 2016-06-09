@@ -7,10 +7,10 @@ use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
 use Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader;
 
-class RelationListConfigLoaderTest extends \PHPUnit_Framework_TestCase
+class RelationListConfigLoaderTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
+     * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $contentTypeServiceMock;
 

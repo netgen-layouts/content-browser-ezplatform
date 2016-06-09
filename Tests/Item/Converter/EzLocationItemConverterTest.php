@@ -11,15 +11,15 @@ use Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzLocationItemConverter;
 use DateTime;
 use DateTimeZone;
 
-class EzLocationItemConverterTest extends \PHPUnit_Framework_TestCase
+class EzLocationItemConverterTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject
+     * @var \eZ\Publish\API\Repository\Repository|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $repositoryMock;
 
     /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var \eZ\Publish\Core\Helper\TranslationHelper|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $translationHelperMock;
 

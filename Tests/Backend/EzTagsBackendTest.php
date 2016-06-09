@@ -7,10 +7,10 @@ use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend;
 
-class EzTagsBackendTest extends \PHPUnit_Framework_TestCase
+class EzTagsBackendTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \Netgen\TagsBundle\API\Repository\TagsService|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Netgen\TagsBundle\API\Repository\TagsService|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $tagsServiceMock;
 

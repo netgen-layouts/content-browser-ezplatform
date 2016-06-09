@@ -8,15 +8,15 @@ use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzContentItemConverter;
 
-class EzContentItemConverterTest extends \PHPUnit_Framework_TestCase
+class EzContentItemConverterTest extends \PHPUnit\Framework\TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject
+     * @var \eZ\Publish\API\Repository\Repository|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $repositoryMock;
 
     /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper|\PHPUnit_Framework_MockObject_MockObject
+     * @var \eZ\Publish\Core\Helper\TranslationHelper|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $translationHelperMock;
 
