@@ -2,8 +2,7 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 
-use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
-use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
@@ -13,6 +12,11 @@ class EzTagsBackend implements BackendInterface
      * @var \Netgen\TagsBundle\API\Repository\TagsService
      */
     protected $tagsService;
+
+    /**
+     * @var \Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface
+     */
+    protected $valueLoader;
 
     /**
      * @var array
@@ -28,93 +32,37 @@ class EzTagsBackend implements BackendInterface
      * Constructor.
      *
      * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface $valueLoader
      * @param array $config
      * @param array $languages
      */
-    public function __construct(TagsService $tagsService, array $config, array $languages)
+    public function __construct(TagsService $tagsService, ValueLoaderInterface $valueLoader, array $config, array $languages)
     {
         $this->tagsService = $tagsService;
+        $this->valueLoader = $valueLoader;
         $this->config = $config;
         $this->languages = $languages;
     }
 
     /**
-     * Returns the configured sections.
+     * Returns the value type this backend supports.
      *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[]
+     * @return string
      */
-    public function getSections()
+    public function getValueType()
     {
-        $sections = array();
-        foreach ($this->config['root_items'] as $rootItemId) {
-            try {
-                $sections[] = $this->loadItem($rootItemId);
-            } catch (NotFoundException $e) {
-                // Do nothing
-            }
-        }
-
-        return $sections;
+        return 'eztags';
     }
 
     /**
-     * Loads the item by its ID.
+     * Returns the value children.
      *
-     * @param int|string $itemId
-     *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
-     *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
-     */
-    public function loadItem($itemId)
-    {
-        if ($itemId > 0) {
-            try {
-                return $this->tagsService->loadTag($itemId);
-            } catch (APINotFoundException $e) {
-                throw new NotFoundException("Tag with ID {$itemId} not found.");
-            }
-        }
-
-        return new Tag(
-            array(
-                'id' => 0,
-                'keywords' => array(
-                    'eng-GB' => 'All tags',
-                ),
-                'mainLanguageCode' => 'eng-GB',
-                'alwaysAvailable' => true,
-            )
-        );
-    }
-
-    /**
-     * Loads items for provided value IDs.
-     *
-     * @param array $valueIds
-     *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[]
-     */
-    public function loadItems(array $valueIds = array())
-    {
-        $items = array();
-
-        foreach ($valueIds as $valueId) {
-            $items[] = $this->loadItem($valueId);
-        }
-
-        return $items;
-    }
-
-    /**
-     * Returns the item children.
-     *
-     * @param int|string $itemId
+     * @param int|string $valueId
      * @param array $params
      *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface[]
      */
-    public function getChildren($itemId, array $params = array())
+    public function getChildren($valueId, array $params = array())
     {
         $offset = 0;
         $limit = -1;
@@ -124,39 +72,41 @@ class EzTagsBackend implements BackendInterface
             $limit = !empty($params['limit']) ? $params['limit'] : $this->config['default_limit'];
         }
 
-        return $this->tagsService->loadTagChildren(
-            !empty($itemId) ?
-                $this->tagsService->loadTag($itemId) :
+        $tags = $this->tagsService->loadTagChildren(
+            !empty($valueId) ?
+                $this->tagsService->loadTag($valueId) :
                 null,
             $offset,
             $limit
         );
+
+        return $this->buildValues($tags);
     }
 
     /**
-     * Returns the item children count.
+     * Returns the value children count.
      *
-     * @param int|string $itemId
+     * @param int|string $valueId
      * @param array $params
      *
      * @return int
      */
-    public function getChildrenCount($itemId, array $params = array())
+    public function getChildrenCount($valueId, array $params = array())
     {
         return $this->tagsService->getTagChildrenCount(
-            !empty($itemId) ?
-                $this->tagsService->loadTag($itemId) :
+            !empty($valueId) ?
+                $this->tagsService->loadTag($valueId) :
                 null
         );
     }
 
     /**
-     * Searches for items.
+     * Searches for values.
      *
      * @param string $searchText
      * @param array $params
      *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface[]
      */
     public function search($searchText, array $params = array())
     {
@@ -164,17 +114,19 @@ class EzTagsBackend implements BackendInterface
             return array();
         }
 
-        return $this->tagsService->loadTagsByKeyword(
+        $tags = $this->tagsService->loadTagsByKeyword(
             $searchText,
             $this->languages[0],
             true,
             !empty($params['offset']) ? $params['offset'] : 0,
             !empty($params['limit']) ? $params['limit'] : $this->config['default_limit']
         );
+
+        return $this->buildValues($tags);
     }
 
     /**
-     * Returns the count of searched items.
+     * Returns the count of searched values.
      *
      * @param string $searchText
      * @param array $params
@@ -190,6 +142,23 @@ class EzTagsBackend implements BackendInterface
         return $this->tagsService->getTagsByKeywordCount(
             $searchText,
             $this->languages[0]
+        );
+    }
+
+    /**
+     * Builds the values from tags.
+     *
+     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
+     *
+     * @return array
+     */
+    protected function buildValues(array $tags)
+    {
+        return array_map(
+            function (Tag $tag) {
+                return $this->valueLoader->buildValue($tag);
+            },
+            $tags
         );
     }
 }

@@ -1,27 +1,66 @@
 parameters:
+    netgen_content_browser.value_loader.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Value\Loader\EzLocationValueLoader
+    netgen_content_browser.value_loader.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Value\Loader\EzContentValueLoader
+
     netgen_content_browser.backend.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend
     netgen_content_browser.backend.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend
 
-    netgen_content_browser.converter.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzContentItemConverter
-    netgen_content_browser.converter.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Item\Converter\EzLocationItemConverter
+    netgen_content_browser.converter.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzContentConverter
+    netgen_content_browser.converter.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzLocationConverter
+
+    netgen_content_browser.template_value_provider.ezpublish.class: Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzPublishTemplateValueProvider
 
     netgen_content_browser.config_loader.field_definition.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader
     netgen_content_browser.config_loader.field_definition.ezobjectrelationlist.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader
 
+    netgen_content_browser.column_value_provider.ezpublish.location_id.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish\LocationId
+    netgen_content_browser.column_value_provider.ezpublish.content_id.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish\ContentId
+    netgen_content_browser.column_value_provider.ezpublish.content_type.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish\ContentType
+    netgen_content_browser.column_value_provider.ezpublish.modified.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish\Modified
+    netgen_content_browser.column_value_provider.ezpublish.published.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish\Published
+    netgen_content_browser.column_value_provider.ezpublish.owner.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish\Owner
+    netgen_content_browser.column_value_provider.ezpublish.priority.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish\Priority
+    netgen_content_browser.column_value_provider.ezpublish.section.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish\Section
+    netgen_content_browser.column_value_provider.ezpublish.visible.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish\Visible
+
 services:
+    # Value loaders
+
+    netgen_content_browser.value_loader.ezlocation:
+        class: "%netgen_content_browser.value_loader.ezlocation.class%"
+        arguments:
+            - "@ezpublish.api.service.search"
+            - "@ezpublish.translation_helper"
+        tags:
+            -  { name: netgen_content_browser.value_loader }
+
+    netgen_content_browser.value_loader.ezcontent:
+        class: "%netgen_content_browser.value_loader.ezcontent.class%"
+        arguments:
+            - "@ezpublish.api.service.search"
+            - "@ezpublish.translation_helper"
+        tags:
+            -  { name: netgen_content_browser.value_loader }
+
     # Backends
 
     netgen_content_browser.backend.ezlocation:
         class: "%netgen_content_browser.backend.ezlocation.class%"
         arguments:
             - "@ezpublish.api.service.search"
+            - "@netgen_content_browser.value_loader.ezlocation"
             - "@netgen_content_browser.current_config"
+        tags:
+            -  { name: netgen_content_browser.backend }
 
     netgen_content_browser.backend.ezcontent:
         class: "%netgen_content_browser.backend.ezcontent.class%"
         arguments:
             - "@ezpublish.api.service.search"
+            - "@netgen_content_browser.value_loader.ezcontent"
             - "@netgen_content_browser.current_config"
+        tags:
+            -  { name: netgen_content_browser.backend }
 
     # Converters
 
@@ -29,12 +68,27 @@ services:
         class: "%netgen_content_browser.converter.ezlocation.class%"
         arguments:
             - "@ezpublish.api.repository"
-            - "@ezpublish.translation_helper"
-            - "%netgen_content_browser.config.ezlocation%"
+            - "@netgen_content_browser.current_config"
+        tags:
+            -  { name: netgen_content_browser.converter, value_type: ezlocation }
 
     netgen_content_browser.converter.ezcontent:
         class: "%netgen_content_browser.converter.ezcontent.class%"
-        parent: netgen_content_browser.converter.ezlocation
+        arguments:
+            - "@ezpublish.api.repository"
+            - "@netgen_content_browser.current_config"
+        tags:
+            -  { name: netgen_content_browser.converter, value_type: ezcontent }
+
+    # Template value providers
+
+    netgen_content_browser.template_value_provider.ezpublish:
+        class: "%netgen_content_browser.template_value_provider.ezpublish.class%"
+        arguments:
+            - "@ezpublish.api.repository"
+        tags:
+            -  { name: netgen_content_browser.template_value_provider, value_type: ezcontent }
+            -  { name: netgen_content_browser.template_value_provider, value_type: ezlocation }
 
     # Config loaders
 
@@ -48,3 +102,56 @@ services:
         parent: netgen_content_browser.config_loader.field_definition
         tags:
             - { name: netgen_content_browser.config_loader }
+
+    netgen_content_browser.column_value_provider.ezpublish.location_id:
+        class: "%netgen_content_browser.column_value_provider.ezpublish.location_id.class%"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_location_id }
+
+    netgen_content_browser.column_value_provider.ezpublish.content_id:
+        class: "%netgen_content_browser.column_value_provider.ezpublish.content_id.class%"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_content_id }
+
+    netgen_content_browser.column_value_provider.ezpublish.content_type:
+        class: "%netgen_content_browser.column_value_provider.ezpublish.content_type.class%"
+        arguments:
+            - "@ezpublish.api.repository"
+            - "@ezpublish.translation_helper"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_content_type }
+
+    netgen_content_browser.column_value_provider.ezpublish.modified:
+        class: "%netgen_content_browser.column_value_provider.ezpublish.modified.class%"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_modified }
+
+    netgen_content_browser.column_value_provider.ezpublish.published:
+        class: "%netgen_content_browser.column_value_provider.ezpublish.published.class%"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_published }
+
+    netgen_content_browser.column_value_provider.ezpublish.owner:
+        class: "%netgen_content_browser.column_value_provider.ezpublish.owner.class%"
+        arguments:
+            - "@ezpublish.api.repository"
+            - "@ezpublish.translation_helper"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_owner }
+
+    netgen_content_browser.column_value_provider.ezpublish.priority:
+        class: "%netgen_content_browser.column_value_provider.ezpublish.priority.class%"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_priority }
+
+    netgen_content_browser.column_value_provider.ezpublish.section:
+        class: "%netgen_content_browser.column_value_provider.ezpublish.section.class%"
+        arguments:
+            - "@ezpublish.api.repository"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_section }
+
+    netgen_content_browser.column_value_provider.ezpublish.visible:
+        class: "%netgen_content_browser.column_value_provider.ezpublish.visible.class%"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_visible }
