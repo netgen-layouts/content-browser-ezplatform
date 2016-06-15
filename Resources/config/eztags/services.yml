@@ -52,12 +52,12 @@ services:
     netgen_content_browser.column_value_provider.eztags.tag_id:
         class: "%netgen_content_browser.column_value_provider.eztags.tag_id.class%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: eztags_tag_id }
+            - { name: netgen_content_browser.column_value_provider, identifier: eztags\tag_id }
 
     netgen_content_browser.column_value_provider.eztags.parent_tag_id:
         class: "%netgen_content_browser.column_value_provider.eztags.parent_tag_id.class%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: eztags_parent_tag_id }
+            - { name: netgen_content_browser.column_value_provider, identifier: eztags\parent_tag_id }
 
     netgen_content_browser.column_value_provider.eztags.parent_tag:
         class: "%netgen_content_browser.column_value_provider.eztags.parent_tag.class%"
@@ -65,11 +65,11 @@ services:
             - "@ezpublish.api.service.tags"
             - "@ezpublish.translation_helper"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: eztags_parent_tag }
+            - { name: netgen_content_browser.column_value_provider, identifier: eztags\parent_tag }
 
     netgen_content_browser.column_value_provider.eztags.modified:
         class: "%netgen_content_browser.column_value_provider.eztags.modified.class%"
         arguments:
             - "%netgen_content_browser.columns.date_format%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: eztags_modified }
+            - { name: netgen_content_browser.column_value_provider, identifier: eztags\modified }

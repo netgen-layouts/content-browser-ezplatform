@@ -106,12 +106,12 @@ services:
     netgen_content_browser.column_value_provider.ezpublish.location_id:
         class: "%netgen_content_browser.column_value_provider.ezpublish.location_id.class%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_location_id }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\location_id }
 
     netgen_content_browser.column_value_provider.ezpublish.content_id:
         class: "%netgen_content_browser.column_value_provider.ezpublish.content_id.class%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_content_id }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\content_id }
 
     netgen_content_browser.column_value_provider.ezpublish.content_type:
         class: "%netgen_content_browser.column_value_provider.ezpublish.content_type.class%"
@@ -119,21 +119,21 @@ services:
             - "@ezpublish.api.repository"
             - "@ezpublish.translation_helper"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_content_type }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\content_type }
 
     netgen_content_browser.column_value_provider.ezpublish.modified:
         class: "%netgen_content_browser.column_value_provider.ezpublish.modified.class%"
         arguments:
             - "%netgen_content_browser.columns.date_format%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_modified }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\modified }
 
     netgen_content_browser.column_value_provider.ezpublish.published:
         class: "%netgen_content_browser.column_value_provider.ezpublish.published.class%"
         arguments:
             - "%netgen_content_browser.columns.date_format%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_published }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\published }
 
     netgen_content_browser.column_value_provider.ezpublish.owner:
         class: "%netgen_content_browser.column_value_provider.ezpublish.owner.class%"
@@ -141,21 +141,21 @@ services:
             - "@ezpublish.api.repository"
             - "@ezpublish.translation_helper"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_owner }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\owner }
 
     netgen_content_browser.column_value_provider.ezpublish.priority:
         class: "%netgen_content_browser.column_value_provider.ezpublish.priority.class%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_priority }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\priority }
 
     netgen_content_browser.column_value_provider.ezpublish.section:
         class: "%netgen_content_browser.column_value_provider.ezpublish.section.class%"
         arguments:
             - "@ezpublish.api.repository"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_section }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\section }
 
     netgen_content_browser.column_value_provider.ezpublish.visible:
         class: "%netgen_content_browser.column_value_provider.ezpublish.visible.class%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_visible }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\visible }

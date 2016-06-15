@@ -18,34 +18,34 @@ configs:
         columns:
             location_id:
                 name: columns.ezpublish.location_id
-                value_provider: ezpublish_location_id
+                value_provider: ezpublish\location_id
             content_id:
                 name: columns.ezpublish.content_id
-                value_provider: ezpublish_content_id
+                value_provider: ezpublish\content_id
             thumbnail:
                 name: columns.ezpublish.thumbnail
                 template: 'NetgenContentBrowserBundle:ezpublish/columns:thumbnail.html.twig'
             type:
                 name: columns.ezpublish.type
-                value_provider: ezpublish_content_type
+                value_provider: ezpublish\content_type
             visible:
                 name: columns.ezpublish.visible
-                value_provider: ezpublish_visible
+                value_provider: ezpublish\visible
             owner:
                 name: columns.ezpublish.owner
-                value_provider: ezpublish_owner
+                value_provider: ezpublish\owner
             modified:
                 name: columns.ezpublish.modified
-                value_provider: ezpublish_modified
+                value_provider: ezpublish\modified
             published:
                 name: columns.ezpublish.published
-                value_provider: ezpublish_published
+                value_provider: ezpublish\published
             priority:
                 name: columns.ezpublish.priority
-                value_provider: ezpublish_priority
+                value_provider: ezpublish\priority
             section:
                 name: columns.ezpublish.section
-                value_provider: ezpublish_section
+                value_provider: ezpublish\section
         default_columns:
             - type
             - visible
@@ -69,34 +69,34 @@ configs:
         columns:
             location_id:
                 name: columns.ezpublish.location_id
-                value_provider: ezpublish_location_id
+                value_provider: ezpublish\location_id
             content_id:
                 name: columns.ezpublish.content_id
-                value_provider: ezpublish_content_id
+                value_provider: ezpublish\content_id
             thumbnail:
                 name: columns.ezpublish.thumbnail
                 template: 'NetgenContentBrowserBundle:ezpublish/columns:thumbnail.html.twig'
             type:
                 name: columns.ezpublish.type
-                value_provider: ezpublish_content_type
+                value_provider: ezpublish\content_type
             visible:
                 name: columns.ezpublish.visible
-                value_provider: ezpublish_visible
+                value_provider: ezpublish\visible
             owner:
                 name: columns.ezpublish.owner
-                value_provider: ezpublish_owner
+                value_provider: ezpublish\owner
             modified:
                 name: columns.ezpublish.modified
-                value_provider: ezpublish_modified
+                value_provider: ezpublish\modified
             published:
                 name: columns.ezpublish.published
-                value_provider: ezpublish_published
+                value_provider: ezpublish\published
             priority:
                 name: columns.ezpublish.priority
-                value_provider: ezpublish_priority
+                value_provider: ezpublish\priority
             section:
                 name: columns.ezpublish.section
-                value_provider: ezpublish_section
+                value_provider: ezpublish\section
         default_columns:
             - type
             - visible

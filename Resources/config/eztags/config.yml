@@ -12,16 +12,16 @@ configs:
         columns:
             tag_id:
                 name: columns.eztags.tag_id
-                value_provider: eztags_tag_id
+                value_provider: eztags\tag_id
             parent_tag_id:
                 name: columns.eztags.parent_tag_id
-                value_provider: eztags_parent_tag_id
+                value_provider: eztags\parent_tag_id
             parent_tag:
                 name: columns.eztags.parent_tag
-                value_provider: eztags_parent_tag
+                value_provider: eztags\parent_tag
             modified:
                 name: columns.eztags.modified
-                value_provider: eztags_modified
+                value_provider: eztags\modified
         default_columns:
             - parent_tag
             - modified
