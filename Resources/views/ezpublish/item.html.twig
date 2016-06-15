@@ -1,8 +1,8 @@
 {{ render(
     controller(
         'ez_content:viewAction', {
-            'contentId': content.id,
-            'locationId': location.id,
+            'content': content,
+            'location': location,
             'viewType': 'line'
         }
     )
