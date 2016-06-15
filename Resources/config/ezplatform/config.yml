@@ -1,4 +1,4 @@
-items:
+configs:
     ezcontent:
         converter: netgen_content_browser.converter.ezcontent
         backend: netgen_content_browser.backend.ezcontent
