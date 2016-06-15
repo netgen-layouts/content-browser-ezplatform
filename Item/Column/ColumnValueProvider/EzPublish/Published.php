@@ -3,10 +3,24 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProviderInterface;
-use DateTime;
 
 class Published implements ColumnValueProviderInterface
 {
+    /**
+     * @var string
+     */
+    protected $dateFormat;
+
+    /**
+     * Constructor.
+     *
+     * @param string $dateFormat
+     */
+    public function __construct($dateFormat)
+    {
+        $this->dateFormat = $dateFormat;
+    }
+
     /**
      * Provides the column value.
      *
@@ -16,6 +30,6 @@ class Published implements ColumnValueProviderInterface
      */
     public function getValue($valueObject)
     {
-        return $valueObject->contentInfo->publishedDate->format(DateTime::ISO8601);
+        return $valueObject->contentInfo->publishedDate->format($this->dateFormat);
     }
 }

@@ -123,11 +123,15 @@ services:
 
     netgen_content_browser.column_value_provider.ezpublish.modified:
         class: "%netgen_content_browser.column_value_provider.ezpublish.modified.class%"
+        arguments:
+            - "%netgen_content_browser.columns.date_format%"
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_modified }
 
     netgen_content_browser.column_value_provider.ezpublish.published:
         class: "%netgen_content_browser.column_value_provider.ezpublish.published.class%"
+        arguments:
+            - "%netgen_content_browser.columns.date_format%"
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish_published }
 

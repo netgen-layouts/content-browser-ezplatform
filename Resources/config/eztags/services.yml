@@ -69,5 +69,7 @@ services:
 
     netgen_content_browser.column_value_provider.eztags.modified:
         class: "%netgen_content_browser.column_value_provider.eztags.modified.class%"
+        arguments:
+            - "%netgen_content_browser.columns.date_format%"
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags_modified }
