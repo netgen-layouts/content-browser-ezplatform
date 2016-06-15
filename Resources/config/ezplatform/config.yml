@@ -17,34 +17,34 @@ configs:
             - user_group
         columns:
             location_id:
-                name: netgen_content_browser.columns.ezpublish.location_id
+                name: columns.ezpublish.location_id
                 value_provider: ezpublish_location_id
             content_id:
-                name: netgen_content_browser.columns.ezpublish.content_id
+                name: columns.ezpublish.content_id
                 value_provider: ezpublish_content_id
             thumbnail:
-                name: netgen_content_browser.columns.ezpublish.thumbnail
+                name: columns.ezpublish.thumbnail
                 template: 'NetgenContentBrowserBundle:ezpublish/columns:thumbnail.html.twig'
             type:
-                name: netgen_content_browser.columns.ezpublish.type
+                name: columns.ezpublish.type
                 value_provider: ezpublish_content_type
             visible:
-                name: netgen_content_browser.columns.ezpublish.visible
+                name: columns.ezpublish.visible
                 value_provider: ezpublish_visible
             owner:
-                name: netgen_content_browser.columns.ezpublish.owner
+                name: columns.ezpublish.owner
                 value_provider: ezpublish_owner
             modified:
-                name: netgen_content_browser.columns.ezpublish.modified
+                name: columns.ezpublish.modified
                 value_provider: ezpublish_modified
             published:
-                name: netgen_content_browser.columns.ezpublish.published
+                name: columns.ezpublish.published
                 value_provider: ezpublish_published
             priority:
-                name: netgen_content_browser.columns.ezpublish.priority
+                name: columns.ezpublish.priority
                 value_provider: ezpublish_priority
             section:
-                name: netgen_content_browser.columns.ezpublish.section
+                name: columns.ezpublish.section
                 value_provider: ezpublish_section
         default_columns:
             - type
@@ -68,34 +68,34 @@ configs:
             - user_group
         columns:
             location_id:
-                name: netgen_content_browser.columns.ezpublish.location_id
+                name: columns.ezpublish.location_id
                 value_provider: ezpublish_location_id
             content_id:
-                name: netgen_content_browser.columns.ezpublish.content_id
+                name: columns.ezpublish.content_id
                 value_provider: ezpublish_content_id
             thumbnail:
-                name: netgen_content_browser.columns.ezpublish.thumbnail
+                name: columns.ezpublish.thumbnail
                 template: 'NetgenContentBrowserBundle:ezpublish/columns:thumbnail.html.twig'
             type:
-                name: netgen_content_browser.columns.ezpublish.type
+                name: columns.ezpublish.type
                 value_provider: ezpublish_content_type
             visible:
-                name: netgen_content_browser.columns.ezpublish.visible
+                name: columns.ezpublish.visible
                 value_provider: ezpublish_visible
             owner:
-                name: netgen_content_browser.columns.ezpublish.owner
+                name: columns.ezpublish.owner
                 value_provider: ezpublish_owner
             modified:
-                name: netgen_content_browser.columns.ezpublish.modified
+                name: columns.ezpublish.modified
                 value_provider: ezpublish_modified
             published:
-                name: netgen_content_browser.columns.ezpublish.published
+                name: columns.ezpublish.published
                 value_provider: ezpublish_published
             priority:
-                name: netgen_content_browser.columns.ezpublish.priority
+                name: columns.ezpublish.priority
                 value_provider: ezpublish_priority
             section:
-                name: netgen_content_browser.columns.ezpublish.section
+                name: columns.ezpublish.section
                 value_provider: ezpublish_section
         default_columns:
             - type
