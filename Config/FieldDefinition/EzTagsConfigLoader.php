@@ -38,7 +38,7 @@ class EzTagsConfigLoader extends ConfigLoader
         $fieldDefinition = $this->getFieldDefinition($configName);
 
         return array(
-            'root_items' => array($fieldDefinition->fieldSettings['subTreeLimit']),
+            'sections' => array($fieldDefinition->fieldSettings['subTreeLimit']),
             'max_selected' => $fieldDefinition->fieldSettings['maxTags'],
         );
     }
