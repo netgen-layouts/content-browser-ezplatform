@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
@@ -57,12 +58,12 @@ class EzTagsBackend implements BackendInterface
     /**
      * Returns the value children.
      *
-     * @param int|string $valueId
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      * @param array $params
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface[]
      */
-    public function getChildren($valueId, array $params = array())
+    public function getChildren(ValueInterface $value, array $params = array())
     {
         $offset = 0;
         $limit = -1;
@@ -73,9 +74,7 @@ class EzTagsBackend implements BackendInterface
         }
 
         $tags = $this->tagsService->loadTagChildren(
-            !empty($valueId) ?
-                $this->tagsService->loadTag($valueId) :
-                null,
+            !empty($value->getId()) ? $value->getValueObject() : null,
             $offset,
             $limit
         );
@@ -86,17 +85,15 @@ class EzTagsBackend implements BackendInterface
     /**
      * Returns the value children count.
      *
-     * @param int|string $valueId
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      * @param array $params
      *
      * @return int
      */
-    public function getChildrenCount($valueId, array $params = array())
+    public function getChildrenCount(ValueInterface $value, array $params = array())
     {
         return $this->tagsService->getTagChildrenCount(
-            !empty($valueId) ?
-                $this->tagsService->loadTag($valueId) :
-                null
+            !empty($value->getId()) ? $value->getValueObject() : null
         );
     }
 

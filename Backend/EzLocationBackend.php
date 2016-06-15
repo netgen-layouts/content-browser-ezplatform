@@ -7,6 +7,7 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface;
 
 class EzLocationBackend implements BackendInterface
@@ -53,15 +54,15 @@ class EzLocationBackend implements BackendInterface
     /**
      * Returns the value children.
      *
-     * @param int|string $valueId
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      * @param array $params
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface[]
      */
-    public function getChildren($valueId, array $params = array())
+    public function getChildren(ValueInterface $value, array $params = array())
     {
         $criteria = array(
-            new Criterion\ParentLocationId($valueId),
+            new Criterion\ParentLocationId($value->getId()),
         );
 
         if (!empty($params['types'])) {
@@ -84,15 +85,15 @@ class EzLocationBackend implements BackendInterface
     /**
      * Returns the value children count.
      *
-     * @param int|string $valueId
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      * @param array $params
      *
      * @return int
      */
-    public function getChildrenCount($valueId, array $params = array())
+    public function getChildrenCount(ValueInterface $value, array $params = array())
     {
         $criteria = array(
-            new Criterion\ParentLocationId($valueId),
+            new Criterion\ParentLocationId($value->getId()),
         );
 
         if (!empty($params['types'])) {
