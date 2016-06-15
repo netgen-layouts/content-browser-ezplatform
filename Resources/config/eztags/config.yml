@@ -1,7 +1,5 @@
 configs:
     eztags:
-        converter: netgen_content_browser.converter.eztags
-        backend: netgen_content_browser.backend.eztags
         root_items: [0]
         min_selected: 1
         max_selected: 0
