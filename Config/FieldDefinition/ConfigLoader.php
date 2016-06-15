@@ -5,10 +5,10 @@ namespace Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use Netgen\Bundle\ContentBrowserBundle\Config\NamedConfigLoaderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Config\ValueTypeConfigLoaderInterface;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\InvalidArgumentException;
 
-abstract class ConfigLoader implements NamedConfigLoaderInterface
+abstract class ConfigLoader implements ValueTypeConfigLoaderInterface
 {
     const CONFIG_NAME_PREFIX = 'ez-field-definition-';
 
