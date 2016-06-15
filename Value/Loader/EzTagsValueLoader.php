@@ -65,6 +65,7 @@ class EzTagsValueLoader implements ValueLoaderInterface
             $tag = new Tag(
                 array(
                     'id' => 0,
+                    'parentTagId' => null,
                     'keywords' => array(
                         'eng-GB' => 'All tags',
                     ),
