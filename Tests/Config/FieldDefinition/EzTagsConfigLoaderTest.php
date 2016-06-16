@@ -36,11 +36,11 @@ class EzTagsConfigLoaderTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader::getItemType
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader::getValueType
      */
-    public function testGetItemType()
+    public function testGetValueType()
     {
-        self::assertEquals('eztags', $this->configLoader->getItemType());
+        self::assertEquals('eztags', $this->configLoader->getValueType());
     }
 
     /**
@@ -75,7 +75,7 @@ class EzTagsConfigLoaderTest extends TestCase
 
         self::assertEquals(
             array(
-                'root_items' => array(42),
+                'sections' => array(42),
                 'max_selected' => 5,
             ),
             $config

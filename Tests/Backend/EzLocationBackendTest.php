@@ -8,16 +8,23 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\Content\Location as APILocation;
 use Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend;
+use Netgen\Bundle\ContentBrowserBundle\Value\EzLocation;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface;
 use PHPUnit\Framework\TestCase;
 
 class EzLocationBackendTest extends TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\SearchService|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $searchServiceMock;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $valueLoaderMock;
 
     /**
      * @var array
@@ -33,125 +40,35 @@ class EzLocationBackendTest extends TestCase
     {
         $this->searchServiceMock = $this->createMock(SearchService::class);
 
+        $this->valueLoaderMock = $this->createMock(ValueLoaderInterface::class);
+
+        $this->valueLoaderMock
+            ->expects($this->any())
+            ->method('buildValue')
+            ->will(
+                $this->returnCallback(
+                    function ($valueObject) {
+                        return new EzLocation($valueObject, 'name');
+                    }
+                )
+            );
+
         $this->config = array(
-            'root_items' => array(1, 43, 5),
+            'sections' => array(1, 43, 5),
             'default_limit' => 25,
         );
 
         $this->backend = new EzLocationBackend(
             $this->searchServiceMock,
+            $this->valueLoaderMock,
             $this->config
         );
     }
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSections
-     */
-    public function testGetSections()
-    {
-        foreach ($this->config['root_items'] as $index => $rootItemId) {
-            $query = new LocationQuery();
-            $query->filter = new Criterion\LocationId(array($rootItemId));
-
-            $searchResult = new SearchResult();
-            $searchResult->searchHits = array(
-                new SearchHit(array('valueObject' => new Location())),
-            );
-
-            $this->searchServiceMock
-                ->expects($this->at($index))
-                ->method('findLocations')
-                ->with($this->equalTo($query))
-                ->will($this->returnValue($searchResult));
-        }
-
-        $sections = $this->backend->getSections();
-
-        self::assertCount(3, $sections);
-        foreach ($sections as $section) {
-            self::assertInstanceOf(APILocation::class, $section);
-        }
-    }
-
-    /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItem
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItemsById
-     */
-    public function testLoadItem()
-    {
-        $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId(array(1));
-
-        $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => new Location())),
-        );
-
-        $this->searchServiceMock
-            ->expects($this->once())
-            ->method('findLocations')
-            ->with($this->equalTo($query))
-            ->will($this->returnValue($searchResult));
-
-        $item = $this->backend->loadItem(1);
-
-        self::assertInstanceOf(APILocation::class, $item);
-    }
-
-    /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItem
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItemsById
-     * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException
-     */
-    public function testLoadItemThrowsNotFoundException()
-    {
-        $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId(array(1));
-
-        $searchResult = new SearchResult();
-
-        $this->searchServiceMock
-            ->expects($this->once())
-            ->method('findLocations')
-            ->with($this->equalTo($query))
-            ->will($this->returnValue($searchResult));
-
-        $this->backend->loadItem(1);
-    }
-
-    /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItems
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
-     */
-    public function testLoadItems()
-    {
-        $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId(array(1, 2));
-
-        $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => new Location())),
-            new SearchHit(array('valueObject' => new Location())),
-        );
-
-        $this->searchServiceMock
-            ->expects($this->once())
-            ->method('findLocations')
-            ->with($this->equalTo($query))
-            ->will($this->returnValue($searchResult));
-
-        $items = $this->backend->loadItems(array(1, 2));
-
-        self::assertCount(2, $items);
-        foreach ($items as $item) {
-            self::assertInstanceOf(APILocation::class, $item);
-        }
-    }
-
-    /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildren
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildValues
      */
     public function testGetChildren()
     {
@@ -174,17 +91,19 @@ class EzLocationBackendTest extends TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $items = $this->backend->getChildren(1);
+        $values = $this->backend->getChildren(
+            new EzLocation(new Location(array('id' => 1)), 'location')
+        );
 
-        self::assertCount(2, $items);
-        foreach ($items as $item) {
-            self::assertInstanceOf(APILocation::class, $item);
+        self::assertCount(2, $values);
+        foreach ($values as $value) {
+            self::assertInstanceOf(ValueInterface::class, $value);
         }
     }
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildren
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildValues
      */
     public function testGetChildrenWithParams()
     {
@@ -210,8 +129,8 @@ class EzLocationBackendTest extends TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $items = $this->backend->getChildren(
-            1,
+        $values = $this->backend->getChildren(
+            new EzLocation(new Location(array('id' => 1)), 'location'),
             array(
                 'offset' => 5,
                 'limit' => 10,
@@ -219,9 +138,9 @@ class EzLocationBackendTest extends TestCase
             )
         );
 
-        self::assertCount(2, $items);
-        foreach ($items as $item) {
-            self::assertInstanceOf(APILocation::class, $item);
+        self::assertCount(2, $values);
+        foreach ($values as $value) {
+            self::assertInstanceOf(ValueInterface::class, $value);
         }
     }
 
@@ -247,7 +166,9 @@ class EzLocationBackendTest extends TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $count = $this->backend->getChildrenCount(1);
+        $count = $this->backend->getChildrenCount(
+            new EzLocation(new Location(array('id' => 1)), 'location')
+        );
 
         self::assertEquals(2, $count);
     }
@@ -276,7 +197,7 @@ class EzLocationBackendTest extends TestCase
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->getChildrenCount(
-            1,
+            new EzLocation(new Location(array('id' => 1)), 'location'),
             array('types' => array('type1', 'type2'))
         );
 
@@ -285,7 +206,7 @@ class EzLocationBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildValues
      */
     public function testSearch()
     {
@@ -295,7 +216,7 @@ class EzLocationBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\FullText('test'),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN)
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
             )
         );
 
@@ -311,17 +232,17 @@ class EzLocationBackendTest extends TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $items = $this->backend->search('test');
+        $values = $this->backend->search('test');
 
-        self::assertCount(2, $items);
-        foreach ($items as $item) {
-            self::assertInstanceOf(APILocation::class, $item);
+        self::assertCount(2, $values);
+        foreach ($values as $value) {
+            self::assertInstanceOf(ValueInterface::class, $value);
         }
     }
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::extractValueObjects
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildValues
      */
     public function testSearchWithParams()
     {
@@ -331,7 +252,7 @@ class EzLocationBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\FullText('test'),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN)
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
             )
         );
 
@@ -347,14 +268,14 @@ class EzLocationBackendTest extends TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $items = $this->backend->search(
+        $values = $this->backend->search(
             'test',
             array('offset' => 5, 'limit' => 10)
         );
 
-        self::assertCount(2, $items);
-        foreach ($items as $item) {
-            self::assertInstanceOf(APILocation::class, $item);
+        self::assertCount(2, $values);
+        foreach ($values as $value) {
+            self::assertInstanceOf(ValueInterface::class, $value);
         }
     }
 
@@ -368,7 +289,7 @@ class EzLocationBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\FullText('test'),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN)
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
             )
         );
 

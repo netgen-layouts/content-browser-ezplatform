@@ -36,11 +36,11 @@ class RelationListConfigLoaderTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader::getItemType
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader::getValueType
      */
-    public function testGetItemType()
+    public function testGetValueType()
     {
-        self::assertEquals('ezcontent', $this->configLoader->getItemType());
+        self::assertEquals('ezcontent', $this->configLoader->getValueType());
     }
 
     /**

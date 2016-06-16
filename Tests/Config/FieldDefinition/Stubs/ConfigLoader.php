@@ -17,11 +17,11 @@ class ConfigLoader extends BaseConfigLoader
     }
 
     /**
-     * Returns the item type which this config supports.
+     * Returns the value type which this config supports.
      *
      * @return string
      */
-    public function getItemType()
+    public function getValueType()
     {
         return 'ezcontent';
     }
