@@ -42,8 +42,12 @@ class Owner implements ColumnValueProviderInterface
     {
         return $this->repository->sudo(
             function (Repository $repository) use ($value) {
+                $ownerContentInfo = $repository->getContentService()->loadContentInfo(
+                    $value->getValueObject()->contentInfo->ownerId
+                );
+
                 return $this->translationHelper->getTranslatedContentNameByContentInfo(
-                    $value->getValueObject()->contentInfo
+                    $ownerContentInfo
                 );
             }
         );
