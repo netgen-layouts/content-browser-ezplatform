@@ -10,16 +10,6 @@ use Netgen\Bundle\ContentBrowserBundle\Value\EzContent;
 class EzContentValueLoader extends EzLocationValueLoader
 {
     /**
-     * Returns the value type this loader supports.
-     *
-     * @return string
-     */
-    public function getValueType()
-    {
-        return 'ezcontent';
-    }
-
-    /**
      * Loads the value by its internal value.
      *
      * @param int|string $value

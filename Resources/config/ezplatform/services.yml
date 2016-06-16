@@ -32,7 +32,7 @@ services:
             - "@ezpublish.api.service.search"
             - "@ezpublish.translation_helper"
         tags:
-            -  { name: netgen_content_browser.value_loader }
+            -  { name: netgen_content_browser.value_loader, value_type: ezlocation }
 
     netgen_content_browser.value_loader.ezcontent:
         class: "%netgen_content_browser.value_loader.ezcontent.class%"
@@ -40,7 +40,7 @@ services:
             - "@ezpublish.api.service.search"
             - "@ezpublish.translation_helper"
         tags:
-            -  { name: netgen_content_browser.value_loader }
+            -  { name: netgen_content_browser.value_loader, value_type: ezcontent }
 
     # Backends
 
@@ -51,7 +51,7 @@ services:
             - "@netgen_content_browser.value_loader.ezlocation"
             - "@netgen_content_browser.current_config"
         tags:
-            -  { name: netgen_content_browser.backend }
+            -  { name: netgen_content_browser.backend, value_type: ezlocation }
 
     netgen_content_browser.backend.ezcontent:
         class: "%netgen_content_browser.backend.ezcontent.class%"
@@ -60,7 +60,7 @@ services:
             - "@netgen_content_browser.value_loader.ezcontent"
             - "@netgen_content_browser.current_config"
         tags:
-            -  { name: netgen_content_browser.backend }
+            -  { name: netgen_content_browser.backend, value_type: ezcontent }
 
     # Converters
 

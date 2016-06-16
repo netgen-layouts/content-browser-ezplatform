@@ -35,16 +35,6 @@ class EzTagsValueLoader implements ValueLoaderInterface
     }
 
     /**
-     * Returns the value type this loader supports.
-     *
-     * @return string
-     */
-    public function getValueType()
-    {
-        return 'eztags';
-    }
-
-    /**
      * Loads the value by its ID.
      *
      * @param int|string $id

@@ -17,7 +17,7 @@ services:
             - "@ezpublish.api.service.tags"
             - "@ezpublish.translation_helper"
         tags:
-            -  { name: netgen_content_browser.value_loader }
+            -  { name: netgen_content_browser.value_loader, value_type: eztags }
 
     netgen_content_browser.backend.eztags:
         class: "%netgen_content_browser.backend.eztags.class%"
@@ -27,7 +27,7 @@ services:
             - "@netgen_content_browser.current_config"
             - $languages$
         tags:
-            - { name: netgen_content_browser.backend }
+            - { name: netgen_content_browser.backend, value_type: eztags }
 
     netgen_content_browser.converter.eztags:
         class: "%netgen_content_browser.converter.eztags.class%"

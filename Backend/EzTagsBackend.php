@@ -46,16 +46,6 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
-     * Returns the value type this backend supports.
-     *
-     * @return string
-     */
-    public function getValueType()
-    {
-        return 'eztags';
-    }
-
-    /**
      * Returns the value children.
      *
      * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
