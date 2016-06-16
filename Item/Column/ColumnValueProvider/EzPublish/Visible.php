@@ -3,18 +3,19 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProviderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 
 class Visible implements ColumnValueProviderInterface
 {
     /**
      * Provides the column value.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $valueObject
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      *
      * @return mixed
      */
-    public function getValue($valueObject)
+    public function getValue(ValueInterface $value)
     {
-        return $valueObject->invisible ? 'No' : 'Yes';
+        return $value->getValueObject()->invisible ? 'No' : 'Yes';
     }
 }

@@ -51,8 +51,7 @@ class EzTagsValueLoader implements ValueLoaderInterface
             } catch (APINotFoundException $e) {
                 throw new NotFoundException(
                     sprintf(
-                        'Value of type "%s" with "%s" ID not found.',
-                        $this->getValueType(),
+                        'Value with "%s" ID not found.',
                         $id
                     )
                 );

@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProviderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 
 class EzTagsTemplateValueProvider implements TemplateValueProviderInterface
@@ -25,14 +26,16 @@ class EzTagsTemplateValueProvider implements TemplateValueProviderInterface
     /**
      * Provides the values for template rendering.
      *
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $valueObject
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      *
      * @return array
      */
-    public function getValues($valueObject)
+    public function getValues(ValueInterface $value)
     {
+        $tag = $value->getValueObject();
+
         return array(
-            'tag' => $valueObject->id > 0 ? $valueObject : null,
+            'tag' => $tag->id > 0 ? $tag : null,
         );
     }
 }

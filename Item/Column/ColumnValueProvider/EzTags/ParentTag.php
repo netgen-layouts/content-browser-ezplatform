@@ -4,6 +4,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzT
 
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProviderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 
 class ParentTag implements ColumnValueProviderInterface
@@ -33,21 +34,23 @@ class ParentTag implements ColumnValueProviderInterface
     /**
      * Provides the column value.
      *
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $valueObject
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      *
      * @return mixed
      */
-    public function getValue($valueObject)
+    public function getValue(ValueInterface $value)
     {
-        if ($valueObject->id > 0) {
+        $tag = $value->getValueObject();
+
+        if ($tag->id > 0) {
             return $this->tagsService->sudo(
-                function (TagsService $tagsService) use ($valueObject) {
-                    if (empty($valueObject->parentTagId)) {
+                function (TagsService $tagsService) use ($tag) {
+                    if (empty($tag->parentTagId)) {
                         return '(No parent)';
                     }
 
                     return $this->translationHelper->getTranslatedByMethod(
-                        $tagsService->loadTag($valueObject->parentTagId),
+                        $tagsService->loadTag($tag->parentTagId),
                         'getKeyword'
                     );
                 }

@@ -36,8 +36,7 @@ class EzContentValueLoader extends EzLocationValueLoader
 
         throw new NotFoundException(
             sprintf(
-                'Value of type "%s" with "%s" value not found.',
-                $this->getValueType(),
+                'Value with "%s" value not found.',
                 $value
             )
         );

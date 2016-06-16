@@ -83,7 +83,7 @@ class EzLocation implements ValueInterface
     /**
      * Returns the value object.
      *
-     * @return int|string
+     * @return \eZ\Publish\API\Repository\Values\Content\Location
      */
     public function getValueObject()
     {

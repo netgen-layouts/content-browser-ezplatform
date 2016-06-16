@@ -81,7 +81,7 @@ class EzTags implements ValueInterface
     /**
      * Returns the value object.
      *
-     * @return int|string
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
     public function getValueObject()
     {

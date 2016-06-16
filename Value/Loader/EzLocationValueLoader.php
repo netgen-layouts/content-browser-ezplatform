@@ -56,8 +56,7 @@ class EzLocationValueLoader implements ValueLoaderInterface
 
         throw new NotFoundException(
             sprintf(
-                'Value of type "%s" with "%s" ID not found.',
-                $this->getValueType(),
+                'Value with "%s" ID not found.',
                 $id
             )
         );

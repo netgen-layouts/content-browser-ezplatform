@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzTags;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProviderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 
 class Modified implements ColumnValueProviderInterface
 {
@@ -24,14 +25,16 @@ class Modified implements ColumnValueProviderInterface
     /**
      * Provides the column value.
      *
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $valueObject
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      *
      * @return mixed
      */
-    public function getValue($valueObject)
+    public function getValue(ValueInterface $value)
     {
-        if ($valueObject->id > 0) {
-            return $valueObject->modificationDate->format($this->dateFormat);
+        $tag = $value->getValueObject();
+
+        if ($tag->id > 0) {
+            return $tag->modificationDate->format($this->dateFormat);
         }
 
         return '';

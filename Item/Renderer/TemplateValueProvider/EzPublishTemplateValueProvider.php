@@ -4,6 +4,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider
 
 use eZ\Publish\API\Repository\Repository;
 use Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProviderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 
 class EzPublishTemplateValueProvider implements TemplateValueProviderInterface
 {
@@ -25,23 +26,25 @@ class EzPublishTemplateValueProvider implements TemplateValueProviderInterface
     /**
      * Provides the values for template rendering.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $valueObject
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      *
      * @return array
      */
-    public function getValues($valueObject)
+    public function getValues(ValueInterface $value)
     {
+        $location = $value->getValueObject();
+
         $content = $this->repository->sudo(
-            function (Repository $repository) use ($valueObject) {
+            function (Repository $repository) use ($location) {
                 return $repository->getContentService()->loadContentByContentInfo(
-                    $valueObject->contentInfo
+                    $location->contentInfo
                 );
             }
         );
 
         return array(
             'content' => $content,
-            'location' => $valueObject,
+            'location' => $location,
         );
     }
 }

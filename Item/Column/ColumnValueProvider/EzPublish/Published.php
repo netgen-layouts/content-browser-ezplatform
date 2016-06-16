@@ -3,6 +3,7 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzPublish;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProviderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 
 class Published implements ColumnValueProviderInterface
 {
@@ -24,12 +25,14 @@ class Published implements ColumnValueProviderInterface
     /**
      * Provides the column value.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $valueObject
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      *
      * @return mixed
      */
-    public function getValue($valueObject)
+    public function getValue(ValueInterface $value)
     {
-        return $valueObject->contentInfo->publishedDate->format($this->dateFormat);
+        return $value->getValueObject()->contentInfo->publishedDate->format(
+            $this->dateFormat
+        );
     }
 }

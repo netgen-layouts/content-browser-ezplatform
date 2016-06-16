@@ -5,6 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzP
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProviderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 
 class ContentType implements ColumnValueProviderInterface
 {
@@ -33,17 +34,17 @@ class ContentType implements ColumnValueProviderInterface
     /**
      * Provides the column value.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $valueObject
+     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
      *
      * @return mixed
      */
-    public function getValue($valueObject)
+    public function getValue(ValueInterface $value)
     {
         return $this->repository->sudo(
-            function (Repository $repository) use ($valueObject) {
+            function (Repository $repository) use ($value) {
                 return $this->translationHelper->getTranslatedByMethod(
                     $repository->getContentTypeService()->loadContentType(
-                        $valueObject->contentInfo->contentTypeId
+                        $value->getValueObject()->contentInfo->contentTypeId
                     ),
                     'getName'
                 );
