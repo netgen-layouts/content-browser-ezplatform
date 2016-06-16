@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Converter\Stubs;
+namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Builder\Converter\Stubs;
 
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\Content\Content;
