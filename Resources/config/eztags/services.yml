@@ -38,8 +38,6 @@ services:
 
     netgen_content_browser.template_value_provider.eztags:
         class: "%netgen_content_browser.template_value_provider.eztags.class%"
-        arguments:
-            - "@ezpublish.api.service.tags"
         tags:
             - { name: netgen_content_browser.template_value_provider, value_type: eztags }
 
