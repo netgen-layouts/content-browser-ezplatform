@@ -31,8 +31,6 @@ services:
 
     netgen_content_browser.converter.eztags:
         class: "%netgen_content_browser.converter.eztags.class%"
-        arguments:
-            - "@ezpublish.api.service.tags"
         tags:
             - { name: netgen_content_browser.converter, value_type: eztags }
 

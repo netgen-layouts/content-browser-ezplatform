@@ -8,21 +8,6 @@ use Netgen\TagsBundle\API\Repository\TagsService;
 class EzTagsConverter implements ConverterInterface
 {
     /**
-     * @var \Netgen\TagsBundle\API\Repository\TagsService
-     */
-    protected $tagsService;
-
-    /**
-     * Constructor.
-     *
-     * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
-     */
-    public function __construct(TagsService $tagsService)
-    {
-        $this->tagsService = $tagsService;
-    }
-
-    /**
      * Returns the value type this converter supports.
      *
      * @return string
