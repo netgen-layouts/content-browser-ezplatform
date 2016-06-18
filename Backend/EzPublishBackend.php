@@ -10,7 +10,7 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface;
 
-class EzLocationBackend implements BackendInterface
+class EzPublishBackend implements BackendInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\SearchService

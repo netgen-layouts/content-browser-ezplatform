@@ -2,12 +2,8 @@ parameters:
     netgen_content_browser.value_loader.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Value\Loader\EzLocationValueLoader
     netgen_content_browser.value_loader.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Value\Loader\EzContentValueLoader
 
-    netgen_content_browser.backend.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend
-    netgen_content_browser.backend.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend
-
-    netgen_content_browser.converter.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzContentConverter
-    netgen_content_browser.converter.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzLocationConverter
-
+    netgen_content_browser.backend.ezpublish.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend
+    netgen_content_browser.converter.ezpublish.class: Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter
     netgen_content_browser.template_value_provider.ezpublish.class: Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzPublishTemplateValueProvider
 
     netgen_content_browser.config_loader.field_definition.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader
@@ -45,7 +41,7 @@ services:
     # Backends
 
     netgen_content_browser.backend.ezlocation:
-        class: "%netgen_content_browser.backend.ezlocation.class%"
+        class: "%netgen_content_browser.backend.ezpublish.class%"
         arguments:
             - "@ezpublish.api.service.search"
             - "@netgen_content_browser.value_loader.ezlocation"
@@ -54,7 +50,7 @@ services:
             -  { name: netgen_content_browser.backend, value_type: ezlocation }
 
     netgen_content_browser.backend.ezcontent:
-        class: "%netgen_content_browser.backend.ezcontent.class%"
+        class: "%netgen_content_browser.backend.ezpublish.class%"
         arguments:
             - "@ezpublish.api.service.search"
             - "@netgen_content_browser.value_loader.ezcontent"
@@ -64,20 +60,13 @@ services:
 
     # Converters
 
-    netgen_content_browser.converter.ezlocation:
-        class: "%netgen_content_browser.converter.ezlocation.class%"
+    netgen_content_browser.converter.ezpublish:
+        class: "%netgen_content_browser.converter.ezpublish.class%"
         arguments:
             - "@ezpublish.api.repository"
             - "@netgen_content_browser.current_config"
         tags:
             -  { name: netgen_content_browser.converter, value_type: ezlocation }
-
-    netgen_content_browser.converter.ezcontent:
-        class: "%netgen_content_browser.converter.ezcontent.class%"
-        arguments:
-            - "@ezpublish.api.repository"
-            - "@netgen_content_browser.current_config"
-        tags:
             -  { name: netgen_content_browser.converter, value_type: ezcontent }
 
     # Template value providers

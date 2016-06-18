@@ -32,17 +32,6 @@ class EzTagsConverterTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzTagsConverter::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzTagsConverter::getValueType
-     */
-    public function testGetValueType()
-    {
-        self::assertEquals(
-            'eztags',
-            $this->converter->getValueType()
-        );
-    }
-
-    /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzTagsConverter::getIsSelectable
      */
     public function testGetIsSelectable()

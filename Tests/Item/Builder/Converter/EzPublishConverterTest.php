@@ -5,13 +5,13 @@ namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Builder\Converter;
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzLocationConverter;
+use Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter;
 use Netgen\Bundle\ContentBrowserBundle\Value\EzLocation;
 use PHPUnit\Framework\TestCase;
 use DateTimeZone;
 use DateTime;
 
-class EzLocationConverterTest extends TestCase
+class EzPublishConverterTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject
@@ -24,7 +24,7 @@ class EzLocationConverterTest extends TestCase
     protected $config;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzLocationConverter
+     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter
      */
     protected $converter;
 
@@ -34,26 +34,15 @@ class EzLocationConverterTest extends TestCase
 
         $this->config = array('types' => array('type1', 'type2'));
 
-        $this->converter = new EzLocationConverter(
+        $this->converter = new EzPublishConverter(
             $this->repositoryMock,
             $this->config
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzLocationConverter::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzLocationConverter::getValueType
-     */
-    public function testGetValueType()
-    {
-        self::assertEquals(
-            'ezlocation',
-            $this->converter->getValueType()
-        );
-    }
-
-    /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzLocationConverter::getIsSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter::getIsSelectable
      */
     public function testGetIsSelectable()
     {
@@ -69,7 +58,7 @@ class EzLocationConverterTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzLocationConverter::getIsSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter::getIsSelectable
      */
     public function testGetIsSelectableWithWrongType()
     {
@@ -85,11 +74,11 @@ class EzLocationConverterTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzLocationConverter::getIsSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter::getIsSelectable
      */
     public function testGetIsSelectableWithEmptyTypes()
     {
-        $this->converter = new EzLocationConverter(
+        $this->converter = new EzPublishConverter(
             $this->repositoryMock,
             array()
         );

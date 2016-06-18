@@ -5,7 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter;
 use eZ\Publish\API\Repository\Repository;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 
-class EzLocationConverter implements ConverterInterface
+class EzPublishConverter implements ConverterInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository
@@ -27,16 +27,6 @@ class EzLocationConverter implements ConverterInterface
     {
         $this->repository = $repository;
         $this->config = $config;
-    }
-
-    /**
-     * Returns the value type this converter supports.
-     *
-     * @return string
-     */
-    public function getValueType()
-    {
-        return 'ezlocation';
     }
 
     /**

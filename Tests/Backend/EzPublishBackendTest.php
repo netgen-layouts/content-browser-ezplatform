@@ -8,13 +8,13 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend;
+use Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend;
 use Netgen\Bundle\ContentBrowserBundle\Value\EzLocation;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface;
 use PHPUnit\Framework\TestCase;
 
-class EzLocationBackendTest extends TestCase
+class EzPublishBackendTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -32,7 +32,7 @@ class EzLocationBackendTest extends TestCase
     protected $config = array();
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend
+     * @var \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend
      */
     protected $backend;
 
@@ -58,7 +58,7 @@ class EzLocationBackendTest extends TestCase
             'default_limit' => 25,
         );
 
-        $this->backend = new EzLocationBackend(
+        $this->backend = new EzPublishBackend(
             $this->searchServiceMock,
             $this->valueLoaderMock,
             $this->config
@@ -66,9 +66,9 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildren
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildValues
      */
     public function testGetChildren()
     {
@@ -102,8 +102,8 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildren
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildValues
      */
     public function testGetChildrenWithParams()
     {
@@ -145,7 +145,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildrenCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildrenCount
      */
     public function testGetChildrenCount()
     {
@@ -174,7 +174,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildrenCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildrenCount
      */
     public function testGetChildrenCountWithParams()
     {
@@ -205,8 +205,8 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildValues
      */
     public function testSearch()
     {
@@ -241,8 +241,8 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildValues
      */
     public function testSearchWithParams()
     {
@@ -280,7 +280,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::searchCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::searchCount
      */
     public function testSearchCount()
     {
