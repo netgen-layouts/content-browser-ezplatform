@@ -1,38 +1,30 @@
 parameters:
-    netgen_content_browser.value_loader.eztags.class: Netgen\Bundle\ContentBrowserBundle\Value\Loader\EzTagsValueLoader
     netgen_content_browser.backend.eztags.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend
-    netgen_content_browser.converter.eztags.class: Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzTagsConverter
+
+    netgen_content_browser.item_configurator.handler.eztags.class: Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzTagsConfiguratorHandler
     netgen_content_browser.template_value_provider.eztags.class: Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzTagsTemplateValueProvider
+
     netgen_content_browser.config_loader.field_definition.eztags.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader
 
-    netgen_content_browser.column_value_provider.eztags.tag_id.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzTags\TagId
-    netgen_content_browser.column_value_provider.eztags.parent_tag_id.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzTags\ParentTagId
-    netgen_content_browser.column_value_provider.eztags.parent_tag.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzTags\ParentTag
-    netgen_content_browser.column_value_provider.eztags.modified.class: Netgen\Bundle\ContentBrowserBundle\Item\Column\ColumnValueProvider\EzTags\Modified
+    netgen_content_browser.column_value_provider.eztags.tag_id.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId
+    netgen_content_browser.column_value_provider.eztags.parent_tag_id.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId
+    netgen_content_browser.column_value_provider.eztags.parent_tag.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
+    netgen_content_browser.column_value_provider.eztags.modified.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
 
 services:
-    netgen_content_browser.value_loader.eztags:
-        class: "%netgen_content_browser.value_loader.eztags.class%"
-        arguments:
-            - "@ezpublish.api.service.tags"
-            - "@ezpublish.translation_helper"
-        tags:
-            -  { name: netgen_content_browser.value_loader, value_type: eztags }
-
     netgen_content_browser.backend.eztags:
         class: "%netgen_content_browser.backend.eztags.class%"
         arguments:
             - "@ezpublish.api.service.tags"
-            - "@netgen_content_browser.value_loader.eztags"
-            - "@netgen_content_browser.current_config"
+            - "@ezpublish.translation_helper"
             - $languages$
         tags:
             - { name: netgen_content_browser.backend, value_type: eztags }
 
-    netgen_content_browser.converter.eztags:
-        class: "%netgen_content_browser.converter.eztags.class%"
+    netgen_content_browser.item_configurator.handler.eztags:
+        class: "%netgen_content_browser.item_configurator.handler.eztags.class%"
         tags:
-            - { name: netgen_content_browser.converter, value_type: eztags }
+            - { name: netgen_content_browser.item_configurator.handler, value_type: eztags }
 
     netgen_content_browser.template_value_provider.eztags:
         class: "%netgen_content_browser.template_value_provider.eztags.class%"

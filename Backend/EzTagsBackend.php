@@ -2,10 +2,14 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 
-use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
-use Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value;
+use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
+use eZ\Publish\Core\Helper\TranslationHelper;
 
 class EzTagsBackend implements BackendInterface
 {
@@ -15,14 +19,9 @@ class EzTagsBackend implements BackendInterface
     protected $tagsService;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface
+     * @var \eZ\Publish\Core\Helper\TranslationHelper
      */
-    protected $valueLoader;
-
-    /**
-     * @var array
-     */
-    protected $config;
+    protected $translationHelper;
 
     /**
      * @var array
@@ -33,69 +32,137 @@ class EzTagsBackend implements BackendInterface
      * Constructor.
      *
      * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
-     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface $valueLoader
-     * @param array $config
+     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      * @param array $languages
      */
-    public function __construct(TagsService $tagsService, ValueLoaderInterface $valueLoader, array $config, array $languages)
+    public function __construct(TagsService $tagsService, TranslationHelper $translationHelper, array $languages)
     {
         $this->tagsService = $tagsService;
-        $this->valueLoader = $valueLoader;
-        $this->config = $config;
+        $this->translationHelper = $translationHelper;
         $this->languages = $languages;
     }
 
     /**
-     * Returns the value children.
+     * Loads the item by its ID.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
-     * @param array $params
+     * @param int|string $id
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface[]
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
      */
-    public function getChildren(ValueInterface $value, array $params = array())
+    public function load($id)
     {
-        $offset = 0;
-        $limit = -1;
-
-        if (isset($params['offset']) || isset($params['limit'])) {
-            $offset = !empty($params['offset']) ? $params['offset'] : 0;
-            $limit = !empty($params['limit']) ? $params['limit'] : $this->config['default_limit'];
+        if ($id > 0) {
+            try {
+                $tag = $this->tagsService->loadTag($id);
+            } catch (APINotFoundException $e) {
+                throw new NotFoundException(
+                    sprintf(
+                        'Item with "%s" ID not found.',
+                        $id
+                    )
+                );
+            }
+        } else {
+            $tag = new Tag(
+                array(
+                    'id' => 0,
+                    'parentTagId' => null,
+                    'keywords' => array(
+                        'eng-GB' => 'All tags',
+                    ),
+                    'mainLanguageCode' => 'eng-GB',
+                    'alwaysAvailable' => true,
+                )
+            );
         }
 
+        return $this->buildItems(array($tag))[0];
+    }
+
+    /**
+     * Loads the item by its value ID.
+     *
+     * @param int|string $id
+     *
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If value does not exist
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     */
+    public function loadByValue($id)
+    {
+        return $this->load($id);
+    }
+
+    /**
+     * Returns the category children.
+     *
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     */
+    public function getSubCategories(ItemInterface $item)
+    {
+        return $this->getChildren($item, 0, -1);
+    }
+
+    /**
+     * Returns the category children count.
+     *
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     *
+     * @return int
+     */
+    public function getSubCategoriesCount(ItemInterface $item)
+    {
+        return $this->getChildrenCount($item);
+    }
+
+    /**
+     * Returns the item children.
+     *
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     */
+    public function getChildren(ItemInterface $item, $offset = 0, $limit = 25)
+    {
         $tags = $this->tagsService->loadTagChildren(
-            !empty($value->getId()) ? $value->getValueObject() : null,
+            !empty($item->getId()) ? $item->getValue()->getValueObject() : null,
             $offset,
             $limit
         );
 
-        return $this->buildValues($tags);
+        return $this->buildItems($tags);
     }
 
     /**
-     * Returns the value children count.
+     * Returns the item children count.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface $value
-     * @param array $params
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
      *
      * @return int
      */
-    public function getChildrenCount(ValueInterface $value, array $params = array())
+    public function getChildrenCount(ItemInterface $item)
     {
         return $this->tagsService->getTagChildrenCount(
-            !empty($value->getId()) ? $value->getValueObject() : null
+            !empty($item->getId()) ? $item->getValue()->getValueObject() : null
         );
     }
 
     /**
-     * Searches for values.
+     * Searches for items.
      *
      * @param string $searchText
-     * @param array $params
+     * @param int $offset
+     * @param int $limit
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
-    public function search($searchText, array $params = array())
+    public function search($searchText, $offset = 0, $limit = 25)
     {
         if (empty($this->languages)) {
             return array();
@@ -105,22 +172,21 @@ class EzTagsBackend implements BackendInterface
             $searchText,
             $this->languages[0],
             true,
-            !empty($params['offset']) ? $params['offset'] : 0,
-            !empty($params['limit']) ? $params['limit'] : $this->config['default_limit']
+            $offset,
+            $limit
         );
 
-        return $this->buildValues($tags);
+        return $this->buildItems($tags);
     }
 
     /**
-     * Returns the count of searched values.
+     * Returns the count of searched items.
      *
      * @param string $searchText
-     * @param array $params
      *
      * @return int
      */
-    public function searchCount($searchText, array $params = array())
+    public function searchCount($searchText)
     {
         if (empty($this->languages)) {
             return 0;
@@ -139,11 +205,19 @@ class EzTagsBackend implements BackendInterface
      *
      * @return array
      */
-    protected function buildValues(array $tags)
+    protected function buildItems(array $tags)
     {
         return array_map(
             function (Tag $tag) {
-                return $this->valueLoader->buildValue($tag);
+                return new Item(
+                    new Value(
+                        $tag,
+                        $this->translationHelper->getTranslatedByMethod(
+                            $tag,
+                            'getKeyword'
+                        )
+                    )
+                );
             },
             $tags
         );

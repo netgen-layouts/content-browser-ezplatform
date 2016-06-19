@@ -3,10 +3,8 @@ configs:
         sections: [0]
         min_selected: 1
         max_selected: 0
-        default_limit: 25
         template: 'NetgenContentBrowserBundle:eztags:item.html.twig'
         types: []
-        category_types: []
         columns:
             tag_id:
                 name: columns.eztags.tag_id
