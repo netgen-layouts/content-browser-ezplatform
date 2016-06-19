@@ -68,7 +68,7 @@ class EzPublishBackendTest extends TestCase
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::__construct
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildren
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildItems
      */
     public function testGetChildren()
     {
@@ -103,7 +103,7 @@ class EzPublishBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::getChildren
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildItems
      */
     public function testGetChildrenWithParams()
     {
@@ -206,7 +206,7 @@ class EzPublishBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildItems
      */
     public function testSearch()
     {
@@ -242,7 +242,7 @@ class EzPublishBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzPublishBackend::buildItems
      */
     public function testSearchWithParams()
     {

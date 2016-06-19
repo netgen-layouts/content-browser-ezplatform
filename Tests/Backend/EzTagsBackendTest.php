@@ -72,7 +72,7 @@ class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::__construct
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getChildren
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testGetChildren()
     {
@@ -96,7 +96,7 @@ class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getChildren
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testGetChildrenWithEmptyValueId()
     {
@@ -120,7 +120,7 @@ class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getChildren
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testGetChildrenWithParams()
     {
@@ -182,7 +182,7 @@ class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testSearch()
     {
@@ -208,7 +208,7 @@ class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testSearchWithNoLanguages()
     {
@@ -230,7 +230,7 @@ class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildValues
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testSearchWithParams()
     {

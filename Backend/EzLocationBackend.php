@@ -61,7 +61,7 @@ class EzLocationBackend implements BackendInterface
         $result = $this->searchService->findLocations($query);
 
         if (!empty($result->searchHits)) {
-            return $this->buildValues($result)[0];
+            return $this->buildItems($result)[0];
         }
 
         throw new NotFoundException(
@@ -106,7 +106,7 @@ class EzLocationBackend implements BackendInterface
 
         $result = $this->searchService->findLocations($query);
 
-        return $this->buildValues($result);
+        return $this->buildItems($result);
     }
 
     /**
@@ -154,7 +154,7 @@ class EzLocationBackend implements BackendInterface
 
         $result = $this->searchService->findLocations($query);
 
-        return $this->buildValues($result);
+        return $this->buildItems($result);
     }
 
     /**
@@ -204,7 +204,7 @@ class EzLocationBackend implements BackendInterface
 
         $result = $this->searchService->findLocations($query);
 
-        return $this->buildValues($result);
+        return $this->buildItems($result);
     }
 
     /**
@@ -239,7 +239,7 @@ class EzLocationBackend implements BackendInterface
      *
      * @return array
      */
-    protected function buildValues(SearchResult $searchResult)
+    protected function buildItems(SearchResult $searchResult)
     {
         return array_map(
             function (SearchHit $searchHit) {
@@ -250,7 +250,6 @@ class EzLocationBackend implements BackendInterface
                             $searchHit->valueObject->contentInfo
                         )
                     )
-
                 );
             },
             $searchResult->searchHits
