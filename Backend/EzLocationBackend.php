@@ -9,9 +9,9 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
+use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Value;
-use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
 class EzLocationBackend implements BackendInterface
 {
@@ -45,15 +45,15 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
-     * Loads the item by its ID.
+     * Loads a  category by its ID.
      *
      * @param int|string $id
      *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If category does not exist
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface
      */
-    public function load($id)
+    public function loadCategory($id)
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($id);
@@ -61,7 +61,7 @@ class EzLocationBackend implements BackendInterface
         $result = $this->searchService->findLocations($query);
 
         if (!empty($result->searchHits)) {
-            return $this->buildItems($result)[0];
+            return $this->buildItem($result->searchHits[0]);
         }
 
         throw new NotFoundException(
@@ -77,26 +77,26 @@ class EzLocationBackend implements BackendInterface
      *
      * @param int|string $id
      *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If value does not exist
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
      */
-    public function loadByValue($id)
+    public function loadItem($id)
     {
-        return $this->load($id);
+        return $this->loadCategory($id);
     }
 
     /**
-     * Returns the category children.
+     * Returns the categories below provided category.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface[]
      */
-    public function getSubCategories(ItemInterface $item)
+    public function getSubCategories(CategoryInterface $category)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($item->getId()),
+            new Criterion\ParentLocationId($category->getId()),
             new Criterion\ContentTypeIdentifier($this->categoryContentTypes),
         );
 
@@ -110,16 +110,16 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
-     * Returns the category children count.
+     * Returns the count of categories below provided category.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
      *
      * @return int
      */
-    public function getSubCategoriesCount(ItemInterface $item)
+    public function getSubCategoriesCount(CategoryInterface $category)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($item->getId()),
+            new Criterion\ParentLocationId($category->getId()),
             new Criterion\ContentTypeIdentifier($this->categoryContentTypes),
         );
 
@@ -133,18 +133,18 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
-     * Returns the item children.
+     * Returns the category items.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
      * @param int $offset
      * @param int $limit
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
-    public function getSubItems(ItemInterface $item, $offset = 0, $limit = 25)
+    public function getSubItems(CategoryInterface $category, $offset = 0, $limit = 25)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($item->getId()),
+            new Criterion\ParentLocationId($category->getId()),
         );
 
         $query = new LocationQuery();
@@ -158,16 +158,16 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
-     * Returns the item children count.
+     * Returns the category items count.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
      *
      * @return int
      */
-    public function getSubItemsCount(ItemInterface $item)
+    public function getSubItemsCount(CategoryInterface $category)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($item->getId()),
+            new Criterion\ParentLocationId($category->getId()),
         );
 
         $query = new LocationQuery();
@@ -233,24 +233,36 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
+     * Builds the item from provided search hit.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $searchHit
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     */
+    protected function buildItem(SearchHit $searchHit)
+    {
+        return new Item(
+            new Value(
+                $searchHit->valueObject,
+                $this->translationHelper->getTranslatedContentNameByContentInfo(
+                    $searchHit->valueObject->contentInfo
+                )
+            )
+        );
+    }
+
+    /**
      * Builds the items from search result and its hits.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
      *
-     * @return array
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
     protected function buildItems(SearchResult $searchResult)
     {
         return array_map(
             function (SearchHit $searchHit) {
-                return new Item(
-                    new Value(
-                        $searchHit->valueObject,
-                        $this->translationHelper->getTranslatedContentNameByContentInfo(
-                            $searchHit->valueObject->contentInfo
-                        )
-                    )
-                );
+                return $this->buildItem($searchHit);
             },
             $searchResult->searchHits
         );

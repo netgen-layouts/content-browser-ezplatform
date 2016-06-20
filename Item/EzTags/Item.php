@@ -2,9 +2,10 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Item\EzTags;
 
+use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
-class Item implements ItemInterface
+class Item implements ItemInterface, CategoryInterface
 {
     /**
      * @var \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value
@@ -32,11 +33,11 @@ class Item implements ItemInterface
     }
 
     /**
-     * Returns the value type.
+     * Returns the type.
      *
      * @return int|string
      */
-    public function getValueType()
+    public function getType()
     {
         return 'eztags';
     }
@@ -58,26 +59,16 @@ class Item implements ItemInterface
      */
     public function getParentId()
     {
-        return $this->value->getValueObject()->parentTagId;
+        return $this->value->getTag()->parentTagId;
     }
 
     /**
      * Returns the value.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ValueInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value
      */
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * Returns the value object.
-     *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
-     */
-    public function getValueObject()
-    {
-        return $this->value->getValueObject();
     }
 }

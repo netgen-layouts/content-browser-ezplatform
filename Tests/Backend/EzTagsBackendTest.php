@@ -5,7 +5,6 @@ namespace Netgen\Bundle\ContentBrowserBundle\Tests\Backend;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\ContentBrowserBundle\Value\EzTags;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
-use Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend;

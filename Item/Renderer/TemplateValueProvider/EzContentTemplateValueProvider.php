@@ -32,7 +32,7 @@ class EzContentTemplateValueProvider implements TemplateValueProviderInterface
      */
     public function getValues(ItemInterface $item)
     {
-        $contentInfo = $item->getValue()->getValueObject();
+        $contentInfo = $item->getValue()->getContentInfo();
 
         $content = $this->repository->sudo(
             function (Repository $repository) use ($contentInfo) {
@@ -44,7 +44,7 @@ class EzContentTemplateValueProvider implements TemplateValueProviderInterface
 
         return array(
             'content' => $content,
-            'location' => $item->getValueObject(),
+            'location' => $item->getLocation(),
         );
     }
 }

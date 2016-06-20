@@ -16,6 +16,6 @@ class Priority implements ColumnValueProviderInterface
      */
     public function getValue(ItemInterface $item)
     {
-        return $item->getValueObject()->priority;
+        return $item->getLocation()->priority;
     }
 }

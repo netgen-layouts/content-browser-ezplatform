@@ -3,9 +3,10 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Item\EzContent;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
+use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
-class Item implements ItemInterface
+class Item implements ItemInterface, CategoryInterface, EzLocationInterface
 {
     /**
      * @var \Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Value
@@ -40,11 +41,11 @@ class Item implements ItemInterface
     }
 
     /**
-     * Returns the value type.
+     * Returns the type.
      *
      * @return int|string
      */
-    public function getValueType()
+    public function getType()
     {
         return 'ezcontent';
     }
@@ -74,7 +75,7 @@ class Item implements ItemInterface
     /**
      * Returns the value.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ValueInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Value
      */
     public function getValue()
     {
@@ -82,11 +83,11 @@ class Item implements ItemInterface
     }
 
     /**
-     * Returns the value object.
+     * Returns the location.
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Location
      */
-    public function getValueObject()
+    public function getLocation()
     {
         return $this->location;
     }

@@ -3,9 +3,9 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
+use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value;
-use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
@@ -43,42 +43,19 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
-     * Loads the item by its ID.
+     * Loads a  category by its ID.
      *
      * @param int|string $id
      *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If category does not exist
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface
      */
-    public function load($id)
+    public function loadCategory($id)
     {
-        if ($id > 0) {
-            try {
-                $tag = $this->tagsService->loadTag($id);
-            } catch (APINotFoundException $e) {
-                throw new NotFoundException(
-                    sprintf(
-                        'Item with "%s" ID not found.',
-                        $id
-                    )
-                );
-            }
-        } else {
-            $tag = new Tag(
-                array(
-                    'id' => 0,
-                    'parentTagId' => null,
-                    'keywords' => array(
-                        'eng-GB' => 'All tags',
-                    ),
-                    'mainLanguageCode' => 'eng-GB',
-                    'alwaysAvailable' => true,
-                )
-            );
-        }
+        $tag = $this->loadTag($id);
 
-        return $this->buildItems(array($tag))[0];
+        return $this->buildItem($tag);
     }
 
     /**
@@ -86,70 +63,74 @@ class EzTagsBackend implements BackendInterface
      *
      * @param int|string $id
      *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If value does not exist
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
      */
-    public function loadByValue($id)
+    public function loadItem($id)
     {
-        return $this->load($id);
+        return $this->loadCategory($id);
     }
 
     /**
-     * Returns the category children.
+     * Returns the categories below provided category.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface[]
      */
-    public function getSubCategories(ItemInterface $item)
-    {
-        return $this->getSubItems($item, 0, -1);
-    }
-
-    /**
-     * Returns the category children count.
-     *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
-     *
-     * @return int
-     */
-    public function getSubCategoriesCount(ItemInterface $item)
-    {
-        return $this->getSubItemsCount($item);
-    }
-
-    /**
-     * Returns the item children.
-     *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
-     */
-    public function getSubItems(ItemInterface $item, $offset = 0, $limit = 25)
+    public function getSubCategories(CategoryInterface $category)
     {
         $tags = $this->tagsService->loadTagChildren(
-            !empty($item->getId()) ? $item->getValue()->getValueObject() : null,
-            $offset,
-            $limit
+            !empty($category->getId()) ? $category->getValue()->getTag() : null
         );
 
         return $this->buildItems($tags);
     }
 
     /**
-     * Returns the item children count.
+     * Returns the count of categories below provided category.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
      *
      * @return int
      */
-    public function getSubItemsCount(ItemInterface $item)
+    public function getSubCategoriesCount(CategoryInterface $category)
     {
         return $this->tagsService->getTagChildrenCount(
-            !empty($item->getId()) ? $item->getValue()->getValueObject() : null
+            !empty($category->getId()) ? $category->getValue()->getTag() : null
+        );
+    }
+
+    /**
+     * Returns the category items.
+     *
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     */
+    public function getSubItems(CategoryInterface $category, $offset = 0, $limit = 25)
+    {
+        $tags = $this->tagsService->loadTagChildren(
+            !empty($category->getId()) ? $category->getValue()->getTag() : null
+        );
+
+        return $this->buildItems($tags);
+    }
+
+    /**
+     * Returns the category items count.
+     *
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     *
+     * @return int
+     */
+    public function getSubItemsCount(CategoryInterface $category)
+    {
+        return $this->tagsService->getTagChildrenCount(
+            !empty($category->getId()) ? $category->getValue()->getTag() : null
         );
     }
 
@@ -199,27 +180,76 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
-     * Builds the values from tags.
+     * Builds the item from provided tag.
+     *
+     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     */
+    protected function buildItem(Tag $tag)
+    {
+        return new Item(
+            new Value(
+                $tag,
+                $this->translationHelper->getTranslatedByMethod(
+                    $tag,
+                    'getKeyword'
+                )
+            )
+        );
+    }
+
+    /**
+     * Builds the items from provided tags.
      *
      * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
      *
-     * @return array
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
     protected function buildItems(array $tags)
     {
         return array_map(
             function (Tag $tag) {
-                return new Item(
-                    new Value(
-                        $tag,
-                        $this->translationHelper->getTranslatedByMethod(
-                            $tag,
-                            'getKeyword'
-                        )
-                    )
-                );
+                return $this->buildItem($tag);
             },
             $tags
+        );
+    }
+
+    /**
+     * Loads the tag by its ID.
+     *
+     * @param int|string $id
+     *
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException
+     *
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
+     */
+    protected function loadTag($id)
+    {
+        if ($id > 0) {
+            try {
+                return $this->tagsService->loadTag($id);
+            } catch (APINotFoundException $e) {
+                throw new NotFoundException(
+                    sprintf(
+                        'Item with "%s" ID not found.',
+                        $id
+                    )
+                );
+            }
+        }
+
+        return new Tag(
+            array(
+                'id' => 0,
+                'parentTagId' => null,
+                'keywords' => array(
+                    'eng-GB' => 'All tags',
+                ),
+                'mainLanguageCode' => 'eng-GB',
+                'alwaysAvailable' => true,
+            )
         );
     }
 }

@@ -5,7 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\EzLocation;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\Bundle\ContentBrowserBundle\Item\ValueInterface;
 
-class Value implements ValueInterface
+class Value implements ValueInterface, EzLocationInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
@@ -50,11 +50,11 @@ class Value implements ValueInterface
     }
 
     /**
-     * Returns the value object.
+     * Returns the location.
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Location
      */
-    public function getValueObject()
+    public function getLocation()
     {
         return $this->location;
     }

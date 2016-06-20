@@ -5,7 +5,6 @@ namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
-use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Value;
@@ -17,11 +16,11 @@ class EzContentBackend extends EzLocationBackend
      *
      * @param int|string $id
      *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If value does not exist
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If item does not exist
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
      */
-    public function loadByValue($id)
+    public function loadItem($id)
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd(
@@ -34,7 +33,7 @@ class EzContentBackend extends EzLocationBackend
         $result = $this->searchService->findLocations($query);
 
         if (!empty($result->searchHits)) {
-            return $this->buildItems($result)[0];
+            return $this->buildItem($result->searchHits[0]);
         }
 
         throw new NotFoundException(
@@ -46,27 +45,22 @@ class EzContentBackend extends EzLocationBackend
     }
 
     /**
-     * Builds the items from search result and its hits.
+     * Builds the item from provided search hit.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
+     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $searchHit
      *
-     * @return array
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
      */
-    protected function buildItems(SearchResult $searchResult)
+    protected function buildItem(SearchHit $searchHit)
     {
-        return array_map(
-            function (SearchHit $searchHit) {
-                return new Item(
-                    new Value(
-                        $searchHit->valueObject->contentInfo,
-                        $this->translationHelper->getTranslatedContentNameByContentInfo(
-                            $searchHit->valueObject->contentInfo
-                        )
-                    ),
-                    $searchHit->valueObject
-                );
-            },
-            $searchResult->searchHits
+        return new Item(
+            new Value(
+                $searchHit->valueObject->contentInfo,
+                $this->translationHelper->getTranslatedContentNameByContentInfo(
+                    $searchHit->valueObject->contentInfo
+                )
+            ),
+            $searchHit->valueObject
         );
     }
 }

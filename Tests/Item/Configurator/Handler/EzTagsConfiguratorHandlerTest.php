@@ -4,8 +4,6 @@ namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Configurator\Handler;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value;
-use Netgen\Bundle\ContentBrowserBundle\Value\EzTags;
-use Netgen\TagsBundle\Core\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzTagsConfiguratorHandler;
 use PHPUnit\Framework\TestCase;

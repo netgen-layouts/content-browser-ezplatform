@@ -5,7 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\EzTags;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\Bundle\ContentBrowserBundle\Item\ValueInterface;
 
-class Value implements ValueInterface
+class Value implements ValueInterface, EzTagsInterface
 {
     /**
      * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
@@ -50,11 +50,11 @@ class Value implements ValueInterface
     }
 
     /**
-     * Returns the value object.
+     * Returns the tag.
      *
      * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    public function getValueObject()
+    public function getTag()
     {
         return $this->tag;
     }

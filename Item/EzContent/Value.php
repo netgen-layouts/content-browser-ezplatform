@@ -5,7 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\EzContent;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use Netgen\Bundle\ContentBrowserBundle\Item\ValueInterface;
 
-class Value implements ValueInterface
+class Value implements ValueInterface, EzContentInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\ContentInfo
@@ -50,11 +50,11 @@ class Value implements ValueInterface
     }
 
     /**
-     * Returns the value object.
+     * Returns the content info.
      *
      * @return \eZ\Publish\API\Repository\Values\Content\ContentInfo
      */
-    public function getValueObject()
+    public function getContentInfo()
     {
         return $this->contentInfo;
     }

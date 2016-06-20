@@ -2,9 +2,10 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Item\EzLocation;
 
+use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
-class Item implements ItemInterface
+class Item implements ItemInterface, CategoryInterface
 {
     /**
      * @var \Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Value
@@ -32,11 +33,11 @@ class Item implements ItemInterface
     }
 
     /**
-     * Returns the value type.
+     * Returns the type.
      *
      * @return int|string
      */
-    public function getValueType()
+    public function getType()
     {
         return 'ezlocation';
     }
@@ -58,7 +59,7 @@ class Item implements ItemInterface
      */
     public function getParentId()
     {
-        $location = $this->value->getValueObject();
+        $location = $this->value->getLocation();
 
         return $location->parentLocationId != 1 ?
             $location->parentLocationId :
@@ -68,20 +69,10 @@ class Item implements ItemInterface
     /**
      * Returns the value.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ValueInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Value
      */
     public function getValue()
     {
         return $this->value;
-    }
-
-    /**
-     * Returns the value object.
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
-     */
-    public function getValueObject()
-    {
-        return $this->value->getValueObject();
     }
 }

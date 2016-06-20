@@ -32,7 +32,7 @@ class EzLocationTemplateValueProvider implements TemplateValueProviderInterface
      */
     public function getValues(ItemInterface $item)
     {
-        $location = $item->getValueObject();
+        $location = $item->getValue()->getLocation();
 
         $content = $this->repository->sudo(
             function (Repository $repository) use ($location) {

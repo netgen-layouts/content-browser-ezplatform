@@ -35,7 +35,7 @@ class Section implements ColumnValueProviderInterface
         return $this->repository->sudo(
             function (Repository $repository) use ($item) {
                 return $repository->getSectionService()->loadSection(
-                    $item->getValue()->getValueObject()->contentInfo->sectionId
+                    $item->getValue()->getLocation()->contentInfo->sectionId
                 )->name;
             }
         );

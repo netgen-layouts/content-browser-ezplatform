@@ -16,7 +16,7 @@ class EzTagsTemplateValueProvider implements TemplateValueProviderInterface
      */
     public function getValues(ItemInterface $item)
     {
-        $tag = $item->getValueObject();
+        $tag = $item->getValue()->getTag();
 
         return array(
             'tag' => $tag->id > 0 ? $tag : null,
