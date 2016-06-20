@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Backend;
 
+use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\ContentBrowserBundle\Value\EzTags;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
 use Netgen\Bundle\ContentBrowserBundle\Value\ValueLoaderInterface;
@@ -20,12 +21,7 @@ class EzTagsBackendTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $valueLoaderMock;
-
-    /**
-     * @var array
-     */
-    protected $config = array();
+    protected $translationHelperMock;
 
     /**
      * @var array
@@ -41,30 +37,13 @@ class EzTagsBackendTest extends TestCase
     {
         $this->tagsServiceMock = $this->createMock(TagsService::class);
 
-        $this->valueLoaderMock = $this->createMock(ValueLoaderInterface::class);
-
-        $this->valueLoaderMock
-            ->expects($this->any())
-            ->method('buildValue')
-            ->will(
-                $this->returnCallback(
-                    function ($valueObject) {
-                        return new EzTags($valueObject, 'name');
-                    }
-                )
-            );
-
-        $this->config = array(
-            'sections' => array(4, 2),
-            'default_limit' => 25,
-        );
+        $this->translationHelperMock = $this->createMock(TranslationHelper::class);
 
         $this->languages = array('eng-GB', 'cro-HR');
 
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->valueLoaderMock,
-            $this->config,
+            $this->translationHelperMock,
             $this->languages
         );
     }
@@ -214,8 +193,7 @@ class EzTagsBackendTest extends TestCase
     {
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->valueLoaderMock,
-            $this->config,
+            $this->translationHelperMock,
             array()
         );
 
@@ -284,8 +262,7 @@ class EzTagsBackendTest extends TestCase
     {
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->valueLoaderMock,
-            $this->config,
+            $this->translationHelperMock,
             array()
         );
 

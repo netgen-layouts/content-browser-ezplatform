@@ -1,17 +1,18 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Builder\Converter;
+namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Configurator\Handler;
 
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter;
-use Netgen\Bundle\ContentBrowserBundle\Value\EzLocation;
+use Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Value;
 use PHPUnit\Framework\TestCase;
 use DateTimeZone;
 use DateTime;
 
-class EzPublishConverterTest extends TestCase
+class EzLocationConfiguratorHandlerTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject
@@ -24,27 +25,24 @@ class EzPublishConverterTest extends TestCase
     protected $config;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter
+     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler
      */
-    protected $converter;
+    protected $configuratorHandler;
 
     public function setUp()
     {
         $this->repositoryMock = $this->createMock(Repository::class);
 
-        $this->config = array('types' => array('type1', 'type2'));
-
-        $this->converter = new EzPublishConverter(
-            $this->repositoryMock,
-            $this->config
+        $this->configuratorHandler = new EzLocationConfiguratorHandler(
+            $this->repositoryMock
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter::getIsSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::isSelectable
      */
-    public function testGetIsSelectable()
+    public function testIsSelectable()
     {
         $this->repositoryMock
             ->expects($this->at(0))
@@ -53,14 +51,17 @@ class EzPublishConverterTest extends TestCase
 
         self::assertEquals(
             true,
-            $this->converter->getIsSelectable($this->getValue())
+            $this->configuratorHandler->isSelectable(
+                $this->getItem(),
+                array('types' => array('type1', 'type2'))
+            )
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter::getIsSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::isSelectable
      */
-    public function testGetIsSelectableWithWrongType()
+    public function testIsSelectableWithWrongType()
     {
         $this->repositoryMock
             ->expects($this->at(0))
@@ -69,34 +70,35 @@ class EzPublishConverterTest extends TestCase
 
         self::assertEquals(
             false,
-            $this->converter->getIsSelectable($this->getValue())
+            $this->configuratorHandler->isSelectable(
+                $this->getItem(),
+                array('types' => array('type1', 'type2'))
+            )
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Builder\Converter\EzPublishConverter::getIsSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::isSelectable
      */
-    public function testGetIsSelectableWithEmptyTypes()
+    public function testIsSelectableWithEmptyTypes()
     {
-        $this->converter = new EzPublishConverter(
-            $this->repositoryMock,
-            array()
-        );
-
         $this->repositoryMock
             ->expects($this->never())
             ->method('sudo');
 
         self::assertEquals(
             true,
-            $this->converter->getIsSelectable($this->getValue())
+            $this->configuratorHandler->isSelectable(
+                $this->getItem(),
+                array()
+            )
         );
     }
 
     /**
-     * @return \Netgen\Bundle\ContentBrowserBundle\Value\EzLocation
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
      */
-    protected function getValue()
+    protected function getItem()
     {
         $modificationDate = new DateTime();
         $modificationDate->setTimestamp(0);
@@ -125,6 +127,6 @@ class EzPublishConverterTest extends TestCase
             )
         );
 
-        return new EzLocation($location, 'location');
+        return new Item(new Value($location, 'name'));
     }
 }
