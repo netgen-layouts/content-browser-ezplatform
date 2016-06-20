@@ -32,7 +32,7 @@ class EzLocationConfiguratorHandler implements ConfiguratorHandlerInterface
      */
     public function isSelectable(ItemInterface $item, array $config)
     {
-        if (empty($config['types'])) {
+        if (empty($config['types']) || !is_array($config['types'])) {
             return true;
         }
 

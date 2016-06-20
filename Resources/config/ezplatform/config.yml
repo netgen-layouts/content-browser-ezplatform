@@ -4,7 +4,6 @@ configs:
         min_selected: 1
         max_selected: 0
         template: 'NetgenContentBrowserBundle:ezpublish:item.html.twig'
-        types: []
         columns:
             location_id:
                 name: columns.ezpublish.location_id
