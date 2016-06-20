@@ -50,7 +50,7 @@ class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItems
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testGetChildren()
@@ -65,7 +65,7 @@ class EzTagsBackendTest extends TestCase
             )
             ->will($this->returnValue(array(new Tag(), new Tag())));
 
-        $values = $this->backend->getChildren(new EzTags(new Tag(array('id' => 1)), 'tag'));
+        $values = $this->backend->getSubItems(new EzTags(new Tag(array('id' => 1)), 'tag'));
 
         self::assertCount(2, $values);
         foreach ($values as $value) {
@@ -74,7 +74,7 @@ class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItems
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testGetChildrenWithEmptyValueId()
@@ -89,7 +89,7 @@ class EzTagsBackendTest extends TestCase
             )
             ->will($this->returnValue(array(new Tag(), new Tag())));
 
-        $values = $this->backend->getChildren(new EzTags(new Tag(array('id' => 0)), ''));
+        $values = $this->backend->getSubItems(new EzTags(new Tag(array('id' => 0)), ''));
 
         self::assertCount(2, $values);
         foreach ($values as $value) {
@@ -98,7 +98,7 @@ class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItems
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testGetChildrenWithParams()
@@ -113,7 +113,7 @@ class EzTagsBackendTest extends TestCase
             )
             ->will($this->returnValue(array(new Tag(), new Tag())));
 
-        $values = $this->backend->getChildren(
+        $values = $this->backend->getSubItems(
             new EzTags(new Tag(array('id' => 1)), 'tag'),
             array(
                 'offset' => 5,
@@ -128,7 +128,7 @@ class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getChildrenCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItemsCount
      */
     public function testGetChildrenCount()
     {
@@ -138,13 +138,13 @@ class EzTagsBackendTest extends TestCase
             ->with($this->equalTo(new Tag(array('id' => 1))))
             ->will($this->returnValue(2));
 
-        $count = $this->backend->getChildrenCount(new EzTags(new Tag(array('id' => 1)), 'tag'));
+        $count = $this->backend->getSubItemsCount(new EzTags(new Tag(array('id' => 1)), 'tag'));
 
         self::assertEquals(2, $count);
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getChildrenCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItemsCount
      */
     public function testGetChildrenCountWithEmptyValueId()
     {
@@ -154,7 +154,7 @@ class EzTagsBackendTest extends TestCase
             ->with($this->equalTo(null))
             ->will($this->returnValue(2));
 
-        $count = $this->backend->getChildrenCount(new EzTags(new Tag(array('id' => 0)), ''));
+        $count = $this->backend->getSubItemsCount(new EzTags(new Tag(array('id' => 0)), ''));
 
         self::assertEquals(2, $count);
     }

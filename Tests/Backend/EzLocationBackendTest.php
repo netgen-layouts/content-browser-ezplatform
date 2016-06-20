@@ -49,7 +49,7 @@ class EzLocationBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSubItems
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItems
      */
     public function testGetChildren()
@@ -73,7 +73,7 @@ class EzLocationBackendTest extends TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $values = $this->backend->getChildren(
+        $values = $this->backend->getSubItems(
             new EzLocation(new Location(array('id' => 1)), 'location')
         );
 
@@ -84,7 +84,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildren
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSubItems
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItems
      */
     public function testGetChildrenWithParams()
@@ -111,7 +111,7 @@ class EzLocationBackendTest extends TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $values = $this->backend->getChildren(
+        $values = $this->backend->getSubItems(
             new EzLocation(new Location(array('id' => 1)), 'location'),
             array(
                 'offset' => 5,
@@ -127,7 +127,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildrenCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSubItemsCount
      */
     public function testGetChildrenCount()
     {
@@ -148,7 +148,7 @@ class EzLocationBackendTest extends TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $count = $this->backend->getChildrenCount(
+        $count = $this->backend->getSubItemsCount(
             new EzLocation(new Location(array('id' => 1)), 'location')
         );
 
@@ -156,7 +156,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getChildrenCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSubItemsCount
      */
     public function testGetChildrenCountWithParams()
     {
@@ -178,7 +178,7 @@ class EzLocationBackendTest extends TestCase
             ->with($this->equalTo($query))
             ->will($this->returnValue($searchResult));
 
-        $count = $this->backend->getChildrenCount(
+        $count = $this->backend->getSubItemsCount(
             new EzLocation(new Location(array('id' => 1)), 'location'),
             array('types' => array('type1', 'type2'))
         );

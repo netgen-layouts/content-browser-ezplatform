@@ -104,7 +104,7 @@ class EzTagsBackend implements BackendInterface
      */
     public function getSubCategories(ItemInterface $item)
     {
-        return $this->getChildren($item, 0, -1);
+        return $this->getSubItems($item, 0, -1);
     }
 
     /**
@@ -116,7 +116,7 @@ class EzTagsBackend implements BackendInterface
      */
     public function getSubCategoriesCount(ItemInterface $item)
     {
-        return $this->getChildrenCount($item);
+        return $this->getSubItemsCount($item);
     }
 
     /**
@@ -128,7 +128,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
-    public function getChildren(ItemInterface $item, $offset = 0, $limit = 25)
+    public function getSubItems(ItemInterface $item, $offset = 0, $limit = 25)
     {
         $tags = $this->tagsService->loadTagChildren(
             !empty($item->getId()) ? $item->getValue()->getValueObject() : null,
@@ -146,7 +146,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @return int
      */
-    public function getChildrenCount(ItemInterface $item)
+    public function getSubItemsCount(ItemInterface $item)
     {
         return $this->tagsService->getTagChildrenCount(
             !empty($item->getId()) ? $item->getValue()->getValueObject() : null

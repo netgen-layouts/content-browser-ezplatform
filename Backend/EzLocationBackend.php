@@ -141,7 +141,7 @@ class EzLocationBackend implements BackendInterface
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
-    public function getChildren(ItemInterface $item, $offset = 0, $limit = 25)
+    public function getSubItems(ItemInterface $item, $offset = 0, $limit = 25)
     {
         $criteria = array(
             new Criterion\ParentLocationId($item->getId()),
@@ -164,7 +164,7 @@ class EzLocationBackend implements BackendInterface
      *
      * @return int
      */
-    public function getChildrenCount(ItemInterface $item)
+    public function getSubItemsCount(ItemInterface $item)
     {
         $criteria = array(
             new Criterion\ParentLocationId($item->getId()),
