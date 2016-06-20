@@ -49,17 +49,7 @@ class EzTagsBackend implements BackendInterface
      */
     public function getDefaultSections()
     {
-        $tag = new Tag(
-            array(
-                'id' => 0,
-                'parentTagId' => null,
-                'keywords' => array(
-                    'eng-GB' => 'All tags',
-                ),
-                'mainLanguageCode' => 'eng-GB',
-                'alwaysAvailable' => true,
-            )
-        );
+        $tag = $this->getRootTag();
 
         return $this->buildItems(array($tag));
     }
@@ -89,8 +79,12 @@ class EzTagsBackend implements BackendInterface
      */
     public function loadItem($id)
     {
+        if (empty($id)) {
+            return $this->buildItem($this->getRootTag());
+        }
+
         try {
-            return $this->tagsService->loadTag($id);
+            $tag = $this->tagsService->loadTag($id);
         } catch (APINotFoundException $e) {
             throw new NotFoundException(
                 sprintf(
@@ -244,6 +238,26 @@ class EzTagsBackend implements BackendInterface
                 return $this->buildItem($tag);
             },
             $tags
+        );
+    }
+
+    /**
+     * Builds the root tag.
+     *
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
+     */
+    protected function getRootTag()
+    {
+        return new Tag(
+            array(
+                'id' => 0,
+                'parentTagId' => null,
+                'keywords' => array(
+                    'eng-GB' => 'All tags',
+                ),
+                'mainLanguageCode' => 'eng-GB',
+                'alwaysAvailable' => true,
+            )
         );
     }
 }
