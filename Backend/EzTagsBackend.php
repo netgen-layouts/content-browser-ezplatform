@@ -61,7 +61,7 @@ class EzTagsBackend implements BackendInterface
             )
         );
 
-        return $this->buildItem($tag);
+        return $this->buildItems(array($tag));
     }
 
     /**

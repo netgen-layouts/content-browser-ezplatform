@@ -67,7 +67,7 @@ class EzLocationBackend implements BackendInterface
 
         $result = $this->searchService->findLocations($query);
 
-        return $this->buildItem($result->searchHits);
+        return $this->buildItems($result);
     }
 
     /**
