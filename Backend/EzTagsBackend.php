@@ -43,6 +43,28 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
+     * Returns the default sections available in the backend.
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface[]
+     */
+    public function getDefaultSections()
+    {
+        $tag = new Tag(
+            array(
+                'id' => 0,
+                'parentTagId' => null,
+                'keywords' => array(
+                    'eng-GB' => 'All tags',
+                ),
+                'mainLanguageCode' => 'eng-GB',
+                'alwaysAvailable' => true,
+            )
+        );
+
+        return $this->buildItem($tag);
+    }
+
+    /**
      * Loads a  category by its ID.
      *
      * @param int|string $id
@@ -53,9 +75,7 @@ class EzTagsBackend implements BackendInterface
      */
     public function loadCategory($id)
     {
-        $tag = $this->loadTag($id);
-
-        return $this->buildItem($tag);
+        return $this->loadItem($id);
     }
 
     /**
@@ -69,7 +89,18 @@ class EzTagsBackend implements BackendInterface
      */
     public function loadItem($id)
     {
-        return $this->loadCategory($id);
+        try {
+            return $this->tagsService->loadTag($id);
+        } catch (APINotFoundException $e) {
+            throw new NotFoundException(
+                sprintf(
+                    'Item with "%s" ID not found.',
+                    $id
+                )
+            );
+        }
+
+        return $this->buildItem($tag);
     }
 
     /**
@@ -213,43 +244,6 @@ class EzTagsBackend implements BackendInterface
                 return $this->buildItem($tag);
             },
             $tags
-        );
-    }
-
-    /**
-     * Loads the tag by its ID.
-     *
-     * @param int|string $id
-     *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException
-     *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
-     */
-    protected function loadTag($id)
-    {
-        if ($id > 0) {
-            try {
-                return $this->tagsService->loadTag($id);
-            } catch (APINotFoundException $e) {
-                throw new NotFoundException(
-                    sprintf(
-                        'Item with "%s" ID not found.',
-                        $id
-                    )
-                );
-            }
-        }
-
-        return new Tag(
-            array(
-                'id' => 0,
-                'parentTagId' => null,
-                'keywords' => array(
-                    'eng-GB' => 'All tags',
-                ),
-                'mainLanguageCode' => 'eng-GB',
-                'alwaysAvailable' => true,
-            )
         );
     }
 }

@@ -31,17 +31,43 @@ class EzLocationBackend implements BackendInterface
     protected $categoryContentTypes;
 
     /**
+     * @var int[]
+     */
+    protected $defaultSections;
+
+    /**
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      * @param string[] $categoryContentTypes
+     * @param int[] $defaultSections
      */
-    public function __construct(SearchService $searchService, TranslationHelper $translationHelper, array $categoryContentTypes)
-    {
+    public function __construct(
+        SearchService $searchService,
+        TranslationHelper $translationHelper,
+        array $categoryContentTypes,
+        array $defaultSections
+    ) {
         $this->searchService = $searchService;
         $this->translationHelper = $translationHelper;
         $this->categoryContentTypes = $categoryContentTypes;
+        $this->defaultSections = $defaultSections;
+    }
+
+    /**
+     * Returns the default sections available in the backend.
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface[]
+     */
+    public function getDefaultSections()
+    {
+        $query = new LocationQuery();
+        $query->filter = new Criterion\LocationId($this->defaultSections);
+
+        $result = $this->searchService->findLocations($query);
+
+        return $this->buildItem($result->searchHits);
     }
 
     /**

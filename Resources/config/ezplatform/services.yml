@@ -2,13 +2,15 @@ parameters:
     netgen_content_browser.backend.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend
     netgen_content_browser.backend.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend
 
-    netgen_content_browser.backend.ezlocation.category_content_types:
+    netgen_content_browser.default.backend.ezlocation.category_content_types:
         - ng_frontpage
         - ng_category
         - ng_landing_page
         - ng_category_page
         - ng_container
         - user_group
+
+    netgen_content_browser.default.backend.ezlocation.default_sections: [2, 43, 5]
 
     netgen_content_browser.item_configurator.handler.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler
     netgen_content_browser.item_configurator.handler.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler
@@ -46,7 +48,8 @@ services:
         arguments:
             - "@ezpublish.api.service.search"
             - "@ezpublish.translation_helper"
-            - "%netgen_content_browser.backend.ezlocation.category_content_types%"
+            - $backend.ezlocation.category_content_types;netgen_content_browser$
+            - $backend.ezlocation.default_sections;netgen_content_browser$
         tags:
             -  { name: netgen_content_browser.backend, value_type: ezlocation }
 
