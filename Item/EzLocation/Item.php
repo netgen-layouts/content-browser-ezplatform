@@ -2,34 +2,42 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Item\EzLocation;
 
+use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
-class Item implements ItemInterface, CategoryInterface
+class Item implements ItemInterface, CategoryInterface, EzLocationInterface
 {
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Value
+     * @var \eZ\Publish\API\Repository\Values\Content\Location
      */
-    protected $value;
+    protected $location;
+
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
      * Constructor.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Value $value
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param string $name
      */
-    public function __construct(Value $value)
+    public function __construct(Location $location, $name)
     {
-        $this->value = $value;
+        $this->location = $location;
+        $this->name = $name;
     }
 
     /**
-     * Returns the item ID.
+     * Returns the category ID.
      *
      * @return int|string
      */
     public function getId()
     {
-        return $this->value->getId();
+        return $this->location->id;
     }
 
     /**
@@ -43,36 +51,44 @@ class Item implements ItemInterface, CategoryInterface
     }
 
     /**
-     * Returns the item name.
+     * Returns the value.
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->location->id;
+    }
+
+    /**
+     * Returns the name.
      *
      * @return string
      */
     public function getName()
     {
-        return $this->value->getName();
+        return $this->name;
     }
 
     /**
-     * Returns the item parent ID.
+     * Returns the parent ID.
      *
      * @return int|string
      */
     public function getParentId()
     {
-        $location = $this->value->getLocation();
-
-        return $location->parentLocationId != 1 ?
-            $location->parentLocationId :
+        return $this->location->parentLocationId != 1 ?
+            $this->location->parentLocationId :
             null;
     }
 
     /**
-     * Returns the value.
+     * Returns the location.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Value
+     * @return \eZ\Publish\API\Repository\Values\Content\Location
      */
-    public function getValue()
+    public function getLocation()
     {
-        return $this->value;
+        return $this->location;
     }
 }

@@ -32,7 +32,7 @@ class EzContentTemplateValueProvider implements TemplateValueProviderInterface
      */
     public function getValues(ItemInterface $item)
     {
-        $contentInfo = $item->getValue()->getContentInfo();
+        $contentInfo = $item->getContentInfo();
 
         $content = $this->repository->sudo(
             function (Repository $repository) use ($contentInfo) {

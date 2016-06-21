@@ -31,7 +31,7 @@ class Modified implements ColumnValueProviderInterface
      */
     public function getValue(ItemInterface $item)
     {
-        return $item->getValue()->getLocation()->contentInfo->modificationDate->format(
+        return $item->getLocation()->contentInfo->modificationDate->format(
             $this->dateFormat
         );
     }

@@ -5,7 +5,6 @@ namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
-use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
@@ -107,7 +106,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubCategories(CategoryInterface $category)
     {
         $tags = $this->tagsService->loadTagChildren(
-            !empty($category->getId()) ? $category->getValue()->getTag() : null
+            !empty($category->getId()) ? $category->getTag() : null
         );
 
         return $this->buildItems($tags);
@@ -123,7 +122,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubCategoriesCount(CategoryInterface $category)
     {
         return $this->tagsService->getTagChildrenCount(
-            !empty($category->getId()) ? $category->getValue()->getTag() : null
+            !empty($category->getId()) ? $category->getTag() : null
         );
     }
 
@@ -139,7 +138,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubItems(CategoryInterface $category, $offset = 0, $limit = 25)
     {
         $tags = $this->tagsService->loadTagChildren(
-            !empty($category->getId()) ? $category->getValue()->getTag() : null
+            !empty($category->getId()) ? $category->getTag() : null
         );
 
         return $this->buildItems($tags);
@@ -155,7 +154,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubItemsCount(CategoryInterface $category)
     {
         return $this->tagsService->getTagChildrenCount(
-            !empty($category->getId()) ? $category->getValue()->getTag() : null
+            !empty($category->getId()) ? $category->getTag() : null
         );
     }
 
@@ -214,12 +213,10 @@ class EzTagsBackend implements BackendInterface
     protected function buildItem(Tag $tag)
     {
         return new Item(
-            new Value(
+            $tag,
+            $this->translationHelper->getTranslatedByMethod(
                 $tag,
-                $this->translationHelper->getTranslatedByMethod(
-                    $tag,
-                    'getKeyword'
-                )
+                'getKeyword'
             )
         );
     }

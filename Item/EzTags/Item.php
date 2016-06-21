@@ -4,32 +4,40 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\EzTags;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
-class Item implements ItemInterface, CategoryInterface
+class Item implements ItemInterface, CategoryInterface, EzTagsInterface
 {
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value
+     * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    protected $value;
+    protected $tag;
+
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
      * Constructor.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value $value
+     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
+     * @param string $name
      */
-    public function __construct(Value $value)
+    public function __construct(Tag $tag, $name)
     {
-        $this->value = $value;
+        $this->tag = $tag;
+        $this->name = $name;
     }
 
     /**
-     * Returns the item ID.
+     * Returns the category ID.
      *
      * @return int|string
      */
     public function getId()
     {
-        return $this->value->getId();
+        return $this->tag->id;
     }
 
     /**
@@ -43,32 +51,42 @@ class Item implements ItemInterface, CategoryInterface
     }
 
     /**
-     * Returns the item name.
+     * Returns the value.
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->tag->id;
+    }
+
+    /**
+     * Returns the name.
      *
      * @return string
      */
     public function getName()
     {
-        return $this->value->getName();
+        return $this->name;
     }
 
     /**
-     * Returns the item parent ID.
+     * Returns the parent ID.
      *
      * @return int|string
      */
     public function getParentId()
     {
-        return $this->value->getTag()->parentTagId;
+        return $this->tag->parentTagId;
     }
 
     /**
-     * Returns the value.
+     * Returns the tag.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    public function getValue()
+    public function getTag()
     {
-        return $this->value;
+        return $this->tag;
     }
 }

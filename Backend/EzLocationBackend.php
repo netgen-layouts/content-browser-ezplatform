@@ -11,7 +11,6 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item;
-use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Value;
 
 class EzLocationBackend implements BackendInterface
 {
@@ -268,11 +267,9 @@ class EzLocationBackend implements BackendInterface
     protected function buildItem(SearchHit $searchHit)
     {
         return new Item(
-            new Value(
-                $searchHit->valueObject,
-                $this->translationHelper->getTranslatedContentNameByContentInfo(
-                    $searchHit->valueObject->contentInfo
-                )
+            $searchHit->valueObject,
+            $this->translationHelper->getTranslatedContentNameByContentInfo(
+                $searchHit->valueObject->contentInfo
             )
         );
     }

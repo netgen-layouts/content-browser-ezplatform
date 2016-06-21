@@ -2,36 +2,44 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Item\EzContent;
 
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
-class Item implements ItemInterface, CategoryInterface, EzLocationInterface
+class Item implements ItemInterface, CategoryInterface, EzContentInterface
 {
-    /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Value
-     */
-    protected $value;
-
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
      */
     protected $location;
 
     /**
+     * @var \eZ\Publish\API\Repository\Values\Content\ContentInfo
+     */
+    protected $contentInfo;
+
+    /**
+     * @var string
+     */
+    protected $name;
+
+    /**
      * Constructor.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Value $value
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo
+     * @param string $name
      */
-    public function __construct(Value $value, Location $location)
+    public function __construct(Location $location, ContentInfo $contentInfo, $name)
     {
-        $this->value = $value;
         $this->location = $location;
+        $this->contentInfo = $contentInfo;
+        $this->name = $name;
     }
 
     /**
-     * Returns the item ID.
+     * Returns the category ID.
      *
      * @return int|string
      */
@@ -51,17 +59,27 @@ class Item implements ItemInterface, CategoryInterface, EzLocationInterface
     }
 
     /**
-     * Returns the item name.
+     * Returns the value.
+     *
+     * @return mixed
+     */
+    public function getValue()
+    {
+        return $this->contentInfo->id;
+    }
+
+    /**
+     * Returns the name.
      *
      * @return string
      */
     public function getName()
     {
-        return $this->value->getName();
+        return $this->name;
     }
 
     /**
-     * Returns the item parent ID.
+     * Returns the parent ID.
      *
      * @return int|string
      */
@@ -73,16 +91,6 @@ class Item implements ItemInterface, CategoryInterface, EzLocationInterface
     }
 
     /**
-     * Returns the value.
-     *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Value
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
      * Returns the location.
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Location
@@ -90,5 +98,15 @@ class Item implements ItemInterface, CategoryInterface, EzLocationInterface
     public function getLocation()
     {
         return $this->location;
+    }
+
+    /**
+     * Returns the content info.
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\ContentInfo
+     */
+    public function getContentInfo()
+    {
+        return $this->contentInfo;
     }
 }

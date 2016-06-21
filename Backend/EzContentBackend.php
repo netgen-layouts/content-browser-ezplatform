@@ -7,7 +7,6 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item;
-use Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Value;
 
 class EzContentBackend extends EzLocationBackend
 {
@@ -54,13 +53,11 @@ class EzContentBackend extends EzLocationBackend
     protected function buildItem(SearchHit $searchHit)
     {
         return new Item(
-            new Value(
-                $searchHit->valueObject->contentInfo,
-                $this->translationHelper->getTranslatedContentNameByContentInfo(
-                    $searchHit->valueObject->contentInfo
-                )
-            ),
-            $searchHit->valueObject
+            $searchHit->valueObject,
+            $searchHit->valueObject->contentInfo,
+            $this->translationHelper->getTranslatedContentNameByContentInfo(
+                $searchHit->valueObject->contentInfo
+            )
         );
     }
 }

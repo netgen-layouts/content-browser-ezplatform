@@ -15,6 +15,6 @@ class EzContentConfiguratorHandler extends EzLocationConfiguratorHandler
      */
     protected function getContentInfo(ItemInterface $item)
     {
-        return $item->getValue()->getContentInfo();
+        return $item->getContentInfo();
     }
 }

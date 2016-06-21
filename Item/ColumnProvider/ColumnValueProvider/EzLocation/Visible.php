@@ -16,6 +16,6 @@ class Visible implements ColumnValueProviderInterface
      */
     public function getValue(ItemInterface $item)
     {
-        return $item->getValue()->getLocation()->invisible ? 'No' : 'Yes';
+        return $item->getLocation()->invisible ? 'No' : 'Yes';
     }
 }

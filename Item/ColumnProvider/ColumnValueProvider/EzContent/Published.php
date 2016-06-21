@@ -31,7 +31,7 @@ class Published implements ColumnValueProviderInterface
      */
     public function getValue(ItemInterface $item)
     {
-        return $item->getValue()->getContentInfo()->publishedDate->format(
+        return $item->getContentInfo()->publishedDate->format(
             $this->dateFormat
         );
     }
