@@ -32,19 +32,29 @@ class EzLocationTemplateValueProvider implements TemplateValueProviderInterface
      */
     public function getValues(ItemInterface $item)
     {
-        $location = $item->getLocation();
-
         $content = $this->repository->sudo(
-            function (Repository $repository) use ($location) {
+            function (Repository $repository) use ($item) {
                 return $repository->getContentService()->loadContentByContentInfo(
-                    $location->contentInfo
+                    $this->getContentInfo($item)
                 );
             }
         );
 
         return array(
             'content' => $content,
-            'location' => $location,
+            'location' => $item->getLocation(),
         );
+    }
+
+    /**
+     * Returns the content info value object from provided item.
+     *
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface $item
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\ContentInfo
+     */
+    protected function getContentInfo(ItemInterface $item)
+    {
+        return $item->getLocation()->contentInfo;
     }
 }
