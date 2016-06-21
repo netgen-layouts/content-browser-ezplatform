@@ -40,23 +40,17 @@ class ParentTag implements ColumnValueProviderInterface
      */
     public function getValue(ItemInterface $item)
     {
-        $tag = $item->getTag();
-
-        if ($tag->id > 0) {
-            return $this->tagsService->sudo(
-                function (TagsService $tagsService) use ($tag) {
-                    if (empty($tag->parentTagId)) {
-                        return '(No parent)';
-                    }
-
-                    return $this->translationHelper->getTranslatedByMethod(
-                        $tagsService->loadTag($tag->parentTagId),
-                        'getKeyword'
-                    );
+        return $this->tagsService->sudo(
+            function (TagsService $tagsService) use ($item) {
+                if (empty($item->getTag()->parentTagId)) {
+                    return '(No parent)';
                 }
-            );
-        }
 
-        return '';
+                return $this->translationHelper->getTranslatedByMethod(
+                    $tagsService->loadTag($item->getTag()->parentTagId),
+                    'getKeyword'
+                );
+            }
+        );
     }
 }

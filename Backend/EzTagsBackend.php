@@ -5,6 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\RootCategory;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
@@ -48,9 +49,7 @@ class EzTagsBackend implements BackendInterface
      */
     public function getDefaultSections()
     {
-        $tag = $this->getRootTag();
-
-        return $this->buildItems(array($tag));
+        return array($this->loadCategory(0));
     }
 
     /**
@@ -64,6 +63,10 @@ class EzTagsBackend implements BackendInterface
      */
     public function loadCategory($id)
     {
+        if (empty($id)) {
+            return $this->buildItem($this->getRootTag());
+        }
+
         return $this->loadItem($id);
     }
 
@@ -78,10 +81,6 @@ class EzTagsBackend implements BackendInterface
      */
     public function loadItem($id)
     {
-        if (empty($id)) {
-            return $this->buildItem($this->getRootTag());
-        }
-
         try {
             $tag = $this->tagsService->loadTag($id);
         } catch (APINotFoundException $e) {
@@ -106,7 +105,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubCategories(CategoryInterface $category)
     {
         $tags = $this->tagsService->loadTagChildren(
-            !empty($category->getId()) ? $category->getTag() : null
+            $category->getTag()
         );
 
         return $this->buildItems($tags);
@@ -122,7 +121,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubCategoriesCount(CategoryInterface $category)
     {
         return $this->tagsService->getTagChildrenCount(
-            !empty($category->getId()) ? $category->getTag() : null
+            $category->getTag()
         );
     }
 
@@ -138,7 +137,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubItems(CategoryInterface $category, $offset = 0, $limit = 25)
     {
         $tags = $this->tagsService->loadTagChildren(
-            !empty($category->getId()) ? $category->getTag() : null
+            $category->getTag()
         );
 
         return $this->buildItems($tags);
@@ -154,7 +153,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubItemsCount(CategoryInterface $category)
     {
         return $this->tagsService->getTagChildrenCount(
-            !empty($category->getId()) ? $category->getTag() : null
+            $category->getTag()
         );
     }
 
@@ -212,13 +211,16 @@ class EzTagsBackend implements BackendInterface
      */
     protected function buildItem(Tag $tag)
     {
-        return new Item(
+        $tagName = $this->translationHelper->getTranslatedByMethod(
             $tag,
-            $this->translationHelper->getTranslatedByMethod(
-                $tag,
-                'getKeyword'
-            )
+            'getKeyword'
         );
+
+        if (empty($tag->id)) {
+            return new RootCategory($tag, $tagName);
+        }
+
+        return new Item($tag, $tagName);
     }
 
     /**

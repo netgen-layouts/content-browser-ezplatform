@@ -16,12 +16,6 @@ class ParentTagId implements ColumnValueProviderInterface
      */
     public function getValue(ItemInterface $item)
     {
-        $tag = $item->getTag();
-
-        if ($tag->id > 0) {
-            return $tag->parentTagId;
-        }
-
-        return '';
+        return $item->getTag()->parentTagId;
     }
 }

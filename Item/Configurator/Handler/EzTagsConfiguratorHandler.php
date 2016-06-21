@@ -16,6 +16,6 @@ class EzTagsConfiguratorHandler implements ConfiguratorHandlerInterface
      */
     public function isSelectable(ItemInterface $item, array $config)
     {
-        return $item->getTag()->id > 0 ? true : false;
+        return true;
     }
 }

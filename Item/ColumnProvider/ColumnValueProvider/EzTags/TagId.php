@@ -16,12 +16,6 @@ class TagId implements ColumnValueProviderInterface
      */
     public function getValue(ItemInterface $item)
     {
-        $tag = $item->getTag();
-
-        if ($tag->id > 0) {
-            return $tag->id;
-        }
-
-        return '';
+        return $item->getTag()->id;
     }
 }
