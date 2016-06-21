@@ -91,6 +91,16 @@ class Item implements ItemInterface, CategoryInterface, EzContentInterface
     }
 
     /**
+     * Returns if the item is visible.
+     *
+     * @return bool
+     */
+    public function isVisible()
+    {
+        return !$this->location->invisible;
+    }
+
+    /**
      * Returns the location.
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Location

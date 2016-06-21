@@ -16,9 +16,9 @@ configs:
             type:
                 name: columns.ezpublish.type
                 value_provider: ezcontent\content_type
-            visible:
-                name: columns.ezpublish.visible
-                value_provider: ezcontent\visible
+            visibility:
+                name: columns.ezpublish.visibility
+                value_provider: ezcontent\visibility
             owner:
                 name: columns.ezpublish.owner
                 value_provider: ezcontent\owner
@@ -55,9 +55,9 @@ configs:
             type:
                 name: columns.ezpublish.type
                 value_provider: ezlocation\content_type
-            visible:
-                name: columns.ezpublish.visible
-                value_provider: ezlocation\visible
+            visibility:
+                name: columns.ezpublish.visibility
+                value_provider: ezlocation\visibility
             owner:
                 name: columns.ezpublish.owner
                 value_provider: ezlocation\owner

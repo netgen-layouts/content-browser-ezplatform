@@ -81,6 +81,16 @@ class Item implements ItemInterface, CategoryInterface, EzTagsInterface
     }
 
     /**
+     * Returns if the item is visible.
+     *
+     * @return bool
+     */
+    public function isVisible()
+    {
+        return true;
+    }
+
+    /**
      * Returns the tag.
      *
      * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
