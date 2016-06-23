@@ -2,11 +2,11 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Item\EzTags;
 
-use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
+use Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
-class Item implements ItemInterface, CategoryInterface, EzTagsInterface
+class Item implements ItemInterface, LocationInterface, EzTagsInterface
 {
     /**
      * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
@@ -31,7 +31,7 @@ class Item implements ItemInterface, CategoryInterface, EzTagsInterface
     }
 
     /**
-     * Returns the category ID.
+     * Returns the location ID.
      *
      * @return int|string
      */

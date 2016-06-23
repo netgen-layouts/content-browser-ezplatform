@@ -9,7 +9,7 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
-use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
+use Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item;
 
 class EzLocationBackend implements BackendInterface
@@ -27,7 +27,7 @@ class EzLocationBackend implements BackendInterface
     /**
      * @var string[]
      */
-    protected $categoryContentTypes;
+    protected $locationContentTypes;
 
     /**
      * @var int[]
@@ -39,25 +39,25 @@ class EzLocationBackend implements BackendInterface
      *
      * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     * @param string[] $categoryContentTypes
+     * @param string[] $locationContentTypes
      * @param int[] $defaultSections
      */
     public function __construct(
         SearchService $searchService,
         TranslationHelper $translationHelper,
-        array $categoryContentTypes,
+        array $locationContentTypes,
         array $defaultSections
     ) {
         $this->searchService = $searchService;
         $this->translationHelper = $translationHelper;
-        $this->categoryContentTypes = $categoryContentTypes;
+        $this->locationContentTypes = $locationContentTypes;
         $this->defaultSections = $defaultSections;
     }
 
     /**
      * Returns the default sections available in the backend.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface[]
      */
     public function getDefaultSections()
     {
@@ -70,15 +70,15 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
-     * Loads a  category by its ID.
+     * Loads a  location by its ID.
      *
      * @param int|string $id
      *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If category does not exist
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If location does not exist
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface
      */
-    public function loadCategory($id)
+    public function loadLocation($id)
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($id);
@@ -108,21 +108,21 @@ class EzLocationBackend implements BackendInterface
      */
     public function loadItem($id)
     {
-        return $this->loadCategory($id);
+        return $this->loadLocation($id);
     }
 
     /**
-     * Returns the categories below provided category.
+     * Returns the locations below provided location.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface $location
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface[]
      */
-    public function getSubCategories(CategoryInterface $category)
+    public function getSubLocations(LocationInterface $location)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($category->getId()),
-            new Criterion\ContentTypeIdentifier($this->categoryContentTypes),
+            new Criterion\ParentLocationId($location->getId()),
+            new Criterion\ContentTypeIdentifier($this->locationContentTypes),
         );
 
         $query = new LocationQuery();
@@ -135,17 +135,17 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
-     * Returns the count of categories below provided category.
+     * Returns the count of locations below provided location.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface $location
      *
      * @return int
      */
-    public function getSubCategoriesCount(CategoryInterface $category)
+    public function getSubLocationsCount(LocationInterface $location)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($category->getId()),
-            new Criterion\ContentTypeIdentifier($this->categoryContentTypes),
+            new Criterion\ParentLocationId($location->getId()),
+            new Criterion\ContentTypeIdentifier($this->locationContentTypes),
         );
 
         $query = new LocationQuery();
@@ -158,18 +158,18 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
-     * Returns the category items.
+     * Returns the location items.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface $location
      * @param int $offset
      * @param int $limit
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
-    public function getSubItems(CategoryInterface $category, $offset = 0, $limit = 25)
+    public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($category->getId()),
+            new Criterion\ParentLocationId($location->getId()),
         );
 
         $query = new LocationQuery();
@@ -183,16 +183,16 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
-     * Returns the category items count.
+     * Returns the location items count.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface $location
      *
      * @return int
      */
-    public function getSubItemsCount(CategoryInterface $category)
+    public function getSubItemsCount(LocationInterface $location)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($category->getId()),
+            new Criterion\ParentLocationId($location->getId()),
         );
 
         $query = new LocationQuery();

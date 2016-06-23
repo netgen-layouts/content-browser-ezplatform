@@ -3,9 +3,9 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
-use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
+use Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
-use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\RootCategory;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\RootLocation;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
@@ -45,23 +45,23 @@ class EzTagsBackend implements BackendInterface
     /**
      * Returns the default sections available in the backend.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface[]
      */
     public function getDefaultSections()
     {
-        return array($this->loadCategory(0));
+        return array($this->loadLocation(0));
     }
 
     /**
-     * Loads a  category by its ID.
+     * Loads a  location by its ID.
      *
      * @param int|string $id
      *
-     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If category does not exist
+     * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException If location does not exist
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface
      */
-    public function loadCategory($id)
+    public function loadLocation($id)
     {
         if (empty($id)) {
             return $this->buildItem($this->getRootTag());
@@ -96,64 +96,64 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
-     * Returns the categories below provided category.
+     * Returns the locations below provided location.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface $location
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface[]
      */
-    public function getSubCategories(CategoryInterface $category)
+    public function getSubLocations(LocationInterface $location)
     {
         $tags = $this->tagsService->loadTagChildren(
-            $category->getTag()
+            $location->getTag()
         );
 
         return $this->buildItems($tags);
     }
 
     /**
-     * Returns the count of categories below provided category.
+     * Returns the count of locations below provided location.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface $location
      *
      * @return int
      */
-    public function getSubCategoriesCount(CategoryInterface $category)
+    public function getSubLocationsCount(LocationInterface $location)
     {
         return $this->tagsService->getTagChildrenCount(
-            $category->getTag()
+            $location->getTag()
         );
     }
 
     /**
-     * Returns the category items.
+     * Returns the location items.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface $location
      * @param int $offset
      * @param int $limit
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
      */
-    public function getSubItems(CategoryInterface $category, $offset = 0, $limit = 25)
+    public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
         $tags = $this->tagsService->loadTagChildren(
-            $category->getTag()
+            $location->getTag()
         );
 
         return $this->buildItems($tags);
     }
 
     /**
-     * Returns the category items count.
+     * Returns the location items count.
      *
-     * @param \Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface $category
+     * @param \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface $location
      *
      * @return int
      */
-    public function getSubItemsCount(CategoryInterface $category)
+    public function getSubItemsCount(LocationInterface $location)
     {
         return $this->tagsService->getTagChildrenCount(
-            $category->getTag()
+            $location->getTag()
         );
     }
 
@@ -217,7 +217,7 @@ class EzTagsBackend implements BackendInterface
         );
 
         if (empty($tag->id)) {
-            return new RootCategory($tag, $tagName);
+            return new RootLocation($tag, $tagName);
         }
 
         return new Item($tag, $tagName);

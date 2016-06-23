@@ -4,10 +4,10 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\EzContent;
 
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Location;
-use Netgen\Bundle\ContentBrowserBundle\Item\CategoryInterface;
+use Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
-class Item implements ItemInterface, CategoryInterface, EzContentInterface
+class Item implements ItemInterface, LocationInterface, EzContentInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
@@ -39,7 +39,7 @@ class Item implements ItemInterface, CategoryInterface, EzContentInterface
     }
 
     /**
-     * Returns the category ID.
+     * Returns the location ID.
      *
      * @return int|string
      */

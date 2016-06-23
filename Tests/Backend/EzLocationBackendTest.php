@@ -43,7 +43,8 @@ class EzLocationBackendTest extends TestCase
         $this->backend = new EzLocationBackend(
             $this->searchServiceMock,
             $this->translationHelperMock,
-            array('ng_frontpage', 'ng_category')
+            array('ng_frontpage', 'ng_category'),
+            array(2, 43, 5)
         );
     }
 
