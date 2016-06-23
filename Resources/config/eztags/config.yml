@@ -4,6 +4,9 @@ configs:
         max_selected: 0
         template: 'NetgenContentBrowserBundle:eztags:item.html.twig'
         columns:
+            name:
+                name: columns.name
+                value_provider: name
             tag_id:
                 name: columns.eztags.tag_id
                 value_provider: eztags\tag_id
@@ -17,5 +20,6 @@ configs:
                 name: columns.eztags.modified
                 value_provider: eztags\modified
         default_columns:
+            - name
             - parent_tag
             - modified

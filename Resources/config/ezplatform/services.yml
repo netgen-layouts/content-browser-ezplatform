@@ -28,7 +28,7 @@ parameters:
     netgen_content_browser.column_value_provider.ezlocation.owner.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzLocation\Owner
     netgen_content_browser.column_value_provider.ezlocation.priority.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzLocation\Priority
     netgen_content_browser.column_value_provider.ezlocation.section.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzLocation\Section
-    netgen_content_browser.column_value_provider.ezlocation.visibility.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzLocation\Visibility
+    netgen_content_browser.column_value_provider.ezlocation.visible.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzLocation\Visible
 
     netgen_content_browser.column_value_provider.ezcontent.location_id.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzContent\LocationId
     netgen_content_browser.column_value_provider.ezcontent.content_id.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzContent\ContentId
@@ -38,7 +38,7 @@ parameters:
     netgen_content_browser.column_value_provider.ezcontent.owner.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzContent\Owner
     netgen_content_browser.column_value_provider.ezcontent.priority.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzContent\Priority
     netgen_content_browser.column_value_provider.ezcontent.section.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzContent\Section
-    netgen_content_browser.column_value_provider.ezcontent.visibility.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzContent\Visibility
+    netgen_content_browser.column_value_provider.ezcontent.visible.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzContent\Visible
 
 services:
     # Backends
@@ -158,10 +158,10 @@ services:
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezlocation\section }
 
-    netgen_content_browser.column_value_provider.ezlocation.visibility:
-        class: "%netgen_content_browser.column_value_provider.ezlocation.visibility.class%"
+    netgen_content_browser.column_value_provider.ezlocation.visible:
+        class: "%netgen_content_browser.column_value_provider.ezlocation.visible.class%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezlocation\visibility }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezlocation\visible }
 
     netgen_content_browser.column_value_provider.ezcontent.location_id:
         class: "%netgen_content_browser.column_value_provider.ezcontent.location_id.class%"
@@ -215,7 +215,7 @@ services:
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezcontent\section }
 
-    netgen_content_browser.column_value_provider.ezcontent.visibility:
-        class: "%netgen_content_browser.column_value_provider.ezcontent.visibility.class%"
+    netgen_content_browser.column_value_provider.ezcontent.visible:
+        class: "%netgen_content_browser.column_value_provider.ezcontent.visible.class%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezcontent\visibility }
+            - { name: netgen_content_browser.column_value_provider, identifier: ezcontent\visible }

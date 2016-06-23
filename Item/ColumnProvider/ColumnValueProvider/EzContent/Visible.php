@@ -1,11 +1,11 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzLocation;
+namespace Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzContent;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
-class Visibility implements ColumnValueProviderInterface
+class Visible implements ColumnValueProviderInterface
 {
     /**
      * Provides the column value.
