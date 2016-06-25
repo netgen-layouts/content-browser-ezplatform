@@ -262,7 +262,7 @@ class EzLocationBackend implements BackendInterface
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $searchHit
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item
      */
     protected function buildItem(SearchHit $searchHit)
     {
@@ -279,7 +279,7 @@ class EzLocationBackend implements BackendInterface
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item[]
      */
     protected function buildItems(SearchResult $searchResult)
     {

@@ -48,7 +48,7 @@ class EzContentBackend extends EzLocationBackend
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $searchHit
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item
      */
     protected function buildItem(SearchHit $searchHit)
     {

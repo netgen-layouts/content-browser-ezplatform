@@ -64,7 +64,7 @@ class EzTagsBackend implements BackendInterface
     public function loadLocation($id)
     {
         if (empty($id)) {
-            return $this->buildItem($this->getRootTag());
+            return $this->buildRootLocation();
         }
 
         return $this->loadItem($id);
@@ -203,11 +203,28 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
+     * Builds the root location.
+     *
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\RootLocation
+     */
+    protected function buildRootLocation()
+    {
+        $tag = $this->getRootTag();
+
+        $tagName = $this->translationHelper->getTranslatedByMethod(
+            $tag,
+            'getKeyword'
+        );
+
+        return new RootLocation($tag, $tagName);
+    }
+
+    /**
      * Builds the item from provided tag.
      *
      * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item
      */
     protected function buildItem(Tag $tag)
     {
@@ -215,10 +232,6 @@ class EzTagsBackend implements BackendInterface
             $tag,
             'getKeyword'
         );
-
-        if (empty($tag->id)) {
-            return new RootLocation($tag, $tagName);
-        }
 
         return new Item($tag, $tagName);
     }
@@ -228,7 +241,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface[]
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item[]
      */
     protected function buildItems(array $tags)
     {
