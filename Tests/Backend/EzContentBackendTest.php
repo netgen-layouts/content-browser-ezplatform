@@ -3,7 +3,7 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Backend;
 
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend;
+use Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item;
 use eZ\Publish\API\Repository\SearchService;
@@ -16,7 +16,7 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface;
 use PHPUnit\Framework\TestCase;
 
-class EzLocationBackendTest extends TestCase
+class EzContentBackendTest extends TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -39,7 +39,7 @@ class EzLocationBackendTest extends TestCase
     protected $defaultSections;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend
+     * @var \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend
      */
     protected $backend;
 
@@ -50,7 +50,7 @@ class EzLocationBackendTest extends TestCase
         $this->locationContentTypes = array('frontpage', 'category');
         $this->defaultSections = array(2, 43, 5);
 
-        $this->backend = new EzLocationBackend(
+        $this->backend = new EzContentBackend(
             $this->searchServiceMock,
             $this->translationHelperMock,
             $this->locationContentTypes,
@@ -59,9 +59,9 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getDefaultSections
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::getDefaultSections
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItems
      */
     public function testGetDefaultSections()
     {
@@ -95,8 +95,8 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadLocation
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::loadLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItem
      */
     public function testLoadLocation()
     {
@@ -121,7 +121,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::loadLocation
      * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException
      */
     public function testLoadLocationThrowsNotFoundException()
@@ -142,17 +142,22 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItem
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::loadItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItem
      */
     public function testLoadItem()
     {
         $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId(2);
+        $query->filter = new Criterion\LogicalAnd(
+            array(
+                new Criterion\ContentId(2),
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+            )
+        );
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation(2))),
+            new SearchHit(array('valueObject' => $this->getLocation(null, null, 2))),
         );
 
         $this->searchServiceMock
@@ -168,13 +173,18 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::loadItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::loadItem
      * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException
      */
     public function testLoadItemThrowsNotFoundException()
     {
         $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId(2);
+        $query->filter = new Criterion\LogicalAnd(
+            array(
+                new Criterion\ContentId(2),
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+            )
+        );
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array();
@@ -189,9 +199,9 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSubLocations
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItem
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::getSubLocations
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItems
      */
     public function testGetSubLocations()
     {
@@ -229,7 +239,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSubLocationsCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::getSubLocationsCount
      */
     public function testGetSubLocationsCount()
     {
@@ -259,9 +269,9 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSubItems
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItem
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::getSubItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItems
      */
     public function testGetSubItems()
     {
@@ -298,9 +308,9 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSubItems
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItem
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::getSubItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItems
      */
     public function testGetSubItemsWithOffsetAndLimit()
     {
@@ -339,7 +349,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::getSubItemsCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::getSubItemsCount
      */
     public function testGetSubItemsCount()
     {
@@ -368,9 +378,9 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItem
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItems
      */
     public function testSearch()
     {
@@ -405,9 +415,9 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::search
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItem
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItems
      */
     public function testSearchWithOffsetAndLimit()
     {
@@ -442,7 +452,7 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend::searchCount
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::searchCount
      */
     public function testSearchCount()
     {
@@ -474,16 +484,21 @@ class EzLocationBackendTest extends TestCase
      *
      * @param int $id
      * @param int $parentLocationId
+     * @param int $contentId
      *
      * @return \eZ\Publish\Core\Repository\Values\Content\Location
      */
-    protected function getLocation($id = null, $parentLocationId = null)
+    protected function getLocation($id = null, $parentLocationId = null, $contentId = null)
     {
         return new Location(
             array(
                 'id' => $id,
                 'parentLocationId' => $parentLocationId,
-                'contentInfo' => new ContentInfo(),
+                'contentInfo' => new ContentInfo(
+                    array(
+                        'id' => $contentId,
+                    )
+                ),
             )
         );
     }

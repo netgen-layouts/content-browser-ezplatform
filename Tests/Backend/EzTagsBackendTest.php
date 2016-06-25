@@ -2,9 +2,11 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Backend;
 
+use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
-use Netgen\Bundle\ContentBrowserBundle\Value\EzTags;
-use Netgen\Bundle\ContentBrowserBundle\Value\ValueInterface;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
+use Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend;
@@ -35,9 +37,7 @@ class EzTagsBackendTest extends TestCase
     public function setUp()
     {
         $this->tagsServiceMock = $this->createMock(TagsService::class);
-
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
-
         $this->languages = array('eng-GB', 'cro-HR');
 
         $this->backend = new EzTagsBackend(
@@ -49,117 +49,224 @@ class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getDefaultSections
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildRootLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getRootTag
+     */
+    public function testGetDefaultSections()
+    {
+        $this->tagsServiceMock
+            ->expects($this->never())
+            ->method('loadTag');
+
+        $locations = $this->backend->getDefaultSections();
+
+        self::assertCount(1, $locations);
+
+        self::assertInstanceOf(LocationInterface::class, $locations[0]);
+        self::assertEquals(0, $locations[0]->getId());
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::loadLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItem
+     */
+    public function testLoadLocation()
+    {
+        $this->tagsServiceMock
+            ->expects($this->once())
+            ->method('loadTag')
+            ->with($this->equalTo(1))
+            ->will($this->returnValue($this->getTag(1)));
+
+        $location = $this->backend->loadLocation(1);
+
+        self::assertInstanceOf(LocationInterface::class, $location);
+        self::assertEquals(1, $location->getId());
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::loadLocation
+     * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException
+     */
+    public function testLoadLocationThrowsNotFoundException()
+    {
+        $this->tagsServiceMock
+            ->expects($this->once())
+            ->method('loadTag')
+            ->with($this->equalTo(1))
+            ->will($this->throwException(new NotFoundException('tag', 1)));
+
+        $this->backend->loadLocation(1);
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::loadLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildRootLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getRootTag
+     */
+    public function testLoadRootLocation()
+    {
+        $this->tagsServiceMock
+            ->expects($this->never())
+            ->method('loadTag');
+
+        $location = $this->backend->loadLocation(0);
+
+        self::assertInstanceOf(LocationInterface::class, $location);
+        self::assertEquals(0, $location->getId());
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::loadItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItem
+     */
+    public function testLoadItem()
+    {
+        $this->tagsServiceMock
+            ->expects($this->once())
+            ->method('loadTag')
+            ->with($this->equalTo(1))
+            ->will($this->returnValue($this->getTag(1)));
+
+        $item = $this->backend->loadItem(1);
+
+        self::assertInstanceOf(ItemInterface::class, $item);
+        self::assertEquals(1, $item->getValue());
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::loadItem
+     * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException
+     */
+    public function testLoadItemThrowsNotFoundException()
+    {
+        $this->tagsServiceMock
+            ->expects($this->once())
+            ->method('loadTag')
+            ->with($this->equalTo(1))
+            ->will($this->throwException(new NotFoundException('tag', 1)));
+
+        $this->backend->loadItem(1);
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubLocations
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
-    public function testGetChildren()
+    public function testGetSubLocations()
     {
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('loadTagChildren')
             ->with(
-                $this->equalTo(new Tag(array('id' => 1))),
+                $this->equalTo($this->getTag(1)),
                 $this->equalTo(0),
                 $this->equalTo(-1)
             )
-            ->will($this->returnValue(array(new Tag(), new Tag())));
+            ->will($this->returnValue(array($this->getTag(null, 1), $this->getTag(null, 1))));
 
-        $values = $this->backend->getSubItems(new EzTags(new Tag(array('id' => 1)), 'tag'));
+        $locations = $this->backend->getSubLocations(new Item($this->getTag(1), 'tag'));
 
-        self::assertCount(2, $values);
-        foreach ($values as $value) {
-            self::assertInstanceOf(ValueInterface::class, $value);
+        self::assertCount(2, $locations);
+        foreach ($locations as $location) {
+            self::assertInstanceOf(LocationInterface::class, $location);
+            self::assertEquals(1, $location->getParentId());
         }
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItems
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubLocationsCount
      */
-    public function testGetChildrenWithEmptyValueId()
-    {
-        $this->tagsServiceMock
-            ->expects($this->once())
-            ->method('loadTagChildren')
-            ->with(
-                $this->equalTo(null),
-                $this->equalTo(0),
-                $this->equalTo(-1)
-            )
-            ->will($this->returnValue(array(new Tag(), new Tag())));
-
-        $values = $this->backend->getSubItems(new EzTags(new Tag(array('id' => 0)), ''));
-
-        self::assertCount(2, $values);
-        foreach ($values as $value) {
-            self::assertInstanceOf(ValueInterface::class, $value);
-        }
-    }
-
-    /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItems
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
-     */
-    public function testGetChildrenWithParams()
-    {
-        $this->tagsServiceMock
-            ->expects($this->once())
-            ->method('loadTagChildren')
-            ->with(
-                $this->equalTo(new Tag(array('id' => 1))),
-                $this->equalTo(5),
-                $this->equalTo(10)
-            )
-            ->will($this->returnValue(array(new Tag(), new Tag())));
-
-        $values = $this->backend->getSubItems(
-            new EzTags(new Tag(array('id' => 1)), 'tag'),
-            array(
-                'offset' => 5,
-                'limit' => 10,
-            )
-        );
-
-        self::assertCount(2, $values);
-        foreach ($values as $value) {
-            self::assertInstanceOf(ValueInterface::class, $value);
-        }
-    }
-
-    /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItemsCount
-     */
-    public function testGetChildrenCount()
+    public function testGetSubLocationsCount()
     {
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('getTagChildrenCount')
-            ->with($this->equalTo(new Tag(array('id' => 1))))
+            ->with($this->equalTo($this->getTag(1)))
             ->will($this->returnValue(2));
 
-        $count = $this->backend->getSubItemsCount(new EzTags(new Tag(array('id' => 1)), 'tag'));
+        $count = $this->backend->getSubLocationsCount(new Item($this->getTag(1), 'tag'));
 
         self::assertEquals(2, $count);
     }
 
     /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
+     */
+    public function testGetSubItems()
+    {
+        $this->tagsServiceMock
+            ->expects($this->once())
+            ->method('loadTagChildren')
+            ->with(
+                $this->equalTo($this->getTag(1)),
+                $this->equalTo(0),
+                $this->equalTo(25)
+            )
+            ->will($this->returnValue(array($this->getTag(null, 1), $this->getTag(null, 1))));
+
+        $items = $this->backend->getSubItems(new Item($this->getTag(1), 'tag'));
+
+        self::assertCount(2, $items);
+        foreach ($items as $item) {
+            self::assertInstanceOf(ItemInterface::class, $item);
+            self::assertEquals(1, $item->getParentId());
+        }
+    }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItem
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
+     */
+    public function testGetSubItemsWithOffsetAndLimit()
+    {
+        $this->tagsServiceMock
+            ->expects($this->once())
+            ->method('loadTagChildren')
+            ->with(
+                $this->equalTo($this->getTag(1)),
+                $this->equalTo(5),
+                $this->equalTo(10)
+            )
+            ->will($this->returnValue(array($this->getTag(null, 1), $this->getTag(null, 1))));
+
+        $items = $this->backend->getSubItems(
+            new Item($this->getTag(1), 'tag'),
+            5,
+            10
+        );
+
+        self::assertCount(2, $items);
+        foreach ($items as $item) {
+            self::assertInstanceOf(ItemInterface::class, $item);
+            self::assertEquals(1, $item->getParentId());
+        }
+    }
+
+    /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getSubItemsCount
      */
-    public function testGetChildrenCountWithEmptyValueId()
+    public function testGetSubItemsCount()
     {
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('getTagChildrenCount')
-            ->with($this->equalTo(null))
+            ->with($this->equalTo($this->getTag(1)))
             ->will($this->returnValue(2));
 
-        $count = $this->backend->getSubItemsCount(new EzTags(new Tag(array('id' => 0)), ''));
+        $count = $this->backend->getSubItemsCount(new Item($this->getTag(1), 'tag'));
 
         self::assertEquals(2, $count);
     }
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testSearch()
@@ -171,21 +278,21 @@ class EzTagsBackendTest extends TestCase
                 $this->equalTo('test'),
                 $this->equalTo('eng-GB'),
                 $this->equalTo(true),
-                $this->equalTo(0),
-                $this->equalTo($this->config['default_limit'])
+                $this->equalTo(0)
             )
-            ->will($this->returnValue(array(new Tag(), new Tag())));
+            ->will($this->returnValue(array($this->getTag(), $this->getTag())));
 
-        $values = $this->backend->search('test');
+        $items = $this->backend->search('test');
 
-        self::assertCount(2, $values);
-        foreach ($values as $value) {
-            self::assertInstanceOf(ValueInterface::class, $value);
+        self::assertCount(2, $items);
+        foreach ($items as $item) {
+            self::assertInstanceOf(ItemInterface::class, $item);
         }
     }
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
     public function testSearchWithNoLanguages()
@@ -200,16 +307,17 @@ class EzTagsBackendTest extends TestCase
             ->expects($this->never())
             ->method('loadTagsByKeyword');
 
-        $values = $this->backend->search('test');
+        $items = $this->backend->search('test');
 
-        self::assertCount(0, $values);
+        self::assertCount(0, $items);
     }
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::search
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildItems
      */
-    public function testSearchWithParams()
+    public function testSearchWithOffsetAndLimit()
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -221,16 +329,13 @@ class EzTagsBackendTest extends TestCase
                 $this->equalTo(5),
                 $this->equalTo(10)
             )
-            ->will($this->returnValue(array(new Tag(), new Tag())));
+            ->will($this->returnValue(array($this->getTag(), $this->getTag())));
 
-        $values = $this->backend->search(
-            'test',
-            array('offset' => 5, 'limit' => 10)
-        );
+        $items = $this->backend->search('test', 5, 10);
 
-        self::assertCount(2, $values);
-        foreach ($values as $value) {
-            self::assertInstanceOf(ValueInterface::class, $value);
+        self::assertCount(2, $items);
+        foreach ($items as $item) {
+            self::assertInstanceOf(ItemInterface::class, $item);
         }
     }
 
@@ -272,5 +377,23 @@ class EzTagsBackendTest extends TestCase
         $count = $this->backend->searchCount('test');
 
         self::assertEquals(0, $count);
+    }
+
+    /**
+     * Returns the tag object used in tests.
+     *
+     * @param int $id
+     * @param int $parentTagId
+     *
+     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
+     */
+    protected function getTag($id = null, $parentTagId = null)
+    {
+        return new Tag(
+            array(
+                'id' => $id,
+                'parentTagId' => $parentTagId,
+            )
+        );
     }
 }

@@ -137,7 +137,9 @@ class EzTagsBackend implements BackendInterface
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
         $tags = $this->tagsService->loadTagChildren(
-            $location->getTag()
+            $location->getTag(),
+            $offset,
+            $limit
         );
 
         return $this->buildItems($tags);
