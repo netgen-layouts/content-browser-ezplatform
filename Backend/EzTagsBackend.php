@@ -5,7 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Backend;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
-use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\RootLocation;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Location;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
@@ -64,7 +64,7 @@ class EzTagsBackend implements BackendInterface
     public function loadLocation($id)
     {
         if (empty($id)) {
-            return $this->buildRootLocation();
+            return $this->buildLocation();
         }
 
         return $this->loadItem($id);
@@ -205,11 +205,11 @@ class EzTagsBackend implements BackendInterface
     }
 
     /**
-     * Builds the root location.
+     * Builds the location.
      *
-     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\RootLocation
+     * @return \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Location
      */
-    protected function buildRootLocation()
+    protected function buildLocation()
     {
         $tag = $this->getRootTag();
 
@@ -218,7 +218,7 @@ class EzTagsBackend implements BackendInterface
             'getKeyword'
         );
 
-        return new RootLocation($tag, $tagName);
+        return new Location($tag, $tagName);
     }
 
     /**

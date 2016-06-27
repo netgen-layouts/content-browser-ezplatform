@@ -3,7 +3,6 @@
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Configurator\Handler;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
-use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Value;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzTagsConfiguratorHandler;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +22,6 @@ class EzTagsConfiguratorHandlerTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzTagsConfiguratorHandler::__construct
      * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzTagsConfiguratorHandler::isSelectable
      */
     public function testIsSelectable()
@@ -51,6 +49,6 @@ class EzTagsConfiguratorHandlerTest extends TestCase
             )
         );
 
-        return new Item(new Value($tag, 'tag'));
+        return new Item($tag, 'tag');
     }
 }

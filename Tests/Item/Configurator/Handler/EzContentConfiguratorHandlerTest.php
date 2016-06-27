@@ -5,13 +5,13 @@ namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Configurator\Handler;
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler;
-use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item;
+use Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler;
+use Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item;
 use PHPUnit\Framework\TestCase;
 use DateTimeZone;
 use DateTime;
 
-class EzLocationConfiguratorHandlerTest extends TestCase
+class EzContentConfiguratorHandlerTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject
@@ -24,7 +24,7 @@ class EzLocationConfiguratorHandlerTest extends TestCase
     protected $config;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler
+     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler
      */
     protected $configuratorHandler;
 
@@ -32,15 +32,15 @@ class EzLocationConfiguratorHandlerTest extends TestCase
     {
         $this->repositoryMock = $this->createMock(Repository::class);
 
-        $this->configuratorHandler = new EzLocationConfiguratorHandler(
+        $this->configuratorHandler = new EzContentConfiguratorHandler(
             $this->repositoryMock
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::isSelectable
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::getContentInfo
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::getContentInfo
      */
     public function testIsSelectable()
     {
@@ -59,8 +59,8 @@ class EzLocationConfiguratorHandlerTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::isSelectable
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::getContentInfo
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::getContentInfo
      */
     public function testIsSelectableWithWrongType()
     {
@@ -79,8 +79,8 @@ class EzLocationConfiguratorHandlerTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::isSelectable
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::getContentInfo
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::getContentInfo
      */
     public function testIsSelectableWithEmptyTypes()
     {
@@ -110,25 +110,27 @@ class EzLocationConfiguratorHandlerTest extends TestCase
         $publishedDate->setTimestamp(10);
         $publishedDate->setTimezone(new DateTimeZone('UTC'));
 
+        $contentInfo = new ContentInfo(
+            array(
+                'id' => 84,
+                'contentTypeId' => 85,
+                'ownerId' => 14,
+                'sectionId' => 2,
+                'modificationDate' => $modificationDate,
+                'publishedDate' => $publishedDate,
+            )
+        );
+
         $location = new Location(
             array(
                 'id' => 42,
                 'parentLocationId' => 24,
                 'invisible' => false,
                 'priority' => 3,
-                'contentInfo' => new ContentInfo(
-                    array(
-                        'id' => 84,
-                        'contentTypeId' => 85,
-                        'ownerId' => 14,
-                        'sectionId' => 2,
-                        'modificationDate' => $modificationDate,
-                        'publishedDate' => $publishedDate,
-                    )
-                ),
+                'contentInfo' => $contentInfo,
             )
         );
 
-        return new Item($location, 'name');
+        return new Item($location, $contentInfo, 'name');
     }
 }

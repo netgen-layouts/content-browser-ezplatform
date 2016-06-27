@@ -5,7 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\Item\EzTags;
 use Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
-class RootLocation implements LocationInterface, EzTagsInterface
+class Location implements LocationInterface, EzTagsInterface
 {
     /**
      * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag

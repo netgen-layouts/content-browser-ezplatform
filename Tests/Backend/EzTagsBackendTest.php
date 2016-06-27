@@ -50,7 +50,7 @@ class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::__construct
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getDefaultSections
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildRootLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildLocation
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getRootTag
      */
     public function testGetDefaultSections()
@@ -102,7 +102,7 @@ class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::loadLocation
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildRootLocation
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::buildLocation
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend::getRootTag
      */
     public function testLoadRootLocation()
