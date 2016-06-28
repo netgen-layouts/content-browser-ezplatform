@@ -28,7 +28,7 @@ class ItemTest extends TestCase
     {
         $this->contentInfo = new ContentInfo(
             array(
-                'id' => 42
+                'id' => 42,
             )
         );
 
