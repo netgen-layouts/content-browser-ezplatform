@@ -1,10 +1,10 @@
 parameters:
     netgen_content_browser.backend.eztags.class: Netgen\Bundle\ContentBrowserBundle\Backend\EzTagsBackend
 
-    netgen_content_browser.item_configurator.handler.eztags.class: Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzTagsConfiguratorHandler
+    netgen_content_browser.serializer.handler.eztags.class: Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzTagsSerializerHandler
     netgen_content_browser.template_value_provider.eztags.class: Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzTagsTemplateValueProvider
 
-    netgen_content_browser.config_loader.field_definition.eztags.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader
+    netgen_content_browser.config_processor.field_definition.eztags.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigProcessor
 
     netgen_content_browser.column_value_provider.eztags.tag_id.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId
     netgen_content_browser.column_value_provider.eztags.parent_tag_id.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId
@@ -21,21 +21,21 @@ services:
         tags:
             - { name: netgen_content_browser.backend, value_type: eztags }
 
-    netgen_content_browser.item_configurator.handler.eztags:
-        class: "%netgen_content_browser.item_configurator.handler.eztags.class%"
+    netgen_content_browser.serializer.handler.eztags:
+        class: "%netgen_content_browser.serializer.handler.eztags.class%"
         tags:
-            - { name: netgen_content_browser.item_configurator.handler, value_type: eztags }
+            - { name: netgen_content_browser.serializer.handler, value_type: eztags }
 
     netgen_content_browser.template_value_provider.eztags:
         class: "%netgen_content_browser.template_value_provider.eztags.class%"
         tags:
             - { name: netgen_content_browser.template_value_provider, value_type: eztags }
 
-    netgen_content_browser.config_loader.field_definition.eztags:
-        class: "%netgen_content_browser.config_loader.field_definition.eztags.class%"
-        parent: netgen_content_browser.config_loader.field_definition
+    netgen_content_browser.config_processor.field_definition.eztags:
+        class: "%netgen_content_browser.config_processor.field_definition.eztags.class%"
+        parent: netgen_content_browser.config_processor.field_definition
         tags:
-            - { name: netgen_content_browser.config_loader }
+            - { name: netgen_content_browser.config_processor }
 
     netgen_content_browser.column_value_provider.eztags.tag_id:
         class: "%netgen_content_browser.column_value_provider.eztags.tag_id.class%"

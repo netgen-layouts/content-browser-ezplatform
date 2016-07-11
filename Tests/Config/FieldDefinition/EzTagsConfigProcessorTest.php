@@ -5,10 +5,11 @@ namespace Netgen\Bundle\ContentBrowserBundle\Tests\Config\FieldDefinition;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader;
+use Netgen\Bundle\ContentBrowserBundle\Config\Configuration;
+use Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigProcessor;
 use PHPUnit\Framework\TestCase;
 
-class EzTagsConfigLoaderTest extends TestCase
+class EzTagsConfigProcessorTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
@@ -16,35 +17,35 @@ class EzTagsConfigLoaderTest extends TestCase
     protected $contentTypeServiceMock;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader
+     * @var \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigProcessor
      */
-    protected $configLoader;
+    protected $configProcessor;
 
     public function setUp()
     {
         $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
 
-        $this->configLoader = new EzTagsConfigLoader($this->contentTypeServiceMock);
+        $this->configProcessor = new EzTagsConfigProcessor($this->contentTypeServiceMock);
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader::getFieldTypeIdentifier
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigProcessor::getFieldTypeIdentifier
      */
     public function testGetFieldTypeIdentifier()
     {
-        self::assertEquals('eztags', $this->configLoader->getFieldTypeIdentifier());
+        self::assertEquals('eztags', $this->configProcessor->getFieldTypeIdentifier());
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader::getValueType
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigProcessor::getValueType
      */
     public function testGetValueType()
     {
-        self::assertEquals('eztags', $this->configLoader->getValueType());
+        self::assertEquals('eztags', $this->configProcessor->getValueType());
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigLoader::loadConfig
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigProcessor::processConfig
      */
     public function testLoadConfig()
     {
@@ -71,14 +72,13 @@ class EzTagsConfigLoaderTest extends TestCase
             ->with('news')
             ->will($this->returnValue($contentType));
 
-        $config = $this->configLoader->loadConfig('ez-field-definition-eztags-news-tags');
-
-        self::assertEquals(
-            array(
-                'sections' => array(42),
-                'max_selected' => 5,
-            ),
+        $config = new Configuration('eztags', array());
+        $this->configProcessor->processConfig(
+            'ez-field-definition-eztags-news-tags',
             $config
         );
+
+        self::assertEquals(array(42), $config->getSections());
+        self::assertEquals(5, $config->getMaxSelected());
     }
 }

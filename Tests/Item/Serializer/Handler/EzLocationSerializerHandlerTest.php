@@ -1,17 +1,18 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Configurator\Handler;
+namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Serializer\Handler;
 
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler;
+use Netgen\Bundle\ContentBrowserBundle\Config\Configuration;
+use Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item;
 use PHPUnit\Framework\TestCase;
 use DateTimeZone;
 use DateTime;
 
-class EzLocationConfiguratorHandlerTest extends TestCase
+class EzLocationSerializerHandlerTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject
@@ -19,28 +20,31 @@ class EzLocationConfiguratorHandlerTest extends TestCase
     protected $repositoryMock;
 
     /**
-     * @var array
+     * @var \Netgen\Bundle\ContentBrowserBundle\Config\ConfigurationInterface
      */
     protected $config;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler
+     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler
      */
-    protected $configuratorHandler;
+    protected $handler;
 
     public function setUp()
     {
         $this->repositoryMock = $this->createMock(Repository::class);
+        $this->config = new Configuration('ezlocation');
+        $this->config->setParameter('types', array('type1', 'type2'));
 
-        $this->configuratorHandler = new EzLocationConfiguratorHandler(
-            $this->repositoryMock
+        $this->handler = new EzLocationSerializerHandler(
+            $this->repositoryMock,
+            $this->config
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::isSelectable
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::getContentInfo
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler::getContentInfo
      */
     public function testIsSelectable()
     {
@@ -51,16 +55,15 @@ class EzLocationConfiguratorHandlerTest extends TestCase
 
         self::assertEquals(
             true,
-            $this->configuratorHandler->isSelectable(
-                $this->getItem(),
-                array('types' => array('type1', 'type2'))
+            $this->handler->isSelectable(
+                $this->getItem()
             )
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::isSelectable
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::getContentInfo
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler::getContentInfo
      */
     public function testIsSelectableWithWrongType()
     {
@@ -71,16 +74,15 @@ class EzLocationConfiguratorHandlerTest extends TestCase
 
         self::assertEquals(
             false,
-            $this->configuratorHandler->isSelectable(
-                $this->getItem(),
-                array('types' => array('type1', 'type2'))
+            $this->handler->isSelectable(
+                $this->getItem()
             )
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::isSelectable
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler::getContentInfo
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler::getContentInfo
      */
     public function testIsSelectableWithEmptyTypes()
     {
@@ -88,11 +90,18 @@ class EzLocationConfiguratorHandlerTest extends TestCase
             ->expects($this->never())
             ->method('sudo');
 
+        $this->config = new Configuration('ezlocation');
+        $this->config->setParameter('types', array());
+
+        $this->handler = new EzLocationSerializerHandler(
+            $this->repositoryMock,
+            $this->config
+        );
+
         self::assertEquals(
             true,
-            $this->configuratorHandler->isSelectable(
-                $this->getItem(),
-                array()
+            $this->handler->isSelectable(
+                $this->getItem()
             )
         );
     }

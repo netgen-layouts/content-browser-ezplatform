@@ -6,10 +6,11 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use Netgen\Bundle\ContentBrowserBundle\Tests\Config\FieldDefinition\Stubs\ConfigLoader;
+use Netgen\Bundle\ContentBrowserBundle\Config\Configuration;
+use Netgen\Bundle\ContentBrowserBundle\Tests\Config\FieldDefinition\Stubs\ConfigProcessor;
 use PHPUnit\Framework\TestCase;
 
-class ConfigLoaderTest extends TestCase
+class ConfigProcessorTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
@@ -17,46 +18,46 @@ class ConfigLoaderTest extends TestCase
     protected $contentTypeServiceMock;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Tests\Config\FieldDefinition\Stubs\ConfigLoader
+     * @var \Netgen\Bundle\ContentBrowserBundle\Tests\Config\FieldDefinition\Stubs\ConfigProcessor
      */
-    protected $configLoader;
+    protected $configProcessor;
 
     public function setUp()
     {
         $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
 
-        $this->configLoader = new ConfigLoader($this->contentTypeServiceMock);
+        $this->configProcessor = new ConfigProcessor($this->contentTypeServiceMock);
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::supports
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::supports
      */
     public function testSupports()
     {
         self::assertTrue(
-            $this->configLoader->supports(
+            $this->configProcessor->supports(
                 'ez-field-definition-field_type-ng_news-relation'
             )
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::supports
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::supports
      */
     public function testSupportsReturnsFalse()
     {
         self::assertFalse(
-            $this->configLoader->supports(
+            $this->configProcessor->supports(
                 'some-config'
             )
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::getFieldDefinition
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::getFieldDefinition
      */
     public function testLoadConfig()
     {
@@ -79,23 +80,31 @@ class ConfigLoaderTest extends TestCase
             ->with('news')
             ->will($this->returnValue($contentType));
 
-        $config = $this->configLoader->loadConfig('ez-field-definition-field_type-news-relation');
+        $config = new Configuration('test');
+        $this->configProcessor->processConfig(
+            'ez-field-definition-field_type-news-relation',
+            $config
+        );
 
-        self::assertEquals(array('test' => 'config'), $config);
+        self::assertTrue($config->hasParameter('test'));
+        self::assertEquals('config', $config->getParameter('test'));
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::getFieldDefinition
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::getFieldDefinition
      * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\InvalidArgumentException
      * @expectedExceptionMessage Config name format for field definition is not valid.
      */
     public function testLoadConfigWithInvalidConfigName()
     {
-        $this->configLoader->loadConfig('ez-field-definition-invalid');
+        $this->configProcessor->processConfig(
+            'ez-field-definition-invalid',
+            new Configuration('ezcontent')
+        );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::getFieldDefinition
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::getFieldDefinition
      * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\InvalidArgumentException
      * @expectedExceptionMessage 'news' content type does not exist.
      */
@@ -107,11 +116,14 @@ class ConfigLoaderTest extends TestCase
             ->with('news')
             ->will($this->throwException(new NotFoundException('content type', 'news')));
 
-        $this->configLoader->loadConfig('ez-field-definition-field_type-news-relation');
+        $this->configProcessor->processConfig(
+            'ez-field-definition-field_type-news-relation',
+            new Configuration('ezcontent')
+        );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::getFieldDefinition
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::getFieldDefinition
      * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\InvalidArgumentException
      * @expectedExceptionMessage 'relation' field definition does not exist.
      */
@@ -125,11 +137,14 @@ class ConfigLoaderTest extends TestCase
             ->with('news')
             ->will($this->returnValue($contentType));
 
-        $this->configLoader->loadConfig('ez-field-definition-field_type-news-relation');
+        $this->configProcessor->processConfig(
+            'ez-field-definition-field_type-news-relation',
+            new Configuration('ezcontent')
+        );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader::getFieldDefinition
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor::getFieldDefinition
      * @expectedException \Netgen\Bundle\ContentBrowserBundle\Exceptions\InvalidArgumentException
      * @expectedExceptionMessage 'relation' field definition is not of 'field_type' field type.
      */
@@ -154,6 +169,9 @@ class ConfigLoaderTest extends TestCase
             ->with('news')
             ->will($this->returnValue($contentType));
 
-        $this->configLoader->loadConfig('ez-field-definition-field_type-news-relation');
+        $this->configProcessor->processConfig(
+            'ez-field-definition-field_type-news-relation',
+            new Configuration('ezcontent')
+        );
     }
 }

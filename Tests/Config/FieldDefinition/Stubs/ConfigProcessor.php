@@ -2,9 +2,9 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Config\FieldDefinition\Stubs;
 
-use Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader as BaseConfigLoader;
+use Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor as BaseConfigProcessor;
 
-class ConfigLoader extends BaseConfigLoader
+class ConfigProcessor extends BaseConfigProcessor
 {
     /**
      * Returns the field type identifier for this config loader.
@@ -27,18 +27,17 @@ class ConfigLoader extends BaseConfigLoader
     }
 
     /**
-     * Loads the configuration by its name.
+     * Processes the given config.
      *
      * @param string $configName
+     * @param \Netgen\Bundle\ContentBrowserBundle\Config\ConfigurationInterface $config
      *
      * @throws \Netgen\Bundle\ContentBrowserBundle\Exceptions\InvalidArgumentException If config could not be found
-     *
-     * @return array
      */
-    public function loadConfig($configName)
+    public function processConfig($configName, $config)
     {
         $this->getFieldDefinition($configName);
 
-        return array('test' => 'config');
+        $config->setParameter('test', 'config');
     }
 }

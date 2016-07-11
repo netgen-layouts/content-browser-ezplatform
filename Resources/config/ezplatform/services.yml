@@ -12,13 +12,13 @@ parameters:
 
     netgen_content_browser.default.backend.ezlocation.default_sections: [2, 43, 5]
 
-    netgen_content_browser.item_configurator.handler.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzLocationConfiguratorHandler
-    netgen_content_browser.item_configurator.handler.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler
+    netgen_content_browser.serializer.handler.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzLocationSerializerHandler
+    netgen_content_browser.serializer.handler.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler
     netgen_content_browser.template_value_provider.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzLocationTemplateValueProvider
     netgen_content_browser.template_value_provider.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzContentTemplateValueProvider
 
-    netgen_content_browser.config_loader.field_definition.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigLoader
-    netgen_content_browser.config_loader.field_definition.ezobjectrelationlist.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader
+    netgen_content_browser.config_processor.field_definition.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor
+    netgen_content_browser.config_processor.field_definition.ezobjectrelationlist.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor
 
     netgen_content_browser.column_value_provider.ezlocation.location_id.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzLocation\LocationId
     netgen_content_browser.column_value_provider.ezlocation.content_id.class: Netgen\Bundle\ContentBrowserBundle\Item\ColumnProvider\ColumnValueProvider\EzLocation\ContentId
@@ -59,21 +59,23 @@ services:
         tags:
             -  { name: netgen_content_browser.backend, value_type: ezcontent }
 
-    # Configurator handlers
+    # Serializer handlers
 
-    netgen_content_browser.item_configurator.handler.ezlocation:
-        class: "%netgen_content_browser.item_configurator.handler.ezlocation.class%"
+    netgen_content_browser.serializer.handler.ezlocation:
+        class: "%netgen_content_browser.serializer.handler.ezlocation.class%"
         arguments:
             - "@ezpublish.api.repository"
+            - "@netgen_content_browser.current_config"
         tags:
-            -  { name: netgen_content_browser.item_configurator.handler, value_type: ezlocation }
+            -  { name: netgen_content_browser.serializer.handler, value_type: ezlocation }
 
-    netgen_content_browser.item_configurator.handler.ezcontent:
-        class: "%netgen_content_browser.item_configurator.handler.ezcontent.class%"
+    netgen_content_browser.serializer.handler.ezcontent:
+        class: "%netgen_content_browser.serializer.handler.ezcontent.class%"
         arguments:
             - "@ezpublish.api.repository"
+            - "@netgen_content_browser.current_config"
         tags:
-            -  { name: netgen_content_browser.item_configurator.handler, value_type: ezcontent }
+            -  { name: netgen_content_browser.serializer.handler, value_type: ezcontent }
 
     # Template value providers
 
@@ -91,18 +93,18 @@ services:
         tags:
             -  { name: netgen_content_browser.template_value_provider, value_type: ezcontent }
 
-    # Config loaders
+    # Config processors
 
-    netgen_content_browser.config_loader.field_definition:
-        class: "%netgen_content_browser.config_loader.field_definition.class%"
+    netgen_content_browser.config_processor.field_definition:
+        class: "%netgen_content_browser.config_processor.field_definition.class%"
         arguments:
             - "@ezpublish.api.service.content_type"
 
-    netgen_content_browser.config_loader.field_definition.ezobjectrelationlist:
-        class: "%netgen_content_browser.config_loader.field_definition.ezobjectrelationlist.class%"
-        parent: netgen_content_browser.config_loader.field_definition
+    netgen_content_browser.config_processor.field_definition.ezobjectrelationlist:
+        class: "%netgen_content_browser.config_processor.field_definition.ezobjectrelationlist.class%"
+        parent: netgen_content_browser.config_processor.field_definition
         tags:
-            - { name: netgen_content_browser.config_loader }
+            - { name: netgen_content_browser.config_processor }
 
     # Column value providers
 

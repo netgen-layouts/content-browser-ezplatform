@@ -1,10 +1,10 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler;
+namespace Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
-class EzContentConfiguratorHandler extends EzLocationConfiguratorHandler
+class EzContentSerializerHandler extends EzLocationSerializerHandler
 {
     /**
      * Returns the content info value object from provided item.

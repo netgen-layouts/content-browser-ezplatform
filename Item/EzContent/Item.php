@@ -9,6 +9,8 @@ use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 
 class Item implements ItemInterface, LocationInterface, EzContentInterface
 {
+    const TYPE = 'ezcontent';
+
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
      */
@@ -55,7 +57,7 @@ class Item implements ItemInterface, LocationInterface, EzContentInterface
      */
     public function getType()
     {
-        return 'ezcontent';
+        return static::TYPE;
     }
 
     /**

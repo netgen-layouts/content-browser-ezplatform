@@ -1,34 +1,34 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Configurator\Handler;
+namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Serializer\Handler;
 
 use Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Item;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
-use Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzTagsConfiguratorHandler;
+use Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzTagsSerializerHandler;
 use PHPUnit\Framework\TestCase;
 use DateTimeZone;
 use DateTime;
 
-class EzTagsConfiguratorHandlerTest extends TestCase
+class EzTagsSerializerHandlerTest extends TestCase
 {
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzTagsConfiguratorHandler
+     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzTagsSerializerHandler
      */
-    protected $configurator;
+    protected $handler;
 
     public function setUp()
     {
-        $this->configurator = new EzTagsConfiguratorHandler();
+        $this->handler = new EzTagsSerializerHandler();
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzTagsConfiguratorHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzTagsSerializerHandler::isSelectable
      */
     public function testIsSelectable()
     {
         self::assertEquals(
             true,
-            $this->configurator->isSelectable($this->getItem(), array())
+            $this->handler->isSelectable($this->getItem())
         );
     }
 

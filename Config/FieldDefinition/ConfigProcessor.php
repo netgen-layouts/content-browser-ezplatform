@@ -5,10 +5,10 @@ namespace Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Values\ContentType\FieldDefinition;
-use Netgen\Bundle\ContentBrowserBundle\Config\ValueTypeConfigLoaderInterface;
+use Netgen\Bundle\ContentBrowserBundle\Config\ConfigProcessorInterface;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\InvalidArgumentException;
 
-abstract class ConfigLoader implements ValueTypeConfigLoaderInterface
+abstract class ConfigProcessor implements ConfigProcessorInterface
 {
     const CONFIG_NAME_PREFIX = 'ez-field-definition-';
 
@@ -28,14 +28,14 @@ abstract class ConfigLoader implements ValueTypeConfigLoaderInterface
     }
 
     /**
-     * Returns the field type identifier for this config loader.
+     * Returns the field type identifier for this config processor.
      *
      * @return string
      */
     abstract public function getFieldTypeIdentifier();
 
     /**
-     * Returns if the loader supports the config with provided name.
+     * Returns if the processor supports the config with provided name.
      *
      * @param string $configName
      *

@@ -5,10 +5,11 @@ namespace Netgen\Bundle\ContentBrowserBundle\Tests\Config\FieldDefinition;
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use eZ\Publish\Core\Repository\Values\ContentType\FieldDefinition;
-use Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader;
+use Netgen\Bundle\ContentBrowserBundle\Config\Configuration;
+use Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor;
 use PHPUnit\Framework\TestCase;
 
-class RelationListConfigLoaderTest extends TestCase
+class RelationListConfigProcessorTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\ContentTypeService|\PHPUnit_Framework_MockObject_MockObject
@@ -16,36 +17,36 @@ class RelationListConfigLoaderTest extends TestCase
     protected $contentTypeServiceMock;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader
+     * @var \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor
      */
-    protected $configLoader;
+    protected $configProcessor;
 
     public function setUp()
     {
         $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
 
-        $this->configLoader = new RelationListConfigLoader($this->contentTypeServiceMock);
+        $this->configProcessor = new RelationListConfigProcessor($this->contentTypeServiceMock);
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader::getFieldTypeIdentifier
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor::getFieldTypeIdentifier
      */
     public function testGetFieldTypeIdentifier()
     {
-        self::assertEquals('ezobjectrelationlist', $this->configLoader->getFieldTypeIdentifier());
+        self::assertEquals('ezobjectrelationlist', $this->configProcessor->getFieldTypeIdentifier());
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader::getValueType
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor::getValueType
      */
     public function testGetValueType()
     {
-        self::assertEquals('ezcontent', $this->configLoader->getValueType());
+        self::assertEquals('ezcontent', $this->configProcessor->getValueType());
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader::loadConfig
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigLoader::getFieldTypeIdentifier
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor::processConfig
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor::getFieldTypeIdentifier
      */
     public function testLoadConfig()
     {
@@ -71,13 +72,13 @@ class RelationListConfigLoaderTest extends TestCase
             ->with('news')
             ->will($this->returnValue($contentType));
 
-        $config = $this->configLoader->loadConfig('ez-field-definition-ezobjectrelationlist-news-relation');
-
-        self::assertEquals(
-            array(
-                'types' => array('type1', 'type2'),
-            ),
+        $config = new Configuration('ezcontent', array());
+        $this->configProcessor->processConfig(
+            'ez-field-definition-ezobjectrelationlist-news-relation',
             $config
         );
+
+        self::assertTrue($config->hasParameter('types'));
+        self::assertEquals(array('type1', 'type2'), $config->getParameter('types'));
     }
 }

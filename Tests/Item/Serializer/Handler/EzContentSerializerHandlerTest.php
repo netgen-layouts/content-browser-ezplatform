@@ -1,17 +1,18 @@
 <?php
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Configurator\Handler;
+namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Serializer\Handler;
 
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler;
+use Netgen\Bundle\ContentBrowserBundle\Config\Configuration;
+use Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item;
 use PHPUnit\Framework\TestCase;
 use DateTimeZone;
 use DateTime;
 
-class EzContentConfiguratorHandlerTest extends TestCase
+class EzContentSerializerHandlerTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject
@@ -19,28 +20,31 @@ class EzContentConfiguratorHandlerTest extends TestCase
     protected $repositoryMock;
 
     /**
-     * @var array
+     * @var \Netgen\Bundle\ContentBrowserBundle\Config\ConfigurationInterface
      */
     protected $config;
 
     /**
-     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler
+     * @var \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler
      */
-    protected $configuratorHandler;
+    protected $handler;
 
     public function setUp()
     {
         $this->repositoryMock = $this->createMock(Repository::class);
+        $this->config = new Configuration('ezlocation');
+        $this->config->setParameter('types', array('type1', 'type2'));
 
-        $this->configuratorHandler = new EzContentConfiguratorHandler(
-            $this->repositoryMock
+        $this->handler = new EzContentSerializerHandler(
+            $this->repositoryMock,
+            $this->config
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::isSelectable
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::getContentInfo
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler::__construct
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler::getContentInfo
      */
     public function testIsSelectable()
     {
@@ -51,16 +55,15 @@ class EzContentConfiguratorHandlerTest extends TestCase
 
         self::assertEquals(
             true,
-            $this->configuratorHandler->isSelectable(
-                $this->getItem(),
-                array('types' => array('type1', 'type2'))
+            $this->handler->isSelectable(
+                $this->getItem()
             )
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::isSelectable
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::getContentInfo
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler::getContentInfo
      */
     public function testIsSelectableWithWrongType()
     {
@@ -71,16 +74,15 @@ class EzContentConfiguratorHandlerTest extends TestCase
 
         self::assertEquals(
             false,
-            $this->configuratorHandler->isSelectable(
-                $this->getItem(),
-                array('types' => array('type1', 'type2'))
+            $this->handler->isSelectable(
+                $this->getItem()
             )
         );
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::isSelectable
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Configurator\Handler\EzContentConfiguratorHandler::getContentInfo
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler::isSelectable
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler::getContentInfo
      */
     public function testIsSelectableWithEmptyTypes()
     {
@@ -88,11 +90,15 @@ class EzContentConfiguratorHandlerTest extends TestCase
             ->expects($this->never())
             ->method('sudo');
 
+        $this->handler = new EzContentSerializerHandler(
+            $this->repositoryMock,
+            new Configuration('ezcontent')
+        );
+
         self::assertEquals(
             true,
-            $this->configuratorHandler->isSelectable(
-                $this->getItem(),
-                array()
+            $this->handler->isSelectable(
+                $this->getItem()
             )
         );
     }
