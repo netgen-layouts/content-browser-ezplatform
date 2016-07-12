@@ -30,7 +30,7 @@ class EzTagsTemplateValueProviderTest extends TestCase
 
         self::assertEquals(
             array(
-                'tag' => $item->getTag()
+                'tag' => $item->getTag(),
             ),
             $this->valueProvider->getValues($item)
         );

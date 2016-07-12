@@ -2,7 +2,6 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Config;
 
-
 use Netgen\Bundle\ContentBrowserBundle\Config\Configuration;
 use Netgen\Bundle\ContentBrowserBundle\Config\SingleEzContentConfigProcessor;
 use PHPUnit\Framework\TestCase;
