@@ -2,7 +2,8 @@ item_types:
     ezcontent:
         min_selected: 1
         max_selected: 0
-        template: 'NetgenContentBrowserBundle:ezpublish:item.html.twig'
+        preview:
+            template: 'NetgenContentBrowserBundle:ezpublish:item.html.twig'
         columns:
             name:
                 name: columns.name
@@ -45,7 +46,8 @@ item_types:
     ezlocation:
         min_selected: 1
         max_selected: 1
-        template: 'NetgenContentBrowserBundle:ezpublish:item.html.twig'
+        preview:
+            template: 'NetgenContentBrowserBundle:ezpublish:item.html.twig'
         columns:
             name:
                 name: columns.name
