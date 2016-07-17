@@ -2,9 +2,11 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Serializer\Handler;
 
+use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use Netgen\Bundle\ContentBrowserBundle\Config\Configuration;
 use Netgen\Bundle\ContentBrowserBundle\Item\Serializer\Handler\EzContentSerializerHandler;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item;
@@ -15,9 +17,14 @@ use DateTime;
 class EzContentSerializerHandlerTest extends TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $repositoryMock;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $contentTypeServiceMock;
 
     /**
      * @var \Netgen\Bundle\ContentBrowserBundle\Config\ConfigurationInterface
@@ -31,8 +38,19 @@ class EzContentSerializerHandlerTest extends TestCase
 
     public function setUp()
     {
-        $this->repositoryMock = $this->createMock(Repository::class);
-        $this->config = new Configuration('ezlocation');
+        $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
+
+        $this->repositoryMock = $this->getMockBuilder(Repository::class)
+            ->disableOriginalConstructor()
+            ->setMethods(array('getContentTypeService'))
+            ->getMock();
+
+        $this->repositoryMock
+            ->expects($this->any())
+            ->method('getContentTypeService')
+            ->will($this->returnValue($this->contentTypeServiceMock));
+
+        $this->config = new Configuration('ezcontent');
         $this->config->setParameter('types', array('type1', 'type2'));
 
         $this->handler = new EzContentSerializerHandler(
@@ -48,10 +66,18 @@ class EzContentSerializerHandlerTest extends TestCase
      */
     public function testIsSelectable()
     {
-        $this->repositoryMock
-            ->expects($this->at(0))
-            ->method('sudo')
-            ->will($this->returnValue('type1'));
+        $contentType = new ContentType(
+            array(
+                'identifier' => 'type1',
+                'fieldDefinitions' => array(),
+            )
+        );
+
+        $this->contentTypeServiceMock
+            ->expects($this->once())
+            ->method('loadContentType')
+            ->with($this->equalTo(85))
+            ->will($this->returnValue($contentType));
 
         self::assertEquals(
             true,
@@ -67,10 +93,18 @@ class EzContentSerializerHandlerTest extends TestCase
      */
     public function testIsSelectableWithWrongType()
     {
-        $this->repositoryMock
-            ->expects($this->at(0))
-            ->method('sudo')
-            ->will($this->returnValue('type42'));
+        $contentType = new ContentType(
+            array(
+                'identifier' => 'type42',
+                'fieldDefinitions' => array(),
+            )
+        );
+
+        $this->contentTypeServiceMock
+            ->expects($this->once())
+            ->method('loadContentType')
+            ->with($this->equalTo(85))
+            ->will($this->returnValue($contentType));
 
         self::assertEquals(
             false,
@@ -86,13 +120,16 @@ class EzContentSerializerHandlerTest extends TestCase
      */
     public function testIsSelectableWithEmptyTypes()
     {
-        $this->repositoryMock
+        $this->contentTypeServiceMock
             ->expects($this->never())
-            ->method('sudo');
+            ->method('loadContentType');
+
+        $this->config = new Configuration('ezcontent');
+        $this->config->setParameter('types', array());
 
         $this->handler = new EzContentSerializerHandler(
             $this->repositoryMock,
-            new Configuration('ezcontent')
+            $this->config
         );
 
         self::assertEquals(

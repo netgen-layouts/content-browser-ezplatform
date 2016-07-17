@@ -2,6 +2,7 @@
 
 namespace Netgen\Bundle\ContentBrowserBundle\Tests\Item\Renderer\TemplateValueProvider;
 
+use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzContentTemplateValueProvider;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item;
@@ -15,9 +16,14 @@ use DateTime;
 class EzContentTemplateValueProviderTest extends TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\Repository|\PHPUnit_Framework_MockObject_MockObject
+     * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $repositoryMock;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $contentServiceMock;
 
     /**
      * @var \Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzContentTemplateValueProvider
@@ -26,7 +32,17 @@ class EzContentTemplateValueProviderTest extends TestCase
 
     public function setUp()
     {
-        $this->repositoryMock = $this->createMock(Repository::class);
+        $this->contentServiceMock = $this->createMock(ContentService::class);
+
+        $this->repositoryMock = $this->getMockBuilder(Repository::class)
+            ->disableOriginalConstructor()
+            ->setMethods(array('getContentService'))
+            ->getMock();
+
+        $this->repositoryMock
+            ->expects($this->any())
+            ->method('getContentService')
+            ->will($this->returnValue($this->contentServiceMock));
 
         $this->valueProvider = new EzContentTemplateValueProvider(
             $this->repositoryMock
@@ -40,12 +56,13 @@ class EzContentTemplateValueProviderTest extends TestCase
      */
     public function testGetValues()
     {
-        $this->repositoryMock
-            ->expects($this->at(0))
-            ->method('sudo')
-            ->will($this->returnValue(new Content()));
-
         $item = $this->getItem();
+
+        $this->contentServiceMock
+            ->expects($this->once())
+            ->method('loadContentByContentInfo')
+            ->with($item->getContentInfo())
+            ->will($this->returnValue(new Content()));
 
         self::assertEquals(
             array(
