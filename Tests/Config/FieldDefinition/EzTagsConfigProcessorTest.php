@@ -33,7 +33,7 @@ class EzTagsConfigProcessorTest extends TestCase
      */
     public function testGetFieldTypeIdentifier()
     {
-        self::assertEquals('eztags', $this->configProcessor->getFieldTypeIdentifier());
+        $this->assertEquals('eztags', $this->configProcessor->getFieldTypeIdentifier());
     }
 
     /**
@@ -41,7 +41,7 @@ class EzTagsConfigProcessorTest extends TestCase
      */
     public function testGetValueType()
     {
-        self::assertEquals('eztags', $this->configProcessor->getValueType());
+        $this->assertEquals('eztags', $this->configProcessor->getValueType());
     }
 
     /**
@@ -78,7 +78,7 @@ class EzTagsConfigProcessorTest extends TestCase
             $config
         );
 
-        self::assertEquals(array(42), $config->getSections());
-        self::assertEquals(5, $config->getMaxSelected());
+        $this->assertEquals(array(42), $config->getSections());
+        $this->assertEquals(5, $config->getMaxSelected());
     }
 }

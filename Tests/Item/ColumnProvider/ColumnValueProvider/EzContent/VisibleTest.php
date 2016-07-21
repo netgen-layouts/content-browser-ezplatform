@@ -35,7 +35,7 @@ class VisibleTest extends TestCase
             'Name'
         );
 
-        self::assertEquals(
+        $this->assertEquals(
             'No',
             $this->provider->getValue($item)
         );

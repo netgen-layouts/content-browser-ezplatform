@@ -70,7 +70,7 @@ class ParentTagTest extends TestCase
             ->with($this->equalTo($parentTag), $this->equalTo('getKeyword'))
             ->will($this->returnValue('Parent tag'));
 
-        self::assertEquals(
+        $this->assertEquals(
             'Parent tag',
             $this->provider->getValue($item)
         );
@@ -98,7 +98,7 @@ class ParentTagTest extends TestCase
             ->expects($this->never())
             ->method('getTranslatedByMethod');
 
-        self::assertEquals(
+        $this->assertEquals(
             '(No parent)',
             $this->provider->getValue($item)
         );

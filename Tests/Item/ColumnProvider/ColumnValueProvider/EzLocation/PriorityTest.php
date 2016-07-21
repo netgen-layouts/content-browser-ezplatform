@@ -33,7 +33,7 @@ class PriorityTest extends TestCase
             'Name'
         );
 
-        self::assertEquals(
+        $this->assertEquals(
             5,
             $this->provider->getValue($item)
         );

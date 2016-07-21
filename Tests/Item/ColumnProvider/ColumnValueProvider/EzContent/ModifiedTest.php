@@ -41,7 +41,7 @@ class ModifiedTest extends TestCase
             'Name'
         );
 
-        self::assertEquals(
+        $this->assertEquals(
             '17.07.2016 18:15:42',
             $this->provider->getValue($item)
         );

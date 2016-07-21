@@ -33,7 +33,7 @@ class RelationListConfigProcessorTest extends TestCase
      */
     public function testGetFieldTypeIdentifier()
     {
-        self::assertEquals('ezobjectrelationlist', $this->configProcessor->getFieldTypeIdentifier());
+        $this->assertEquals('ezobjectrelationlist', $this->configProcessor->getFieldTypeIdentifier());
     }
 
     /**
@@ -41,7 +41,7 @@ class RelationListConfigProcessorTest extends TestCase
      */
     public function testGetValueType()
     {
-        self::assertEquals('ezcontent', $this->configProcessor->getValueType());
+        $this->assertEquals('ezcontent', $this->configProcessor->getValueType());
     }
 
     /**
@@ -78,7 +78,7 @@ class RelationListConfigProcessorTest extends TestCase
             $config
         );
 
-        self::assertTrue($config->hasParameter('types'));
-        self::assertEquals(array('type1', 'type2'), $config->getParameter('types'));
+        $this->assertTrue($config->hasParameter('types'));
+        $this->assertEquals(array('type1', 'type2'), $config->getParameter('types'));
     }
 }

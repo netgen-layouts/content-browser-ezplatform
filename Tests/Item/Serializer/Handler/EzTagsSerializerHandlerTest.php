@@ -26,7 +26,7 @@ class EzTagsSerializerHandlerTest extends TestCase
      */
     public function testIsSelectable()
     {
-        self::assertEquals(
+        $this->assertEquals(
             true,
             $this->handler->isSelectable($this->getItem())
         );

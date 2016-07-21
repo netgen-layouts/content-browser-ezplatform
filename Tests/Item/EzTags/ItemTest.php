@@ -30,7 +30,7 @@ class ItemTest extends TestCase
      */
     public function testGetId()
     {
-        self::assertEquals(42, $this->item->getId());
+        $this->assertEquals(42, $this->item->getId());
     }
 
     /**
@@ -39,7 +39,7 @@ class ItemTest extends TestCase
      */
     public function testGetType()
     {
-        self::assertEquals('eztags', $this->item->getType());
+        $this->assertEquals('eztags', $this->item->getType());
     }
 
     /**
@@ -47,7 +47,7 @@ class ItemTest extends TestCase
      */
     public function testGetValue()
     {
-        self::assertEquals(42, $this->item->getValue());
+        $this->assertEquals(42, $this->item->getValue());
     }
 
     /**
@@ -55,7 +55,7 @@ class ItemTest extends TestCase
      */
     public function testGetName()
     {
-        self::assertEquals('Keyword', $this->item->getName());
+        $this->assertEquals('Keyword', $this->item->getName());
     }
 
     /**
@@ -63,7 +63,7 @@ class ItemTest extends TestCase
      */
     public function testGetParentId()
     {
-        self::assertEquals(24, $this->item->getParentId());
+        $this->assertEquals(24, $this->item->getParentId());
     }
 
     /**
@@ -71,7 +71,7 @@ class ItemTest extends TestCase
      */
     public function testIsVisible()
     {
-        self::assertTrue($this->item->isVisible());
+        $this->assertTrue($this->item->isVisible());
     }
 
     /**
@@ -79,6 +79,6 @@ class ItemTest extends TestCase
      */
     public function testGetTag()
     {
-        self::assertEquals($this->tag, $this->item->getTag());
+        $this->assertEquals($this->tag, $this->item->getTag());
     }
 }

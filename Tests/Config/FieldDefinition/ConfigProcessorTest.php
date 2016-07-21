@@ -35,7 +35,7 @@ class ConfigProcessorTest extends TestCase
      */
     public function testSupports()
     {
-        self::assertTrue(
+        $this->assertTrue(
             $this->configProcessor->supports(
                 'ez-field-definition-field_type-ng_news-relation'
             )
@@ -48,7 +48,7 @@ class ConfigProcessorTest extends TestCase
      */
     public function testSupportsReturnsFalse()
     {
-        self::assertFalse(
+        $this->assertFalse(
             $this->configProcessor->supports(
                 'some-config'
             )
@@ -86,8 +86,8 @@ class ConfigProcessorTest extends TestCase
             $config
         );
 
-        self::assertTrue($config->hasParameter('test'));
-        self::assertEquals('config', $config->getParameter('test'));
+        $this->assertTrue($config->hasParameter('test'));
+        $this->assertEquals('config', $config->getParameter('test'));
     }
 
     /**

@@ -88,7 +88,7 @@ class OwnerTest extends TestCase
             ->with($this->equalTo($ownerContentInfo))
             ->will($this->returnValue('Owner name'));
 
-        self::assertEquals(
+        $this->assertEquals(
             'Owner name',
             $this->provider->getValue($item)
         );

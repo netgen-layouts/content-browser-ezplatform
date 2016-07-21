@@ -64,7 +64,7 @@ class EzContentTemplateValueProviderTest extends TestCase
             ->with($item->getContentInfo())
             ->will($this->returnValue(new Content()));
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'content' => new Content(),
                 'location' => $item->getLocation(),

@@ -42,25 +42,25 @@ class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
         $this->compile();
 
         foreach (array('default', 'cro', 'admin') as $scope) {
-            self::assertContainerBuilderHasParameter("ezsettings.{$scope}.content_view");
-            self::assertContainerBuilderHasParameter("ezsettings.{$scope}.location_view");
+            $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.content_view");
+            $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.location_view");
 
             $contentView = $this->container->getParameter("ezsettings.{$scope}.content_view");
-            self::assertArrayHasKey('ngcb_preview', $contentView);
-            self::assertArrayHasKey('___ngcb_preview_default___', $contentView['ngcb_preview']);
+            $this->assertArrayHasKey('ngcb_preview', $contentView);
+            $this->assertArrayHasKey('___ngcb_preview_default___', $contentView['ngcb_preview']);
 
-            self::assertArrayHasKey('full', $contentView);
-            self::assertArrayHasKey('full_rule', $contentView['full']);
+            $this->assertArrayHasKey('full', $contentView);
+            $this->assertArrayHasKey('full_rule', $contentView['full']);
 
             $locationView = $this->container->getParameter("ezsettings.{$scope}.location_view");
-            self::assertArrayHasKey('ngcb_preview', $locationView);
-            self::assertArrayHasKey('___ngcb_preview_default___', $locationView['ngcb_preview']);
+            $this->assertArrayHasKey('ngcb_preview', $locationView);
+            $this->assertArrayHasKey('___ngcb_preview_default___', $locationView['ngcb_preview']);
 
-            self::assertArrayHasKey('rule1', $locationView['ngcb_preview']);
-            self::assertArrayHasKey('rule2', $locationView['ngcb_preview']);
+            $this->assertArrayHasKey('rule1', $locationView['ngcb_preview']);
+            $this->assertArrayHasKey('rule2', $locationView['ngcb_preview']);
         }
 
-        self::assertFalse($this->container->hasParameter('ezsettings.eng.content_view'));
-        self::assertFalse($this->container->hasParameter('ezsettings.eng.location_view'));
+        $this->assertFalse($this->container->hasParameter('ezsettings.eng.content_view'));
+        $this->assertFalse($this->container->hasParameter('ezsettings.eng.location_view'));
     }
 }

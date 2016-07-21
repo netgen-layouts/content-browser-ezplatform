@@ -28,7 +28,7 @@ class EzTagsTemplateValueProviderTest extends TestCase
     {
         $item = $this->getItem();
 
-        self::assertEquals(
+        $this->assertEquals(
             array(
                 'tag' => $item->getTag(),
             ),

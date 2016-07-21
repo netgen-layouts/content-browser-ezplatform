@@ -31,7 +31,7 @@ class LocationTest extends TestCase
      */
     public function testGetId()
     {
-        self::assertEquals(42, $this->location->getId());
+        $this->assertEquals(42, $this->location->getId());
     }
 
     /**
@@ -39,7 +39,7 @@ class LocationTest extends TestCase
      */
     public function testGetType()
     {
-        self::assertEquals('eztags', $this->location->getType());
+        $this->assertEquals('eztags', $this->location->getType());
     }
 
     /**
@@ -47,7 +47,7 @@ class LocationTest extends TestCase
      */
     public function testGetName()
     {
-        self::assertEquals('Keyword', $this->location->getName());
+        $this->assertEquals('Keyword', $this->location->getName());
     }
 
     /**
@@ -55,7 +55,7 @@ class LocationTest extends TestCase
      */
     public function testGetParentId()
     {
-        self::assertEquals(24, $this->location->getParentId());
+        $this->assertEquals(24, $this->location->getParentId());
     }
 
     /**
@@ -63,6 +63,6 @@ class LocationTest extends TestCase
      */
     public function testGetTag()
     {
-        self::assertEquals($this->tag, $this->location->getTag());
+        $this->assertEquals($this->tag, $this->location->getTag());
     }
 }

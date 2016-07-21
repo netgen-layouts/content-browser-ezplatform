@@ -78,7 +78,7 @@ class SectionTest extends TestCase
             ->with($this->equalTo(42))
             ->will($this->returnValue($section));
 
-        self::assertEquals(
+        $this->assertEquals(
             'Section name',
             $this->provider->getValue($item)
         );

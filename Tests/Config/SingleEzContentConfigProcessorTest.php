@@ -23,7 +23,7 @@ class SingleEzContentConfigProcessorTest extends TestCase
      */
     public function testSupports()
     {
-        self::assertTrue(
+        $this->assertTrue(
             $this->configProcessor->supports(
                 'ezcontent-single'
             )
@@ -35,7 +35,7 @@ class SingleEzContentConfigProcessorTest extends TestCase
      */
     public function testSupportsReturnsFalse()
     {
-        self::assertFalse(
+        $this->assertFalse(
             $this->configProcessor->supports(
                 'some-config'
             )
@@ -47,7 +47,7 @@ class SingleEzContentConfigProcessorTest extends TestCase
      */
     public function testGetValueType()
     {
-        self::assertEquals('ezcontent', $this->configProcessor->getValueType());
+        $this->assertEquals('ezcontent', $this->configProcessor->getValueType());
     }
 
     /**
@@ -61,6 +61,6 @@ class SingleEzContentConfigProcessorTest extends TestCase
             $config
         );
 
-        self::assertEquals(1, $config->getMaxSelected());
+        $this->assertEquals(1, $config->getMaxSelected());
     }
 }

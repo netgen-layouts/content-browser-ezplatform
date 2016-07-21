@@ -83,15 +83,15 @@ class EzLocationBackendTest extends TestCase
 
         $locations = $this->backend->getDefaultSections();
 
-        self::assertCount(3, $locations);
+        $this->assertCount(3, $locations);
 
         foreach ($locations as $location) {
-            self::assertInstanceOf(LocationInterface::class, $location);
+            $this->assertInstanceOf(LocationInterface::class, $location);
         }
 
-        self::assertEquals(2, $locations[0]->getId());
-        self::assertEquals(43, $locations[1]->getId());
-        self::assertEquals(5, $locations[2]->getId());
+        $this->assertEquals(2, $locations[0]->getId());
+        $this->assertEquals(43, $locations[1]->getId());
+        $this->assertEquals(5, $locations[2]->getId());
     }
 
     /**
@@ -116,8 +116,8 @@ class EzLocationBackendTest extends TestCase
 
         $location = $this->backend->loadLocation(2);
 
-        self::assertInstanceOf(LocationInterface::class, $location);
-        self::assertEquals(2, $location->getId());
+        $this->assertInstanceOf(LocationInterface::class, $location);
+        $this->assertEquals(2, $location->getId());
     }
 
     /**
@@ -163,8 +163,8 @@ class EzLocationBackendTest extends TestCase
 
         $item = $this->backend->loadItem(2);
 
-        self::assertInstanceOf(ItemInterface::class, $item);
-        self::assertEquals(2, $item->getValue());
+        $this->assertInstanceOf(ItemInterface::class, $item);
+        $this->assertEquals(2, $item->getValue());
     }
 
     /**
@@ -221,10 +221,10 @@ class EzLocationBackendTest extends TestCase
             new Item($this->getLocation(2), 'location')
         );
 
-        self::assertCount(2, $locations);
+        $this->assertCount(2, $locations);
         foreach ($locations as $location) {
-            self::assertInstanceOf(LocationInterface::class, $location);
-            self::assertEquals(2, $location->getParentId());
+            $this->assertInstanceOf(LocationInterface::class, $location);
+            $this->assertEquals(2, $location->getParentId());
         }
     }
 
@@ -255,7 +255,7 @@ class EzLocationBackendTest extends TestCase
             new Item($this->getLocation(2), 'location')
         );
 
-        self::assertEquals(2, $count);
+        $this->assertEquals(2, $count);
     }
 
     /**
@@ -290,10 +290,10 @@ class EzLocationBackendTest extends TestCase
             new Item($this->getLocation(2), 'location')
         );
 
-        self::assertCount(2, $items);
+        $this->assertCount(2, $items);
         foreach ($items as $item) {
-            self::assertInstanceOf(ItemInterface::class, $item);
-            self::assertEquals(2, $item->getParentId());
+            $this->assertInstanceOf(ItemInterface::class, $item);
+            $this->assertEquals(2, $item->getParentId());
         }
     }
 
@@ -331,10 +331,10 @@ class EzLocationBackendTest extends TestCase
             10
         );
 
-        self::assertCount(2, $items);
+        $this->assertCount(2, $items);
         foreach ($items as $item) {
-            self::assertInstanceOf(ItemInterface::class, $item);
-            self::assertEquals(2, $item->getParentId());
+            $this->assertInstanceOf(ItemInterface::class, $item);
+            $this->assertEquals(2, $item->getParentId());
         }
     }
 
@@ -364,7 +364,7 @@ class EzLocationBackendTest extends TestCase
             new Item($this->getLocation(2), 'location')
         );
 
-        self::assertEquals(2, $count);
+        $this->assertEquals(2, $count);
     }
 
     /**
@@ -398,9 +398,9 @@ class EzLocationBackendTest extends TestCase
 
         $items = $this->backend->search('test');
 
-        self::assertCount(2, $items);
+        $this->assertCount(2, $items);
         foreach ($items as $item) {
-            self::assertInstanceOf(ItemInterface::class, $item);
+            $this->assertInstanceOf(ItemInterface::class, $item);
         }
     }
 
@@ -435,9 +435,9 @@ class EzLocationBackendTest extends TestCase
 
         $items = $this->backend->search('test', 5, 10);
 
-        self::assertCount(2, $items);
+        $this->assertCount(2, $items);
         foreach ($items as $item) {
-            self::assertInstanceOf(ItemInterface::class, $item);
+            $this->assertInstanceOf(ItemInterface::class, $item);
         }
     }
 
@@ -466,7 +466,7 @@ class EzLocationBackendTest extends TestCase
 
         $count = $this->backend->searchCount('test');
 
-        self::assertEquals(2, $count);
+        $this->assertEquals(2, $count);
     }
 
     /**

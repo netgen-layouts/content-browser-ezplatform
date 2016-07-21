@@ -35,7 +35,7 @@ class ContentIdTest extends TestCase
             'Name'
         );
 
-        self::assertEquals(
+        $this->assertEquals(
             42,
             $this->provider->getValue($item)
         );

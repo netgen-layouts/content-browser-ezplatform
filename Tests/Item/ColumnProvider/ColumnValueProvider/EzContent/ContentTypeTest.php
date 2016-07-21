@@ -90,7 +90,7 @@ class ContentTypeTest extends TestCase
             ->with($this->equalTo($contentType), $this->equalTo('getName'))
             ->will($this->returnValue('Content type'));
 
-        self::assertEquals(
+        $this->assertEquals(
             'Content type',
             $this->provider->getValue($item)
         );
