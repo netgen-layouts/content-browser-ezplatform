@@ -6,9 +6,9 @@ parameters:
         - ng_frontpage
         - ng_category
         - ng_landing_page
-        - ng_category_page
         - ng_container
         - user_group
+        - folder
 
     netgen_content_browser.default.backend.ezlocation.default_sections: [2, 43, 5]
 
