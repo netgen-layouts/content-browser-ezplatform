@@ -48,6 +48,7 @@ services:
         class: "%netgen_content_browser.backend.ezlocation.class%"
         arguments:
             - "@ezpublish.api.service.search"
+            - "@ezpublish.spi.persistence.content_type_handler"
             - "@ezpublish.translation_helper"
             - $backend.ezlocation.location_content_types;netgen_content_browser$
             - $backend.ezlocation.default_sections;netgen_content_browser$

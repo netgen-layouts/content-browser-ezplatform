@@ -8,6 +8,8 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\SPI\Persistence\Content\Type\Handler;
+use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Exceptions\NotFoundException;
 use Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item;
@@ -18,6 +20,11 @@ class EzLocationBackend implements BackendInterface
      * @var \eZ\Publish\API\Repository\SearchService
      */
     protected $searchService;
+
+    /**
+     * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler
+     */
+    protected $contentTypeHandler;
 
     /**
      * @var \eZ\Publish\Core\Helper\TranslationHelper
@@ -35,23 +42,35 @@ class EzLocationBackend implements BackendInterface
     protected $defaultSections;
 
     /**
+     * @var int[]
+     */
+    protected $locationContentTypeIds;
+
+    /**
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\SearchService $searchService
+     * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $contentTypeHandler
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      * @param string[] $locationContentTypes
      * @param int[] $defaultSections
      */
     public function __construct(
         SearchService $searchService,
+        Handler $contentTypeHandler,
         TranslationHelper $translationHelper,
         array $locationContentTypes,
         array $defaultSections
     ) {
         $this->searchService = $searchService;
+        $this->contentTypeHandler = $contentTypeHandler;
         $this->translationHelper = $translationHelper;
         $this->locationContentTypes = $locationContentTypes;
         $this->defaultSections = $defaultSections;
+
+        $this->locationContentTypeIds = $this->getContentTypeIds(
+            $this->locationContentTypes
+        );
     }
 
     /**
@@ -122,7 +141,7 @@ class EzLocationBackend implements BackendInterface
     {
         $criteria = array(
             new Criterion\ParentLocationId($location->getId()),
-            new Criterion\ContentTypeIdentifier($this->locationContentTypes),
+            new Criterion\ContentTypeId($this->locationContentTypeIds),
         );
 
         $query = new LocationQuery();
@@ -145,7 +164,7 @@ class EzLocationBackend implements BackendInterface
     {
         $criteria = array(
             new Criterion\ParentLocationId($location->getId()),
-            new Criterion\ContentTypeIdentifier($this->locationContentTypes),
+            new Criterion\ContentTypeId($this->locationContentTypeIds),
         );
 
         $query = new LocationQuery();
@@ -289,5 +308,28 @@ class EzLocationBackend implements BackendInterface
             },
             $searchResult->searchHits
         );
+    }
+
+    /**
+     * Returns content type IDs for all existing content types.
+     *
+     * @param array $contentTypeIdentifiers
+     *
+     * @return array
+     */
+    protected function getContentTypeIds(array $contentTypeIdentifiers)
+    {
+        $idList = array();
+
+        foreach ($contentTypeIdentifiers as $identifier) {
+            try {
+                $contentType = $this->contentTypeHandler->loadByIdentifier($identifier);
+                $idList[] = $contentType->id;
+            } catch (APINotFoundException $e) {
+                continue;
+            }
+        }
+
+        return $idList;
     }
 }
