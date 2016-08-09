@@ -31,11 +31,7 @@ class SectionTest extends TestCase
     public function setUp()
     {
         $this->sectionServiceMock = $this->createMock(SectionService::class);
-
-        $this->repositoryMock = $this->getMockBuilder(Repository::class)
-            ->disableOriginalConstructor()
-            ->setMethods(array('getSectionService'))
-            ->getMock();
+        $this->repositoryMock = $this->createPartialMock(Repository::class, array('getSectionService'));
 
         $this->repositoryMock
             ->expects($this->any())

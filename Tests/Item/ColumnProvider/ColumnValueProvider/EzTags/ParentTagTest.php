@@ -28,11 +28,7 @@ class ParentTagTest extends TestCase
 
     public function setUp()
     {
-        $this->tagsServiceMock = $this->getMockBuilder(TagsService::class)
-            ->disableOriginalConstructor()
-            ->setMethods(array('loadTag'))
-            ->getMock();
-
+        $this->tagsServiceMock = $this->createPartialMock(TagsService::class, array('loadTag'));
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
 
         $this->provider = new ParentTag(
