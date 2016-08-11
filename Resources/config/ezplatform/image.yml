@@ -1,7 +1,7 @@
 system:
     default:
         image_variations:
-            netgen_content_browser:
+            ngcb_thumbnail:
                 reference: original
                 filters:
                     - { name: geometry/scale, params: [200, 200] }
