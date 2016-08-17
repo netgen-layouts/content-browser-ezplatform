@@ -67,7 +67,7 @@ class EzPublishDefaultPreviewPass implements CompilerPassInterface
             array();
 
         $contentBrowserRules += array(
-            '___ngcb_preview_default___' => $defaultRule
+            '___ngcb_preview_default___' => $defaultRule,
         );
 
         $scopeRules['ngcb_preview'] = $contentBrowserRules;
