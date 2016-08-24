@@ -7,6 +7,8 @@ use Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend;
 use Netgen\Bundle\ContentBrowserBundle\Item\ItemInterface;
 use Netgen\Bundle\ContentBrowserBundle\Item\EzLocation\Item;
 use eZ\Publish\API\Repository\SearchService;
+use eZ\Publish\SPI\Persistence\Content\Type\Handler;
+use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
@@ -22,6 +24,11 @@ class EzContentBackendTest extends TestCase
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
     protected $searchServiceMock;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $contentTypeHandlerMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -45,15 +52,31 @@ class EzContentBackendTest extends TestCase
 
     public function setUp()
     {
+        $this->locationContentTypes = array('frontpage' => 24, 'category' => 42);
+
+        $this->contentTypeHandlerMock = $this->createMock(Handler::class);
+        $this->contentTypeHandlerMock
+            ->expects($this->any())
+            ->method('loadByIdentifier')
+            ->will(
+                $this->returnCallback(function ($identifier) {
+                    return new Type(
+                        array(
+                            'id' => $this->locationContentTypes[$identifier],
+                        )
+                    );
+                })
+            );
+
         $this->searchServiceMock = $this->createMock(SearchService::class);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
-        $this->locationContentTypes = array('frontpage', 'category');
         $this->defaultSections = array(2, 43, 5);
 
         $this->backend = new EzContentBackend(
             $this->searchServiceMock,
+            $this->contentTypeHandlerMock,
             $this->translationHelperMock,
-            $this->locationContentTypes,
+            array_keys($this->locationContentTypes),
             $this->defaultSections
         );
     }
@@ -62,6 +85,7 @@ class EzContentBackendTest extends TestCase
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::__construct
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::getDefaultSections
      * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::buildItems
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Backend\EzContentBackend::getContentTypeIds
      */
     public function testGetDefaultSections()
     {
@@ -211,7 +235,9 @@ class EzContentBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\ParentLocationId(2),
-                new Criterion\ContentTypeIdentifier($this->locationContentTypes),
+                new Criterion\ContentTypeId(
+                    array_values($this->locationContentTypes)
+                ),
             )
         );
 
@@ -248,7 +274,9 @@ class EzContentBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             array(
                 new Criterion\ParentLocationId(2),
-                new Criterion\ContentTypeIdentifier($this->locationContentTypes),
+                new Criterion\ContentTypeId(
+                    array_values($this->locationContentTypes)
+                ),
             )
         );
 
