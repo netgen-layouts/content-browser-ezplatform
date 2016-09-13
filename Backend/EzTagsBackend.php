@@ -26,19 +26,27 @@ class EzTagsBackend implements BackendInterface
     /**
      * @var array
      */
-    protected $languages;
+    protected $languages = array();
 
     /**
      * Constructor.
      *
      * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     * @param array $languages
      */
-    public function __construct(TagsService $tagsService, TranslationHelper $translationHelper, array $languages)
+    public function __construct(TagsService $tagsService, TranslationHelper $translationHelper)
     {
         $this->tagsService = $tagsService;
         $this->translationHelper = $translationHelper;
+    }
+
+    /**
+     * Sets the current languages.
+     *
+     * @param array $languages
+     */
+    public function setLanguages(array $languages = array())
+    {
         $this->languages = $languages;
     }
 

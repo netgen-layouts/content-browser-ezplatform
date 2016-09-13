@@ -17,7 +17,8 @@ services:
         arguments:
             - "@ezpublish.api.service.tags"
             - "@ezpublish.translation_helper"
-            - $languages$
+        calls:
+            - [setLanguages, ["$languages$"]]
         tags:
             - { name: netgen_content_browser.backend, value_type: eztags }
 
