@@ -46,6 +46,11 @@ class EzLocationBackendTest extends TestCase
     protected $defaultSections;
 
     /**
+     * @var array
+     */
+    protected $languages;
+
+    /**
      * @var \Netgen\Bundle\ContentBrowserBundle\Backend\EzLocationBackend
      */
     protected $backend;
@@ -71,6 +76,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock = $this->createMock(SearchService::class);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
         $this->defaultSections = array(2, 43, 5);
+        $this->languages = array('eng-GB', 'cro-HR');
 
         $this->backend = new EzLocationBackend(
             $this->searchServiceMock,
@@ -79,6 +85,8 @@ class EzLocationBackendTest extends TestCase
             array_keys($this->locationContentTypes),
             $this->defaultSections
         );
+
+        $this->backend->setLanguages($this->languages);
     }
 
     /**
@@ -102,7 +110,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $locations = $this->backend->getDefaultSections();
@@ -135,7 +143,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $location = $this->backend->loadLocation(2);
@@ -159,7 +167,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $this->backend->loadLocation(2);
@@ -182,7 +190,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $item = $this->backend->loadItem(2);
@@ -206,7 +214,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $this->backend->loadItem(2);
@@ -240,7 +248,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $locations = $this->backend->getSubLocations(
@@ -276,7 +284,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->getSubLocationsCount(
@@ -311,7 +319,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
@@ -350,7 +358,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
@@ -385,7 +393,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->getSubItemsCount(
@@ -421,7 +429,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->search('test');
@@ -458,7 +466,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->search('test', 5, 10);
@@ -489,7 +497,7 @@ class EzLocationBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query))
+            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->searchCount('test');

@@ -42,6 +42,11 @@ class EzLocationBackend implements BackendInterface
     protected $defaultSections;
 
     /**
+     * @var array
+     */
+    protected $languages = array();
+
+    /**
      * @var int[]
      */
     protected $locationContentTypeIds;
@@ -74,6 +79,16 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
+     * Sets the current languages.
+     *
+     * @param array $languages
+     */
+    public function setLanguages(array $languages = null)
+    {
+        $this->languages = is_array($languages) ? $languages : null;
+    }
+
+    /**
      * Returns the default sections available in the backend.
      *
      * @return \Netgen\Bundle\ContentBrowserBundle\Item\LocationInterface[]
@@ -83,7 +98,7 @@ class EzLocationBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($this->defaultSections);
 
-        $result = $this->searchService->findLocations($query);
+        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
         return $this->buildItems($result);
     }
@@ -102,7 +117,7 @@ class EzLocationBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($id);
 
-        $result = $this->searchService->findLocations($query);
+        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
         if (!empty($result->searchHits)) {
             return $this->buildItem($result->searchHits[0]);
@@ -148,7 +163,7 @@ class EzLocationBackend implements BackendInterface
         $query->filter = new Criterion\LogicalAnd($criteria);
         $query->limit = 9999;
 
-        $result = $this->searchService->findLocations($query);
+        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
         return $this->buildItems($result);
     }
@@ -171,7 +186,7 @@ class EzLocationBackend implements BackendInterface
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->searchService->findLocations($query);
+        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
         return $result->totalCount;
     }
@@ -196,7 +211,7 @@ class EzLocationBackend implements BackendInterface
         $query->limit = $limit;
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->searchService->findLocations($query);
+        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
         return $this->buildItems($result);
     }
@@ -218,7 +233,7 @@ class EzLocationBackend implements BackendInterface
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->searchService->findLocations($query);
+        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
         return $result->totalCount;
     }
@@ -246,7 +261,7 @@ class EzLocationBackend implements BackendInterface
         $query->offset = $offset;
         $query->limit = $limit;
 
-        $result = $this->searchService->findLocations($query);
+        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
         return $this->buildItems($result);
     }
@@ -271,7 +286,7 @@ class EzLocationBackend implements BackendInterface
 
         $query->limit = 0;
 
-        $result = $this->searchService->findLocations($query);
+        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
         return $result->totalCount;
     }

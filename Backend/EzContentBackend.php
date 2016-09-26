@@ -29,7 +29,7 @@ class EzContentBackend extends EzLocationBackend
             )
         );
 
-        $result = $this->searchService->findLocations($query);
+        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
         if (!empty($result->searchHits)) {
             return $this->buildItem($result->searchHits[0]);

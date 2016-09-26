@@ -52,6 +52,8 @@ services:
             - "@ezpublish.translation_helper"
             - $backend.ezlocation.location_content_types;netgen_content_browser$
             - $backend.ezlocation.default_sections;netgen_content_browser$
+        calls:
+            - [setLanguages, ["$languages$"]]
         tags:
             -  { name: netgen_content_browser.backend, value_type: ezlocation }
 
