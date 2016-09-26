@@ -42,9 +42,10 @@ class EzTagsBackendTest extends TestCase
 
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->translationHelperMock,
-            $this->languages
+            $this->translationHelperMock
         );
+
+        $this->backend->setLanguages($this->languages);
     }
 
     /**
@@ -278,7 +279,8 @@ class EzTagsBackendTest extends TestCase
                 $this->equalTo('test'),
                 $this->equalTo('eng-GB'),
                 $this->equalTo(true),
-                $this->equalTo(0)
+                $this->equalTo(0),
+                $this->equalTo(25)
             )
             ->will($this->returnValue(array($this->getTag(), $this->getTag())));
 
