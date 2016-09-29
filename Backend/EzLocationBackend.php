@@ -132,7 +132,7 @@ class EzLocationBackend implements BackendInterface
     }
 
     /**
-     * Loads the item by its value ID.
+     * Loads the item by its ID.
      *
      * @param int|string $id
      *

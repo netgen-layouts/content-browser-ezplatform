@@ -43,11 +43,11 @@ class SingleEzContentConfigProcessorTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\SingleEzContentConfigProcessor::getValueType
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\SingleEzContentConfigProcessor::getItemType
      */
-    public function testGetValueType()
+    public function testGetItemType()
     {
-        $this->assertEquals('ezcontent', $this->configProcessor->getValueType());
+        $this->assertEquals('ezcontent', $this->configProcessor->getItemType());
     }
 
     /**

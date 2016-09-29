@@ -17,11 +17,11 @@ class EzTagsConfigProcessor extends ConfigProcessor
     }
 
     /**
-     * Returns the value type which this config processor supports.
+     * Returns the item type which this config processor supports.
      *
      * @return string
      */
-    public function getValueType()
+    public function getItemType()
     {
         return Item::TYPE;
     }

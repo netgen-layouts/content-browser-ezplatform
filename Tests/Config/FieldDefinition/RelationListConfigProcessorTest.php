@@ -37,11 +37,11 @@ class RelationListConfigProcessorTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor::getValueType
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor::getItemType
      */
-    public function testGetValueType()
+    public function testGetItemType()
     {
-        $this->assertEquals('ezcontent', $this->configProcessor->getValueType());
+        $this->assertEquals('ezcontent', $this->configProcessor->getItemType());
     }
 
     /**

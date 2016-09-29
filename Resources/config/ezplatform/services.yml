@@ -55,13 +55,13 @@ services:
         calls:
             - [setLanguages, ["$languages$"]]
         tags:
-            -  { name: netgen_content_browser.backend, value_type: ezlocation }
+            -  { name: netgen_content_browser.backend, item_type: ezlocation }
 
     netgen_content_browser.backend.ezcontent:
         class: "%netgen_content_browser.backend.ezcontent.class%"
         parent: netgen_content_browser.backend.ezlocation
         tags:
-            -  { name: netgen_content_browser.backend, value_type: ezcontent }
+            -  { name: netgen_content_browser.backend, item_type: ezcontent }
 
     # Serializer handlers
 
@@ -71,7 +71,7 @@ services:
             - "@ezpublish.api.repository"
             - "@netgen_content_browser.current_config"
         tags:
-            -  { name: netgen_content_browser.serializer.handler, value_type: ezlocation }
+            -  { name: netgen_content_browser.serializer.handler, item_type: ezlocation }
 
     netgen_content_browser.serializer.handler.ezcontent:
         class: "%netgen_content_browser.serializer.handler.ezcontent.class%"
@@ -79,7 +79,7 @@ services:
             - "@ezpublish.api.repository"
             - "@netgen_content_browser.current_config"
         tags:
-            -  { name: netgen_content_browser.serializer.handler, value_type: ezcontent }
+            -  { name: netgen_content_browser.serializer.handler, item_type: ezcontent }
 
     # Template value providers
 
@@ -88,14 +88,14 @@ services:
         arguments:
             - "@ezpublish.api.repository"
         tags:
-            -  { name: netgen_content_browser.template_value_provider, value_type: ezlocation }
+            -  { name: netgen_content_browser.template_value_provider, item_type: ezlocation }
 
     netgen_content_browser.template_value_provider.ezcontent:
         class: "%netgen_content_browser.template_value_provider.ezcontent.class%"
         arguments:
             - "@ezpublish.api.repository"
         tags:
-            -  { name: netgen_content_browser.template_value_provider, value_type: ezcontent }
+            -  { name: netgen_content_browser.template_value_provider, item_type: ezcontent }
 
     # Config processors
 

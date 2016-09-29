@@ -11,7 +11,7 @@ use Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item;
 class EzContentBackend extends EzLocationBackend
 {
     /**
-     * Loads the item by its value ID.
+     * Loads the item by its ID.
      *
      * @param int|string $id
      *

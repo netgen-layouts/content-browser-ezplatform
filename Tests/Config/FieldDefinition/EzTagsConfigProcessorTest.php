@@ -37,11 +37,11 @@ class EzTagsConfigProcessorTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigProcessor::getValueType
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\EzTagsConfigProcessor::getItemType
      */
-    public function testGetValueType()
+    public function testGetItemType()
     {
-        $this->assertEquals('eztags', $this->configProcessor->getValueType());
+        $this->assertEquals('eztags', $this->configProcessor->getItemType());
     }
 
     /**
