@@ -27,11 +27,11 @@ class LocationTest extends TestCase
 
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Location::__construct
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Location::getId
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\EzTags\Location::getLocationId
      */
-    public function testGetId()
+    public function testGetLocationId()
     {
-        $this->assertEquals(42, $this->location->getId());
+        $this->assertEquals(42, $this->location->getLocationId());
     }
 
     /**

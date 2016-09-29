@@ -121,9 +121,9 @@ class EzContentBackendTest extends TestCase
             $this->assertInstanceOf(LocationInterface::class, $location);
         }
 
-        $this->assertEquals(2, $locations[0]->getId());
-        $this->assertEquals(43, $locations[1]->getId());
-        $this->assertEquals(5, $locations[2]->getId());
+        $this->assertEquals(2, $locations[0]->getLocationId());
+        $this->assertEquals(43, $locations[1]->getLocationId());
+        $this->assertEquals(5, $locations[2]->getLocationId());
     }
 
     /**
@@ -149,7 +149,7 @@ class EzContentBackendTest extends TestCase
         $location = $this->backend->loadLocation(2);
 
         $this->assertInstanceOf(LocationInterface::class, $location);
-        $this->assertEquals(2, $location->getId());
+        $this->assertEquals(2, $location->getLocationId());
     }
 
     /**

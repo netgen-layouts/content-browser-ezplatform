@@ -45,11 +45,11 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item::getId
+     * @covers \Netgen\Bundle\ContentBrowserBundle\Item\EzContent\Item::getLocationId
      */
-    public function testGetId()
+    public function testGetLocationId()
     {
-        $this->assertEquals(22, $this->item->getId());
+        $this->assertEquals(22, $this->item->getLocationId());
     }
 
     /**

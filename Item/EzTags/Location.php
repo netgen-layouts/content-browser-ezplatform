@@ -34,7 +34,7 @@ class Location implements LocationInterface, EzTagsInterface
      *
      * @return int|string
      */
-    public function getId()
+    public function getLocationId()
     {
         return $this->tag->id;
     }

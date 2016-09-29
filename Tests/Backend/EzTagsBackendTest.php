@@ -65,7 +65,7 @@ class EzTagsBackendTest extends TestCase
         $this->assertCount(1, $locations);
 
         $this->assertInstanceOf(LocationInterface::class, $locations[0]);
-        $this->assertEquals(0, $locations[0]->getId());
+        $this->assertEquals(0, $locations[0]->getLocationId());
     }
 
     /**
@@ -83,7 +83,7 @@ class EzTagsBackendTest extends TestCase
         $location = $this->backend->loadLocation(1);
 
         $this->assertInstanceOf(LocationInterface::class, $location);
-        $this->assertEquals(1, $location->getId());
+        $this->assertEquals(1, $location->getLocationId());
     }
 
     /**
@@ -115,7 +115,7 @@ class EzTagsBackendTest extends TestCase
         $location = $this->backend->loadLocation(0);
 
         $this->assertInstanceOf(LocationInterface::class, $location);
-        $this->assertEquals(0, $location->getId());
+        $this->assertEquals(0, $location->getLocationId());
     }
 
     /**

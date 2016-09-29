@@ -45,7 +45,7 @@ class Item implements ItemInterface, LocationInterface, EzContentInterface
      *
      * @return int|string
      */
-    public function getId()
+    public function getLocationId()
     {
         return $this->location->id;
     }

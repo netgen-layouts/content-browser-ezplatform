@@ -155,7 +155,7 @@ class EzLocationBackend implements BackendInterface
     public function getSubLocations(LocationInterface $location)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($location->getId()),
+            new Criterion\ParentLocationId($location->getLocationId()),
             new Criterion\ContentTypeId($this->locationContentTypeIds),
         );
 
@@ -178,7 +178,7 @@ class EzLocationBackend implements BackendInterface
     public function getSubLocationsCount(LocationInterface $location)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($location->getId()),
+            new Criterion\ParentLocationId($location->getLocationId()),
             new Criterion\ContentTypeId($this->locationContentTypeIds),
         );
 
@@ -203,7 +203,7 @@ class EzLocationBackend implements BackendInterface
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($location->getId()),
+            new Criterion\ParentLocationId($location->getLocationId()),
         );
 
         $query = new LocationQuery();
@@ -226,7 +226,7 @@ class EzLocationBackend implements BackendInterface
     public function getSubItemsCount(LocationInterface $location)
     {
         $criteria = array(
-            new Criterion\ParentLocationId($location->getId()),
+            new Criterion\ParentLocationId($location->getLocationId()),
         );
 
         $query = new LocationQuery();
