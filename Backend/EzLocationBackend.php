@@ -85,7 +85,7 @@ class EzLocationBackend implements BackendInterface
      */
     public function setLanguages(array $languages = null)
     {
-        $this->languages = is_array($languages) ? $languages : null;
+        $this->languages = is_array($languages) ? $languages : array();
     }
 
     /**
