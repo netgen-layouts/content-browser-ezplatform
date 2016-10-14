@@ -17,7 +17,6 @@ parameters:
     netgen_content_browser.template_value_provider.ezlocation.class: Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzLocationTemplateValueProvider
     netgen_content_browser.template_value_provider.ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Item\Renderer\TemplateValueProvider\EzContentTemplateValueProvider
 
-    netgen_content_browser.config_processor.single_ezcontent.class: Netgen\Bundle\ContentBrowserBundle\Config\SingleEzContentConfigProcessor
     netgen_content_browser.config_processor.field_definition.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\ConfigProcessor
     netgen_content_browser.config_processor.field_definition.ezobjectrelationlist.class: Netgen\Bundle\ContentBrowserBundle\Config\FieldDefinition\RelationListConfigProcessor
 
@@ -103,11 +102,6 @@ services:
         class: "%netgen_content_browser.config_processor.field_definition.class%"
         arguments:
             - "@ezpublish.api.service.content_type"
-
-    netgen_content_browser.config_processor.single_ezcontent:
-        class: "%netgen_content_browser.config_processor.single_ezcontent.class%"
-        tags:
-            - { name: netgen_content_browser.config_processor }
 
     netgen_content_browser.config_processor.field_definition.ezobjectrelationlist:
         class: "%netgen_content_browser.config_processor.field_definition.ezobjectrelationlist.class%"
