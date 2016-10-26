@@ -51,6 +51,7 @@ services:
             - "@ezpublish.translation_helper"
             - $backend.ezlocation.location_content_types;netgen_content_browser$
             - $backend.ezlocation.default_sections;netgen_content_browser$
+        lazy: true
         calls:
             - [setLanguages, ["$languages$"]]
         tags:
@@ -59,6 +60,7 @@ services:
     netgen_content_browser.backend.ezcontent:
         class: "%netgen_content_browser.backend.ezcontent.class%"
         parent: netgen_content_browser.backend.ezlocation
+        lazy: true
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezcontent }
 
