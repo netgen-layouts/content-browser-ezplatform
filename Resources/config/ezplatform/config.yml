@@ -1,5 +1,6 @@
 item_types:
     ezcontent:
+        name: item_types.ezcontent
         min_selected: 1
         max_selected: 0
         preview:
@@ -44,6 +45,7 @@ item_types:
             - visible
 
     ezlocation:
+        name: item_types.ezlocation
         min_selected: 1
         max_selected: 1
         preview:
