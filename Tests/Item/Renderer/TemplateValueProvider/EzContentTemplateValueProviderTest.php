@@ -33,7 +33,15 @@ class EzContentTemplateValueProviderTest extends TestCase
     public function setUp()
     {
         $this->contentServiceMock = $this->createMock(ContentService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, array('getContentService'));
+        $this->repositoryMock = $this->createPartialMock(Repository::class, array('sudo', 'getContentService'));
+
+        $this->repositoryMock
+            ->expects($this->any())
+            ->method('sudo')
+            ->with($this->anything())
+            ->will($this->returnCallback(function ($callback) {
+                return $callback($this->repositoryMock);
+            }));
 
         $this->repositoryMock
             ->expects($this->any())

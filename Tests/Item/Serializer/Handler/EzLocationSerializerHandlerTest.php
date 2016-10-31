@@ -39,7 +39,15 @@ class EzLocationSerializerHandlerTest extends TestCase
     public function setUp()
     {
         $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, array('getContentTypeService'));
+        $this->repositoryMock = $this->createPartialMock(Repository::class, array('sudo', 'getContentTypeService'));
+
+        $this->repositoryMock
+            ->expects($this->any())
+            ->method('sudo')
+            ->with($this->anything())
+            ->will($this->returnCallback(function ($callback) {
+                return $callback($this->repositoryMock);
+            }));
 
         $this->repositoryMock
             ->expects($this->any())
