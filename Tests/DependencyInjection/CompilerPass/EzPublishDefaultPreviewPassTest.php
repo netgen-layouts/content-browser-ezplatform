@@ -63,4 +63,17 @@ class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
         $this->assertFalse($this->container->hasParameter('ezsettings.eng.content_view'));
         $this->assertFalse($this->container->hasParameter('ezsettings.eng.location_view'));
     }
+
+    /**
+     * @covers \Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::process
+     */
+    public function testProcessWithEmptyContainer()
+    {
+        $this->compile();
+
+        $this->assertEmpty($this->container->getAliases());
+        // The container has at least self ("service_container") as the service
+        $this->assertCount(1, $this->container->getServiceIds());
+        $this->assertEmpty($this->container->getParameterBag()->all());
+    }
 }
