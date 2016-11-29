@@ -1,19 +1,6 @@
-parameters:
-    netgen_content_browser.backend.eztags.class: Netgen\ContentBrowser\Backend\EzTagsBackend
-
-    netgen_content_browser.serializer.handler.eztags.class: Netgen\ContentBrowser\Item\Serializer\Handler\EzTagsSerializerHandler
-    netgen_content_browser.template_value_provider.eztags.class: Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzTagsTemplateValueProvider
-
-    netgen_content_browser.config_processor.field_definition.eztags.class: Netgen\ContentBrowser\Config\FieldDefinition\EzTagsConfigProcessor
-
-    netgen_content_browser.column_value_provider.eztags.tag_id.class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId
-    netgen_content_browser.column_value_provider.eztags.parent_tag_id.class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId
-    netgen_content_browser.column_value_provider.eztags.parent_tag.class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
-    netgen_content_browser.column_value_provider.eztags.modified.class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
-
 services:
     netgen_content_browser.backend.eztags:
-        class: "%netgen_content_browser.backend.eztags.class%"
+        class: Netgen\ContentBrowser\Backend\EzTagsBackend
         # Needs to be lazy since we're injecting "languages" dynamic param
         lazy: true
         arguments:
@@ -25,33 +12,33 @@ services:
             - { name: netgen_content_browser.backend, item_type: eztags }
 
     netgen_content_browser.serializer.handler.eztags:
-        class: "%netgen_content_browser.serializer.handler.eztags.class%"
+        class: Netgen\ContentBrowser\Item\Serializer\Handler\EzTagsSerializerHandler
         tags:
             - { name: netgen_content_browser.serializer.handler, item_type: eztags }
 
     netgen_content_browser.template_value_provider.eztags:
-        class: "%netgen_content_browser.template_value_provider.eztags.class%"
+        class: Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzTagsTemplateValueProvider
         tags:
             - { name: netgen_content_browser.template_value_provider, item_type: eztags }
 
     netgen_content_browser.config_processor.field_definition.eztags:
-        class: "%netgen_content_browser.config_processor.field_definition.eztags.class%"
+        class: Netgen\ContentBrowser\Config\FieldDefinition\EzTagsConfigProcessor
         parent: netgen_content_browser.config_processor.field_definition
         tags:
             - { name: netgen_content_browser.config_processor }
 
     netgen_content_browser.column_value_provider.eztags.tag_id:
-        class: "%netgen_content_browser.column_value_provider.eztags.tag_id.class%"
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags\tag_id }
 
     netgen_content_browser.column_value_provider.eztags.parent_tag_id:
-        class: "%netgen_content_browser.column_value_provider.eztags.parent_tag_id.class%"
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags\parent_tag_id }
 
     netgen_content_browser.column_value_provider.eztags.parent_tag:
-        class: "%netgen_content_browser.column_value_provider.eztags.parent_tag.class%"
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
         arguments:
             - "@ezpublish.api.service.tags"
             - "@ezpublish.translation_helper"
@@ -59,7 +46,7 @@ services:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags\parent_tag }
 
     netgen_content_browser.column_value_provider.eztags.modified:
-        class: "%netgen_content_browser.column_value_provider.eztags.modified.class%"
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
         arguments:
             - "%netgen_content_browser.columns.date_format%"
         tags:
