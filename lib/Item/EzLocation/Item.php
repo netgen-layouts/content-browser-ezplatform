@@ -3,8 +3,8 @@
 namespace Netgen\ContentBrowser\Item\EzLocation;
 
 use eZ\Publish\API\Repository\Values\Content\Location;
-use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
+use Netgen\ContentBrowser\Item\LocationInterface;
 
 class Item implements ItemInterface, LocationInterface, EzLocationInterface
 {
@@ -79,9 +79,9 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
      */
     public function getParentId()
     {
-        return $this->location->parentLocationId != 1 ?
-            $this->location->parentLocationId :
-            null;
+        $parentId = (int) $this->location->parentLocationId;
+
+        return $parentId !== 1 ? $parentId : null;
     }
 
     /**

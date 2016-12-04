@@ -2,12 +2,12 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzLocation;
 
+use DateTime;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Published;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
 use PHPUnit\Framework\TestCase;
-use DateTime;
 
 class PublishedTest extends TestCase
 {

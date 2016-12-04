@@ -3,8 +3,8 @@
 namespace Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider;
 
 use eZ\Publish\API\Repository\Repository;
-use Netgen\ContentBrowser\Item\Renderer\TemplateValueProviderInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
+use Netgen\ContentBrowser\Item\Renderer\TemplateValueProviderInterface;
 
 class EzLocationTemplateValueProvider implements TemplateValueProviderInterface
 {

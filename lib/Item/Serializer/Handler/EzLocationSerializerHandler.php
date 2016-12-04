@@ -2,10 +2,10 @@
 
 namespace Netgen\ContentBrowser\Item\Serializer\Handler;
 
+use eZ\Publish\API\Repository\Repository;
 use Netgen\ContentBrowser\Config\ConfigurationInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\Serializer\ItemSerializerHandlerInterface;
-use eZ\Publish\API\Repository\Repository;
 
 class EzLocationSerializerHandler implements ItemSerializerHandlerInterface
 {
@@ -59,7 +59,7 @@ class EzLocationSerializerHandler implements ItemSerializerHandlerInterface
             }
         );
 
-        return in_array($contentTypeIdentifier, $contentTypes);
+        return in_array($contentTypeIdentifier, $contentTypes, true);
     }
 
     /**

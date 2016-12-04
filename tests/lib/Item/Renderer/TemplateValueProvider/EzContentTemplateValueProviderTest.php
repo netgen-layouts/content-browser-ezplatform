@@ -2,16 +2,16 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\Renderer\TemplateValueProvider;
 
-use eZ\Publish\API\Repository\ContentService;
-use eZ\Publish\Core\Repository\Values\Content\Content;
-use Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzContentTemplateValueProvider;
-use Netgen\ContentBrowser\Item\EzContent\Item;
-use eZ\Publish\Core\Repository\Repository;
-use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use PHPUnit\Framework\TestCase;
-use DateTimeZone;
 use DateTime;
+use DateTimeZone;
+use eZ\Publish\API\Repository\ContentService;
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\Core\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\Content\Content;
+use eZ\Publish\Core\Repository\Values\Content\Location;
+use Netgen\ContentBrowser\Item\EzContent\Item;
+use Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzContentTemplateValueProvider;
+use PHPUnit\Framework\TestCase;
 
 class EzContentTemplateValueProviderTest extends TestCase
 {

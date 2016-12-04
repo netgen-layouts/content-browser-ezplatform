@@ -2,8 +2,8 @@
 
 namespace Netgen\ContentBrowser\Item\EzTags;
 
-use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
+use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
 class Item implements ItemInterface, LocationInterface, EzTagsInterface

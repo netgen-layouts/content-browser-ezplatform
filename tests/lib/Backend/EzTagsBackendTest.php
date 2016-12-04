@@ -4,12 +4,12 @@ namespace Netgen\ContentBrowser\Tests\Backend;
 
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use Netgen\ContentBrowser\Backend\EzTagsBackend;
 use Netgen\ContentBrowser\Item\EzTags\Item;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
-use Netgen\ContentBrowser\Backend\EzTagsBackend;
 use PHPUnit\Framework\TestCase;
 
 class EzTagsBackendTest extends TestCase

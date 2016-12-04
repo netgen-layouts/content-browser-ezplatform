@@ -2,19 +2,19 @@
 
 namespace Netgen\ContentBrowser\Tests\Backend;
 
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use Netgen\ContentBrowser\Backend\EzLocationBackend;
-use Netgen\ContentBrowser\Item\ItemInterface;
-use Netgen\ContentBrowser\Item\EzLocation\Item;
 use eZ\Publish\API\Repository\SearchService;
-use eZ\Publish\SPI\Persistence\Content\Type\Handler;
-use eZ\Publish\SPI\Persistence\Content\Type;
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
-use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\SPI\Persistence\Content\Type;
+use eZ\Publish\SPI\Persistence\Content\Type\Handler;
+use Netgen\ContentBrowser\Backend\EzLocationBackend;
+use Netgen\ContentBrowser\Item\EzLocation\Item;
+use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use PHPUnit\Framework\TestCase;
 

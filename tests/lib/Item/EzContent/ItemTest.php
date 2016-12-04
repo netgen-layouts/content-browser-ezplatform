@@ -2,9 +2,9 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\EzContent;
 
-use Netgen\ContentBrowser\Item\EzContent\Item;
-use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\Core\Repository\Values\Content\Location;
+use Netgen\ContentBrowser\Item\EzContent\Item;
 use PHPUnit\Framework\TestCase;
 
 class ItemTest extends TestCase

@@ -4,9 +4,9 @@ namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\Ez
 
 use eZ\Publish\API\Repository\SectionService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\API\Repository\Values\Content\Section as EzSection;
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\Content\Section as EzSection;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Section;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
 use PHPUnit\Framework\TestCase;

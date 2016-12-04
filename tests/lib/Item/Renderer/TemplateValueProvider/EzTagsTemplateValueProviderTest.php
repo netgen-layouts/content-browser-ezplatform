@@ -2,12 +2,12 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\Renderer\TemplateValueProvider;
 
-use Netgen\ContentBrowser\Item\EzTags\Item;
-use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
-use Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzTagsTemplateValueProvider;
-use PHPUnit\Framework\TestCase;
-use DateTimeZone;
 use DateTime;
+use DateTimeZone;
+use Netgen\ContentBrowser\Item\EzTags\Item;
+use Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzTagsTemplateValueProvider;
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use PHPUnit\Framework\TestCase;
 
 class EzTagsTemplateValueProviderTest extends TestCase
 {

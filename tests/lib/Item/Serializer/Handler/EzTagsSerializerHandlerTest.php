@@ -2,12 +2,12 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\Serializer\Handler;
 
-use Netgen\ContentBrowser\Item\EzTags\Item;
-use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
-use Netgen\ContentBrowser\Item\Serializer\Handler\EzTagsSerializerHandler;
-use PHPUnit\Framework\TestCase;
-use DateTimeZone;
 use DateTime;
+use DateTimeZone;
+use Netgen\ContentBrowser\Item\EzTags\Item;
+use Netgen\ContentBrowser\Item\Serializer\Handler\EzTagsSerializerHandler;
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use PHPUnit\Framework\TestCase;
 
 class EzTagsSerializerHandlerTest extends TestCase
 {

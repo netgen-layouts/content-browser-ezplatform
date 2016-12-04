@@ -2,8 +2,8 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\EzLocation;
 
-use Netgen\ContentBrowser\Item\EzLocation\Item;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use Netgen\ContentBrowser\Item\EzLocation\Item;
 use PHPUnit\Framework\TestCase;
 
 class ItemTest extends TestCase

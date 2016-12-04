@@ -2,17 +2,17 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\Serializer\Handler;
 
+use DateTime;
+use DateTimeZone;
 use eZ\Publish\API\Repository\ContentTypeService;
+use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType;
 use Netgen\ContentBrowser\Config\Configuration;
-use Netgen\ContentBrowser\Item\Serializer\Handler\EzLocationSerializerHandler;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
+use Netgen\ContentBrowser\Item\Serializer\Handler\EzLocationSerializerHandler;
 use PHPUnit\Framework\TestCase;
-use DateTimeZone;
-use DateTime;
 
 class EzLocationSerializerHandlerTest extends TestCase
 {

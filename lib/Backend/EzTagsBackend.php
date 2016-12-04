@@ -2,14 +2,14 @@
 
 namespace Netgen\ContentBrowser\Backend;
 
-use Netgen\ContentBrowser\Exceptions\NotFoundException;
-use Netgen\ContentBrowser\Item\LocationInterface;
-use Netgen\ContentBrowser\Item\EzTags\Item;
-use Netgen\ContentBrowser\Item\EzTags\Location;
-use Netgen\TagsBundle\API\Repository\TagsService;
-use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use Netgen\ContentBrowser\Exceptions\NotFoundException;
+use Netgen\ContentBrowser\Item\EzTags\Item;
+use Netgen\ContentBrowser\Item\EzTags\Location;
+use Netgen\ContentBrowser\Item\LocationInterface;
+use Netgen\TagsBundle\API\Repository\TagsService;
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
 class EzTagsBackend implements BackendInterface
 {

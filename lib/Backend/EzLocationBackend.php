@@ -2,6 +2,7 @@
 
 namespace Netgen\ContentBrowser\Backend;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -9,10 +10,9 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
-use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
-use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
+use Netgen\ContentBrowser\Item\LocationInterface;
 
 class EzLocationBackend implements BackendInterface
 {

@@ -2,11 +2,11 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzTags;
 
+use DateTime;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified;
 use Netgen\ContentBrowser\Item\EzTags\Item;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
-use DateTime;
 
 class ModifiedTest extends TestCase
 {
