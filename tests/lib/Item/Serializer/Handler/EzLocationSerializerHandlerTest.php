@@ -83,8 +83,7 @@ class EzLocationSerializerHandlerTest extends TestCase
             ->with($this->equalTo(85))
             ->will($this->returnValue($contentType));
 
-        $this->assertEquals(
-            true,
+        $this->assertTrue(
             $this->handler->isSelectable(
                 $this->getItem()
             )
@@ -110,8 +109,7 @@ class EzLocationSerializerHandlerTest extends TestCase
             ->with($this->equalTo(85))
             ->will($this->returnValue($contentType));
 
-        $this->assertEquals(
-            false,
+        $this->assertFalse(
             $this->handler->isSelectable(
                 $this->getItem()
             )
@@ -136,8 +134,7 @@ class EzLocationSerializerHandlerTest extends TestCase
             $this->config
         );
 
-        $this->assertEquals(
-            true,
+        $this->assertTrue(
             $this->handler->isSelectable(
                 $this->getItem()
             )
@@ -161,8 +158,7 @@ class EzLocationSerializerHandlerTest extends TestCase
             $this->config
         );
 
-        $this->assertEquals(
-            true,
+        $this->assertTrue(
             $this->handler->isSelectable(
                 $this->getItem()
             )
