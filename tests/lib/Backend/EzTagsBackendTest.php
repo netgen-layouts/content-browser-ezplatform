@@ -301,8 +301,7 @@ class EzTagsBackendTest extends TestCase
     {
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->translationHelperMock,
-            array()
+            $this->translationHelperMock
         );
 
         $this->tagsServiceMock
@@ -368,8 +367,7 @@ class EzTagsBackendTest extends TestCase
     {
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->translationHelperMock,
-            array()
+            $this->translationHelperMock
         );
 
         $this->tagsServiceMock
