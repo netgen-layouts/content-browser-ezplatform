@@ -43,7 +43,7 @@ abstract class ConfigProcessor implements ConfigProcessorInterface
      */
     public function supports($configName)
     {
-        return stripos(
+        return mb_stripos(
             $configName,
             static::CONFIG_NAME_PREFIX . $this->getFieldTypeIdentifier() . '-'
         ) === 0;
@@ -60,7 +60,7 @@ abstract class ConfigProcessor implements ConfigProcessorInterface
      */
     protected function getFieldDefinition($configName)
     {
-        $configName = substr($configName, strlen(static::CONFIG_NAME_PREFIX));
+        $configName = mb_substr($configName, mb_strlen(static::CONFIG_NAME_PREFIX));
 
         $configName = explode('-', $configName);
         if (!isset($configName[2])) {
