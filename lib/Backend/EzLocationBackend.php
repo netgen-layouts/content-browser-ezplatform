@@ -4,8 +4,10 @@ namespace Netgen\ContentBrowser\Backend;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\API\Repository\SearchService;
+use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
@@ -50,6 +52,29 @@ class EzLocationBackend implements BackendInterface
      * @var int[]
      */
     protected $locationContentTypeIds;
+
+    /**
+     * @var array
+     */
+    protected $sortClauses = array(
+        Location::SORT_FIELD_PATH => SortClause\Location\Path::class,
+        Location::SORT_FIELD_PUBLISHED => SortClause\DatePublished::class,
+        Location::SORT_FIELD_MODIFIED => SortClause\DateModified::class,
+        Location::SORT_FIELD_SECTION => SortClause\SectionIdentifier::class,
+        Location::SORT_FIELD_DEPTH => SortClause\Location\Depth::class,
+        Location::SORT_FIELD_PRIORITY => SortClause\Location\Priority::class,
+        Location::SORT_FIELD_NAME => SortClause\ContentName::class,
+        Location::SORT_FIELD_NODE_ID => SortClause\Location\Id::class,
+        Location::SORT_FIELD_CONTENTOBJECT_ID => SortClause\ContentId::class,
+    );
+
+    /**
+     * @var array
+     */
+    protected $sortDirections = array(
+        Location::SORT_ORDER_ASC => LocationQuery::SORT_ASC,
+        Location::SORT_ORDER_DESC => LocationQuery::SORT_DESC,
+    );
 
     /**
      * Constructor.
@@ -162,6 +187,7 @@ class EzLocationBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd($criteria);
         $query->limit = 9999;
+        $query->sortClauses = $this->getSortClause($location->getLocation());
 
         $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
@@ -210,6 +236,7 @@ class EzLocationBackend implements BackendInterface
         $query->offset = $offset;
         $query->limit = $limit;
         $query->filter = new Criterion\LogicalAnd($criteria);
+        $query->sortClauses = $this->getSortClause($location->getLocation());
 
         $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
@@ -346,5 +373,26 @@ class EzLocationBackend implements BackendInterface
         }
 
         return $idList;
+    }
+
+    /**
+     * Returns the sort clause based on provided parent location.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Location $parentLocation
+     *
+     * @return array
+     */
+    protected function getSortClause(Location $parentLocation)
+    {
+        $sortType = $parentLocation->sortField;
+        $sortDirection = $this->sortDirections[$parentLocation->sortOrder];
+
+        if (!isset($this->sortClauses[$sortType])) {
+            return array();
+        }
+
+        return array(
+            new $this->sortClauses[$sortType]($sortDirection),
+        );
     }
 }

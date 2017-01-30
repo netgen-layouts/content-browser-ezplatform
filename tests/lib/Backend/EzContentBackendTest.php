@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
@@ -234,6 +235,7 @@ class EzContentBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::getSubLocations
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::getSortClause
      */
     public function testGetSubLocations()
     {
@@ -248,6 +250,8 @@ class EzContentBackendTest extends TestCase
                 ),
             )
         );
+
+        $query->sortClauses = array(new ContentName(LocationQuery::SORT_ASC));
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
@@ -308,6 +312,7 @@ class EzContentBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::getSortClause
      */
     public function testGetSubItems()
     {
@@ -319,6 +324,8 @@ class EzContentBackendTest extends TestCase
                 new Criterion\ParentLocationId(2),
             )
         );
+
+        $query->sortClauses = array(new ContentName(LocationQuery::SORT_ASC));
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
@@ -347,6 +354,7 @@ class EzContentBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::getSortClause
      */
     public function testGetSubItemsWithOffsetAndLimit()
     {
@@ -358,6 +366,8 @@ class EzContentBackendTest extends TestCase
                 new Criterion\ParentLocationId(2),
             )
         );
+
+        $query->sortClauses = array(new ContentName(LocationQuery::SORT_ASC));
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
@@ -535,6 +545,8 @@ class EzContentBackendTest extends TestCase
                         'id' => $contentId,
                     )
                 ),
+                'sortField' => Location::SORT_FIELD_NAME,
+                'sortOrder' => Location::SORT_ORDER_ASC,
             )
         );
     }
