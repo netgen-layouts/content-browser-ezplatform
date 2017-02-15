@@ -156,6 +156,7 @@ class EzContentBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::loadLocation
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
+     * @expectedExceptionMessage Item with ID 2 not found.
      */
     public function testLoadLocationThrowsNotFoundException()
     {
@@ -208,6 +209,7 @@ class EzContentBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::loadItem
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
+     * @expectedExceptionMessage Item with ID 2 not found.
      */
     public function testLoadItemThrowsNotFoundException()
     {

@@ -89,6 +89,7 @@ class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadLocation
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
+     * @expectedExceptionMessage Item with ID 1 not found.
      */
     public function testLoadLocationThrowsNotFoundException()
     {
@@ -139,6 +140,7 @@ class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadItem
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
+     * @expectedExceptionMessage Item with ID 1 not found.
      */
     public function testLoadItemThrowsNotFoundException()
     {
