@@ -150,7 +150,7 @@ class EzLocationBackend implements BackendInterface
 
         throw new NotFoundException(
             sprintf(
-                'Item with "%s" ID not found.',
+                'Item with ID %s not found.',
                 $id
             )
         );
