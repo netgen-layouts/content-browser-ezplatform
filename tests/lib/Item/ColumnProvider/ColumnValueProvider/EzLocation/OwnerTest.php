@@ -4,6 +4,7 @@ namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\Ez
 
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Location;
@@ -96,5 +97,36 @@ class OwnerTest extends TestCase
             'Owner name',
             $this->provider->getValue($item)
         );
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Owner::getValue
+     */
+    public function testGetValueWithNonExistingOwner()
+    {
+        $item = new Item(
+            new Location(
+                array(
+                    'contentInfo' => new ContentInfo(
+                        array(
+                            'ownerId' => 42,
+                        )
+                    ),
+                )
+            ),
+            'Name'
+        );
+
+        $this->contentServiceMock
+            ->expects($this->once())
+            ->method('loadContentInfo')
+            ->with($this->equalTo(42))
+            ->will($this->throwException(new NotFoundException('user', 42)));
+
+        $this->translationHelperMock
+            ->expects($this->never())
+            ->method('getTranslatedContentNameByContentInfo');
+
+        $this->assertEquals('', $this->provider->getValue($item));
     }
 }

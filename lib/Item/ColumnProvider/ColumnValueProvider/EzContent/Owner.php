@@ -2,6 +2,7 @@
 
 namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent;
 
+use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
@@ -42,9 +43,14 @@ class Owner implements ColumnValueProviderInterface
     {
         return $this->repository->sudo(
             function (Repository $repository) use ($item) {
-                $ownerContentInfo = $repository->getContentService()->loadContentInfo(
-                    $item->getContentInfo()->ownerId
-                );
+                try {
+                    $ownerContentInfo = $repository->getContentService()->loadContentInfo(
+                        $item->getContentInfo()->ownerId
+                    );
+                } catch (NotFoundException $e) {
+                    // Owner might be deleted in eZ database
+                    return '';
+                }
 
                 return $this->translationHelper->getTranslatedContentNameByContentInfo(
                     $ownerContentInfo
