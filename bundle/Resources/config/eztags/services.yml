@@ -11,11 +11,6 @@ services:
         tags:
             - { name: netgen_content_browser.backend, item_type: eztags }
 
-    netgen_content_browser.template_value_provider.eztags:
-        class: Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzTagsTemplateValueProvider
-        tags:
-            - { name: netgen_content_browser.template_value_provider, item_type: eztags }
-
     netgen_content_browser.config_processor.field_definition.eztags:
         class: Netgen\ContentBrowser\Config\FieldDefinition\EzTagsConfigProcessor
         parent: netgen_content_browser.config_processor.field_definition

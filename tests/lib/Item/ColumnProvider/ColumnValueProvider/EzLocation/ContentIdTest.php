@@ -3,6 +3,7 @@
 namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzLocation;
 
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\ContentId;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
@@ -35,6 +36,7 @@ class ContentIdTest extends TestCase
                     ),
                 )
             ),
+            new Content(),
             'Name'
         );
 

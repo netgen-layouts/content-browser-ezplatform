@@ -15,7 +15,7 @@ services:
     netgen_content_browser.backend.ezlocation:
         class: Netgen\ContentBrowser\Backend\EzLocationBackend
         arguments:
-            - "@ezpublish.api.service.search"
+            - "@ezpublish.api.repository"
             - "@ezpublish.spi.persistence.content_type_handler"
             - "@ezpublish.translation_helper"
             - $backend.ezlocation.location_content_types;netgen_content_browser$
@@ -32,22 +32,6 @@ services:
         lazy: true
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezcontent }
-
-    # Template value providers
-
-    netgen_content_browser.template_value_provider.ezlocation:
-        class: Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzLocationTemplateValueProvider
-        arguments:
-            - "@ezpublish.api.repository"
-        tags:
-            -  { name: netgen_content_browser.template_value_provider, item_type: ezlocation }
-
-    netgen_content_browser.template_value_provider.ezcontent:
-        class: Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzContentTemplateValueProvider
-        arguments:
-            - "@ezpublish.api.repository"
-        tags:
-            -  { name: netgen_content_browser.template_value_provider, item_type: ezcontent }
 
     # Config processors
 

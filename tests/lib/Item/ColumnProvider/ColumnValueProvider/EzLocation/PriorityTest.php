@@ -2,6 +2,7 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzLocation;
 
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Priority;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
@@ -30,6 +31,7 @@ class PriorityTest extends TestCase
                     'priority' => 5,
                 )
             ),
+            new Content(),
             'Name'
         );
 

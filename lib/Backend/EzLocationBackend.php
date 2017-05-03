@@ -3,7 +3,7 @@
 namespace Netgen\ContentBrowser\Backend;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
-use eZ\Publish\API\Repository\SearchService;
+use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -19,9 +19,9 @@ use Netgen\ContentBrowser\Item\LocationInterface;
 class EzLocationBackend implements BackendInterface
 {
     /**
-     * @var \eZ\Publish\API\Repository\SearchService
+     * @var \eZ\Publish\API\Repository\Repository
      */
-    protected $searchService;
+    protected $repository;
 
     /**
      * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler
@@ -79,20 +79,20 @@ class EzLocationBackend implements BackendInterface
     /**
      * Constructor.
      *
-     * @param \eZ\Publish\API\Repository\SearchService $searchService
+     * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $contentTypeHandler
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      * @param string[] $locationContentTypes
      * @param int[] $defaultSections
      */
     public function __construct(
-        SearchService $searchService,
+        Repository $repository,
         Handler $contentTypeHandler,
         TranslationHelper $translationHelper,
         array $locationContentTypes,
         array $defaultSections
     ) {
-        $this->searchService = $searchService;
+        $this->repository = $repository;
         $this->contentTypeHandler = $contentTypeHandler;
         $this->translationHelper = $translationHelper;
         $this->locationContentTypes = $locationContentTypes;
@@ -123,7 +123,10 @@ class EzLocationBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($this->defaultSections);
 
-        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
 
         $items = $this->buildItems($result);
 
@@ -157,7 +160,10 @@ class EzLocationBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($id);
 
-        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
 
         if (!empty($result->searchHits)) {
             return $this->buildItem($result->searchHits[0]);
@@ -204,7 +210,10 @@ class EzLocationBackend implements BackendInterface
         $query->limit = 9999;
         $query->sortClauses = $this->getSortClause($location->getLocation());
 
-        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
 
         return $this->buildItems($result);
     }
@@ -227,7 +236,10 @@ class EzLocationBackend implements BackendInterface
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
 
         return $result->totalCount;
     }
@@ -253,7 +265,10 @@ class EzLocationBackend implements BackendInterface
         $query->filter = new Criterion\LogicalAnd($criteria);
         $query->sortClauses = $this->getSortClause($location->getLocation());
 
-        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
 
         return $this->buildItems($result);
     }
@@ -275,7 +290,10 @@ class EzLocationBackend implements BackendInterface
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
 
         return $result->totalCount;
     }
@@ -303,7 +321,10 @@ class EzLocationBackend implements BackendInterface
         $query->offset = $offset;
         $query->limit = $limit;
 
-        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
 
         return $this->buildItems($result);
     }
@@ -328,7 +349,10 @@ class EzLocationBackend implements BackendInterface
 
         $query->limit = 0;
 
-        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
 
         return $result->totalCount;
     }
@@ -342,11 +366,22 @@ class EzLocationBackend implements BackendInterface
      */
     protected function buildItem(SearchHit $searchHit)
     {
+        $content = $this->repository->sudo(
+            function (Repository $repository) use ($searchHit) {
+                return $repository->getContentService()->loadContentByContentInfo(
+                    $searchHit->valueObject->contentInfo
+                );
+            }
+        );
+
+        $name = $this->translationHelper->getTranslatedContentNameByContentInfo(
+            $searchHit->valueObject->contentInfo
+        );
+
         return new Item(
             $searchHit->valueObject,
-            $this->translationHelper->getTranslatedContentNameByContentInfo(
-                $searchHit->valueObject->contentInfo
-            )
+            $content,
+            $name
         );
     }
 

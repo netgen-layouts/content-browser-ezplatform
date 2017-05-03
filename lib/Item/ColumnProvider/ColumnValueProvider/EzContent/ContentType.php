@@ -44,7 +44,7 @@ class ContentType implements ColumnValueProviderInterface
             function (Repository $repository) use ($item) {
                 return $this->translationHelper->getTranslatedByMethod(
                     $repository->getContentTypeService()->loadContentType(
-                        $item->getContentInfo()->contentTypeId
+                        $item->getContent()->contentInfo->contentTypeId
                     ),
                     'getName'
                 );

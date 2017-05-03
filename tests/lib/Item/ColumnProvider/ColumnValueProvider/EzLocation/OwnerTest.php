@@ -7,6 +7,7 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Owner;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
@@ -76,6 +77,7 @@ class OwnerTest extends TestCase
                     ),
                 )
             ),
+            new Content(),
             'Name'
         );
 
@@ -114,6 +116,7 @@ class OwnerTest extends TestCase
                     ),
                 )
             ),
+            new Content(),
             'Name'
         );
 

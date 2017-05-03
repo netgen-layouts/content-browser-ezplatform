@@ -45,7 +45,7 @@ class Owner implements ColumnValueProviderInterface
             function (Repository $repository) use ($item) {
                 try {
                     $ownerContentInfo = $repository->getContentService()->loadContentInfo(
-                        $item->getContentInfo()->ownerId
+                        $item->getContent()->contentInfo->ownerId
                     );
                 } catch (NotFoundException $e) {
                     // Owner might be deleted in eZ database

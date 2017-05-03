@@ -2,6 +2,7 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\EzLocation;
 
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
 use PHPUnit\Framework\TestCase;
@@ -28,7 +29,7 @@ class ItemTest extends TestCase
             )
         );
 
-        $this->item = new Item($this->location, 'Some name');
+        $this->item = new Item($this->location, new Content(), 'Some name');
     }
 
     /**
@@ -83,7 +84,7 @@ class ItemTest extends TestCase
             )
         );
 
-        $this->item = new Item($this->location, 'Some name');
+        $this->item = new Item($this->location, new Content(), 'Some name');
 
         $this->assertNull($this->item->getParentId());
     }

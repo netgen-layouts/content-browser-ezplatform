@@ -3,7 +3,9 @@
 namespace Netgen\ContentBrowser\Tests\Item\EzContent;
 
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Item\EzContent\Item;
 use PHPUnit\Framework\TestCase;
 
@@ -15,9 +17,9 @@ class ItemTest extends TestCase
     protected $location;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\ContentInfo
+     * @var \eZ\Publish\API\Repository\Values\Content\Content
      */
-    protected $contentInfo;
+    protected $content;
 
     /**
      * @var \Netgen\ContentBrowser\Item\EzContent\Item
@@ -26,9 +28,17 @@ class ItemTest extends TestCase
 
     public function setUp()
     {
-        $this->contentInfo = new ContentInfo(
+        $this->content = new Content(
             array(
-                'id' => 42,
+                'versionInfo' => new VersionInfo(
+                    array(
+                        'contentInfo' => new ContentInfo(
+                            array(
+                                'id' => 42,
+                            )
+                        ),
+                    )
+                ),
             )
         );
 
@@ -37,11 +47,10 @@ class ItemTest extends TestCase
                 'id' => 22,
                 'parentLocationId' => 24,
                 'invisible' => true,
-                'contentInfo' => $this->contentInfo,
             )
         );
 
-        $this->item = new Item($this->location, $this->contentInfo, 'Some name');
+        $this->item = new Item($this->location, $this->content, 'Some name');
     }
 
     /**
@@ -96,7 +105,7 @@ class ItemTest extends TestCase
             )
         );
 
-        $this->item = new Item($this->location, $this->contentInfo, 'Some name');
+        $this->item = new Item($this->location, $this->content, 'Some name');
 
         $this->assertNull($this->item->getParentId());
     }
@@ -118,10 +127,10 @@ class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzContent\Item::getContentInfo
+     * @covers \Netgen\ContentBrowser\Item\EzContent\Item::getContent
      */
-    public function testGetContentInfo()
+    public function testGetContent()
     {
-        $this->assertEquals($this->contentInfo, $this->item->getContentInfo());
+        $this->assertEquals($this->content, $this->item->getContent());
     }
 }

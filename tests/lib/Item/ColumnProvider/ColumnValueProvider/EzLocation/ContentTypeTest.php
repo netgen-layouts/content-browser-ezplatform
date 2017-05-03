@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType as EzContentType;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\ContentType;
@@ -76,6 +77,7 @@ class ContentTypeTest extends TestCase
                     ),
                 )
             ),
+            new Content(),
             'Name'
         );
 

@@ -2,6 +2,7 @@
 
 namespace Netgen\ContentBrowser\Item\EzLocation;
 
+use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
@@ -16,6 +17,11 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
     protected $location;
 
     /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     */
+    protected $content;
+
+    /**
      * @var string
      */
     protected $name;
@@ -24,11 +30,13 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param string $name
      */
-    public function __construct(Location $location, $name)
+    public function __construct(Location $location, Content $content, $name)
     {
         $this->location = $location;
+        $this->content = $content;
         $this->name = $name;
     }
 
@@ -112,5 +120,15 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
     public function getLocation()
     {
         return $this->location;
+    }
+
+    /**
+     * Returns the content.
+     *
+     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     */
+    public function getContent()
+    {
+        return $this->content;
     }
 }

@@ -12,9 +12,9 @@ interface EzContentInterface
     public function getLocation();
 
     /**
-     * Returns the content info.
+     * Returns the content.
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\ContentInfo
+     * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
-    public function getContentInfo();
+    public function getContent();
 }

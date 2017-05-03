@@ -2,6 +2,7 @@
 
 namespace Netgen\ContentBrowser\Backend;
 
+use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
@@ -29,7 +30,10 @@ class EzContentBackend extends EzLocationBackend
             )
         );
 
-        $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
 
         if (!empty($result->searchHits)) {
             return $this->buildItem($result->searchHits[0]);
@@ -52,12 +56,22 @@ class EzContentBackend extends EzLocationBackend
      */
     protected function buildItem(SearchHit $searchHit)
     {
+        $content = $this->repository->sudo(
+            function (Repository $repository) use ($searchHit) {
+                return $repository->getContentService()->loadContentByContentInfo(
+                    $searchHit->valueObject->contentInfo
+                );
+            }
+        );
+
+        $name = $this->translationHelper->getTranslatedContentNameByContentInfo(
+            $searchHit->valueObject->contentInfo
+        );
+
         return new Item(
             $searchHit->valueObject,
-            $searchHit->valueObject->contentInfo,
-            $this->translationHelper->getTranslatedContentNameByContentInfo(
-                $searchHit->valueObject->contentInfo
-            )
+            $content,
+            $name
         );
     }
 }

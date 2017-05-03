@@ -1,3 +1,5 @@
+{% set content = item.content %}
+
 {% if content.fields.image is defined and not ez_is_field_empty( content, 'image' ) %}
     {% set image_alias = ez_image_alias( ez_field( content, 'image' ), content.versionInfo, 'ngcb_thumbnail' ) %}
 

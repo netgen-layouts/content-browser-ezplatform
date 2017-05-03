@@ -7,7 +7,9 @@ use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Owner;
 use Netgen\ContentBrowser\Item\EzContent\Item;
 use PHPUnit\Framework\TestCase;
@@ -66,13 +68,23 @@ class OwnerTest extends TestCase
      */
     public function testGetValue()
     {
+        $content = new Content(
+            array(
+                'versionInfo' => new VersionInfo(
+                    array(
+                        'contentInfo' => new ContentInfo(
+                            array(
+                                'ownerId' => 42,
+                            )
+                        ),
+                    )
+                ),
+            )
+        );
+
         $item = new Item(
             new Location(),
-            new ContentInfo(
-                array(
-                    'ownerId' => 42,
-                )
-            ),
+            $content,
             'Name'
         );
 
@@ -101,13 +113,23 @@ class OwnerTest extends TestCase
      */
     public function testGetValueWithNonExistingOwner()
     {
+        $content = new Content(
+            array(
+                'versionInfo' => new VersionInfo(
+                    array(
+                        'contentInfo' => new ContentInfo(
+                            array(
+                                'ownerId' => 42,
+                            )
+                        ),
+                    )
+                ),
+            )
+        );
+
         $item = new Item(
             new Location(),
-            new ContentInfo(
-                array(
-                    'ownerId' => 42,
-                )
-            ),
+            $content,
             'Name'
         );
 

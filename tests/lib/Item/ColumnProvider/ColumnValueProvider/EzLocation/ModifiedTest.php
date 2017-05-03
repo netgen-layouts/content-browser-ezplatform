@@ -4,6 +4,7 @@ namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\Ez
 
 use DateTime;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Modified;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
@@ -41,6 +42,7 @@ class ModifiedTest extends TestCase
                     ),
                 )
             ),
+            new Content(),
             'Name'
         );
 

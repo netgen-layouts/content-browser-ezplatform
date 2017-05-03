@@ -2,6 +2,7 @@
 
 namespace Netgen\ContentBrowser\Tests\Backend;
 
+use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -10,7 +11,10 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Backend\EzLocationBackend;
@@ -24,7 +28,17 @@ class EzLocationBackendTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
+    protected $repositoryMock;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
     protected $searchServiceMock;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $contentServiceMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -74,13 +88,62 @@ class EzLocationBackendTest extends TestCase
                 })
             );
 
+        $this->repositoryMock = $this->createPartialMock(
+            Repository::class,
+            array(
+                'sudo',
+                'getSearchService',
+                'getContentService',
+            )
+        );
+
+        $this->repositoryMock
+            ->expects($this->any())
+            ->method('sudo')
+            ->with($this->anything())
+            ->will($this->returnCallback(
+                function ($callback) {
+                    return $callback($this->repositoryMock);
+                }
+            ));
+
         $this->searchServiceMock = $this->createMock(SearchService::class);
+        $this->contentServiceMock = $this->createMock(ContentService::class);
+
+        $this->contentServiceMock
+            ->expects($this->any())
+            ->method('loadContentByContentInfo')
+            ->with($this->isInstanceOf(ContentInfo::class))
+            ->will($this->returnCallback(
+                function (ContentInfo $contentInfo) {
+                    return new Content(
+                        array(
+                            'versionInfo' => new VersionInfo(
+                                array(
+                                    'contentInfo' => $contentInfo,
+                                )
+                            ),
+                        )
+                    );
+                }
+            ));
+
+        $this->repositoryMock
+            ->expects($this->any())
+            ->method('getSearchService')
+            ->will($this->returnValue($this->searchServiceMock));
+
+        $this->repositoryMock
+            ->expects($this->any())
+            ->method('getContentService')
+            ->will($this->returnValue($this->contentServiceMock));
+
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
         $this->defaultSections = array(2, 43, 5);
         $this->languages = array('eng-GB', 'cro-HR');
 
         $this->backend = new EzLocationBackend(
-            $this->searchServiceMock,
+            $this->repositoryMock,
             $this->contentTypeHandlerMock,
             $this->translationHelperMock,
             array_keys($this->locationContentTypes),
@@ -258,7 +321,7 @@ class EzLocationBackendTest extends TestCase
             ->will($this->returnValue($searchResult));
 
         $locations = $this->backend->getSubLocations(
-            new Item($this->getLocation(2), 'location')
+            new Item($this->getLocation(2), new Content(), 'location')
         );
 
         $this->assertCount(2, $locations);
@@ -294,7 +357,7 @@ class EzLocationBackendTest extends TestCase
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->getSubLocationsCount(
-            new Item($this->getLocation(2), 'location')
+            new Item($this->getLocation(2), new Content(), 'location')
         );
 
         $this->assertEquals(2, $count);
@@ -332,7 +395,7 @@ class EzLocationBackendTest extends TestCase
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
-            new Item($this->getLocation(2), 'location')
+            new Item($this->getLocation(2), new Content(), 'location')
         );
 
         $this->assertCount(2, $items);
@@ -374,7 +437,7 @@ class EzLocationBackendTest extends TestCase
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
-            new Item($this->getLocation(2), 'location'),
+            new Item($this->getLocation(2), new Content(), 'location'),
             5,
             10
         );
@@ -409,7 +472,7 @@ class EzLocationBackendTest extends TestCase
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->getSubItemsCount(
-            new Item($this->getLocation(2), 'location')
+            new Item($this->getLocation(2), new Content(), 'location')
         );
 
         $this->assertEquals(2, $count);

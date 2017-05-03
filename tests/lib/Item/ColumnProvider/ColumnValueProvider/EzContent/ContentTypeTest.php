@@ -6,7 +6,9 @@ use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType as EzContentType;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\ContentType;
 use Netgen\ContentBrowser\Item\EzContent\Item;
@@ -66,13 +68,23 @@ class ContentTypeTest extends TestCase
      */
     public function testGetValue()
     {
+        $content = new Content(
+            array(
+                'versionInfo' => new VersionInfo(
+                    array(
+                        'contentInfo' => new ContentInfo(
+                            array(
+                                'contentTypeId' => 42,
+                            )
+                        ),
+                    )
+                ),
+            )
+        );
+
         $item = new Item(
             new Location(),
-            new ContentInfo(
-                array(
-                    'contentTypeId' => 42,
-                )
-            ),
+            $content,
             'Name'
         );
 

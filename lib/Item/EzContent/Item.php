@@ -2,7 +2,7 @@
 
 namespace Netgen\ContentBrowser\Item\EzContent;
 
-use eZ\Publish\API\Repository\Values\Content\ContentInfo;
+use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
@@ -17,9 +17,9 @@ class Item implements ItemInterface, LocationInterface, EzContentInterface
     protected $location;
 
     /**
-     * @var \eZ\Publish\API\Repository\Values\Content\ContentInfo
+     * @var \eZ\Publish\API\Repository\Values\Content\Content
      */
-    protected $contentInfo;
+    protected $content;
 
     /**
      * @var string
@@ -30,13 +30,13 @@ class Item implements ItemInterface, LocationInterface, EzContentInterface
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     * @param \eZ\Publish\API\Repository\Values\Content\ContentInfo $contentInfo
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param string $name
      */
-    public function __construct(Location $location, ContentInfo $contentInfo, $name)
+    public function __construct(Location $location, Content $content, $name)
     {
         $this->location = $location;
-        $this->contentInfo = $contentInfo;
+        $this->content = $content;
         $this->name = $name;
     }
 
@@ -67,7 +67,7 @@ class Item implements ItemInterface, LocationInterface, EzContentInterface
      */
     public function getValue()
     {
-        return $this->contentInfo->id;
+        return $this->content->contentInfo->id;
     }
 
     /**
@@ -125,10 +125,10 @@ class Item implements ItemInterface, LocationInterface, EzContentInterface
     /**
      * Returns the content info.
      *
-     * @return \eZ\Publish\API\Repository\Values\Content\ContentInfo
+     * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
-    public function getContentInfo()
+    public function getContent()
     {
-        return $this->contentInfo;
+        return $this->content;
     }
 }

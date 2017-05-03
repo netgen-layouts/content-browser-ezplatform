@@ -6,6 +6,7 @@ use eZ\Publish\API\Repository\SectionService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Section as EzSection;
 use eZ\Publish\Core\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Section;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
@@ -67,6 +68,7 @@ class SectionTest extends TestCase
                     ),
                 )
             ),
+            new Content(),
             'Name'
         );
 

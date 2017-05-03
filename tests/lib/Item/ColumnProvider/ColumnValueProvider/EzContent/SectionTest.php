@@ -6,7 +6,9 @@ use eZ\Publish\API\Repository\SectionService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\Section as EzSection;
 use eZ\Publish\Core\Repository\Repository;
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Section;
 use Netgen\ContentBrowser\Item\EzContent\Item;
 use PHPUnit\Framework\TestCase;
@@ -57,13 +59,23 @@ class SectionTest extends TestCase
      */
     public function testGetValue()
     {
+        $content = new Content(
+            array(
+                'versionInfo' => new VersionInfo(
+                    array(
+                        'contentInfo' => new ContentInfo(
+                            array(
+                                'sectionId' => 42,
+                            )
+                        ),
+                    )
+                ),
+            )
+        );
+
         $item = new Item(
             new Location(),
-            new ContentInfo(
-                array(
-                    'sectionId' => 42,
-                )
-            ),
+            $content,
             'Name'
         );
 

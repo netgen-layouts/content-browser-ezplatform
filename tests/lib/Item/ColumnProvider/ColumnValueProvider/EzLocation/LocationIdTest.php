@@ -2,6 +2,7 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzLocation;
 
+use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\LocationId;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
@@ -30,6 +31,7 @@ class LocationIdTest extends TestCase
                     'id' => 42,
                 )
             ),
+            new Content(),
             'Name'
         );
 

@@ -16,6 +16,6 @@ class ContentId implements ColumnValueProviderInterface
      */
     public function getValue(ItemInterface $item)
     {
-        return $item->getContentInfo()->id;
+        return $item->getContent()->contentInfo->id;
     }
 }

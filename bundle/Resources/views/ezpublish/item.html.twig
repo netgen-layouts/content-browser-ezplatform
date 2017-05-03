@@ -1,8 +1,8 @@
 {{ render(
     controller(
         'ez_content:viewAction', {
-            'content': content,
-            'location': location,
+            'content': item.content,
+            'location': item.location,
             'viewType': 'ngcb_preview',
             'layout': false,
         }
