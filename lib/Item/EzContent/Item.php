@@ -123,7 +123,7 @@ class Item implements ItemInterface, LocationInterface, EzContentInterface
     }
 
     /**
-     * Returns the content info.
+     * Returns the content.
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
