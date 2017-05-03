@@ -2,8 +2,6 @@
 
 namespace Netgen\ContentBrowser\Config\FieldDefinition;
 
-use Netgen\ContentBrowser\Item\EzTags\Item;
-
 class EzTagsConfigProcessor extends ConfigProcessor
 {
     /**
@@ -23,7 +21,7 @@ class EzTagsConfigProcessor extends ConfigProcessor
      */
     public function getItemType()
     {
-        return Item::TYPE;
+        return 'eztags';
     }
 
     /**

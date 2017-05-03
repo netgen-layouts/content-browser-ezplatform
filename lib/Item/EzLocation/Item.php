@@ -9,8 +9,6 @@ use Netgen\ContentBrowser\Item\LocationInterface;
 
 class Item implements ItemInterface, LocationInterface, EzLocationInterface
 {
-    const TYPE = 'ezlocation';
-
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
      */
@@ -57,7 +55,7 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
      */
     public function getType()
     {
-        return static::TYPE;
+        return 'ezlocation';
     }
 
     /**

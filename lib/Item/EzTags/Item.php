@@ -8,8 +8,6 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
 class Item implements ItemInterface, LocationInterface, EzTagsInterface
 {
-    const TYPE = 'eztags';
-
     /**
      * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
@@ -49,7 +47,7 @@ class Item implements ItemInterface, LocationInterface, EzTagsInterface
      */
     public function getType()
     {
-        return static::TYPE;
+        return 'eztags';
     }
 
     /**

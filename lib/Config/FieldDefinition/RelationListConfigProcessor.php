@@ -2,8 +2,6 @@
 
 namespace Netgen\ContentBrowser\Config\FieldDefinition;
 
-use Netgen\ContentBrowser\Item\EzContent\Item;
-
 class RelationListConfigProcessor extends ConfigProcessor
 {
     /**
@@ -23,7 +21,7 @@ class RelationListConfigProcessor extends ConfigProcessor
      */
     public function getItemType()
     {
-        return Item::TYPE;
+        return 'ezcontent';
     }
 
     /**
