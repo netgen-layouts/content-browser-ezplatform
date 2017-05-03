@@ -95,6 +95,16 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
     }
 
     /**
+     * Returns if the item is selectable.
+     *
+     * @return bool
+     */
+    public function isSelectable()
+    {
+        return true;
+    }
+
+    /**
      * Returns the location.
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Location

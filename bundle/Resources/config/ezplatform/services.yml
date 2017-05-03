@@ -33,24 +33,6 @@ services:
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezcontent }
 
-    # Serializer handlers
-
-    netgen_content_browser.serializer.handler.ezlocation:
-        class: Netgen\ContentBrowser\Item\Serializer\Handler\EzLocationSerializerHandler
-        arguments:
-            - "@ezpublish.api.repository"
-            - "@netgen_content_browser.current_config"
-        tags:
-            -  { name: netgen_content_browser.serializer.handler, item_type: ezlocation }
-
-    netgen_content_browser.serializer.handler.ezcontent:
-        class: Netgen\ContentBrowser\Item\Serializer\Handler\EzContentSerializerHandler
-        arguments:
-            - "@ezpublish.api.repository"
-            - "@netgen_content_browser.current_config"
-        tags:
-            -  { name: netgen_content_browser.serializer.handler, item_type: ezcontent }
-
     # Template value providers
 
     netgen_content_browser.template_value_provider.ezlocation:

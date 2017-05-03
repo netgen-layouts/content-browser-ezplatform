@@ -11,11 +11,6 @@ services:
         tags:
             - { name: netgen_content_browser.backend, item_type: eztags }
 
-    netgen_content_browser.serializer.handler.eztags:
-        class: Netgen\ContentBrowser\Item\Serializer\Handler\EzTagsSerializerHandler
-        tags:
-            - { name: netgen_content_browser.serializer.handler, item_type: eztags }
-
     netgen_content_browser.template_value_provider.eztags:
         class: Netgen\ContentBrowser\Item\Renderer\TemplateValueProvider\EzTagsTemplateValueProvider
         tags:

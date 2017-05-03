@@ -93,6 +93,16 @@ class Item implements ItemInterface, LocationInterface, EzTagsInterface
     }
 
     /**
+     * Returns if the item is selectable.
+     *
+     * @return bool
+     */
+    public function isSelectable()
+    {
+        return true;
+    }
+
+    /**
      * Returns the tag.
      *
      * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
