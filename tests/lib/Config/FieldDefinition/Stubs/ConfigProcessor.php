@@ -32,8 +32,6 @@ class ConfigProcessor extends BaseConfigProcessor
      *
      * @param string $configName
      * @param \Netgen\ContentBrowser\Config\ConfigurationInterface $config
-     *
-     * @throws \Netgen\ContentBrowser\Exceptions\InvalidArgumentException If config could not be found
      */
     public function processConfig($configName, ConfigurationInterface $config)
     {
