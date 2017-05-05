@@ -2,6 +2,8 @@
 
 namespace Netgen\ContentBrowser\Config\FieldDefinition;
 
+use Netgen\ContentBrowser\Config\ConfigurationInterface;
+
 class EzTagsConfigProcessor extends ConfigProcessor
 {
     /**
@@ -32,7 +34,7 @@ class EzTagsConfigProcessor extends ConfigProcessor
      *
      * @throws \Netgen\ContentBrowser\Exceptions\InvalidArgumentException If config could not be found
      */
-    public function processConfig($configName, $config)
+    public function processConfig($configName, ConfigurationInterface $config)
     {
         $fieldDefinition = $this->getFieldDefinition($configName);
 

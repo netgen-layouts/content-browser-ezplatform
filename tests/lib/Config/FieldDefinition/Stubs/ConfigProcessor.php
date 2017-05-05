@@ -2,6 +2,7 @@
 
 namespace Netgen\ContentBrowser\Tests\Config\FieldDefinition\Stubs;
 
+use Netgen\ContentBrowser\Config\ConfigurationInterface;
 use Netgen\ContentBrowser\Config\FieldDefinition\ConfigProcessor as BaseConfigProcessor;
 
 class ConfigProcessor extends BaseConfigProcessor
@@ -34,7 +35,7 @@ class ConfigProcessor extends BaseConfigProcessor
      *
      * @throws \Netgen\ContentBrowser\Exceptions\InvalidArgumentException If config could not be found
      */
-    public function processConfig($configName, $config)
+    public function processConfig($configName, ConfigurationInterface $config)
     {
         $this->getFieldDefinition($configName);
 
