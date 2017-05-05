@@ -63,14 +63,6 @@ class ItemTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Item\EzContent\Item::__construct
-     * @covers \Netgen\ContentBrowser\Item\EzContent\Item::getType
-     */
-    public function testGetType()
-    {
-        $this->assertEquals('ezcontent', $this->item->getType());
-    }
-
-    /**
      * @covers \Netgen\ContentBrowser\Item\EzContent\Item::getValue
      */
     public function testGetValue()

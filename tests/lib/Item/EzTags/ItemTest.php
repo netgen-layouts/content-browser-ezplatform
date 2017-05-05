@@ -35,14 +35,6 @@ class ItemTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::__construct
-     * @covers \Netgen\ContentBrowser\Item\EzTags\Item::getType
-     */
-    public function testGetType()
-    {
-        $this->assertEquals('eztags', $this->item->getType());
-    }
-
-    /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::getValue
      */
     public function testGetValue()

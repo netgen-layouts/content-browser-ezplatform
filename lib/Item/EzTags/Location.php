@@ -40,16 +40,6 @@ class Location implements LocationInterface, EzTagsInterface
     }
 
     /**
-     * Returns the type.
-     *
-     * @return int|string
-     */
-    public function getType()
-    {
-        return 'eztags';
-    }
-
-    /**
      * Returns the name.
      *
      * @return string

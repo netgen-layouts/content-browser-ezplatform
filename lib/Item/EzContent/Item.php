@@ -49,16 +49,6 @@ class Item implements ItemInterface, LocationInterface, EzContentInterface
     }
 
     /**
-     * Returns the type.
-     *
-     * @return int|string
-     */
-    public function getType()
-    {
-        return 'ezcontent';
-    }
-
-    /**
      * Returns the value.
      *
      * @return mixed

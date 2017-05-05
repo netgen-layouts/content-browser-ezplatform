@@ -49,16 +49,6 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
     }
 
     /**
-     * Returns the type.
-     *
-     * @return int|string
-     */
-    public function getType()
-    {
-        return 'ezlocation';
-    }
-
-    /**
      * Returns the value.
      *
      * @return mixed

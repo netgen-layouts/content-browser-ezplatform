@@ -35,14 +35,6 @@ class LocationTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getType
-     */
-    public function testGetType()
-    {
-        $this->assertEquals('eztags', $this->location->getType());
-    }
-
-    /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getName
      */
     public function testGetName()

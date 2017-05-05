@@ -42,14 +42,6 @@ class ItemTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Item\EzLocation\Item::__construct
-     * @covers \Netgen\ContentBrowser\Item\EzLocation\Item::getType
-     */
-    public function testGetType()
-    {
-        $this->assertEquals('ezlocation', $this->item->getType());
-    }
-
-    /**
      * @covers \Netgen\ContentBrowser\Item\EzLocation\Item::getValue
      */
     public function testGetValue()
