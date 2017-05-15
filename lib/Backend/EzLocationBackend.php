@@ -125,7 +125,22 @@ class EzLocationBackend implements BackendInterface
 
         $result = $this->searchService->findLocations($query, array('languages' => $this->languages));
 
-        return $this->buildItems($result);
+        $items = $this->buildItems($result);
+
+        $sortMap = array_flip($this->defaultSections);
+
+        usort(
+            $items,
+            function ($item1, $item2) use ($sortMap) {
+                if ($item1->getLocationId() === $item2->getLocationId()) {
+                    return 0;
+                }
+
+                return ($sortMap[$item1->getLocationId()] < $sortMap[$item2->getLocationId()]) ? -1 : 1;
+            }
+        );
+
+        return $items;
     }
 
     /**
