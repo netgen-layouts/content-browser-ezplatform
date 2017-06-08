@@ -4,6 +4,7 @@ namespace Netgen\ContentBrowser\Backend;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
@@ -12,6 +13,7 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
+use Netgen\ContentBrowser\Config\ConfigurationInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
 use Netgen\ContentBrowser\Item\LocationInterface;
@@ -34,6 +36,11 @@ class EzLocationBackend implements BackendInterface
     protected $translationHelper;
 
     /**
+     * @var \Netgen\ContentBrowser\Config\ConfigurationInterface
+     */
+    protected $config;
+
+    /**
      * @var string[]
      */
     protected $locationContentTypes;
@@ -52,6 +59,11 @@ class EzLocationBackend implements BackendInterface
      * @var int[]
      */
     protected $locationContentTypeIds;
+
+    /**
+     * @var int[]
+     */
+    protected $allowedContentTypeIds;
 
     /**
      * @var array
@@ -82,6 +94,7 @@ class EzLocationBackend implements BackendInterface
      * @param \eZ\Publish\API\Repository\Repository $repository
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $contentTypeHandler
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
+     * @param \Netgen\ContentBrowser\Config\ConfigurationInterface $config
      * @param string[] $locationContentTypes
      * @param int[] $defaultSections
      */
@@ -89,12 +102,25 @@ class EzLocationBackend implements BackendInterface
         Repository $repository,
         Handler $contentTypeHandler,
         TranslationHelper $translationHelper,
+        ConfigurationInterface $config,
         array $locationContentTypes,
         array $defaultSections
     ) {
         $this->repository = $repository;
         $this->contentTypeHandler = $contentTypeHandler;
         $this->translationHelper = $translationHelper;
+        $this->config = $config;
+
+        if ($this->config->hasParameter('location_content_types')) {
+            $locationContentTypes = $this->config->getParameter('location_content_types');
+            $locationContentTypes = array_map('trim', explode(',', $locationContentTypes));
+        }
+
+        if ($this->config->hasParameter('default_sections')) {
+            $defaultSections = $this->config->getParameter('default_sections');
+            $defaultSections = array_map('intval', explode(',', $defaultSections));
+        }
+
         $this->locationContentTypes = $locationContentTypes;
         $this->defaultSections = $defaultSections;
     }
@@ -389,7 +415,8 @@ class EzLocationBackend implements BackendInterface
         return new Item(
             $searchHit->valueObject,
             $content,
-            $name
+            $name,
+            $this->isSelectable($content)
         );
     }
 
@@ -452,5 +479,27 @@ class EzLocationBackend implements BackendInterface
         return array(
             new $this->sortClauses[$sortType]($sortDirection),
         );
+    }
+
+    /**
+     * Returns if the provided content is selectable.
+     *
+     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
+     *
+     * @return bool
+     */
+    protected function isSelectable(Content $content)
+    {
+        if (!$this->config->hasParameter('allowed_content_types')) {
+            return true;
+        }
+
+        if ($this->allowedContentTypeIds === null) {
+            $allowedContentTypes = $this->config->getParameter('allowed_content_types');
+            $allowedContentTypes = array_map('trim', explode(',', $allowedContentTypes));
+            $this->allowedContentTypeIds = $this->getContentTypeIds($allowedContentTypes);
+        }
+
+        return in_array($content->contentInfo->contentTypeId, $this->allowedContentTypeIds, true);
     }
 }

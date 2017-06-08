@@ -25,17 +25,24 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
     protected $name;
 
     /**
+     * @var bool
+     */
+    protected $selectable;
+
+    /**
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param string $name
+     * @param bool $selectable
      */
-    public function __construct(Location $location, Content $content, $name)
+    public function __construct(Location $location, Content $content, $name, $selectable = true)
     {
         $this->location = $location;
         $this->content = $content;
         $this->name = $name;
+        $this->selectable = $selectable;
     }
 
     /**
@@ -97,7 +104,7 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
      */
     public function isSelectable()
     {
-        return true;
+        return $this->selectable;
     }
 
     /**

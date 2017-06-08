@@ -18,6 +18,7 @@ services:
             - "@ezpublish.api.repository"
             - "@ezpublish.spi.persistence.content_type_handler"
             - "@ezpublish.translation_helper"
+            - "@netgen_content_browser.config.ezlocation"
             - $backend.ezlocation.location_content_types;netgen_content_browser$
             - $backend.ezlocation.default_sections;netgen_content_browser$
         lazy: true
@@ -28,8 +29,16 @@ services:
 
     netgen_content_browser.backend.ezcontent:
         class: Netgen\ContentBrowser\Backend\EzContentBackend
-        parent: netgen_content_browser.backend.ezlocation
+        arguments:
+            - "@ezpublish.api.repository"
+            - "@ezpublish.spi.persistence.content_type_handler"
+            - "@ezpublish.translation_helper"
+            - "@netgen_content_browser.config.ezcontent"
+            - $backend.ezlocation.location_content_types;netgen_content_browser$
+            - $backend.ezlocation.default_sections;netgen_content_browser$
         lazy: true
+        calls:
+            - [setLanguages, ["$languages$"]]
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezcontent }
 

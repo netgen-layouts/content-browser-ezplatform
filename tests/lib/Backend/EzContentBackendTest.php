@@ -18,6 +18,7 @@ use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Backend\EzContentBackend;
+use Netgen\ContentBrowser\Config\Configuration;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
@@ -146,6 +147,7 @@ class EzContentBackendTest extends TestCase
             $this->repositoryMock,
             $this->contentTypeHandlerMock,
             $this->translationHelperMock,
+            new Configuration('ezcontent'),
             array_keys($this->locationContentTypes),
             $this->defaultSections
         );

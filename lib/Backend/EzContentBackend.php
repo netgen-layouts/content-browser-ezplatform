@@ -71,7 +71,8 @@ class EzContentBackend extends EzLocationBackend
         return new Item(
             $searchHit->valueObject,
             $content,
-            $name
+            $name,
+            $this->isSelectable($content)
         );
     }
 }
