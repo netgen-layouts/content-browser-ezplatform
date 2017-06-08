@@ -97,10 +97,6 @@ class EzLocationBackend implements BackendInterface
         $this->translationHelper = $translationHelper;
         $this->locationContentTypes = $locationContentTypes;
         $this->defaultSections = $defaultSections;
-
-        $this->locationContentTypeIds = $this->getContentTypeIds(
-            $this->locationContentTypes
-        );
     }
 
     /**
@@ -200,6 +196,12 @@ class EzLocationBackend implements BackendInterface
      */
     public function getSubLocations(LocationInterface $location)
     {
+        if ($this->locationContentTypeIds === null) {
+            $this->locationContentTypeIds = $this->getContentTypeIds(
+                $this->locationContentTypes
+            );
+        }
+
         $criteria = array(
             new Criterion\ParentLocationId($location->getLocationId()),
             new Criterion\ContentTypeId($this->locationContentTypeIds),
@@ -227,6 +229,12 @@ class EzLocationBackend implements BackendInterface
      */
     public function getSubLocationsCount(LocationInterface $location)
     {
+        if ($this->locationContentTypeIds === null) {
+            $this->locationContentTypeIds = $this->getContentTypeIds(
+                $this->locationContentTypes
+            );
+        }
+
         $criteria = array(
             new Criterion\ParentLocationId($location->getLocationId()),
             new Criterion\ContentTypeId($this->locationContentTypeIds),
