@@ -33,19 +33,6 @@ services:
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezcontent }
 
-    # Config processors
-
-    netgen_content_browser.config_processor.field_definition:
-        class: Netgen\ContentBrowser\Config\FieldDefinition\ConfigProcessor
-        arguments:
-            - "@ezpublish.api.service.content_type"
-
-    netgen_content_browser.config_processor.field_definition.ezobjectrelationlist:
-        class: Netgen\ContentBrowser\Config\FieldDefinition\RelationListConfigProcessor
-        parent: netgen_content_browser.config_processor.field_definition
-        tags:
-            - { name: netgen_content_browser.config_processor }
-
     # Column value providers
 
     netgen_content_browser.column_value_provider.ezlocation.location_id:
