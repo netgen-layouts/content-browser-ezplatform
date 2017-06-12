@@ -116,11 +116,6 @@ class EzLocationBackend implements BackendInterface
             $locationContentTypes = array_map('trim', explode(',', $locationContentTypes));
         }
 
-        if ($this->config->hasParameter('default_sections')) {
-            $defaultSections = $this->config->getParameter('default_sections');
-            $defaultSections = array_map('intval', explode(',', $defaultSections));
-        }
-
         $this->locationContentTypes = $locationContentTypes;
         $this->defaultSections = $defaultSections;
     }
