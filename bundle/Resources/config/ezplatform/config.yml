@@ -1,8 +1,6 @@
 item_types:
     ezlocation:
         name: item_types.ezlocation
-        min_selected: 1
-        max_selected: 0
         preview:
             template: '%netgen_content_browser.ezpublish.default_item_template%'
         columns:
@@ -46,8 +44,6 @@ item_types:
 
     ezcontent:
         name: item_types.ezcontent
-        min_selected: 1
-        max_selected: 0
         preview:
             template: '%netgen_content_browser.ezpublish.default_item_template%'
         columns:
