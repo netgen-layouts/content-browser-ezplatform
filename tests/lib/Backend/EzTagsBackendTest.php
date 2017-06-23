@@ -50,6 +50,7 @@ class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::__construct
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::setLanguages
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getDefaultSections
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildLocation
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getRootTag

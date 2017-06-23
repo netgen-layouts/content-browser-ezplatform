@@ -67,6 +67,14 @@ class ItemTest extends TestCase
     }
 
     /**
+     * @covers \Netgen\ContentBrowser\Item\EzTags\Item::isSelectable
+     */
+    public function testIsSelectable()
+    {
+        $this->assertTrue($this->item->isSelectable());
+    }
+
+    /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::getTag
      */
     public function testGetTag()

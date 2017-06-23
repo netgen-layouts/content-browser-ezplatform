@@ -50,7 +50,7 @@ class ItemTest extends TestCase
             )
         );
 
-        $this->item = new Item($this->location, $this->content, 'Some name');
+        $this->item = new Item($this->location, $this->content, 'Some name', false);
     }
 
     /**
@@ -108,6 +108,14 @@ class ItemTest extends TestCase
     public function testIsVisible()
     {
         $this->assertFalse($this->item->isVisible());
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Item\EzContent\Item::isSelectable
+     */
+    public function testIsSelectable()
+    {
+        $this->assertFalse($this->item->isSelectable());
     }
 
     /**

@@ -15,6 +15,11 @@ class ItemTest extends TestCase
     protected $location;
 
     /**
+     * @var \eZ\Publish\API\Repository\Values\Content\Content
+     */
+    protected $content;
+
+    /**
      * @var \Netgen\ContentBrowser\Item\EzLocation\Item
      */
     protected $item;
@@ -29,7 +34,9 @@ class ItemTest extends TestCase
             )
         );
 
-        $this->item = new Item($this->location, new Content(), 'Some name');
+        $this->content = new Content();
+
+        $this->item = new Item($this->location, $this->content, 'Some name', false);
     }
 
     /**
@@ -90,10 +97,26 @@ class ItemTest extends TestCase
     }
 
     /**
+     * @covers \Netgen\ContentBrowser\Item\EzLocation\Item::isSelectable
+     */
+    public function testIsSelectable()
+    {
+        $this->assertFalse($this->item->isSelectable());
+    }
+
+    /**
      * @covers \Netgen\ContentBrowser\Item\EzLocation\Item::getLocation
      */
     public function testGetLocation()
     {
         $this->assertEquals($this->location, $this->item->getLocation());
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Item\EzLocation\Item::getContent
+     */
+    public function testGetContent()
+    {
+        $this->assertEquals($this->content, $this->item->getContent());
     }
 }

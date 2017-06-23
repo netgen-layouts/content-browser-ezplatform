@@ -158,7 +158,9 @@ class EzLocationBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::__construct
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getDefaultSections
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::isSelectable
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getContentTypeIds
      */
     public function testGetDefaultSections()
@@ -195,6 +197,7 @@ class EzLocationBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::loadLocation
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItem
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::isSelectable
      */
     public function testLoadLocation()
     {
@@ -243,6 +246,7 @@ class EzLocationBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::loadItem
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItem
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::isSelectable
      */
     public function testLoadItem()
     {
@@ -293,6 +297,8 @@ class EzLocationBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getSortClause
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getContentTypeIds
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::isSelectable
      */
     public function testGetSubLocations()
     {
@@ -335,6 +341,7 @@ class EzLocationBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getSubLocationsCount
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getContentTypeIds
      */
     public function testGetSubLocationsCount()
     {
@@ -369,6 +376,7 @@ class EzLocationBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::isSelectable
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getSortClause
      */
     public function testGetSubItems()
@@ -412,6 +420,7 @@ class EzLocationBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getSortClause
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::isSelectable
      */
     public function testGetSubItemsWithOffsetAndLimit()
     {
@@ -484,6 +493,7 @@ class EzLocationBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::search
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::isSelectable
      */
     public function testSearch()
     {
@@ -521,6 +531,7 @@ class EzLocationBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::search
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::isSelectable
      */
     public function testSearchWithOffsetAndLimit()
     {
