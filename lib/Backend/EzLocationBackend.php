@@ -130,11 +130,6 @@ class EzLocationBackend implements BackendInterface
         $this->languages = is_array($languages) ? $languages : array();
     }
 
-    /**
-     * Returns the default sections available in the backend.
-     *
-     * @return \Netgen\ContentBrowser\Item\LocationInterface[]
-     */
     public function getDefaultSections()
     {
         $query = new LocationQuery();
@@ -163,15 +158,6 @@ class EzLocationBackend implements BackendInterface
         return $items;
     }
 
-    /**
-     * Loads a  location by its ID.
-     *
-     * @param int|string $id
-     *
-     * @throws \Netgen\ContentBrowser\Exceptions\NotFoundException If location does not exist
-     *
-     * @return \Netgen\ContentBrowser\Item\LocationInterface
-     */
     public function loadLocation($id)
     {
         $query = new LocationQuery();
@@ -194,27 +180,11 @@ class EzLocationBackend implements BackendInterface
         );
     }
 
-    /**
-     * Loads the item by its ID.
-     *
-     * @param int|string $id
-     *
-     * @throws \Netgen\ContentBrowser\Exceptions\NotFoundException If item does not exist
-     *
-     * @return \Netgen\ContentBrowser\Item\ItemInterface
-     */
     public function loadItem($id)
     {
         return $this->loadLocation($id);
     }
 
-    /**
-     * Returns the locations below provided location.
-     *
-     * @param \Netgen\ContentBrowser\Item\LocationInterface $location
-     *
-     * @return \Netgen\ContentBrowser\Item\LocationInterface[]
-     */
     public function getSubLocations(LocationInterface $location)
     {
         if ($this->locationContentTypeIds === null) {
@@ -241,13 +211,6 @@ class EzLocationBackend implements BackendInterface
         return $this->buildItems($result);
     }
 
-    /**
-     * Returns the count of locations below provided location.
-     *
-     * @param \Netgen\ContentBrowser\Item\LocationInterface $location
-     *
-     * @return int
-     */
     public function getSubLocationsCount(LocationInterface $location)
     {
         if ($this->locationContentTypeIds === null) {
@@ -273,15 +236,6 @@ class EzLocationBackend implements BackendInterface
         return $result->totalCount;
     }
 
-    /**
-     * Returns the location items.
-     *
-     * @param \Netgen\ContentBrowser\Item\LocationInterface $location
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Netgen\ContentBrowser\Item\ItemInterface[]
-     */
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
         $criteria = array(
@@ -302,13 +256,6 @@ class EzLocationBackend implements BackendInterface
         return $this->buildItems($result);
     }
 
-    /**
-     * Returns the location items count.
-     *
-     * @param \Netgen\ContentBrowser\Item\LocationInterface $location
-     *
-     * @return int
-     */
     public function getSubItemsCount(LocationInterface $location)
     {
         $criteria = array(
@@ -327,15 +274,6 @@ class EzLocationBackend implements BackendInterface
         return $result->totalCount;
     }
 
-    /**
-     * Searches for items.
-     *
-     * @param string $searchText
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Netgen\ContentBrowser\Item\ItemInterface[]
-     */
     public function search($searchText, $offset = 0, $limit = 25)
     {
         $query = new LocationQuery();
@@ -358,13 +296,6 @@ class EzLocationBackend implements BackendInterface
         return $this->buildItems($result);
     }
 
-    /**
-     * Returns the count of searched items.
-     *
-     * @param string $searchText
-     *
-     * @return int
-     */
     public function searchCount($searchText)
     {
         $query = new LocationQuery();

@@ -11,15 +11,6 @@ use Netgen\ContentBrowser\Item\EzContent\Item;
 
 class EzContentBackend extends EzLocationBackend
 {
-    /**
-     * Loads the item by its ID.
-     *
-     * @param int|string $id
-     *
-     * @throws \Netgen\ContentBrowser\Exceptions\NotFoundException If item does not exist
-     *
-     * @return \Netgen\ContentBrowser\Item\ItemInterface
-     */
     public function loadItem($id)
     {
         $query = new LocationQuery();

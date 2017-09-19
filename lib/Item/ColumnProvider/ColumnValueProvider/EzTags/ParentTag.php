@@ -19,25 +19,12 @@ class ParentTag implements ColumnValueProviderInterface
      */
     protected $translationHelper;
 
-    /**
-     * Constructor.
-     *
-     * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     */
     public function __construct(TagsService $tagsService, TranslationHelper $translationHelper)
     {
         $this->tagsService = $tagsService;
         $this->translationHelper = $translationHelper;
     }
 
-    /**
-     * Provides the column value.
-     *
-     * @param \Netgen\ContentBrowser\Item\ItemInterface $item
-     *
-     * @return mixed
-     */
     public function getValue(ItemInterface $item)
     {
         return $this->tagsService->sudo(

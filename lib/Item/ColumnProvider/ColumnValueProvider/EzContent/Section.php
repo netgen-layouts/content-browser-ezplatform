@@ -13,23 +13,11 @@ class Section implements ColumnValueProviderInterface
      */
     protected $repository;
 
-    /**
-     * Constructor.
-     *
-     * @param \eZ\Publish\API\Repository\Repository $repository
-     */
     public function __construct(Repository $repository)
     {
         $this->repository = $repository;
     }
 
-    /**
-     * Provides the column value.
-     *
-     * @param \Netgen\ContentBrowser\Item\ItemInterface $item
-     *
-     * @return mixed
-     */
     public function getValue(ItemInterface $item)
     {
         return $this->repository->sudo(

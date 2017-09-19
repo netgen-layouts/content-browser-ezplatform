@@ -20,25 +20,12 @@ class Owner implements ColumnValueProviderInterface
      */
     protected $translationHelper;
 
-    /**
-     * Constructor.
-     *
-     * @param \eZ\Publish\API\Repository\Repository $repository
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     */
     public function __construct(Repository $repository, TranslationHelper $translationHelper)
     {
         $this->repository = $repository;
         $this->translationHelper = $translationHelper;
     }
 
-    /**
-     * Provides the column value.
-     *
-     * @param \Netgen\ContentBrowser\Item\ItemInterface $item
-     *
-     * @return mixed
-     */
     public function getValue(ItemInterface $item)
     {
         return $this->repository->sudo(

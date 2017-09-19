@@ -22,13 +22,6 @@ class Published implements ColumnValueProviderInterface
         $this->dateFormat = $dateFormat;
     }
 
-    /**
-     * Provides the column value.
-     *
-     * @param \Netgen\ContentBrowser\Item\ItemInterface $item
-     *
-     * @return mixed
-     */
     public function getValue(ItemInterface $item)
     {
         return $item->getLocation()->contentInfo->publishedDate->format(

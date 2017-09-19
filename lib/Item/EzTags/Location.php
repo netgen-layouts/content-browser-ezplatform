@@ -29,41 +29,21 @@ class Location implements LocationInterface, EzTagsInterface
         $this->name = $name;
     }
 
-    /**
-     * Returns the location ID.
-     *
-     * @return int|string
-     */
     public function getLocationId()
     {
         return $this->tag->id;
     }
 
-    /**
-     * Returns the name.
-     *
-     * @return string
-     */
     public function getName()
     {
         return $this->name;
     }
 
-    /**
-     * Returns the parent ID.
-     *
-     * @return int|string
-     */
     public function getParentId()
     {
         return $this->tag->parentTagId;
     }
 
-    /**
-     * Returns the tag.
-     *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
-     */
     public function getTag()
     {
         return $this->tag;

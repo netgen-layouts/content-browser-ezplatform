@@ -28,12 +28,6 @@ class EzTagsBackend implements BackendInterface
      */
     protected $languages = array();
 
-    /**
-     * Constructor.
-     *
-     * @param \Netgen\TagsBundle\API\Repository\TagsService $tagsService
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     */
     public function __construct(TagsService $tagsService, TranslationHelper $translationHelper)
     {
         $this->tagsService = $tagsService;
@@ -50,25 +44,11 @@ class EzTagsBackend implements BackendInterface
         $this->languages = is_array($languages) ? $languages : array();
     }
 
-    /**
-     * Returns the default sections available in the backend.
-     *
-     * @return \Netgen\ContentBrowser\Item\LocationInterface[]
-     */
     public function getDefaultSections()
     {
         return array($this->loadLocation(0));
     }
 
-    /**
-     * Loads a  location by its ID.
-     *
-     * @param int|string $id
-     *
-     * @throws \Netgen\ContentBrowser\Exceptions\NotFoundException If location does not exist
-     *
-     * @return \Netgen\ContentBrowser\Item\LocationInterface
-     */
     public function loadLocation($id)
     {
         if (empty($id)) {
@@ -78,15 +58,6 @@ class EzTagsBackend implements BackendInterface
         return $this->loadItem($id);
     }
 
-    /**
-     * Loads the item by its ID.
-     *
-     * @param int|string $id
-     *
-     * @throws \Netgen\ContentBrowser\Exceptions\NotFoundException If item does not exist
-     *
-     * @return \Netgen\ContentBrowser\Item\ItemInterface
-     */
     public function loadItem($id)
     {
         try {
@@ -103,13 +74,6 @@ class EzTagsBackend implements BackendInterface
         return $this->buildItem($tag);
     }
 
-    /**
-     * Returns the locations below provided location.
-     *
-     * @param \Netgen\ContentBrowser\Item\LocationInterface $location
-     *
-     * @return \Netgen\ContentBrowser\Item\LocationInterface[]
-     */
     public function getSubLocations(LocationInterface $location)
     {
         $tags = $this->tagsService->loadTagChildren(
@@ -119,13 +83,6 @@ class EzTagsBackend implements BackendInterface
         return $this->buildItems($tags);
     }
 
-    /**
-     * Returns the count of locations below provided location.
-     *
-     * @param \Netgen\ContentBrowser\Item\LocationInterface $location
-     *
-     * @return int
-     */
     public function getSubLocationsCount(LocationInterface $location)
     {
         return $this->tagsService->getTagChildrenCount(
@@ -133,15 +90,6 @@ class EzTagsBackend implements BackendInterface
         );
     }
 
-    /**
-     * Returns the location items.
-     *
-     * @param \Netgen\ContentBrowser\Item\LocationInterface $location
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Netgen\ContentBrowser\Item\ItemInterface[]
-     */
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
         $tags = $this->tagsService->loadTagChildren(
@@ -153,13 +101,6 @@ class EzTagsBackend implements BackendInterface
         return $this->buildItems($tags);
     }
 
-    /**
-     * Returns the location items count.
-     *
-     * @param \Netgen\ContentBrowser\Item\LocationInterface $location
-     *
-     * @return int
-     */
     public function getSubItemsCount(LocationInterface $location)
     {
         return $this->tagsService->getTagChildrenCount(
@@ -167,15 +108,6 @@ class EzTagsBackend implements BackendInterface
         );
     }
 
-    /**
-     * Searches for items.
-     *
-     * @param string $searchText
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Netgen\ContentBrowser\Item\ItemInterface[]
-     */
     public function search($searchText, $offset = 0, $limit = 25)
     {
         if (empty($this->languages)) {
@@ -193,13 +125,6 @@ class EzTagsBackend implements BackendInterface
         return $this->buildItems($tags);
     }
 
-    /**
-     * Returns the count of searched items.
-     *
-     * @param string $searchText
-     *
-     * @return int
-     */
     public function searchCount($searchText)
     {
         if (empty($this->languages)) {
