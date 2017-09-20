@@ -16,17 +16,17 @@ class EzTagsBackend implements BackendInterface
     /**
      * @var \Netgen\TagsBundle\API\Repository\TagsService
      */
-    protected $tagsService;
+    private $tagsService;
 
     /**
      * @var \eZ\Publish\Core\Helper\TranslationHelper
      */
-    protected $translationHelper;
+    private $translationHelper;
 
     /**
      * @var array
      */
-    protected $languages = array();
+    private $languages = array();
 
     public function __construct(TagsService $tagsService, TranslationHelper $translationHelper)
     {
@@ -142,7 +142,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @return \Netgen\ContentBrowser\Item\EzTags\Location
      */
-    protected function buildLocation()
+    private function buildLocation()
     {
         $tag = $this->getRootTag();
 
@@ -161,7 +161,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @return \Netgen\ContentBrowser\Item\EzTags\Item
      */
-    protected function buildItem(Tag $tag)
+    private function buildItem(Tag $tag)
     {
         $tagName = $this->translationHelper->getTranslatedByMethod(
             $tag,
@@ -178,7 +178,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @return \Netgen\ContentBrowser\Item\EzTags\Item[]
      */
-    protected function buildItems(array $tags)
+    private function buildItems(array $tags)
     {
         return array_map(
             function (Tag $tag) {
@@ -193,7 +193,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    protected function getRootTag()
+    private function getRootTag()
     {
         return new Tag(
             array(

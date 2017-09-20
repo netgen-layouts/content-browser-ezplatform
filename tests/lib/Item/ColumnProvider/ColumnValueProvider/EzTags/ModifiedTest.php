@@ -13,7 +13,7 @@ class ModifiedTest extends TestCase
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {

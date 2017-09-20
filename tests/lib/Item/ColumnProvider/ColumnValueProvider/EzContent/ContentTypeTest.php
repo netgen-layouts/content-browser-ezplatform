@@ -19,22 +19,22 @@ class ContentTypeTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $repositoryMock;
+    private $repositoryMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $contentTypeServiceMock;
+    private $contentTypeServiceMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $translationHelperMock;
+    private $translationHelperMock;
 
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\ContentType
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {

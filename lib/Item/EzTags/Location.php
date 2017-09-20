@@ -10,12 +10,12 @@ class Location implements LocationInterface, EzTagsInterface
     /**
      * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    protected $tag;
+    private $tag;
 
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * Constructor.

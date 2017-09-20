@@ -17,22 +17,22 @@ class EzTagsBackendTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $tagsServiceMock;
+    private $tagsServiceMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $translationHelperMock;
+    private $translationHelperMock;
 
     /**
      * @var array
      */
-    protected $languages = array();
+    private $languages = array();
 
     /**
      * @var \Netgen\ContentBrowser\Backend\EzTagsBackend
      */
-    protected $backend;
+    private $backend;
 
     public function setUp()
     {
@@ -390,7 +390,7 @@ class EzTagsBackendTest extends TestCase
      *
      * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    protected function getTag($id = null, $parentTagId = null)
+    private function getTag($id = null, $parentTagId = null)
     {
         return new Tag(
             array(

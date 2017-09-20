@@ -29,47 +29,47 @@ class EzLocationBackendTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $repositoryMock;
+    private $repositoryMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $searchServiceMock;
+    private $searchServiceMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $contentServiceMock;
+    private $contentServiceMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $contentTypeHandlerMock;
+    private $contentTypeHandlerMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $translationHelperMock;
+    private $translationHelperMock;
 
     /**
      * @var array
      */
-    protected $locationContentTypes;
+    private $locationContentTypes;
 
     /**
      * @var array
      */
-    protected $defaultSections;
+    private $defaultSections;
 
     /**
      * @var array
      */
-    protected $languages;
+    private $languages;
 
     /**
      * @var \Netgen\ContentBrowser\Backend\EzLocationBackend
      */
-    protected $backend;
+    private $backend;
 
     public function setUp()
     {
@@ -601,7 +601,7 @@ class EzLocationBackendTest extends TestCase
      *
      * @return \eZ\Publish\Core\Repository\Values\Content\Location
      */
-    protected function getLocation($id = null, $parentLocationId = null)
+    private function getLocation($id = null, $parentLocationId = null)
     {
         return new Location(
             array(

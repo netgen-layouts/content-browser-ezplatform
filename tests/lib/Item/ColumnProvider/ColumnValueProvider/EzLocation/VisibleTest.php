@@ -13,7 +13,7 @@ class VisibleTest extends TestCase
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Visible
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {

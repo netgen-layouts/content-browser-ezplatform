@@ -15,7 +15,7 @@ class PublishedTest extends TestCase
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Published
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {

@@ -13,7 +13,7 @@ class PriorityTest extends TestCase
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Priority
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {

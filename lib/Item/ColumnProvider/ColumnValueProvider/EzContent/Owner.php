@@ -13,12 +13,12 @@ class Owner implements ColumnValueProviderInterface
     /**
      * @var \eZ\Publish\API\Repository\Repository
      */
-    protected $repository;
+    private $repository;
 
     /**
      * @var \eZ\Publish\Core\Helper\TranslationHelper
      */
-    protected $translationHelper;
+    private $translationHelper;
 
     public function __construct(Repository $repository, TranslationHelper $translationHelper)
     {

@@ -10,7 +10,7 @@ class Published implements ColumnValueProviderInterface
     /**
      * @var string
      */
-    protected $dateFormat;
+    private $dateFormat;
 
     /**
      * Constructor.

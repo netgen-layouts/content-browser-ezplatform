@@ -14,7 +14,7 @@ class ContentIdTest extends TestCase
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\ContentId
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {

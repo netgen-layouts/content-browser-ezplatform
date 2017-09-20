@@ -12,22 +12,22 @@ class Item implements ItemInterface, LocationInterface, EzLocationInterface
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
      */
-    protected $location;
+    private $location;
 
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Content
      */
-    protected $content;
+    private $content;
 
     /**
      * @var string
      */
-    protected $name;
+    private $name;
 
     /**
      * @var bool
      */
-    protected $selectable;
+    private $selectable;
 
     /**
      * Constructor.

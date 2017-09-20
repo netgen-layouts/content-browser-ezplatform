@@ -12,7 +12,7 @@ class ParentTagIdTest extends TestCase
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {

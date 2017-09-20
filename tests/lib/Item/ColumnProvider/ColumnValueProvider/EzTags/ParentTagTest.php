@@ -14,17 +14,17 @@ class ParentTagTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $tagsServiceMock;
+    private $tagsServiceMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $translationHelperMock;
+    private $translationHelperMock;
 
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {

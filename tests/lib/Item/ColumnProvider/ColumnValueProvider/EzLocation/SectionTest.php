@@ -17,17 +17,17 @@ class SectionTest extends TestCase
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $repositoryMock;
+    private $repositoryMock;
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $sectionServiceMock;
+    private $sectionServiceMock;
 
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Section
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {

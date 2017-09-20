@@ -12,17 +12,17 @@ class ItemTest extends TestCase
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
      */
-    protected $location;
+    private $location;
 
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Content
      */
-    protected $content;
+    private $content;
 
     /**
      * @var \Netgen\ContentBrowser\Item\EzLocation\Item
      */
-    protected $item;
+    private $item;
 
     public function setUp()
     {

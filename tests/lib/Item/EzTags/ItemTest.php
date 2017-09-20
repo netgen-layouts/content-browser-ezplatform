@@ -11,12 +11,12 @@ class ItemTest extends TestCase
     /**
      * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    protected $tag;
+    private $tag;
 
     /**
      * @var \Netgen\ContentBrowser\Item\EzTags\Item
      */
-    protected $item;
+    private $item;
 
     public function setUp()
     {

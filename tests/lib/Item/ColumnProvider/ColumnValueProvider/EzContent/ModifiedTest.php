@@ -16,7 +16,7 @@ class ModifiedTest extends TestCase
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Modified
      */
-    protected $provider;
+    private $provider;
 
     public function setUp()
     {
