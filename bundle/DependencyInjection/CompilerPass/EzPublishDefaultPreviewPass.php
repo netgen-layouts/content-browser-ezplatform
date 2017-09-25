@@ -5,7 +5,7 @@ namespace Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class EzPublishDefaultPreviewPass implements CompilerPassInterface
+final class EzPublishDefaultPreviewPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {

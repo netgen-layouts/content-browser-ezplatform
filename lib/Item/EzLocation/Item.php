@@ -7,7 +7,7 @@ use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 
-class Item implements ItemInterface, LocationInterface, EzLocationInterface
+final class Item implements ItemInterface, LocationInterface, EzLocationInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location
