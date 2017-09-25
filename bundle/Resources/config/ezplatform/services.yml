@@ -14,7 +14,6 @@ services:
 
     netgen_content_browser.backend.ezlocation:
         class: Netgen\ContentBrowser\Backend\EzLocationBackend
-        public: false
         arguments:
             - "@ezpublish.api.repository"
             - "@ezpublish.spi.persistence.content_type_handler"
@@ -30,7 +29,6 @@ services:
 
     netgen_content_browser.backend.ezcontent:
         class: Netgen\ContentBrowser\Backend\EzContentBackend
-        public: false
         arguments:
             - "@ezpublish.api.repository"
             - "@ezpublish.spi.persistence.content_type_handler"
