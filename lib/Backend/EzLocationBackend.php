@@ -43,12 +43,12 @@ class EzLocationBackend implements BackendInterface
     /**
      * @var string[]
      */
-    protected $locationContentTypes;
+    protected $locationContentTypes = array();
 
     /**
      * @var int[]
      */
-    protected $defaultSections;
+    protected $defaultSections = array();
 
     /**
      * @var array
@@ -95,16 +95,12 @@ class EzLocationBackend implements BackendInterface
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $contentTypeHandler
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      * @param \Netgen\ContentBrowser\Config\ConfigurationInterface $config
-     * @param string[] $locationContentTypes
-     * @param int[] $defaultSections
      */
     public function __construct(
         Repository $repository,
         Handler $contentTypeHandler,
         TranslationHelper $translationHelper,
-        ConfigurationInterface $config,
-        array $locationContentTypes,
-        array $defaultSections
+        ConfigurationInterface $config
     ) {
         $this->repository = $repository;
         $this->contentTypeHandler = $contentTypeHandler;
@@ -113,11 +109,8 @@ class EzLocationBackend implements BackendInterface
 
         if ($this->config->hasParameter('location_content_types')) {
             $locationContentTypes = $this->config->getParameter('location_content_types');
-            $locationContentTypes = array_map('trim', explode(',', $locationContentTypes));
+            $this->locationContentTypes = array_map('trim', explode(',', $locationContentTypes));
         }
-
-        $this->locationContentTypes = $locationContentTypes;
-        $this->defaultSections = $defaultSections;
     }
 
     /**
@@ -128,6 +121,28 @@ class EzLocationBackend implements BackendInterface
     public function setLanguages(array $languages = null)
     {
         $this->languages = is_array($languages) ? $languages : array();
+    }
+
+    /**
+     * Sets the default sections to the backend.
+     *
+     * @param array $defaultSections
+     */
+    public function setDefaultSections(array $defaultSections = null)
+    {
+        $this->defaultSections = is_array($defaultSections) ? $defaultSections : array();
+    }
+
+    /**
+     * Sets the list of default content types for the location tree.
+     *
+     * @param array $locationContentTypes
+     */
+    public function setLocationContentTypes(array $locationContentTypes = null)
+    {
+        if (is_array($locationContentTypes) && !empty($locationContentTypes)) {
+            $this->locationContentTypes = $locationContentTypes;
+        }
     }
 
     public function getDefaultSections()

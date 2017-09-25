@@ -147,12 +147,12 @@ class EzContentBackendTest extends TestCase
             $this->repositoryMock,
             $this->contentTypeHandlerMock,
             $this->translationHelperMock,
-            new Configuration('ezcontent'),
-            array_keys($this->locationContentTypes),
-            $this->defaultSections
+            new Configuration('ezcontent')
         );
 
         $this->backend->setLanguages($this->languages);
+        $this->backend->setDefaultSections($this->defaultSections);
+        $this->backend->setLocationContentTypes(array_keys($this->locationContentTypes));
     }
 
     /**
