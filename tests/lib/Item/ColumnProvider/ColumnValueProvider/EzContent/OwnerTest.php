@@ -86,6 +86,7 @@ class OwnerTest extends TestCase
         $item = new Item(
             new Location(),
             $content,
+            null,
             'Name'
         );
 
@@ -131,6 +132,7 @@ class OwnerTest extends TestCase
         $item = new Item(
             new Location(),
             $content,
+            null,
             'Name'
         );
 

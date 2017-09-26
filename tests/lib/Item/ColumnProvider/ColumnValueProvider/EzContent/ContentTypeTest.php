@@ -86,6 +86,7 @@ class ContentTypeTest extends TestCase
         $item = new Item(
             new Location(),
             $content,
+            null,
             'Name'
         );
 

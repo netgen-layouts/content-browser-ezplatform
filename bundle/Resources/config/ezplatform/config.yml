@@ -9,34 +9,34 @@ item_types:
                 value_provider: name
             location_id:
                 name: columns.ezpublish.location_id
-                value_provider: ezlocation\location_id
+                value_provider: ezpublish\location_id
             content_id:
                 name: columns.ezpublish.content_id
-                value_provider: ezlocation\content_id
+                value_provider: ezpublish\content_id
             thumbnail:
                 name: columns.ezpublish.thumbnail
                 template: '%netgen_content_browser.ezpublish.default_thumbnail_template%'
             type:
                 name: columns.ezpublish.type
-                value_provider: ezlocation\content_type
+                value_provider: ezpublish\content_type
             visible:
                 name: columns.ezpublish.visible
-                value_provider: ezlocation\visible
+                value_provider: ezpublish\visible
             owner:
                 name: columns.ezpublish.owner
-                value_provider: ezlocation\owner
+                value_provider: ezpublish\owner
             modified:
                 name: columns.ezpublish.modified
-                value_provider: ezlocation\modified
+                value_provider: ezpublish\modified
             published:
                 name: columns.ezpublish.published
-                value_provider: ezlocation\published
+                value_provider: ezpublish\published
             priority:
                 name: columns.ezpublish.priority
-                value_provider: ezlocation\priority
+                value_provider: ezpublish\priority
             section:
                 name: columns.ezpublish.section
-                value_provider: ezlocation\section
+                value_provider: ezpublish\section
         default_columns:
             - name
             - type
@@ -52,34 +52,34 @@ item_types:
                 value_provider: name
             location_id:
                 name: columns.ezpublish.location_id
-                value_provider: ezcontent\location_id
+                value_provider: ezpublish\location_id
             content_id:
                 name: columns.ezpublish.content_id
-                value_provider: ezcontent\content_id
+                value_provider: ezpublish\content_id
             thumbnail:
                 name: columns.ezpublish.thumbnail
                 template: '%netgen_content_browser.ezpublish.default_thumbnail_template%'
             type:
                 name: columns.ezpublish.type
-                value_provider: ezcontent\content_type
+                value_provider: ezpublish\content_type
             visible:
                 name: columns.ezpublish.visible
-                value_provider: ezcontent\visible
+                value_provider: ezpublish\visible
             owner:
                 name: columns.ezpublish.owner
-                value_provider: ezcontent\owner
+                value_provider: ezpublish\owner
             modified:
                 name: columns.ezpublish.modified
-                value_provider: ezcontent\modified
+                value_provider: ezpublish\modified
             published:
                 name: columns.ezpublish.published
-                value_provider: ezcontent\published
+                value_provider: ezpublish\published
             priority:
                 name: columns.ezpublish.priority
-                value_provider: ezcontent\priority
+                value_provider: ezpublish\priority
             section:
                 name: columns.ezpublish.section
-                value_provider: ezcontent\section
+                value_provider: ezpublish\section
         default_columns:
             - name
             - type

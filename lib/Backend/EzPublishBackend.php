@@ -15,11 +15,11 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Config\ConfigurationInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
-use Netgen\ContentBrowser\Item\EzLocation\EzLocationInterface;
-use Netgen\ContentBrowser\Item\EzLocation\Item;
+use Netgen\ContentBrowser\Item\EzContent\EzContentInterface;
+use Netgen\ContentBrowser\Item\EzContent\Item;
 use Netgen\ContentBrowser\Item\LocationInterface;
 
-class EzLocationBackend implements BackendInterface
+class EzPublishBackend implements BackendInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository
@@ -190,7 +190,7 @@ class EzLocationBackend implements BackendInterface
 
         throw new NotFoundException(
             sprintf(
-                'Item with ID %s not found.',
+                'Location with ID %s not found.',
                 $id
             )
         );
@@ -198,12 +198,37 @@ class EzLocationBackend implements BackendInterface
 
     public function loadItem($id)
     {
-        return $this->loadLocation($id);
+        $criteria = array();
+        if ($this->config->getItemType() === 'ezlocation') {
+            $criteria[] = new Criterion\LocationId($id);
+        } elseif ($this->config->getItemType() === 'ezcontent') {
+            $criteria[] = new Criterion\ContentId($id);
+            $criteria[] = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
+        }
+
+        $query = new LocationQuery();
+        $query->filter = new Criterion\LogicalAnd($criteria);
+
+        $result = $this->repository->getSearchService()->findLocations(
+            $query,
+            array('languages' => $this->languages)
+        );
+
+        if (!empty($result->searchHits)) {
+            return $this->buildItem($result->searchHits[0]);
+        }
+
+        throw new NotFoundException(
+            sprintf(
+                'Item with ID %s not found.',
+                $id
+            )
+        );
     }
 
     public function getSubLocations(LocationInterface $location)
     {
-        if (!$location instanceof EzLocationInterface) {
+        if (!$location instanceof EzContentInterface) {
             return array();
         }
 
@@ -258,7 +283,7 @@ class EzLocationBackend implements BackendInterface
 
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
-        if (!$location instanceof EzLocationInterface) {
+        if (!$location instanceof EzContentInterface) {
             return array();
         }
 
@@ -346,7 +371,7 @@ class EzLocationBackend implements BackendInterface
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $searchHit
      *
-     * @return \Netgen\ContentBrowser\Item\EzLocation\Item
+     * @return \Netgen\ContentBrowser\Item\EzContent\Item
      */
     protected function buildItem(SearchHit $searchHit)
     {
@@ -365,6 +390,9 @@ class EzLocationBackend implements BackendInterface
         return new Item(
             $searchHit->valueObject,
             $content,
+            $this->config->getItemType() === 'ezlocation' ?
+                $searchHit->valueObject->id :
+                $searchHit->valueObject->contentInfo->id,
             $name,
             $this->isSelectable($content)
         );
@@ -375,7 +403,7 @@ class EzLocationBackend implements BackendInterface
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
      *
-     * @return \Netgen\ContentBrowser\Item\EzLocation\Item[]
+     * @return \Netgen\ContentBrowser\Item\EzContent\Item[]
      */
     protected function buildItems(SearchResult $searchResult)
     {

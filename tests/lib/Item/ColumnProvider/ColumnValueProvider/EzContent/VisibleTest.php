@@ -33,6 +33,7 @@ class VisibleTest extends TestCase
                 )
             ),
             new Content(),
+            null,
             'Name'
         );
 

@@ -50,7 +50,7 @@ class ItemTest extends TestCase
             )
         );
 
-        $this->item = new Item($this->location, $this->content, 'Some name', false);
+        $this->item = new Item($this->location, $this->content, 42, 'Some name', false);
     }
 
     /**
@@ -97,7 +97,7 @@ class ItemTest extends TestCase
             )
         );
 
-        $this->item = new Item($this->location, $this->content, 'Some name');
+        $this->item = new Item($this->location, $this->content, 42, 'Some name');
 
         $this->assertNull($this->item->getParentId());
     }

@@ -77,6 +77,7 @@ class SectionTest extends TestCase
         $item = new Item(
             new Location(),
             $content,
+            null,
             'Name'
         );
 
