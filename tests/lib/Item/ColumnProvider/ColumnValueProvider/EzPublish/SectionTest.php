@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzContent;
+namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
 use eZ\Publish\API\Repository\SectionService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
@@ -9,7 +9,7 @@ use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
-use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Section;
+use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section;
 use Netgen\ContentBrowser\Item\EzContent\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
@@ -27,7 +27,7 @@ class SectionTest extends TestCase
     private $sectionServiceMock;
 
     /**
-     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Section
+     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section
      */
     private $provider;
 
@@ -55,8 +55,8 @@ class SectionTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Section::__construct
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Section::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::__construct
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::getValue
      */
     public function testGetValue()
     {
@@ -100,7 +100,7 @@ class SectionTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Section::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::getValue
      */
     public function testGetValueWithInvalidItem()
     {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzContent;
+namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\LocationId;
+use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\LocationId;
 use Netgen\ContentBrowser\Item\EzContent\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class LocationIdTest extends TestCase
 {
     /**
-     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\LocationId
+     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\LocationId
      */
     private $provider;
 
@@ -22,7 +22,7 @@ class LocationIdTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\LocationId::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\LocationId::getValue
      */
     public function testGetValue()
     {
@@ -44,7 +44,7 @@ class LocationIdTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\LocationId::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\LocationId::getValue
      */
     public function testGetValueWithInvalidItem()
     {

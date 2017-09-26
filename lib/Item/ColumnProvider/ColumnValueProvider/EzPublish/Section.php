@@ -1,6 +1,6 @@
 <?php
 
-namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent;
+namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
 use eZ\Publish\API\Repository\Repository;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;

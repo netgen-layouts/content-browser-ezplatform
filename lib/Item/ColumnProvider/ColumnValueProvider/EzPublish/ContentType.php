@@ -1,15 +1,14 @@
 <?php
 
-namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent;
+namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
-use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\EzContent\EzContentInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
-class Owner implements ColumnValueProviderInterface
+class ContentType implements ColumnValueProviderInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository
@@ -35,17 +34,11 @@ class Owner implements ColumnValueProviderInterface
 
         return $this->repository->sudo(
             function (Repository $repository) use ($item) {
-                try {
-                    $ownerContentInfo = $repository->getContentService()->loadContentInfo(
-                        $item->getContent()->contentInfo->ownerId
-                    );
-                } catch (NotFoundException $e) {
-                    // Owner might be deleted in eZ database
-                    return '';
-                }
-
-                return $this->translationHelper->getTranslatedContentNameByContentInfo(
-                    $ownerContentInfo
+                return $this->translationHelper->getTranslatedByMethod(
+                    $repository->getContentTypeService()->loadContentType(
+                        $item->getContent()->contentInfo->contentTypeId
+                    ),
+                    'getName'
                 );
             }
         );

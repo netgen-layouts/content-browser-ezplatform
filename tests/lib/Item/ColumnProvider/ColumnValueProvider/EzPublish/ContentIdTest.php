@@ -1,46 +1,40 @@
 <?php
 
-namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzContent;
+namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
-use DateTime;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
-use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Modified;
+use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentId;
 use Netgen\ContentBrowser\Item\EzContent\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
-class ModifiedTest extends TestCase
+class ContentIdTest extends TestCase
 {
     /**
-     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Modified
+     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentId
      */
     private $provider;
 
     public function setUp()
     {
-        $this->provider = new Modified('d.m.Y H:i:s');
+        $this->provider = new ContentId();
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Modified::__construct
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Modified::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentId::getValue
      */
     public function testGetValue()
     {
-        $date = new DateTime();
-        $date->setDate(2016, 7, 17);
-        $date->setTime(18, 15, 42);
-
         $content = new Content(
             array(
                 'versionInfo' => new VersionInfo(
                     array(
                         'contentInfo' => new ContentInfo(
                             array(
-                                'modificationDate' => $date,
+                                'id' => 42,
                             )
                         ),
                     )
@@ -56,13 +50,13 @@ class ModifiedTest extends TestCase
         );
 
         $this->assertEquals(
-            '17.07.2016 18:15:42',
+            42,
             $this->provider->getValue($item)
         );
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Modified::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentId::getValue
      */
     public function testGetValueWithInvalidItem()
     {

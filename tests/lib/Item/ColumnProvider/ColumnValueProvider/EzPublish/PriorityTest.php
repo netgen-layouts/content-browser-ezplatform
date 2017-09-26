@@ -1,10 +1,10 @@
 <?php
 
-namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzContent;
+namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Priority;
+use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Priority;
 use Netgen\ContentBrowser\Item\EzContent\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 class PriorityTest extends TestCase
 {
     /**
-     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Priority
+     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Priority
      */
     private $provider;
 
@@ -22,7 +22,7 @@ class PriorityTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Priority::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Priority::getValue
      */
     public function testGetValue()
     {
@@ -44,7 +44,7 @@ class PriorityTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Priority::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Priority::getValue
      */
     public function testGetValueWithInvalidItem()
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzContent;
+namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
 use DateTime;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
-use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Published;
+use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Published;
 use Netgen\ContentBrowser\Item\EzContent\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class PublishedTest extends TestCase
 {
     /**
-     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Published
+     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Published
      */
     private $provider;
 
@@ -25,8 +25,8 @@ class PublishedTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Published::__construct
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Published::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Published::__construct
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Published::getValue
      */
     public function testGetValue()
     {
@@ -62,7 +62,7 @@ class PublishedTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Published::getValue
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Published::getValue
      */
     public function testGetValueWithInvalidItem()
     {

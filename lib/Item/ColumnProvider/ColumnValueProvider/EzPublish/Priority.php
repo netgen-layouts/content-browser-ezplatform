@@ -1,12 +1,12 @@
 <?php
 
-namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent;
+namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\EzContent\EzContentInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
-class Visible implements ColumnValueProviderInterface
+class Priority implements ColumnValueProviderInterface
 {
     public function getValue(ItemInterface $item)
     {
@@ -14,6 +14,6 @@ class Visible implements ColumnValueProviderInterface
             return null;
         }
 
-        return $item->getLocation()->invisible ? 'No' : 'Yes';
+        return $item->getLocation()->priority;
     }
 }

@@ -45,19 +45,19 @@ services:
     # Column value providers
 
     netgen_content_browser.column_value_provider.ezpublish.location_id:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\LocationId
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\LocationId
         public: false
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\location_id }
 
     netgen_content_browser.column_value_provider.ezpublish.content_id:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\ContentId
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentId
         public: false
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\content_id }
 
     netgen_content_browser.column_value_provider.ezpublish.content_type:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\ContentType
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentType
         public: false
         arguments:
             - "@ezpublish.api.repository"
@@ -66,7 +66,7 @@ services:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\content_type }
 
     netgen_content_browser.column_value_provider.ezpublish.modified:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Modified
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Modified
         public: false
         arguments:
             - "%netgen_content_browser.columns.date_format%"
@@ -74,7 +74,7 @@ services:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\modified }
 
     netgen_content_browser.column_value_provider.ezpublish.published:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Published
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Published
         public: false
         arguments:
             - "%netgen_content_browser.columns.date_format%"
@@ -82,7 +82,7 @@ services:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\published }
 
     netgen_content_browser.column_value_provider.ezpublish.owner:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Owner
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Owner
         public: false
         arguments:
             - "@ezpublish.api.repository"
@@ -91,13 +91,13 @@ services:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\owner }
 
     netgen_content_browser.column_value_provider.ezpublish.priority:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Priority
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Priority
         public: false
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\priority }
 
     netgen_content_browser.column_value_provider.ezpublish.section:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Section
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section
         public: false
         arguments:
             - "@ezpublish.api.repository"
@@ -105,7 +105,7 @@ services:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\section }
 
     netgen_content_browser.column_value_provider.ezpublish.visible:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\Visible
+        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible
         public: false
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\visible }
