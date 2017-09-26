@@ -5,6 +5,7 @@ namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\Ez
 use DateTime;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified;
 use Netgen\ContentBrowser\Item\EzTags\Item;
+use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
@@ -43,5 +44,13 @@ class ModifiedTest extends TestCase
             '17.07.2016 18:15:42',
             $this->provider->getValue($item)
         );
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::getValue
+     */
+    public function testGetValueWithInvalidItem()
+    {
+        $this->assertNull($this->provider->getValue(new StubItem()));
     }
 }

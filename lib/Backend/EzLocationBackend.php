@@ -15,6 +15,7 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Config\ConfigurationInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
+use Netgen\ContentBrowser\Item\EzLocation\EzLocationInterface;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
 use Netgen\ContentBrowser\Item\LocationInterface;
 
@@ -161,7 +162,7 @@ class EzLocationBackend implements BackendInterface
 
         usort(
             $items,
-            function ($item1, $item2) use ($sortMap) {
+            function (LocationInterface $item1, LocationInterface $item2) use ($sortMap) {
                 if ($item1->getLocationId() === $item2->getLocationId()) {
                     return 0;
                 }
@@ -202,6 +203,10 @@ class EzLocationBackend implements BackendInterface
 
     public function getSubLocations(LocationInterface $location)
     {
+        if (!$location instanceof EzLocationInterface) {
+            return array();
+        }
+
         if ($this->locationContentTypeIds === null) {
             $this->locationContentTypeIds = $this->getContentTypeIds(
                 $this->locationContentTypes
@@ -253,6 +258,10 @@ class EzLocationBackend implements BackendInterface
 
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
+        if (!$location instanceof EzLocationInterface) {
+            return array();
+        }
+
         $criteria = array(
             new Criterion\ParentLocationId($location->getLocationId()),
         );

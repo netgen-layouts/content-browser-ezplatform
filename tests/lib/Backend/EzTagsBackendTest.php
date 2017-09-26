@@ -8,6 +8,7 @@ use Netgen\ContentBrowser\Backend\EzTagsBackend;
 use Netgen\ContentBrowser\Item\EzTags\Item;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
+use Netgen\ContentBrowser\Tests\Stubs\Location as StubLocation;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
@@ -181,6 +182,20 @@ class EzTagsBackendTest extends TestCase
     }
 
     /**
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubLocations
+     */
+    public function testGetSubLocationsWithInvalidItem()
+    {
+        $this->tagsServiceMock
+            ->expects($this->never())
+            ->method('loadTagChildren');
+
+        $locations = $this->backend->getSubLocations(new StubLocation(0));
+
+        $this->assertEquals(array(), $locations);
+    }
+
+    /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubLocationsCount
      */
     public function testGetSubLocationsCount()
@@ -194,6 +209,20 @@ class EzTagsBackendTest extends TestCase
         $count = $this->backend->getSubLocationsCount(new Item($this->getTag(1), 'tag'));
 
         $this->assertEquals(2, $count);
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubLocationsCount
+     */
+    public function testGetSubLocationsCountWithInvalidItem()
+    {
+        $this->tagsServiceMock
+            ->expects($this->never())
+            ->method('getTagChildrenCount');
+
+        $count = $this->backend->getSubLocationsCount(new StubLocation(0));
+
+        $this->assertEquals(0, $count);
     }
 
     /**
@@ -253,6 +282,20 @@ class EzTagsBackendTest extends TestCase
     }
 
     /**
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItems
+     */
+    public function testGetSubItemsWithInvalidItem()
+    {
+        $this->tagsServiceMock
+            ->expects($this->never())
+            ->method('loadTagChildren');
+
+        $locations = $this->backend->getSubItems(new StubLocation(0));
+
+        $this->assertEquals(array(), $locations);
+    }
+
+    /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItemsCount
      */
     public function testGetSubItemsCount()
@@ -266,6 +309,20 @@ class EzTagsBackendTest extends TestCase
         $count = $this->backend->getSubItemsCount(new Item($this->getTag(1), 'tag'));
 
         $this->assertEquals(2, $count);
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItemsCount
+     */
+    public function testGetSubItemsCountWithInvalidItem()
+    {
+        $this->tagsServiceMock
+            ->expects($this->never())
+            ->method('getTagChildrenCount');
+
+        $count = $this->backend->getSubItemsCount(new StubLocation(0));
+
+        $this->assertEquals(0, $count);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\Ez
 
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId;
 use Netgen\ContentBrowser\Item\EzTags\Item;
+use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
@@ -37,5 +38,13 @@ class ParentTagIdTest extends TestCase
             42,
             $this->provider->getValue($item)
         );
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId::getValue
+     */
+    public function testGetValueWithInvalidItem()
+    {
+        $this->assertNull($this->provider->getValue(new StubItem()));
     }
 }

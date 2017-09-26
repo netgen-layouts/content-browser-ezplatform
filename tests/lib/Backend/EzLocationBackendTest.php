@@ -22,6 +22,7 @@ use Netgen\ContentBrowser\Config\Configuration;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
+use Netgen\ContentBrowser\Tests\Stubs\Location as StubLocation;
 use PHPUnit\Framework\TestCase;
 
 class EzLocationBackendTest extends TestCase
@@ -340,6 +341,20 @@ class EzLocationBackendTest extends TestCase
     }
 
     /**
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getSubLocations
+     */
+    public function testGetSubLocationsWithInvalidItem()
+    {
+        $this->searchServiceMock
+            ->expects($this->never())
+            ->method('findLocations');
+
+        $locations = $this->backend->getSubLocations(new StubLocation(0));
+
+        $this->assertEquals(array(), $locations);
+    }
+
+    /**
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getSubLocationsCount
      * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getContentTypeIds
      */
@@ -458,6 +473,20 @@ class EzLocationBackendTest extends TestCase
             $this->assertInstanceOf(ItemInterface::class, $item);
             $this->assertEquals(2, $item->getParentId());
         }
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Backend\EzLocationBackend::getSubItems
+     */
+    public function testGetSubItemsWithInvalidItem()
+    {
+        $this->searchServiceMock
+            ->expects($this->never())
+            ->method('findLocations');
+
+        $items = $this->backend->getSubItems(new StubLocation(0));
+
+        $this->assertEquals(array(), $items);
     }
 
     /**

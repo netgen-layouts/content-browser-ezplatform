@@ -6,6 +6,7 @@ use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\LocationId;
 use Netgen\ContentBrowser\Item\EzContent\Item;
+use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
 class LocationIdTest extends TestCase
@@ -39,5 +40,13 @@ class LocationIdTest extends TestCase
             42,
             $this->provider->getValue($item)
         );
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzContent\LocationId::getValue
+     */
+    public function testGetValueWithInvalidItem()
+    {
+        $this->assertNull($this->provider->getValue(new StubItem()));
     }
 }

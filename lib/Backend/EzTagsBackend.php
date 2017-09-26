@@ -5,6 +5,7 @@ namespace Netgen\ContentBrowser\Backend;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
+use Netgen\ContentBrowser\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Item\EzTags\Item;
 use Netgen\ContentBrowser\Item\EzTags\Location;
 use Netgen\ContentBrowser\Item\LocationInterface;
@@ -76,6 +77,10 @@ class EzTagsBackend implements BackendInterface
 
     public function getSubLocations(LocationInterface $location)
     {
+        if (!$location instanceof EzTagsInterface) {
+            return array();
+        }
+
         $tags = $this->tagsService->loadTagChildren(
             $location->getTag()
         );
@@ -85,6 +90,10 @@ class EzTagsBackend implements BackendInterface
 
     public function getSubLocationsCount(LocationInterface $location)
     {
+        if (!$location instanceof EzTagsInterface) {
+            return 0;
+        }
+
         return $this->tagsService->getTagChildrenCount(
             $location->getTag()
         );
@@ -92,6 +101,10 @@ class EzTagsBackend implements BackendInterface
 
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
+        if (!$location instanceof EzTagsInterface) {
+            return array();
+        }
+
         $tags = $this->tagsService->loadTagChildren(
             $location->getTag(),
             $offset,
@@ -103,6 +116,10 @@ class EzTagsBackend implements BackendInterface
 
     public function getSubItemsCount(LocationInterface $location)
     {
+        if (!$location instanceof EzTagsInterface) {
+            return 0;
+        }
+
         return $this->tagsService->getTagChildrenCount(
             $location->getTag()
         );

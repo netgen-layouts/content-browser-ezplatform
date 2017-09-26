@@ -8,6 +8,7 @@ use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Modified;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
+use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
 class ModifiedTest extends TestCase
@@ -50,5 +51,13 @@ class ModifiedTest extends TestCase
             '17.07.2016 18:15:42',
             $this->provider->getValue($item)
         );
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Modified::getValue
+     */
+    public function testGetValueWithInvalidItem()
+    {
+        $this->assertNull($this->provider->getValue(new StubItem()));
     }
 }

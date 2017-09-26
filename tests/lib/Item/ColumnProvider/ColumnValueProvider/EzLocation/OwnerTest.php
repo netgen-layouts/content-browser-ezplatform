@@ -11,6 +11,7 @@ use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Owner;
 use Netgen\ContentBrowser\Item\EzLocation\Item;
+use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
 class OwnerTest extends TestCase
@@ -131,5 +132,13 @@ class OwnerTest extends TestCase
             ->method('getTranslatedContentNameByContentInfo');
 
         $this->assertEquals('', $this->provider->getValue($item));
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocation\Owner::getValue
+     */
+    public function testGetValueWithInvalidItem()
+    {
+        $this->assertNull($this->provider->getValue(new StubItem()));
     }
 }

@@ -19,9 +19,10 @@ use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Backend\EzContentBackend;
 use Netgen\ContentBrowser\Config\Configuration;
-use Netgen\ContentBrowser\Item\EzLocation\Item;
+use Netgen\ContentBrowser\Item\EzContent\Item;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
+use Netgen\ContentBrowser\Tests\Stubs\Location as StubLocation;
 use PHPUnit\Framework\TestCase;
 
 class EzContentBackendTest extends TestCase
@@ -341,6 +342,20 @@ class EzContentBackendTest extends TestCase
             $this->assertInstanceOf(LocationInterface::class, $location);
             $this->assertEquals(2, $location->getParentId());
         }
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Backend\EzContentBackend::getSubLocations
+     */
+    public function testGetSubLocationsWithInvalidItem()
+    {
+        $this->searchServiceMock
+            ->expects($this->never())
+            ->method('findLocations');
+
+        $locations = $this->backend->getSubLocations(new StubLocation(0));
+
+        $this->assertEquals(array(), $locations);
     }
 
     /**

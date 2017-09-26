@@ -5,6 +5,7 @@ namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzLocati
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
+use Netgen\ContentBrowser\Item\EzLocation\EzLocationInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
 class ContentType implements ColumnValueProviderInterface
@@ -27,6 +28,10 @@ class ContentType implements ColumnValueProviderInterface
 
     public function getValue(ItemInterface $item)
     {
+        if (!$item instanceof EzLocationInterface) {
+            return null;
+        }
+
         return $this->repository->sudo(
             function (Repository $repository) use ($item) {
                 return $this->translationHelper->getTranslatedByMethod(

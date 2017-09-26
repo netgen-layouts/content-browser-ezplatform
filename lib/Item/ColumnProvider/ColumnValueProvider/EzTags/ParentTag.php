@@ -4,6 +4,7 @@ namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags;
 
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
+use Netgen\ContentBrowser\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 
@@ -27,6 +28,10 @@ class ParentTag implements ColumnValueProviderInterface
 
     public function getValue(ItemInterface $item)
     {
+        if (!$item instanceof EzTagsInterface) {
+            return null;
+        }
+
         return $this->tagsService->sudo(
             function (TagsService $tagsService) use ($item) {
                 if (empty($item->getTag()->parentTagId)) {
