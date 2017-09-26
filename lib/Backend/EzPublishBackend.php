@@ -24,52 +24,52 @@ class EzPublishBackend implements BackendInterface
     /**
      * @var \eZ\Publish\API\Repository\Repository
      */
-    protected $repository;
+    private $repository;
 
     /**
      * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler
      */
-    protected $contentTypeHandler;
+    private $contentTypeHandler;
 
     /**
      * @var \eZ\Publish\Core\Helper\TranslationHelper
      */
-    protected $translationHelper;
+    private $translationHelper;
 
     /**
      * @var \Netgen\ContentBrowser\Config\ConfigurationInterface
      */
-    protected $config;
+    private $config;
 
     /**
      * @var string[]
      */
-    protected $locationContentTypes = array();
+    private $locationContentTypes = array();
 
     /**
      * @var int[]
      */
-    protected $defaultSections = array();
+    private $defaultSections = array();
 
     /**
      * @var array
      */
-    protected $languages = array();
+    private $languages = array();
 
     /**
      * @var int[]
      */
-    protected $locationContentTypeIds;
+    private $locationContentTypeIds;
 
     /**
      * @var int[]
      */
-    protected $allowedContentTypeIds;
+    private $allowedContentTypeIds;
 
     /**
      * @var array
      */
-    protected $sortClauses = array(
+    private $sortClauses = array(
         Location::SORT_FIELD_PATH => SortClause\Location\Path::class,
         Location::SORT_FIELD_PUBLISHED => SortClause\DatePublished::class,
         Location::SORT_FIELD_MODIFIED => SortClause\DateModified::class,
@@ -84,7 +84,7 @@ class EzPublishBackend implements BackendInterface
     /**
      * @var array
      */
-    protected $sortDirections = array(
+    private $sortDirections = array(
         Location::SORT_ORDER_ASC => LocationQuery::SORT_ASC,
         Location::SORT_ORDER_DESC => LocationQuery::SORT_DESC,
     );
@@ -373,7 +373,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @return \Netgen\ContentBrowser\Item\EzPublish\Item
      */
-    protected function buildItem(SearchHit $searchHit)
+    private function buildItem(SearchHit $searchHit)
     {
         $content = $this->repository->sudo(
             function (Repository $repository) use ($searchHit) {
@@ -405,7 +405,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @return \Netgen\ContentBrowser\Item\EzPublish\Item[]
      */
-    protected function buildItems(SearchResult $searchResult)
+    private function buildItems(SearchResult $searchResult)
     {
         return array_map(
             function (SearchHit $searchHit) {
@@ -422,7 +422,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @return array
      */
-    protected function getContentTypeIds(array $contentTypeIdentifiers)
+    private function getContentTypeIds(array $contentTypeIdentifiers)
     {
         $idList = array();
 
@@ -445,7 +445,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @return array
      */
-    protected function getSortClause(Location $parentLocation)
+    private function getSortClause(Location $parentLocation)
     {
         $sortType = $parentLocation->sortField;
         $sortDirection = $this->sortDirections[$parentLocation->sortOrder];
@@ -466,7 +466,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @return bool
      */
-    protected function isSelectable(Content $content)
+    private function isSelectable(Content $content)
     {
         if (!$this->config->hasParameter('allowed_content_types')) {
             return true;
