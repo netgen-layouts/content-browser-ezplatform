@@ -15,8 +15,8 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Config\ConfigurationInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
-use Netgen\ContentBrowser\Item\EzContent\EzContentInterface;
-use Netgen\ContentBrowser\Item\EzContent\Item;
+use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
+use Netgen\ContentBrowser\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Item\LocationInterface;
 
 class EzPublishBackend implements BackendInterface
@@ -228,7 +228,7 @@ class EzPublishBackend implements BackendInterface
 
     public function getSubLocations(LocationInterface $location)
     {
-        if (!$location instanceof EzContentInterface) {
+        if (!$location instanceof EzPublishInterface) {
             return array();
         }
 
@@ -283,7 +283,7 @@ class EzPublishBackend implements BackendInterface
 
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
-        if (!$location instanceof EzContentInterface) {
+        if (!$location instanceof EzPublishInterface) {
             return array();
         }
 
@@ -371,7 +371,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $searchHit
      *
-     * @return \Netgen\ContentBrowser\Item\EzContent\Item
+     * @return \Netgen\ContentBrowser\Item\EzPublish\Item
      */
     protected function buildItem(SearchHit $searchHit)
     {
@@ -403,7 +403,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
      *
-     * @return \Netgen\ContentBrowser\Item\EzContent\Item[]
+     * @return \Netgen\ContentBrowser\Item\EzPublish\Item[]
      */
     protected function buildItems(SearchResult $searchResult)
     {

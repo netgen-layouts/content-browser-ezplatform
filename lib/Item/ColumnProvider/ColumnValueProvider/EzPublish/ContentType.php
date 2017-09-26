@@ -5,7 +5,7 @@ namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublis
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
-use Netgen\ContentBrowser\Item\EzContent\EzContentInterface;
+use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
 class ContentType implements ColumnValueProviderInterface
@@ -28,7 +28,7 @@ class ContentType implements ColumnValueProviderInterface
 
     public function getValue(ItemInterface $item)
     {
-        if (!$item instanceof EzContentInterface) {
+        if (!$item instanceof EzPublishInterface) {
             return null;
         }
 

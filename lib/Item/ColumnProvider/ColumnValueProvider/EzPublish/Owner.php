@@ -6,7 +6,7 @@ use eZ\Publish\API\Repository\Exceptions\NotFoundException;
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
-use Netgen\ContentBrowser\Item\EzContent\EzContentInterface;
+use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
 class Owner implements ColumnValueProviderInterface
@@ -29,7 +29,7 @@ class Owner implements ColumnValueProviderInterface
 
     public function getValue(ItemInterface $item)
     {
-        if (!$item instanceof EzContentInterface) {
+        if (!$item instanceof EzPublishInterface) {
             return null;
         }
 

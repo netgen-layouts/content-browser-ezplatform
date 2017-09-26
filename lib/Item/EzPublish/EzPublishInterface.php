@@ -1,8 +1,8 @@
 <?php
 
-namespace Netgen\ContentBrowser\Item\EzContent;
+namespace Netgen\ContentBrowser\Item\EzPublish;
 
-interface EzContentInterface
+interface EzPublishInterface
 {
     /**
      * Returns the location.

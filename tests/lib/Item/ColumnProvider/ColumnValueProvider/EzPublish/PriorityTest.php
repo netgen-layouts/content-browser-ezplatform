@@ -5,7 +5,7 @@ namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\Ez
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Priority;
-use Netgen\ContentBrowser\Item\EzContent\Item;
+use Netgen\ContentBrowser\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 

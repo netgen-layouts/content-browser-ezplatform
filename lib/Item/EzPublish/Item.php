@@ -1,13 +1,13 @@
 <?php
 
-namespace Netgen\ContentBrowser\Item\EzContent;
+namespace Netgen\ContentBrowser\Item\EzPublish;
 
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 
-final class Item implements ItemInterface, LocationInterface, EzContentInterface
+final class Item implements ItemInterface, LocationInterface, EzPublishInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location

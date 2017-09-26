@@ -19,7 +19,7 @@ use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Backend\EzPublishBackend;
 use Netgen\ContentBrowser\Config\Configuration;
-use Netgen\ContentBrowser\Item\EzContent\Item;
+use Netgen\ContentBrowser\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\ContentBrowser\Tests\Stubs\Location as StubLocation;

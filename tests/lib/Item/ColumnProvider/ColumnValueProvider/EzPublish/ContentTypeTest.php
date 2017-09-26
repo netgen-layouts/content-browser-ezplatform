@@ -11,7 +11,7 @@ use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\Core\Repository\Values\ContentType\ContentType as EzContentType;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentType;
-use Netgen\ContentBrowser\Item\EzContent\Item;
+use Netgen\ContentBrowser\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 

@@ -3,7 +3,7 @@
 namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
-use Netgen\ContentBrowser\Item\EzContent\EzContentInterface;
+use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
 class Modified implements ColumnValueProviderInterface
@@ -25,7 +25,7 @@ class Modified implements ColumnValueProviderInterface
 
     public function getValue(ItemInterface $item)
     {
-        if (!$item instanceof EzContentInterface) {
+        if (!$item instanceof EzPublishInterface) {
             return null;
         }
 

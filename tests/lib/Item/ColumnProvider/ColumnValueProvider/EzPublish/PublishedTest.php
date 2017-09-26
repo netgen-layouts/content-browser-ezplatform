@@ -8,7 +8,7 @@ use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Published;
-use Netgen\ContentBrowser\Item\EzContent\Item;
+use Netgen\ContentBrowser\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
