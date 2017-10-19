@@ -1,6 +1,7 @@
 services:
     netgen_content_browser.backend.eztags:
         class: Netgen\ContentBrowser\Backend\EzTagsBackend
+        public: true
         # Needs to be lazy since we're injecting "languages" dynamic param
         lazy: true
         arguments:
