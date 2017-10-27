@@ -577,12 +577,8 @@ class EzPublishBackendTest extends TestCase
         $query = new LocationQuery();
         $query->offset = 0;
         $query->limit = 25;
-        $query->filter = new Criterion\LogicalAnd(
-            array(
-                new Criterion\FullText('test'),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            )
-        );
+        $query->query = new Criterion\FullText('test');
+        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
@@ -615,12 +611,8 @@ class EzPublishBackendTest extends TestCase
         $query = new LocationQuery();
         $query->offset = 5;
         $query->limit = 10;
-        $query->filter = new Criterion\LogicalAnd(
-            array(
-                new Criterion\FullText('test'),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            )
-        );
+        $query->query = new Criterion\FullText('test');
+        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = array(
@@ -649,12 +641,8 @@ class EzPublishBackendTest extends TestCase
     {
         $query = new LocationQuery();
         $query->limit = 0;
-        $query->filter = new Criterion\LogicalAnd(
-            array(
-                new Criterion\FullText('test'),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            )
-        );
+        $query->query = new Criterion\FullText('test');
+        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
 
         $searchResult = new SearchResult();
         $searchResult->totalCount = 2;
