@@ -340,12 +340,11 @@ class EzLocationBackend implements BackendInterface
     {
         $query = new LocationQuery();
 
-        $query->filter = new Criterion\LogicalAnd(
-            array(
-                new Criterion\FullText($searchText),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            )
-        );
+        if (!empty($searchText)) {
+            $query->query = new Criterion\FullText($searchText);
+        }
+
+        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
 
         $query->offset = $offset;
         $query->limit = $limit;
@@ -369,12 +368,11 @@ class EzLocationBackend implements BackendInterface
     {
         $query = new LocationQuery();
 
-        $query->filter = new Criterion\LogicalAnd(
-            array(
-                new Criterion\FullText($searchText),
-                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            )
-        );
+        if (!empty($searchText)) {
+            $query->query = new Criterion\FullText($searchText);
+        }
+
+        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
 
         $query->limit = 0;
 
