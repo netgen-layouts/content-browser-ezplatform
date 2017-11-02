@@ -6,7 +6,7 @@ use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
-class Modified implements ColumnValueProviderInterface
+final class Modified implements ColumnValueProviderInterface
 {
     /**
      * @var string

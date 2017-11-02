@@ -8,7 +8,7 @@ use Netgen\ContentBrowser\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 
-class ParentTag implements ColumnValueProviderInterface
+final class ParentTag implements ColumnValueProviderInterface
 {
     /**
      * @var \Netgen\TagsBundle\API\Repository\TagsService

@@ -9,7 +9,7 @@ use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
-class Owner implements ColumnValueProviderInterface
+final class Owner implements ColumnValueProviderInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\Repository

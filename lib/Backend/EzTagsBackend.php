@@ -12,6 +12,9 @@ use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
+/**
+ * @final
+ */
 class EzTagsBackend implements BackendInterface
 {
     /**

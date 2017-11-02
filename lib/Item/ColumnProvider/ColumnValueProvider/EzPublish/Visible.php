@@ -6,7 +6,7 @@ use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
-class Visible implements ColumnValueProviderInterface
+final class Visible implements ColumnValueProviderInterface
 {
     public function getValue(ItemInterface $item)
     {

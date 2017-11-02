@@ -19,6 +19,9 @@ use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
 use Netgen\ContentBrowser\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Item\LocationInterface;
 
+/**
+ * @final
+ */
 class EzPublishBackend implements BackendInterface
 {
     /**

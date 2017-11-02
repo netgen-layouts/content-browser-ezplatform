@@ -6,7 +6,7 @@ use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
-class TagId implements ColumnValueProviderInterface
+final class TagId implements ColumnValueProviderInterface
 {
     public function getValue(ItemInterface $item)
     {
