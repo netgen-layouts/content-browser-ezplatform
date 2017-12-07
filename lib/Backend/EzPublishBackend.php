@@ -4,6 +4,7 @@ namespace Netgen\ContentBrowser\Backend;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\API\Repository\Repository;
+use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\Location;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -28,6 +29,11 @@ class EzPublishBackend implements BackendInterface
      * @var \eZ\Publish\API\Repository\Repository
      */
     private $repository;
+
+    /**
+     * @var \eZ\Publish\API\Repository\SearchService
+     */
+    private $searchService;
 
     /**
      * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler
@@ -96,17 +102,20 @@ class EzPublishBackend implements BackendInterface
      * Constructor.
      *
      * @param \eZ\Publish\API\Repository\Repository $repository
+     * @param \eZ\Publish\API\Repository\SearchService $searchService
      * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $contentTypeHandler
      * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
      * @param \Netgen\ContentBrowser\Config\ConfigurationInterface $config
      */
     public function __construct(
         Repository $repository,
+        SearchService $searchService,
         Handler $contentTypeHandler,
         TranslationHelper $translationHelper,
         ConfigurationInterface $config
     ) {
         $this->repository = $repository;
+        $this->searchService = $searchService;
         $this->contentTypeHandler = $contentTypeHandler;
         $this->translationHelper = $translationHelper;
         $this->config = $config;
@@ -154,7 +163,7 @@ class EzPublishBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($this->defaultSections);
 
-        $result = $this->repository->getSearchService()->findLocations(
+        $result = $this->searchService->findLocations(
             $query,
             array('languages' => $this->languages)
         );
@@ -182,7 +191,7 @@ class EzPublishBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($id);
 
-        $result = $this->repository->getSearchService()->findLocations(
+        $result = $this->searchService->findLocations(
             $query,
             array('languages' => $this->languages)
         );
@@ -212,7 +221,7 @@ class EzPublishBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->repository->getSearchService()->findLocations(
+        $result = $this->searchService->findLocations(
             $query,
             array('languages' => $this->languages)
         );
@@ -251,7 +260,7 @@ class EzPublishBackend implements BackendInterface
         $query->limit = 9999;
         $query->sortClauses = $this->getSortClause($location->getLocation());
 
-        $result = $this->repository->getSearchService()->findLocations(
+        $result = $this->searchService->findLocations(
             $query,
             array('languages' => $this->languages)
         );
@@ -276,7 +285,7 @@ class EzPublishBackend implements BackendInterface
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->repository->getSearchService()->findLocations(
+        $result = $this->searchService->findLocations(
             $query,
             array('languages' => $this->languages)
         );
@@ -300,7 +309,7 @@ class EzPublishBackend implements BackendInterface
         $query->filter = new Criterion\LogicalAnd($criteria);
         $query->sortClauses = $this->getSortClause($location->getLocation());
 
-        $result = $this->repository->getSearchService()->findLocations(
+        $result = $this->searchService->findLocations(
             $query,
             array('languages' => $this->languages)
         );
@@ -318,7 +327,7 @@ class EzPublishBackend implements BackendInterface
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->repository->getSearchService()->findLocations(
+        $result = $this->searchService->findLocations(
             $query,
             array('languages' => $this->languages)
         );
@@ -339,7 +348,7 @@ class EzPublishBackend implements BackendInterface
         $query->offset = $offset;
         $query->limit = $limit;
 
-        $result = $this->repository->getSearchService()->findLocations(
+        $result = $this->searchService->findLocations(
             $query,
             array('languages' => $this->languages)
         );
@@ -359,7 +368,7 @@ class EzPublishBackend implements BackendInterface
 
         $query->limit = 0;
 
-        $result = $this->repository->getSearchService()->findLocations(
+        $result = $this->searchService->findLocations(
             $query,
             array('languages' => $this->languages)
         );

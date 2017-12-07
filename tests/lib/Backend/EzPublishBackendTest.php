@@ -146,6 +146,7 @@ class EzPublishBackendTest extends TestCase
 
         $this->backend = new EzPublishBackend(
             $this->repositoryMock,
+            $this->searchServiceMock,
             $this->contentTypeHandlerMock,
             $this->translationHelperMock,
             new Configuration('ezlocation')
@@ -283,6 +284,7 @@ class EzPublishBackendTest extends TestCase
     {
         $this->backend = new EzPublishBackend(
             $this->repositoryMock,
+            $this->searchServiceMock,
             $this->contentTypeHandlerMock,
             $this->translationHelperMock,
             new Configuration('ezcontent')
