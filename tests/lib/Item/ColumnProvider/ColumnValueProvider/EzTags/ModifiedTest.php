@@ -9,7 +9,7 @@ use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
-class ModifiedTest extends TestCase
+final class ModifiedTest extends TestCase
 {
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified

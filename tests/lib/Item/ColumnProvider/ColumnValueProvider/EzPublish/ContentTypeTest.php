@@ -15,7 +15,7 @@ use Netgen\ContentBrowser\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
-class ContentTypeTest extends TestCase
+final class ContentTypeTest extends TestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject

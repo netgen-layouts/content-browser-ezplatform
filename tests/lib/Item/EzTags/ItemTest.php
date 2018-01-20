@@ -6,7 +6,7 @@ use Netgen\ContentBrowser\Item\EzTags\Item;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
-class ItemTest extends TestCase
+final class ItemTest extends TestCase
 {
     /**
      * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag

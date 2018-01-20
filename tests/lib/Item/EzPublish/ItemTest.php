@@ -9,7 +9,7 @@ use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Item\EzPublish\Item;
 use PHPUnit\Framework\TestCase;
 
-class ItemTest extends TestCase
+final class ItemTest extends TestCase
 {
     /**
      * @var \eZ\Publish\API\Repository\Values\Content\Location

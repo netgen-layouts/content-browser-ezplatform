@@ -8,7 +8,7 @@ use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
-class TagIdTest extends TestCase
+final class TagIdTest extends TestCase
 {
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId

@@ -25,7 +25,7 @@ use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\ContentBrowser\Tests\Stubs\Location as StubLocation;
 use PHPUnit\Framework\TestCase;
 
-class EzPublishBackendTest extends TestCase
+final class EzPublishBackendTest extends TestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject

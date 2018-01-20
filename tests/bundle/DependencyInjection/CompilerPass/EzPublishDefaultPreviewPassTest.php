@@ -7,7 +7,7 @@ use Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublis
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
 
-class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
+final class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
 {
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::process

@@ -6,7 +6,7 @@ use Netgen\ContentBrowser\Item\EzTags\Location;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
-class LocationTest extends TestCase
+final class LocationTest extends TestCase
 {
     /**
      * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag

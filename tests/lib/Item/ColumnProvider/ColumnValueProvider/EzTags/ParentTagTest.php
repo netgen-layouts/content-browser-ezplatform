@@ -10,7 +10,7 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\Core\Repository\TagsService;
 use PHPUnit\Framework\TestCase;
 
-class ParentTagTest extends TestCase
+final class ParentTagTest extends TestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject

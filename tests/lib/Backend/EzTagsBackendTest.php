@@ -13,7 +13,7 @@ use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
-class EzTagsBackendTest extends TestCase
+final class EzTagsBackendTest extends TestCase
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject

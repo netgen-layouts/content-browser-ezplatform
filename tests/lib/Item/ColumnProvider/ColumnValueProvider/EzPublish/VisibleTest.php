@@ -9,7 +9,7 @@ use Netgen\ContentBrowser\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
-class VisibleTest extends TestCase
+final class VisibleTest extends TestCase
 {
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible

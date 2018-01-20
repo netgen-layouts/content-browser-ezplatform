@@ -9,7 +9,7 @@ use Netgen\ContentBrowser\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
-class LocationIdTest extends TestCase
+final class LocationIdTest extends TestCase
 {
     /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\LocationId
