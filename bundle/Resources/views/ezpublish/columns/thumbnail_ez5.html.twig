@@ -3,5 +3,5 @@
 {% if content.fields.image is defined and not ez_is_field_empty( content, 'image' ) %}
     {% set image_alias = ez_image_alias( content.field('image'), content.versionInfo, 'ngcb_thumbnail' ) %}
 
-    <img src="{{ image_alias.uri }}" />
+    <img src="{{ asset(image_alias.uri) }}" />
 {% endif %}
