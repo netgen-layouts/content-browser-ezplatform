@@ -35,8 +35,6 @@ final class Item implements ItemInterface, LocationInterface, EzPublishInterface
     private $selectable;
 
     /**
-     * Constructor.
-     *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param int|string $value

@@ -18,8 +18,6 @@ final class Location implements LocationInterface, EzTagsInterface
     private $name;
 
     /**
-     * Constructor.
-     *
      * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
      * @param string $name
      */

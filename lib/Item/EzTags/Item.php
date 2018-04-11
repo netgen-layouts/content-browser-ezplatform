@@ -19,8 +19,6 @@ final class Item implements ItemInterface, LocationInterface, EzTagsInterface
     private $name;
 
     /**
-     * Constructor.
-     *
      * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
      * @param string $name
      */

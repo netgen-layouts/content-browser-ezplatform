@@ -98,15 +98,6 @@ class EzPublishBackend implements BackendInterface
         Location::SORT_ORDER_DESC => LocationQuery::SORT_DESC,
     );
 
-    /**
-     * Constructor.
-     *
-     * @param \eZ\Publish\API\Repository\Repository $repository
-     * @param \eZ\Publish\API\Repository\SearchService $searchService
-     * @param \eZ\Publish\SPI\Persistence\Content\Type\Handler $contentTypeHandler
-     * @param \eZ\Publish\Core\Helper\TranslationHelper $translationHelper
-     * @param \Netgen\ContentBrowser\Config\ConfigurationInterface $config
-     */
     public function __construct(
         Repository $repository,
         SearchService $searchService,
