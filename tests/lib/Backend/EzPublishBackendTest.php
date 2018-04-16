@@ -159,11 +159,11 @@ final class EzPublishBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::__construct
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getDefaultSections
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getContentTypeIds
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getDefaultSections
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      */
     public function testGetDefaultSections()
     {
@@ -197,9 +197,9 @@ final class EzPublishBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadLocation
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadLocation
      */
     public function testLoadLocation()
     {
@@ -246,9 +246,9 @@ final class EzPublishBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadItem
      */
     public function testLoadItem()
     {
@@ -277,8 +277,8 @@ final class EzPublishBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadItem
      */
     public function testLoadItemWithContent()
     {
@@ -344,11 +344,11 @@ final class EzPublishBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubLocations
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSortClause
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getContentTypeIds
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSortClause
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubLocations
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      */
     public function testGetSubLocations()
@@ -405,8 +405,8 @@ final class EzPublishBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubLocationsCount
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getContentTypeIds
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubLocationsCount
      */
     public function testGetSubLocationsCount()
     {
@@ -438,11 +438,11 @@ final class EzPublishBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSortClause
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubItems
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      */
     public function testGetSubItems()
     {
@@ -481,10 +481,10 @@ final class EzPublishBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSortClause
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      */
     public function testGetSubItemsWithOffsetAndLimit()
@@ -569,10 +569,10 @@ final class EzPublishBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::search
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::search
      */
     public function testSearch()
     {
@@ -603,10 +603,10 @@ final class EzPublishBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::search
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::search
      */
     public function testSearchWithOffsetAndLimit()
     {

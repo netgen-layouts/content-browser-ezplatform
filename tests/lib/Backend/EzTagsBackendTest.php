@@ -51,10 +51,10 @@ final class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::__construct
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::setLanguages
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getDefaultSections
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildLocation
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getDefaultSections
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getRootTag
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::setLanguages
      */
     public function testGetDefaultSections()
     {
@@ -71,8 +71,8 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadLocation
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadLocation
      */
     public function testLoadLocation()
     {
@@ -105,9 +105,9 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadLocation
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildLocation
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getRootTag
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadLocation
      */
     public function testLoadRootLocation()
     {
@@ -122,8 +122,8 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadItem
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadItem
      */
     public function testLoadItem()
     {
@@ -156,9 +156,9 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubLocations
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubLocations
      */
     public function testGetSubLocations()
     {
@@ -226,9 +226,9 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItems
      */
     public function testGetSubItems()
     {
@@ -252,9 +252,9 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItems
      */
     public function testGetSubItemsWithOffsetAndLimit()
     {
@@ -326,9 +326,9 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::search
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::search
      */
     public function testSearch()
     {
@@ -353,9 +353,9 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::search
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::search
      */
     public function testSearchWithNoLanguages()
     {
@@ -374,9 +374,9 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::search
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::search
      */
     public function testSearchWithOffsetAndLimit()
     {
