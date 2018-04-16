@@ -30,7 +30,7 @@ final class Owner implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzPublishInterface) {
-            return null;
+            return;
         }
 
         return $this->repository->sudo(

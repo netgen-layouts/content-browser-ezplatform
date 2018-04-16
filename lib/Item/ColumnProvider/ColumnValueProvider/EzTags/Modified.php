@@ -24,7 +24,7 @@ final class Modified implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzTagsInterface) {
-            return null;
+            return;
         }
 
         return $item->getTag()->modificationDate->format($this->dateFormat);

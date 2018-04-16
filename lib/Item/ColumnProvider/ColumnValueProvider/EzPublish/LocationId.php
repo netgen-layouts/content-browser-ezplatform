@@ -11,7 +11,7 @@ final class LocationId implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzPublishInterface) {
-            return null;
+            return;
         }
 
         return $item->getLocation()->id;

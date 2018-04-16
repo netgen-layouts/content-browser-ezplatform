@@ -2,7 +2,7 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
-use DateTime;
+use DateTimeImmutable;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
@@ -30,9 +30,9 @@ final class ModifiedTest extends TestCase
      */
     public function testGetValue()
     {
-        $date = new DateTime();
-        $date->setDate(2016, 7, 17);
-        $date->setTime(18, 15, 42);
+        $date = new DateTimeImmutable();
+        $date = $date->setDate(2016, 7, 17);
+        $date = $date->setTime(18, 15, 42);
 
         $content = new Content(
             array(

@@ -11,7 +11,7 @@ final class ContentId implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzPublishInterface) {
-            return null;
+            return;
         }
 
         return $item->getContent()->contentInfo->id;

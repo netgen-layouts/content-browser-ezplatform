@@ -2,7 +2,7 @@
 
 namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzTags;
 
-use DateTime;
+use DateTimeImmutable;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified;
 use Netgen\ContentBrowser\Item\EzTags\Item;
 use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
@@ -27,9 +27,9 @@ final class ModifiedTest extends TestCase
      */
     public function testGetValue()
     {
-        $date = new DateTime();
-        $date->setDate(2016, 7, 17);
-        $date->setTime(18, 15, 42);
+        $date = new DateTimeImmutable();
+        $date = $date->setDate(2016, 7, 17);
+        $date = $date->setTime(18, 15, 42);
 
         $item = new Item(
             new Tag(

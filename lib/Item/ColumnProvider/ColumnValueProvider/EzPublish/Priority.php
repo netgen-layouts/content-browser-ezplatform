@@ -11,7 +11,7 @@ final class Priority implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzPublishInterface) {
-            return null;
+            return;
         }
 
         return $item->getLocation()->priority;

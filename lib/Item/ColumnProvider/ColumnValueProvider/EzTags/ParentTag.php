@@ -29,7 +29,7 @@ final class ParentTag implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzTagsInterface) {
-            return null;
+            return;
         }
 
         return $this->tagsService->sudo(
