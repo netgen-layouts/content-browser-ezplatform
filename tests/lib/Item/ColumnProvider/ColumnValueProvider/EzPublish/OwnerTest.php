@@ -40,7 +40,7 @@ final class OwnerTest extends TestCase
     public function setUp()
     {
         $this->contentServiceMock = $this->createMock(ContentService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, array('sudo', 'getContentService'));
+        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentService']);
 
         $this->repositoryMock
             ->expects($this->any())
@@ -70,17 +70,17 @@ final class OwnerTest extends TestCase
     public function testGetValue()
     {
         $content = new Content(
-            array(
+            [
                 'versionInfo' => new VersionInfo(
-                    array(
+                    [
                         'contentInfo' => new ContentInfo(
-                            array(
+                            [
                                 'ownerId' => 42,
-                            )
+                            ]
                         ),
-                    )
+                    ]
                 ),
-            )
+            ]
         );
 
         $item = new Item(
@@ -116,17 +116,17 @@ final class OwnerTest extends TestCase
     public function testGetValueWithNonExistingOwner()
     {
         $content = new Content(
-            array(
+            [
                 'versionInfo' => new VersionInfo(
-                    array(
+                    [
                         'contentInfo' => new ContentInfo(
-                            array(
+                            [
                                 'ownerId' => 42,
-                            )
+                            ]
                         ),
-                    )
+                    ]
                 ),
-            )
+            ]
         );
 
         $item = new Item(

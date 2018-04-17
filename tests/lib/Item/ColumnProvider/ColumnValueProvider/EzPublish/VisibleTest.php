@@ -28,9 +28,9 @@ final class VisibleTest extends TestCase
     {
         $item = new Item(
             new Location(
-                array(
+                [
                     'invisible' => true,
-                )
+                ]
             ),
             new Content(),
             null,

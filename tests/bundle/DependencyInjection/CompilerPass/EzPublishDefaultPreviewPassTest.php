@@ -15,24 +15,24 @@ final class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
      */
     public function testProcess()
     {
-        $this->setParameter('ezpublish.siteaccess.list', array('cro', 'eng', 'admin'));
+        $this->setParameter('ezpublish.siteaccess.list', ['cro', 'eng', 'admin']);
         $this->setParameter('netgen_content_browser.ezpublish.default_preview_template', 'template.html.twig');
 
-        foreach (array('default', 'cro', 'admin') as $scope) {
+        foreach (['default', 'cro', 'admin'] as $scope) {
             $this->setParameter(
                 "ezsettings.{$scope}.content_view",
-                array('full' => array('full_rule' => array()))
+                ['full' => ['full_rule' => []]]
             );
 
             $this->setParameter(
                 "ezsettings.{$scope}.location_view",
-                array('ngcb_preview' => array('rule1' => array(), 'rule2' => array()))
+                ['ngcb_preview' => ['rule1' => [], 'rule2' => []]]
             );
         }
 
         $this->compile();
 
-        foreach (array('default', 'cro', 'admin') as $scope) {
+        foreach (['default', 'cro', 'admin'] as $scope) {
             $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.content_view");
             $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.location_view");
 

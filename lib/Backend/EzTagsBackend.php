@@ -30,7 +30,7 @@ class EzTagsBackend implements BackendInterface
     /**
      * @var array
      */
-    private $languages = array();
+    private $languages = [];
 
     public function __construct(TagsService $tagsService, TranslationHelper $translationHelper)
     {
@@ -45,12 +45,12 @@ class EzTagsBackend implements BackendInterface
      */
     public function setLanguages(array $languages = null)
     {
-        $this->languages = is_array($languages) ? $languages : array();
+        $this->languages = is_array($languages) ? $languages : [];
     }
 
     public function getDefaultSections()
     {
-        return array($this->loadLocation(0));
+        return [$this->loadLocation(0)];
     }
 
     public function loadLocation($id)
@@ -81,7 +81,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubLocations(LocationInterface $location)
     {
         if (!$location instanceof EzTagsInterface) {
-            return array();
+            return [];
         }
 
         $tags = $this->tagsService->loadTagChildren(
@@ -105,7 +105,7 @@ class EzTagsBackend implements BackendInterface
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
         if (!$location instanceof EzTagsInterface) {
-            return array();
+            return [];
         }
 
         $tags = $this->tagsService->loadTagChildren(
@@ -131,7 +131,7 @@ class EzTagsBackend implements BackendInterface
     public function search($searchText, $offset = 0, $limit = 25)
     {
         if (empty($this->languages)) {
-            return array();
+            return [];
         }
 
         $tags = $this->tagsService->loadTagsByKeyword(
@@ -216,15 +216,15 @@ class EzTagsBackend implements BackendInterface
     private function getRootTag()
     {
         return new Tag(
-            array(
+            [
                 'id' => 0,
                 'parentTagId' => null,
-                'keywords' => array(
+                'keywords' => [
                     'eng-GB' => 'All tags',
-                ),
+                ],
                 'mainLanguageCode' => 'eng-GB',
                 'alwaysAvailable' => true,
-            )
+            ]
         );
     }
 }

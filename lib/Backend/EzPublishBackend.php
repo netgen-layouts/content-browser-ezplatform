@@ -53,17 +53,17 @@ class EzPublishBackend implements BackendInterface
     /**
      * @var string[]
      */
-    private $locationContentTypes = array();
+    private $locationContentTypes = [];
 
     /**
      * @var int[]
      */
-    private $defaultSections = array();
+    private $defaultSections = [];
 
     /**
      * @var array
      */
-    private $languages = array();
+    private $languages = [];
 
     /**
      * @var int[]
@@ -78,7 +78,7 @@ class EzPublishBackend implements BackendInterface
     /**
      * @var array
      */
-    private $sortClauses = array(
+    private $sortClauses = [
         Location::SORT_FIELD_PATH => SortClause\Location\Path::class,
         Location::SORT_FIELD_PUBLISHED => SortClause\DatePublished::class,
         Location::SORT_FIELD_MODIFIED => SortClause\DateModified::class,
@@ -88,15 +88,15 @@ class EzPublishBackend implements BackendInterface
         Location::SORT_FIELD_NAME => SortClause\ContentName::class,
         Location::SORT_FIELD_NODE_ID => SortClause\Location\Id::class,
         Location::SORT_FIELD_CONTENTOBJECT_ID => SortClause\ContentId::class,
-    );
+    ];
 
     /**
      * @var array
      */
-    private $sortDirections = array(
+    private $sortDirections = [
         Location::SORT_ORDER_ASC => LocationQuery::SORT_ASC,
         Location::SORT_ORDER_DESC => LocationQuery::SORT_DESC,
-    );
+    ];
 
     public function __construct(
         Repository $repository,
@@ -124,7 +124,7 @@ class EzPublishBackend implements BackendInterface
      */
     public function setLanguages(array $languages = null)
     {
-        $this->languages = is_array($languages) ? $languages : array();
+        $this->languages = is_array($languages) ? $languages : [];
     }
 
     /**
@@ -134,7 +134,7 @@ class EzPublishBackend implements BackendInterface
      */
     public function setDefaultSections(array $defaultSections = null)
     {
-        $this->defaultSections = is_array($defaultSections) ? $defaultSections : array();
+        $this->defaultSections = is_array($defaultSections) ? $defaultSections : [];
     }
 
     /**
@@ -156,7 +156,7 @@ class EzPublishBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            array('languages' => $this->languages)
+            ['languages' => $this->languages]
         );
 
         $items = $this->buildItems($result);
@@ -184,7 +184,7 @@ class EzPublishBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            array('languages' => $this->languages)
+            ['languages' => $this->languages]
         );
 
         if (!empty($result->searchHits)) {
@@ -201,7 +201,7 @@ class EzPublishBackend implements BackendInterface
 
     public function loadItem($id)
     {
-        $criteria = array();
+        $criteria = [];
         if ($this->config->getItemType() === 'ezlocation') {
             $criteria[] = new Criterion\LocationId($id);
         } elseif ($this->config->getItemType() === 'ezcontent') {
@@ -214,7 +214,7 @@ class EzPublishBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            array('languages' => $this->languages)
+            ['languages' => $this->languages]
         );
 
         if (!empty($result->searchHits)) {
@@ -232,7 +232,7 @@ class EzPublishBackend implements BackendInterface
     public function getSubLocations(LocationInterface $location)
     {
         if (!$location instanceof EzPublishInterface) {
-            return array();
+            return [];
         }
 
         if ($this->locationContentTypeIds === null) {
@@ -241,10 +241,10 @@ class EzPublishBackend implements BackendInterface
             );
         }
 
-        $criteria = array(
+        $criteria = [
             new Criterion\ParentLocationId($location->getLocationId()),
             new Criterion\ContentTypeId($this->locationContentTypeIds),
-        );
+        ];
 
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd($criteria);
@@ -253,7 +253,7 @@ class EzPublishBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            array('languages' => $this->languages)
+            ['languages' => $this->languages]
         );
 
         return $this->buildItems($result);
@@ -267,10 +267,10 @@ class EzPublishBackend implements BackendInterface
             );
         }
 
-        $criteria = array(
+        $criteria = [
             new Criterion\ParentLocationId($location->getLocationId()),
             new Criterion\ContentTypeId($this->locationContentTypeIds),
-        );
+        ];
 
         $query = new LocationQuery();
         $query->limit = 0;
@@ -278,7 +278,7 @@ class EzPublishBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            array('languages' => $this->languages)
+            ['languages' => $this->languages]
         );
 
         return $result->totalCount;
@@ -287,12 +287,12 @@ class EzPublishBackend implements BackendInterface
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
     {
         if (!$location instanceof EzPublishInterface) {
-            return array();
+            return [];
         }
 
-        $criteria = array(
+        $criteria = [
             new Criterion\ParentLocationId($location->getLocationId()),
-        );
+        ];
 
         $query = new LocationQuery();
         $query->offset = $offset;
@@ -302,7 +302,7 @@ class EzPublishBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            array('languages' => $this->languages)
+            ['languages' => $this->languages]
         );
 
         return $this->buildItems($result);
@@ -310,9 +310,9 @@ class EzPublishBackend implements BackendInterface
 
     public function getSubItemsCount(LocationInterface $location)
     {
-        $criteria = array(
+        $criteria = [
             new Criterion\ParentLocationId($location->getLocationId()),
-        );
+        ];
 
         $query = new LocationQuery();
         $query->limit = 0;
@@ -320,7 +320,7 @@ class EzPublishBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            array('languages' => $this->languages)
+            ['languages' => $this->languages]
         );
 
         return $result->totalCount;
@@ -341,7 +341,7 @@ class EzPublishBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            array('languages' => $this->languages)
+            ['languages' => $this->languages]
         );
 
         return $this->buildItems($result);
@@ -361,7 +361,7 @@ class EzPublishBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            array('languages' => $this->languages)
+            ['languages' => $this->languages]
         );
 
         return $result->totalCount;
@@ -425,7 +425,7 @@ class EzPublishBackend implements BackendInterface
      */
     private function getContentTypeIds(array $contentTypeIdentifiers)
     {
-        $idList = array();
+        $idList = [];
 
         foreach ($contentTypeIdentifiers as $identifier) {
             try {
@@ -452,12 +452,12 @@ class EzPublishBackend implements BackendInterface
         $sortDirection = $this->sortDirections[$parentLocation->sortOrder];
 
         if (!isset($this->sortClauses[$sortType])) {
-            return array();
+            return [];
         }
 
-        return array(
+        return [
             new $this->sortClauses[$sortType]($sortDirection),
-        );
+        ];
     }
 
     /**

@@ -20,7 +20,7 @@ final class ItemTest extends TestCase
 
     public function setUp()
     {
-        $this->tag = new Tag(array('id' => 42, 'parentTagId' => 24));
+        $this->tag = new Tag(['id' => 42, 'parentTagId' => 24]);
 
         $this->item = new Item($this->tag, 'Keyword');
     }

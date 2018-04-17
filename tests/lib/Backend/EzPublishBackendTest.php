@@ -74,7 +74,7 @@ final class EzPublishBackendTest extends TestCase
 
     public function setUp()
     {
-        $this->locationContentTypes = array('frontpage' => 24, 'category' => 42);
+        $this->locationContentTypes = ['frontpage' => 24, 'category' => 42];
 
         $this->contentTypeHandlerMock = $this->createMock(Handler::class);
         $this->contentTypeHandlerMock
@@ -83,20 +83,20 @@ final class EzPublishBackendTest extends TestCase
             ->will(
                 $this->returnCallback(function ($identifier) {
                     return new Type(
-                        array(
+                        [
                             'id' => $this->locationContentTypes[$identifier],
-                        )
+                        ]
                     );
                 })
             );
 
         $this->repositoryMock = $this->createPartialMock(
             Repository::class,
-            array(
+            [
                 'sudo',
                 'getSearchService',
                 'getContentService',
-            )
+            ]
         );
 
         $this->repositoryMock
@@ -119,13 +119,13 @@ final class EzPublishBackendTest extends TestCase
             ->will($this->returnCallback(
                 function (ContentInfo $contentInfo) {
                     return new Content(
-                        array(
+                        [
                             'versionInfo' => new VersionInfo(
-                                array(
+                                [
                                     'contentInfo' => $contentInfo,
-                                )
+                                ]
                             ),
-                        )
+                        ]
                     );
                 }
             ));
@@ -141,8 +141,8 @@ final class EzPublishBackendTest extends TestCase
             ->will($this->returnValue($this->contentServiceMock));
 
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
-        $this->defaultSections = array(2, 43, 5);
-        $this->languages = array('eng-GB', 'cro-HR');
+        $this->defaultSections = [2, 43, 5];
+        $this->languages = ['eng-GB', 'cro-HR'];
 
         $this->backend = new EzPublishBackend(
             $this->repositoryMock,
@@ -171,16 +171,16 @@ final class EzPublishBackendTest extends TestCase
         $query->filter = new Criterion\LocationId($this->defaultSections);
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation(2))),
-            new SearchHit(array('valueObject' => $this->getLocation(43))),
-            new SearchHit(array('valueObject' => $this->getLocation(5))),
-        );
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation(2)]),
+            new SearchHit(['valueObject' => $this->getLocation(43)]),
+            new SearchHit(['valueObject' => $this->getLocation(5)]),
+        ];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $locations = $this->backend->getDefaultSections();
@@ -207,14 +207,14 @@ final class EzPublishBackendTest extends TestCase
         $query->filter = new Criterion\LocationId(2);
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation(2))),
-        );
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation(2)]),
+        ];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $location = $this->backend->loadLocation(2);
@@ -234,12 +234,12 @@ final class EzPublishBackendTest extends TestCase
         $query->filter = new Criterion\LocationId(2);
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array();
+        $searchResult->searchHits = [];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $this->backend->loadLocation(2);
@@ -254,20 +254,20 @@ final class EzPublishBackendTest extends TestCase
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd(
-            array(
+            [
                 new Criterion\LocationId(2),
-            )
+            ]
         );
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation(2))),
-        );
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation(2)]),
+        ];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $item = $this->backend->loadItem(2);
@@ -294,21 +294,21 @@ final class EzPublishBackendTest extends TestCase
 
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd(
-            array(
+            [
                 new Criterion\ContentId(2),
                 new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            )
+            ]
         );
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation(null, null, 2))),
-        );
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation(null, null, 2)]),
+        ];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $item = $this->backend->loadItem(2);
@@ -326,18 +326,18 @@ final class EzPublishBackendTest extends TestCase
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd(
-            array(
+            [
                 new Criterion\LocationId(2),
-            )
+            ]
         );
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array();
+        $searchResult->searchHits = [];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $this->backend->loadItem(2);
@@ -357,26 +357,26 @@ final class EzPublishBackendTest extends TestCase
         $query->offset = 0;
         $query->limit = 9999;
         $query->filter = new Criterion\LogicalAnd(
-            array(
+            [
                 new Criterion\ParentLocationId(2),
                 new Criterion\ContentTypeId(
                     array_values($this->locationContentTypes)
                 ),
-            )
+            ]
         );
 
-        $query->sortClauses = array(new ContentName(LocationQuery::SORT_ASC));
+        $query->sortClauses = [new ContentName(LocationQuery::SORT_ASC)];
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation(null, 2))),
-            new SearchHit(array('valueObject' => $this->getLocation(null, 2))),
-        );
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
+        ];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $locations = $this->backend->getSubLocations(
@@ -401,7 +401,7 @@ final class EzPublishBackendTest extends TestCase
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        $this->assertEquals(array(), $locations);
+        $this->assertEquals([], $locations);
     }
 
     /**
@@ -413,12 +413,12 @@ final class EzPublishBackendTest extends TestCase
         $query = new LocationQuery();
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd(
-            array(
+            [
                 new Criterion\ParentLocationId(2),
                 new Criterion\ContentTypeId(
                     array_values($this->locationContentTypes)
                 ),
-            )
+            ]
         );
 
         $searchResult = new SearchResult();
@@ -427,7 +427,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->getSubLocationsCount(
@@ -450,23 +450,23 @@ final class EzPublishBackendTest extends TestCase
         $query->offset = 0;
         $query->limit = 25;
         $query->filter = new Criterion\LogicalAnd(
-            array(
+            [
                 new Criterion\ParentLocationId(2),
-            )
+            ]
         );
 
-        $query->sortClauses = array(new ContentName(LocationQuery::SORT_ASC));
+        $query->sortClauses = [new ContentName(LocationQuery::SORT_ASC)];
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation(null, 2))),
-            new SearchHit(array('valueObject' => $this->getLocation(null, 2))),
-        );
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
+        ];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
@@ -493,23 +493,23 @@ final class EzPublishBackendTest extends TestCase
         $query->offset = 5;
         $query->limit = 10;
         $query->filter = new Criterion\LogicalAnd(
-            array(
+            [
                 new Criterion\ParentLocationId(2),
-            )
+            ]
         );
 
-        $query->sortClauses = array(new ContentName(LocationQuery::SORT_ASC));
+        $query->sortClauses = [new ContentName(LocationQuery::SORT_ASC)];
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation(null, 2))),
-            new SearchHit(array('valueObject' => $this->getLocation(null, 2))),
-        );
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
+            new SearchHit(['valueObject' => $this->getLocation(null, 2)]),
+        ];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
@@ -536,7 +536,7 @@ final class EzPublishBackendTest extends TestCase
 
         $items = $this->backend->getSubItems(new StubLocation(0));
 
-        $this->assertEquals(array(), $items);
+        $this->assertEquals([], $items);
     }
 
     /**
@@ -547,9 +547,9 @@ final class EzPublishBackendTest extends TestCase
         $query = new LocationQuery();
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd(
-            array(
+            [
                 new Criterion\ParentLocationId(2),
-            )
+            ]
         );
 
         $searchResult = new SearchResult();
@@ -558,7 +558,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->getSubItemsCount(
@@ -583,15 +583,15 @@ final class EzPublishBackendTest extends TestCase
         $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation())),
-            new SearchHit(array('valueObject' => $this->getLocation())),
-        );
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation()]),
+            new SearchHit(['valueObject' => $this->getLocation()]),
+        ];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->search('test');
@@ -617,15 +617,15 @@ final class EzPublishBackendTest extends TestCase
         $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
 
         $searchResult = new SearchResult();
-        $searchResult->searchHits = array(
-            new SearchHit(array('valueObject' => $this->getLocation())),
-            new SearchHit(array('valueObject' => $this->getLocation())),
-        );
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation()]),
+            new SearchHit(['valueObject' => $this->getLocation()]),
+        ];
 
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->search('test', 5, 10);
@@ -652,7 +652,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(array('languages' => $this->languages)))
+            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->searchCount('test');
@@ -672,17 +672,17 @@ final class EzPublishBackendTest extends TestCase
     private function getLocation($id = null, $parentLocationId = null, $contentId = null)
     {
         return new Location(
-            array(
+            [
                 'id' => $id,
                 'parentLocationId' => $parentLocationId,
                 'contentInfo' => new ContentInfo(
-                    array(
+                    [
                         'id' => $contentId,
-                    )
+                    ]
                 ),
                 'sortField' => Location::SORT_FIELD_NAME,
                 'sortOrder' => Location::SORT_ORDER_ASC,
-            )
+            ]
         );
     }
 }

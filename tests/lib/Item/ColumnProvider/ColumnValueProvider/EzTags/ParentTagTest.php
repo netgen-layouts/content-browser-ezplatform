@@ -29,7 +29,7 @@ final class ParentTagTest extends TestCase
 
     public function setUp()
     {
-        $this->tagsServiceMock = $this->createPartialMock(TagsService::class, array('loadTag'));
+        $this->tagsServiceMock = $this->createPartialMock(TagsService::class, ['loadTag']);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
 
         $this->provider = new ParentTag(
@@ -46,14 +46,14 @@ final class ParentTagTest extends TestCase
     {
         $item = new Item(
             new Tag(
-                array(
+                [
                     'parentTagId' => 42,
-                )
+                ]
             ),
             'Name'
         );
 
-        $parentTag = new Tag(array('keywords' => array('eng-GB', 'Parent tag')));
+        $parentTag = new Tag(['keywords' => ['eng-GB', 'Parent tag']]);
 
         $this->tagsServiceMock
             ->expects($this->once())
@@ -80,9 +80,9 @@ final class ParentTagTest extends TestCase
     {
         $item = new Item(
             new Tag(
-                array(
+                [
                     'parentTagId' => 0,
-                )
+                ]
             ),
             'Name'
         );

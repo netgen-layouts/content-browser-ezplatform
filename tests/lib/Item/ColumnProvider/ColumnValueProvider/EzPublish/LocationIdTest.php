@@ -28,9 +28,9 @@ final class LocationIdTest extends TestCase
     {
         $item = new Item(
             new Location(
-                array(
+                [
                     'id' => 42,
-                )
+                ]
             ),
             new Content(),
             null,

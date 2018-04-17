@@ -29,25 +29,25 @@ final class ItemTest extends TestCase
     public function setUp()
     {
         $this->content = new Content(
-            array(
+            [
                 'versionInfo' => new VersionInfo(
-                    array(
+                    [
                         'contentInfo' => new ContentInfo(
-                            array(
+                            [
                                 'id' => 42,
-                            )
+                            ]
                         ),
-                    )
+                    ]
                 ),
-            )
+            ]
         );
 
         $this->location = new Location(
-            array(
+            [
                 'id' => 22,
                 'parentLocationId' => 24,
                 'invisible' => true,
-            )
+            ]
         );
 
         $this->item = new Item($this->location, $this->content, 42, 'Some name', false);
@@ -92,9 +92,9 @@ final class ItemTest extends TestCase
     public function testGetParentIdWithRootLocation()
     {
         $this->location = new Location(
-            array(
+            [
                 'parentLocationId' => 1,
-            )
+            ]
         );
 
         $this->item = new Item($this->location, $this->content, 42, 'Some name');

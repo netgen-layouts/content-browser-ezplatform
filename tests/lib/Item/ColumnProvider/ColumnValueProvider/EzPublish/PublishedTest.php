@@ -35,17 +35,17 @@ final class PublishedTest extends TestCase
         $date = $date->setTime(18, 15, 42);
 
         $content = new Content(
-            array(
+            [
                 'versionInfo' => new VersionInfo(
-                    array(
+                    [
                         'contentInfo' => new ContentInfo(
-                            array(
+                            [
                                 'publishedDate' => $date,
-                            )
+                            ]
                         ),
-                    )
+                    ]
                 ),
-            )
+            ]
         );
 
         $item = new Item(

@@ -35,17 +35,17 @@ final class ModifiedTest extends TestCase
         $date = $date->setTime(18, 15, 42);
 
         $content = new Content(
-            array(
+            [
                 'versionInfo' => new VersionInfo(
-                    array(
+                    [
                         'contentInfo' => new ContentInfo(
-                            array(
+                            [
                                 'modificationDate' => $date,
-                            )
+                            ]
                         ),
-                    )
+                    ]
                 ),
-            )
+            ]
         );
 
         $item = new Item(

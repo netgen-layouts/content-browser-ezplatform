@@ -27,9 +27,9 @@ final class ParentTagIdTest extends TestCase
     {
         $item = new Item(
             new Tag(
-                array(
+                [
                     'parentTagId' => 42,
-                )
+                ]
             ),
             'Name'
         );

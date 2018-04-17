@@ -13,24 +13,24 @@ final class EzPublishDefaultPreviewPass implements CompilerPassInterface
             return;
         }
 
-        $defaultRule = array(
+        $defaultRule = [
             'template' => $container->getParameter(
                 'netgen_content_browser.ezpublish.default_preview_template'
             ),
-            'match' => array(),
-            'params' => array(),
-        );
+            'match' => [],
+            'params' => [],
+        ];
 
         $scopes = array_merge(
-            array('default'),
+            ['default'],
             $container->getParameter('ezpublish.siteaccess.list')
         );
 
         foreach ($scopes as $scope) {
-            $scopeParams = array(
+            $scopeParams = [
                 "ezsettings.{$scope}.content_view",
                 "ezsettings.{$scope}.location_view",
-            );
+            ];
 
             foreach ($scopeParams as $scopeParam) {
                 if (!$container->hasParameter($scopeParam)) {
@@ -55,15 +55,15 @@ final class EzPublishDefaultPreviewPass implements CompilerPassInterface
      */
     private function addDefaultPreviewRule($scopeRules, $defaultRule)
     {
-        $scopeRules = is_array($scopeRules) ? $scopeRules : array();
+        $scopeRules = is_array($scopeRules) ? $scopeRules : [];
 
         $contentBrowserRules = isset($scopeRules['ngcb_preview']) ?
             $scopeRules['ngcb_preview'] :
-            array();
+            [];
 
-        $contentBrowserRules += array(
+        $contentBrowserRules += [
             '___ngcb_preview_default___' => $defaultRule,
-        );
+        ];
 
         $scopeRules['ngcb_preview'] = $contentBrowserRules;
 

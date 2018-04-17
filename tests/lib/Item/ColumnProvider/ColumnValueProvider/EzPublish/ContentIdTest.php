@@ -29,17 +29,17 @@ final class ContentIdTest extends TestCase
     public function testGetValue()
     {
         $content = new Content(
-            array(
+            [
                 'versionInfo' => new VersionInfo(
-                    array(
+                    [
                         'contentInfo' => new ContentInfo(
-                            array(
+                            [
                                 'id' => 42,
-                            )
+                            ]
                         ),
-                    )
+                    ]
                 ),
-            )
+            ]
         );
 
         $item = new Item(

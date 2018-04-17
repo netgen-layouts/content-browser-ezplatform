@@ -34,7 +34,7 @@ final class SectionTest extends TestCase
     public function setUp()
     {
         $this->sectionServiceMock = $this->createMock(SectionService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, array('sudo', 'getSectionService'));
+        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getSectionService']);
 
         $this->repositoryMock
             ->expects($this->any())
@@ -61,17 +61,17 @@ final class SectionTest extends TestCase
     public function testGetValue()
     {
         $content = new Content(
-            array(
+            [
                 'versionInfo' => new VersionInfo(
-                    array(
+                    [
                         'contentInfo' => new ContentInfo(
-                            array(
+                            [
                                 'sectionId' => 42,
-                            )
+                            ]
                         ),
-                    )
+                    ]
                 ),
-            )
+            ]
         );
 
         $item = new Item(
@@ -82,9 +82,9 @@ final class SectionTest extends TestCase
         );
 
         $section = new EzSection(
-            array(
+            [
                 'name' => 'Section name',
-            )
+            ]
         );
 
         $this->sectionServiceMock

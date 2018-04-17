@@ -40,7 +40,7 @@ final class ContentTypeTest extends TestCase
     public function setUp()
     {
         $this->contentTypeServiceMock = $this->createMock(ContentTypeService::class);
-        $this->repositoryMock = $this->createPartialMock(Repository::class, array('sudo', 'getContentTypeService'));
+        $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentTypeService']);
 
         $this->repositoryMock
             ->expects($this->any())
@@ -70,17 +70,17 @@ final class ContentTypeTest extends TestCase
     public function testGetValue()
     {
         $content = new Content(
-            array(
+            [
                 'versionInfo' => new VersionInfo(
-                    array(
+                    [
                         'contentInfo' => new ContentInfo(
-                            array(
+                            [
                                 'contentTypeId' => 42,
-                            )
+                            ]
                         ),
-                    )
+                    ]
                 ),
-            )
+            ]
         );
 
         $item = new Item(
@@ -91,9 +91,9 @@ final class ContentTypeTest extends TestCase
         );
 
         $contentType = new EzContentType(
-            array(
-                'fieldDefinitions' => array(),
-            )
+            [
+                'fieldDefinitions' => [],
+            ]
         );
 
         $this->contentTypeServiceMock

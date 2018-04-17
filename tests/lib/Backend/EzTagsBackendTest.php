@@ -28,7 +28,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @var array
      */
-    private $languages = array();
+    private $languages = [];
 
     /**
      * @var \Netgen\ContentBrowser\Backend\EzTagsBackend
@@ -39,7 +39,7 @@ final class EzTagsBackendTest extends TestCase
     {
         $this->tagsServiceMock = $this->createMock(TagsService::class);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
-        $this->languages = array('eng-GB', 'cro-HR');
+        $this->languages = ['eng-GB', 'cro-HR'];
 
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
@@ -170,7 +170,7 @@ final class EzTagsBackendTest extends TestCase
                 $this->equalTo(0),
                 $this->equalTo(-1)
             )
-            ->will($this->returnValue(array($this->getTag(null, 1), $this->getTag(null, 1))));
+            ->will($this->returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
         $locations = $this->backend->getSubLocations(new Item($this->getTag(1), 'tag'));
 
@@ -192,7 +192,7 @@ final class EzTagsBackendTest extends TestCase
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        $this->assertEquals(array(), $locations);
+        $this->assertEquals([], $locations);
     }
 
     /**
@@ -240,7 +240,7 @@ final class EzTagsBackendTest extends TestCase
                 $this->equalTo(0),
                 $this->equalTo(25)
             )
-            ->will($this->returnValue(array($this->getTag(null, 1), $this->getTag(null, 1))));
+            ->will($this->returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
         $items = $this->backend->getSubItems(new Item($this->getTag(1), 'tag'));
 
@@ -266,7 +266,7 @@ final class EzTagsBackendTest extends TestCase
                 $this->equalTo(5),
                 $this->equalTo(10)
             )
-            ->will($this->returnValue(array($this->getTag(null, 1), $this->getTag(null, 1))));
+            ->will($this->returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
         $items = $this->backend->getSubItems(
             new Item($this->getTag(1), 'tag'),
@@ -292,7 +292,7 @@ final class EzTagsBackendTest extends TestCase
 
         $locations = $this->backend->getSubItems(new StubLocation(0));
 
-        $this->assertEquals(array(), $locations);
+        $this->assertEquals([], $locations);
     }
 
     /**
@@ -342,7 +342,7 @@ final class EzTagsBackendTest extends TestCase
                 $this->equalTo(0),
                 $this->equalTo(25)
             )
-            ->will($this->returnValue(array($this->getTag(), $this->getTag())));
+            ->will($this->returnValue([$this->getTag(), $this->getTag()]));
 
         $items = $this->backend->search('test');
 
@@ -390,7 +390,7 @@ final class EzTagsBackendTest extends TestCase
                 $this->equalTo(5),
                 $this->equalTo(10)
             )
-            ->will($this->returnValue(array($this->getTag(), $this->getTag())));
+            ->will($this->returnValue([$this->getTag(), $this->getTag()]));
 
         $items = $this->backend->search('test', 5, 10);
 
@@ -450,10 +450,10 @@ final class EzTagsBackendTest extends TestCase
     private function getTag($id = null, $parentTagId = null)
     {
         return new Tag(
-            array(
+            [
                 'id' => $id,
                 'parentTagId' => $parentTagId,
-            )
+            ]
         );
     }
 }
