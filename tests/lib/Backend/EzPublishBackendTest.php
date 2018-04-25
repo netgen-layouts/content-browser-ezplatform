@@ -104,7 +104,7 @@ final class EzPublishBackendTest extends TestCase
             ->method('sudo')
             ->with($this->anything())
             ->will($this->returnCallback(
-                function ($callback) {
+                function (callable $callback) {
                     return $callback($this->repositoryMock);
                 }
             ));
