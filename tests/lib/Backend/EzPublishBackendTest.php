@@ -28,27 +28,27 @@ use PHPUnit\Framework\TestCase;
 final class EzPublishBackendTest extends TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\API\Repository\Repository&\PHPUnit\Framework\MockObject\MockObject
      */
     private $repositoryMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\API\Repository\SearchService&\PHPUnit\Framework\MockObject\MockObject
      */
     private $searchServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\API\Repository\ContentService&\PHPUnit\Framework\MockObject\MockObject
      */
     private $contentServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler&\PHPUnit\Framework\MockObject\MockObject
      */
     private $contentTypeHandlerMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\Core\Helper\TranslationHelper&\PHPUnit\Framework\MockObject\MockObject
      */
     private $translationHelperMock;
 

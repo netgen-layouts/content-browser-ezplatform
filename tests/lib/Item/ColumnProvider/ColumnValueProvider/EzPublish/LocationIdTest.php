@@ -33,7 +33,7 @@ final class LocationIdTest extends TestCase
                 ]
             ),
             new Content(),
-            null,
+            24,
             'Name'
         );
 

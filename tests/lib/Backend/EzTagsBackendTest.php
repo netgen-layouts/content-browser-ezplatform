@@ -16,12 +16,12 @@ use PHPUnit\Framework\TestCase;
 final class EzTagsBackendTest extends TestCase
 {
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Netgen\TagsBundle\API\Repository\TagsService&\PHPUnit\Framework\MockObject\MockObject
      */
     private $tagsServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \eZ\Publish\Core\Helper\TranslationHelper&\PHPUnit\Framework\MockObject\MockObject
      */
     private $translationHelperMock;
 

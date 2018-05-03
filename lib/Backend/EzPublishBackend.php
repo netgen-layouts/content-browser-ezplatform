@@ -376,24 +376,27 @@ class EzPublishBackend implements BackendInterface
      */
     private function buildItem(SearchHit $searchHit)
     {
+        /** @var \eZ\Publish\API\Repository\Values\Content\Location $location */
+        $location = $searchHit->valueObject;
+
         $content = $this->repository->sudo(
-            function (Repository $repository) use ($searchHit) {
+            function (Repository $repository) use ($location) {
                 return $repository->getContentService()->loadContentByContentInfo(
-                    $searchHit->valueObject->contentInfo
+                    $location->contentInfo
                 );
             }
         );
 
         $name = $this->translationHelper->getTranslatedContentNameByContentInfo(
-            $searchHit->valueObject->contentInfo
+            $location->contentInfo
         );
 
         return new Item(
-            $searchHit->valueObject,
+            $location,
             $content,
             $this->config->getItemType() === 'ezlocation' ?
-                $searchHit->valueObject->id :
-                $searchHit->valueObject->contentInfo->id,
+                $location->id :
+                $location->contentInfo->id,
             $name,
             $this->isSelectable($content)
         );

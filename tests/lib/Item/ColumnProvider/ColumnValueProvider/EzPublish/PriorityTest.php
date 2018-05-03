@@ -33,7 +33,7 @@ final class PriorityTest extends TestCase
                 ]
             ),
             new Content(),
-            null,
+            24,
             'Name'
         );
 

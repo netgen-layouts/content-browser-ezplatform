@@ -171,7 +171,7 @@ class EzTagsBackend implements BackendInterface
             'getKeyword'
         );
 
-        return new Location($tag, $tagName);
+        return new Location($tag, (string) $tagName);
     }
 
     /**
@@ -188,7 +188,7 @@ class EzTagsBackend implements BackendInterface
             'getKeyword'
         );
 
-        return new Item($tag, $tagName);
+        return new Item($tag, (string) $tagName);
     }
 
     /**
