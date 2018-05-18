@@ -48,7 +48,7 @@ final class EzPublishDefaultPreviewPass implements CompilerPassInterface
      * Adds the default eZ content preview template to default scope as a fallback
      * when no preview rules are defined.
      *
-     * @param array $scopeRules
+     * @param mixed $scopeRules
      * @param array $defaultRule
      *
      * @return array
