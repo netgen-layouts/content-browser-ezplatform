@@ -11,7 +11,7 @@ final class Visible implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzPublishInterface) {
-            return;
+            return null;
         }
 
         return $item->getLocation()->invisible ? 'No' : 'Yes';

@@ -11,7 +11,7 @@ final class TagId implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzTagsInterface) {
-            return;
+            return null;
         }
 
         return $item->getTag()->id;

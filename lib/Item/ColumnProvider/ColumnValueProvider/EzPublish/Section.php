@@ -22,7 +22,7 @@ final class Section implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzPublishInterface) {
-            return;
+            return null;
         }
 
         return $this->repository->sudo(

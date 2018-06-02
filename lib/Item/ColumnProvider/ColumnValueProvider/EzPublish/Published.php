@@ -24,7 +24,7 @@ final class Published implements ColumnValueProviderInterface
     public function getValue(ItemInterface $item)
     {
         if (!$item instanceof EzPublishInterface) {
-            return;
+            return null;
         }
 
         return $item->getContent()->contentInfo->publishedDate->format(
