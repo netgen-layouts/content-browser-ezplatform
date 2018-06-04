@@ -475,6 +475,7 @@ final class EzPublishBackendTest extends TestCase
 
         $this->assertCount(2, $items);
         foreach ($items as $item) {
+            $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
             $this->assertEquals(2, $item->getParentId());
         }
@@ -520,6 +521,7 @@ final class EzPublishBackendTest extends TestCase
 
         $this->assertCount(2, $items);
         foreach ($items as $item) {
+            $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
             $this->assertEquals(2, $item->getParentId());
         }

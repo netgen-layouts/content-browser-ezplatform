@@ -246,6 +246,7 @@ final class EzTagsBackendTest extends TestCase
 
         $this->assertCount(2, $items);
         foreach ($items as $item) {
+            $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
             $this->assertEquals(1, $item->getParentId());
         }
@@ -276,6 +277,7 @@ final class EzTagsBackendTest extends TestCase
 
         $this->assertCount(2, $items);
         foreach ($items as $item) {
+            $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
             $this->assertEquals(1, $item->getParentId());
         }
