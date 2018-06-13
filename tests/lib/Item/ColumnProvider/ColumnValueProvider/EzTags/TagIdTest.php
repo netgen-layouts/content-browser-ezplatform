@@ -17,7 +17,7 @@ final class TagIdTest extends TestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->provider = new TagId();
     }
@@ -25,7 +25,7 @@ final class TagIdTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId::getValue
      */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $item = new Item(
             new Tag(
@@ -37,7 +37,7 @@ final class TagIdTest extends TestCase
         );
 
         $this->assertEquals(
-            42,
+            '42',
             $this->provider->getValue($item)
         );
     }
@@ -45,7 +45,7 @@ final class TagIdTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId::getValue
      */
-    public function testGetValueWithInvalidItem()
+    public function testGetValueWithInvalidItem(): void
     {
         $this->assertNull($this->provider->getValue(new StubItem()));
     }

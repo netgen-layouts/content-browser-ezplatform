@@ -19,11 +19,7 @@ final class Location implements LocationInterface, EzTagsInterface
      */
     private $name;
 
-    /**
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
-     * @param string $name
-     */
-    public function __construct(Tag $tag, $name)
+    public function __construct(Tag $tag, string $name)
     {
         $this->tag = $tag;
         $this->name = $name;
@@ -34,7 +30,7 @@ final class Location implements LocationInterface, EzTagsInterface
         return $this->tag->id;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -44,7 +40,7 @@ final class Location implements LocationInterface, EzTagsInterface
         return $this->tag->parentTagId;
     }
 
-    public function getTag()
+    public function getTag(): Tag
     {
         return $this->tag;
     }

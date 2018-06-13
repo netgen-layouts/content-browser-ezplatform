@@ -10,12 +10,12 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class TagId implements ColumnValueProviderInterface
 {
-    public function getValue(ItemInterface $item)
+    public function getValue(ItemInterface $item): ?string
     {
         if (!$item instanceof EzTagsInterface) {
             return null;
         }
 
-        return $item->getTag()->id;
+        return (string) $item->getTag()->id;
     }
 }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Netgen\ContentBrowser\Item\EzTags;
 
+use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+
 interface EzTagsInterface
 {
     /**
      * Returns the tag.
-     *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    public function getTag();
+    public function getTag(): Tag;
 }

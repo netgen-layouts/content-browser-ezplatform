@@ -43,7 +43,7 @@ final class Item implements ItemInterface, LocationInterface, EzPublishInterface
      * @param string $name
      * @param bool $selectable
      */
-    public function __construct(Location $location, Content $content, $value, $name, $selectable = true)
+    public function __construct(Location $location, Content $content, $value, string $name, bool $selectable = true)
     {
         $this->location = $location;
         $this->content = $content;
@@ -62,7 +62,7 @@ final class Item implements ItemInterface, LocationInterface, EzPublishInterface
         return $this->value;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -74,22 +74,22 @@ final class Item implements ItemInterface, LocationInterface, EzPublishInterface
         return $parentId !== 1 ? $parentId : null;
     }
 
-    public function isVisible()
+    public function isVisible(): bool
     {
         return !$this->location->invisible;
     }
 
-    public function isSelectable()
+    public function isSelectable(): bool
     {
         return $this->selectable;
     }
 
-    public function getLocation()
+    public function getLocation(): Location
     {
         return $this->location;
     }
 
-    public function getContent()
+    public function getContent(): Content
     {
         return $this->content;
     }

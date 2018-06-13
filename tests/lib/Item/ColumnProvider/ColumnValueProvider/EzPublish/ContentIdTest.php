@@ -20,7 +20,7 @@ final class ContentIdTest extends TestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->provider = new ContentId();
     }
@@ -28,7 +28,7 @@ final class ContentIdTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentId::getValue
      */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $content = new Content(
             [
@@ -52,7 +52,7 @@ final class ContentIdTest extends TestCase
         );
 
         $this->assertEquals(
-            42,
+            '42',
             $this->provider->getValue($item)
         );
     }
@@ -60,7 +60,7 @@ final class ContentIdTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentId::getValue
      */
-    public function testGetValueWithInvalidItem()
+    public function testGetValueWithInvalidItem(): void
     {
         $this->assertNull($this->provider->getValue(new StubItem()));
     }

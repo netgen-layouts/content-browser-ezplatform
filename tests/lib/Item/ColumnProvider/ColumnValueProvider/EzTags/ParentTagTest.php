@@ -29,7 +29,7 @@ final class ParentTagTest extends TestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->tagsServiceMock = $this->createPartialMock(TagsService::class, ['loadTag']);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
@@ -44,7 +44,7 @@ final class ParentTagTest extends TestCase
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::__construct
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::getValue
      */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $item = new Item(
             new Tag(
@@ -78,7 +78,7 @@ final class ParentTagTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::getValue
      */
-    public function testGetValueWithNoParentTag()
+    public function testGetValueWithNoParentTag(): void
     {
         $item = new Item(
             new Tag(
@@ -106,7 +106,7 @@ final class ParentTagTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::getValue
      */
-    public function testGetValueWithInvalidItem()
+    public function testGetValueWithInvalidItem(): void
     {
         $this->assertNull($this->provider->getValue(new StubItem()));
     }

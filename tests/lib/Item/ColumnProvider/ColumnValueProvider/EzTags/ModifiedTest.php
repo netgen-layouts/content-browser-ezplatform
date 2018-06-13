@@ -18,7 +18,7 @@ final class ModifiedTest extends TestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->provider = new Modified('d.m.Y H:i:s');
     }
@@ -27,7 +27,7 @@ final class ModifiedTest extends TestCase
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::__construct
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::getValue
      */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $date = new DateTimeImmutable();
         $date = $date->setDate(2016, 7, 17);
@@ -51,7 +51,7 @@ final class ModifiedTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::getValue
      */
-    public function testGetValueWithInvalidItem()
+    public function testGetValueWithInvalidItem(): void
     {
         $this->assertNull($this->provider->getValue(new StubItem()));
     }

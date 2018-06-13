@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace Netgen\ContentBrowser\Item\EzPublish;
 
+use eZ\Publish\API\Repository\Values\Content\Content;
+use eZ\Publish\API\Repository\Values\Content\Location;
+
 interface EzPublishInterface
 {
     /**
      * Returns the location.
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Location
      */
-    public function getLocation();
+    public function getLocation(): Location;
 
     /**
      * Returns the content.
-     *
-     * @return \eZ\Publish\API\Repository\Values\Content\Content
      */
-    public function getContent();
+    public function getContent(): Content;
 }

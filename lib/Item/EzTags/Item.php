@@ -20,11 +20,7 @@ final class Item implements ItemInterface, LocationInterface, EzTagsInterface
      */
     private $name;
 
-    /**
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
-     * @param string $name
-     */
-    public function __construct(Tag $tag, $name)
+    public function __construct(Tag $tag, string $name)
     {
         $this->tag = $tag;
         $this->name = $name;
@@ -40,7 +36,7 @@ final class Item implements ItemInterface, LocationInterface, EzTagsInterface
         return $this->tag->id;
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -50,17 +46,17 @@ final class Item implements ItemInterface, LocationInterface, EzTagsInterface
         return $this->tag->parentTagId;
     }
 
-    public function isVisible()
+    public function isVisible(): bool
     {
         return true;
     }
 
-    public function isSelectable()
+    public function isSelectable(): bool
     {
         return true;
     }
 
-    public function getTag()
+    public function getTag(): Tag
     {
         return $this->tag;
     }

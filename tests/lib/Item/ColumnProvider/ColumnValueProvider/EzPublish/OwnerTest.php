@@ -39,7 +39,7 @@ final class OwnerTest extends TestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->contentServiceMock = $this->createMock(ContentService::class);
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentService']);
@@ -69,7 +69,7 @@ final class OwnerTest extends TestCase
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Owner::__construct
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Owner::getValue
      */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $content = new Content(
             [
@@ -115,7 +115,7 @@ final class OwnerTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Owner::getValue
      */
-    public function testGetValueWithNonExistingOwner()
+    public function testGetValueWithNonExistingOwner(): void
     {
         $content = new Content(
             [
@@ -154,7 +154,7 @@ final class OwnerTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Owner::getValue
      */
-    public function testGetValueWithInvalidItem()
+    public function testGetValueWithInvalidItem(): void
     {
         $this->assertNull($this->provider->getValue(new StubItem()));
     }

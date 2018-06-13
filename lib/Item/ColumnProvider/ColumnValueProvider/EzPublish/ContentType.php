@@ -28,14 +28,14 @@ final class ContentType implements ColumnValueProviderInterface
         $this->translationHelper = $translationHelper;
     }
 
-    public function getValue(ItemInterface $item)
+    public function getValue(ItemInterface $item): ?string
     {
         if (!$item instanceof EzPublishInterface) {
             return null;
         }
 
         return $this->repository->sudo(
-            function (Repository $repository) use ($item) {
+            function (Repository $repository) use ($item): string {
                 return $this->translationHelper->getTranslatedByMethod(
                     $repository->getContentTypeService()->loadContentType(
                         $item->getContent()->contentInfo->contentTypeId

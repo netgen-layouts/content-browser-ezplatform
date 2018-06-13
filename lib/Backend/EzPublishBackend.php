@@ -20,6 +20,7 @@ use Netgen\ContentBrowser\Config\ConfigurationInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
 use Netgen\ContentBrowser\Item\EzPublish\Item;
+use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 
 /**
@@ -124,7 +125,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @param array $languages
      */
-    public function setLanguages(array $languages = null)
+    public function setLanguages(array $languages = null): void
     {
         $this->languages = is_array($languages) ? $languages : [];
     }
@@ -134,7 +135,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @param array $defaultSections
      */
-    public function setDefaultSections(array $defaultSections = null)
+    public function setDefaultSections(array $defaultSections = null): void
     {
         $this->defaultSections = is_array($defaultSections) ? $defaultSections : [];
     }
@@ -144,7 +145,7 @@ class EzPublishBackend implements BackendInterface
      *
      * @param array $locationContentTypes
      */
-    public function setLocationContentTypes(array $locationContentTypes = null)
+    public function setLocationContentTypes(array $locationContentTypes = null): void
     {
         if (is_array($locationContentTypes) && !empty($locationContentTypes)) {
             $this->locationContentTypes = $locationContentTypes;
@@ -167,7 +168,7 @@ class EzPublishBackend implements BackendInterface
 
         usort(
             $items,
-            function (LocationInterface $item1, LocationInterface $item2) use ($sortMap) {
+            function (LocationInterface $item1, LocationInterface $item2) use ($sortMap): int {
                 if ($item1->getLocationId() === $item2->getLocationId()) {
                     return 0;
                 }
@@ -179,7 +180,7 @@ class EzPublishBackend implements BackendInterface
         return $items;
     }
 
-    public function loadLocation($id)
+    public function loadLocation($id): LocationInterface
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($id);
@@ -201,7 +202,7 @@ class EzPublishBackend implements BackendInterface
         );
     }
 
-    public function loadItem($id)
+    public function loadItem($id): ItemInterface
     {
         $criteria = [];
         if ($this->config->getItemType() === 'ezlocation') {
@@ -261,7 +262,7 @@ class EzPublishBackend implements BackendInterface
         return $this->buildItems($result);
     }
 
-    public function getSubLocationsCount(LocationInterface $location)
+    public function getSubLocationsCount(LocationInterface $location): int
     {
         if ($this->locationContentTypeIds === null) {
             $this->locationContentTypeIds = $this->getContentTypeIds(
@@ -283,7 +284,7 @@ class EzPublishBackend implements BackendInterface
             ['languages' => $this->languages]
         );
 
-        return $result->totalCount;
+        return $result->totalCount ?? 0;
     }
 
     public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
@@ -310,7 +311,7 @@ class EzPublishBackend implements BackendInterface
         return $this->buildItems($result);
     }
 
-    public function getSubItemsCount(LocationInterface $location)
+    public function getSubItemsCount(LocationInterface $location): int
     {
         $criteria = [
             new Criterion\ParentLocationId($location->getLocationId()),
@@ -325,7 +326,7 @@ class EzPublishBackend implements BackendInterface
             ['languages' => $this->languages]
         );
 
-        return $result->totalCount;
+        return $result->totalCount ?? 0;
     }
 
     public function search($searchText, $offset = 0, $limit = 25)
@@ -349,7 +350,7 @@ class EzPublishBackend implements BackendInterface
         return $this->buildItems($result);
     }
 
-    public function searchCount($searchText)
+    public function searchCount($searchText): int
     {
         $query = new LocationQuery();
 
@@ -366,23 +367,19 @@ class EzPublishBackend implements BackendInterface
             ['languages' => $this->languages]
         );
 
-        return $result->totalCount;
+        return $result->totalCount ?? 0;
     }
 
     /**
      * Builds the item from provided search hit.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchHit $searchHit
-     *
-     * @return \Netgen\ContentBrowser\Item\EzPublish\Item
      */
-    private function buildItem(SearchHit $searchHit)
+    private function buildItem(SearchHit $searchHit): Item
     {
         /** @var \eZ\Publish\API\Repository\Values\Content\Location $location */
         $location = $searchHit->valueObject;
 
         $content = $this->repository->sudo(
-            function (Repository $repository) use ($location) {
+            function (Repository $repository) use ($location): Content {
                 return $repository->getContentService()->loadContentByContentInfo(
                     $location->contentInfo
                 );
@@ -399,7 +396,7 @@ class EzPublishBackend implements BackendInterface
             $this->config->getItemType() === 'ezlocation' ?
                 $location->id :
                 $location->contentInfo->id,
-            $name,
+            (string) $name,
             $this->isSelectable($content)
         );
     }
@@ -411,10 +408,10 @@ class EzPublishBackend implements BackendInterface
      *
      * @return \Netgen\ContentBrowser\Item\EzPublish\Item[]
      */
-    private function buildItems(SearchResult $searchResult)
+    private function buildItems(SearchResult $searchResult): array
     {
         return array_map(
-            function (SearchHit $searchHit) {
+            function (SearchHit $searchHit): Item {
                 return $this->buildItem($searchHit);
             },
             $searchResult->searchHits
@@ -423,12 +420,8 @@ class EzPublishBackend implements BackendInterface
 
     /**
      * Returns content type IDs for all existing content types.
-     *
-     * @param array $contentTypeIdentifiers
-     *
-     * @return array
      */
-    private function getContentTypeIds(array $contentTypeIdentifiers)
+    private function getContentTypeIds(array $contentTypeIdentifiers): array
     {
         $idList = [];
 
@@ -449,9 +442,9 @@ class EzPublishBackend implements BackendInterface
      *
      * @param \eZ\Publish\API\Repository\Values\Content\Location $parentLocation
      *
-     * @return array
+     * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause[]
      */
-    private function getSortClause(Location $parentLocation)
+    private function getSortClause(Location $parentLocation): array
     {
         $sortType = $parentLocation->sortField;
         $sortDirection = $this->sortDirections[$parentLocation->sortOrder];
@@ -467,12 +460,8 @@ class EzPublishBackend implements BackendInterface
 
     /**
      * Returns if the provided content is selectable.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
-     *
-     * @return bool
      */
-    private function isSelectable(Content $content)
+    private function isSelectable(Content $content): bool
     {
         if (!$this->config->hasParameter('allowed_content_types')) {
             return true;

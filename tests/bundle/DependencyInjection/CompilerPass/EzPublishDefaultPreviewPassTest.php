@@ -15,7 +15,7 @@ final class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
      * @covers \Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::addDefaultPreviewRule
      * @covers \Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::process
      */
-    public function testProcess()
+    public function testProcess(): void
     {
         $this->setParameter('ezpublish.siteaccess.list', ['cro', 'eng', 'admin']);
         $this->setParameter('netgen_content_browser.ezpublish.default_preview_template', 'template.html.twig');
@@ -60,19 +60,14 @@ final class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
     /**
      * @covers \Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::process
      */
-    public function testProcessWithEmptyContainer()
+    public function testProcessWithEmptyContainer(): void
     {
         $this->compile();
 
         $this->assertInstanceOf(FrozenParameterBag::class, $this->container->getParameterBag());
     }
 
-    /**
-     * Register the compiler pass under test.
-     *
-     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
-     */
-    protected function registerCompilerPass(ContainerBuilder $container)
+    protected function registerCompilerPass(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new EzPublishDefaultPreviewPass());
     }

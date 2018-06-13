@@ -20,7 +20,7 @@ final class LocationTest extends TestCase
      */
     private $location;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->tag = new Tag(['id' => 42, 'parentTagId' => 24]);
 
@@ -31,7 +31,7 @@ final class LocationTest extends TestCase
      * @covers \Netgen\ContentBrowser\Item\EzTags\Location::__construct
      * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getLocationId
      */
-    public function testGetLocationId()
+    public function testGetLocationId(): void
     {
         $this->assertEquals(42, $this->location->getLocationId());
     }
@@ -39,7 +39,7 @@ final class LocationTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getName
      */
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertEquals('Keyword', $this->location->getName());
     }
@@ -47,7 +47,7 @@ final class LocationTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getParentId
      */
-    public function testGetParentId()
+    public function testGetParentId(): void
     {
         $this->assertEquals(24, $this->location->getParentId());
     }
@@ -55,7 +55,7 @@ final class LocationTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getTag
      */
-    public function testGetTag()
+    public function testGetTag(): void
     {
         $this->assertEquals($this->tag, $this->location->getTag());
     }

@@ -10,12 +10,12 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class LocationId implements ColumnValueProviderInterface
 {
-    public function getValue(ItemInterface $item)
+    public function getValue(ItemInterface $item): ?string
     {
         if (!$item instanceof EzPublishInterface) {
             return null;
         }
 
-        return $item->getLocation()->id;
+        return (string) $item->getLocation()->id;
     }
 }

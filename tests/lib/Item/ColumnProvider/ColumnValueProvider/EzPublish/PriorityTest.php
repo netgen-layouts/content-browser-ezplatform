@@ -18,7 +18,7 @@ final class PriorityTest extends TestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->provider = new Priority();
     }
@@ -26,7 +26,7 @@ final class PriorityTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Priority::getValue
      */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $item = new Item(
             new Location(
@@ -40,7 +40,7 @@ final class PriorityTest extends TestCase
         );
 
         $this->assertEquals(
-            5,
+            '5',
             $this->provider->getValue($item)
         );
     }
@@ -48,7 +48,7 @@ final class PriorityTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Priority::getValue
      */
-    public function testGetValueWithInvalidItem()
+    public function testGetValueWithInvalidItem(): void
     {
         $this->assertNull($this->provider->getValue(new StubItem()));
     }

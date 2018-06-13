@@ -28,7 +28,7 @@ final class ItemTest extends TestCase
      */
     private $item;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->content = new Content(
             [
@@ -58,7 +58,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getLocationId
      */
-    public function testGetLocationId()
+    public function testGetLocationId(): void
     {
         $this->assertEquals(22, $this->item->getLocationId());
     }
@@ -67,7 +67,7 @@ final class ItemTest extends TestCase
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::__construct
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getValue
      */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $this->assertEquals(42, $this->item->getValue());
     }
@@ -75,7 +75,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getName
      */
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertEquals('Some name', $this->item->getName());
     }
@@ -83,7 +83,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getParentId
      */
-    public function testGetParentId()
+    public function testGetParentId(): void
     {
         $this->assertEquals(24, $this->item->getParentId());
     }
@@ -91,7 +91,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getParentId
      */
-    public function testGetParentIdWithRootLocation()
+    public function testGetParentIdWithRootLocation(): void
     {
         $this->location = new Location(
             [
@@ -107,7 +107,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::isVisible
      */
-    public function testIsVisible()
+    public function testIsVisible(): void
     {
         $this->assertFalse($this->item->isVisible());
     }
@@ -115,7 +115,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::isSelectable
      */
-    public function testIsSelectable()
+    public function testIsSelectable(): void
     {
         $this->assertFalse($this->item->isSelectable());
     }
@@ -123,7 +123,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getLocation
      */
-    public function testGetLocation()
+    public function testGetLocation(): void
     {
         $this->assertEquals($this->location, $this->item->getLocation());
     }
@@ -131,7 +131,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getContent
      */
-    public function testGetContent()
+    public function testGetContent(): void
     {
         $this->assertEquals($this->content, $this->item->getContent());
     }

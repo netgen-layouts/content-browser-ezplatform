@@ -33,7 +33,7 @@ final class SectionTest extends TestCase
      */
     private $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->sectionServiceMock = $this->createMock(SectionService::class);
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getSectionService']);
@@ -60,7 +60,7 @@ final class SectionTest extends TestCase
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::__construct
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::getValue
      */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $content = new Content(
             [
@@ -104,7 +104,7 @@ final class SectionTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::getValue
      */
-    public function testGetValueWithInvalidItem()
+    public function testGetValueWithInvalidItem(): void
     {
         $this->assertNull($this->provider->getValue(new StubItem()));
     }

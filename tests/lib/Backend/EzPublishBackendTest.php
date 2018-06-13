@@ -74,7 +74,7 @@ final class EzPublishBackendTest extends TestCase
      */
     private $backend;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->locationContentTypes = ['frontpage' => 24, 'category' => 42];
 
@@ -83,7 +83,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects($this->any())
             ->method('loadByIdentifier')
             ->will(
-                $this->returnCallback(function ($identifier) {
+                $this->returnCallback(function (string $identifier): Type {
                     return new Type(
                         [
                             'id' => $this->locationContentTypes[$identifier],
@@ -119,7 +119,7 @@ final class EzPublishBackendTest extends TestCase
             ->method('loadContentByContentInfo')
             ->with($this->isInstanceOf(ContentInfo::class))
             ->will($this->returnCallback(
-                function (ContentInfo $contentInfo) {
+                function (ContentInfo $contentInfo): Content {
                     return new Content(
                         [
                             'versionInfo' => new VersionInfo(
@@ -167,7 +167,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getDefaultSections
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      */
-    public function testGetDefaultSections()
+    public function testGetDefaultSections(): void
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($this->defaultSections);
@@ -203,7 +203,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadLocation
      */
-    public function testLoadLocation()
+    public function testLoadLocation(): void
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId(2);
@@ -230,7 +230,7 @@ final class EzPublishBackendTest extends TestCase
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
      * @expectedExceptionMessage Location with ID 2 not found.
      */
-    public function testLoadLocationThrowsNotFoundException()
+    public function testLoadLocationThrowsNotFoundException(): void
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId(2);
@@ -252,7 +252,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadItem
      */
-    public function testLoadItem()
+    public function testLoadItem(): void
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd(
@@ -282,7 +282,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadItem
      */
-    public function testLoadItemWithContent()
+    public function testLoadItemWithContent(): void
     {
         $this->backend = new EzPublishBackend(
             $this->repositoryMock,
@@ -324,7 +324,7 @@ final class EzPublishBackendTest extends TestCase
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
      * @expectedExceptionMessage Item with ID 2 not found.
      */
-    public function testLoadItemThrowsNotFoundException()
+    public function testLoadItemThrowsNotFoundException(): void
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd(
@@ -353,7 +353,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubLocations
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      */
-    public function testGetSubLocations()
+    public function testGetSubLocations(): void
     {
         $query = new LocationQuery();
         $query->offset = 0;
@@ -395,7 +395,7 @@ final class EzPublishBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubLocations
      */
-    public function testGetSubLocationsWithInvalidItem()
+    public function testGetSubLocationsWithInvalidItem(): void
     {
         $this->searchServiceMock
             ->expects($this->never())
@@ -410,7 +410,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getContentTypeIds
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubLocationsCount
      */
-    public function testGetSubLocationsCount()
+    public function testGetSubLocationsCount(): void
     {
         $query = new LocationQuery();
         $query->limit = 0;
@@ -446,7 +446,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      */
-    public function testGetSubItems()
+    public function testGetSubItems(): void
     {
         $query = new LocationQuery();
         $query->offset = 0;
@@ -490,7 +490,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      */
-    public function testGetSubItemsWithOffsetAndLimit()
+    public function testGetSubItemsWithOffsetAndLimit(): void
     {
         $query = new LocationQuery();
         $query->offset = 5;
@@ -532,7 +532,7 @@ final class EzPublishBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubItems
      */
-    public function testGetSubItemsWithInvalidItem()
+    public function testGetSubItemsWithInvalidItem(): void
     {
         $this->searchServiceMock
             ->expects($this->never())
@@ -546,7 +546,7 @@ final class EzPublishBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSubItemsCount
      */
-    public function testGetSubItemsCount()
+    public function testGetSubItemsCount(): void
     {
         $query = new LocationQuery();
         $query->limit = 0;
@@ -578,7 +578,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::search
      */
-    public function testSearch()
+    public function testSearch(): void
     {
         $query = new LocationQuery();
         $query->offset = 0;
@@ -612,7 +612,7 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::search
      */
-    public function testSearchWithOffsetAndLimit()
+    public function testSearchWithOffsetAndLimit(): void
     {
         $query = new LocationQuery();
         $query->offset = 5;
@@ -643,7 +643,7 @@ final class EzPublishBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::searchCount
      */
-    public function testSearchCount()
+    public function testSearchCount(): void
     {
         $query = new LocationQuery();
         $query->limit = 0;
@@ -673,7 +673,7 @@ final class EzPublishBackendTest extends TestCase
      *
      * @return \eZ\Publish\Core\Repository\Values\Content\Location
      */
-    private function getLocation($id = null, $parentLocationId = null, $contentId = null)
+    private function getLocation($id = null, $parentLocationId = null, $contentId = null): Location
     {
         return new Location(
             [

@@ -23,7 +23,7 @@ final class Modified implements ColumnValueProviderInterface
         $this->dateFormat = $dateFormat;
     }
 
-    public function getValue(ItemInterface $item)
+    public function getValue(ItemInterface $item): ?string
     {
         if (!$item instanceof EzPublishInterface) {
             return null;

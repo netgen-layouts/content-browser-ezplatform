@@ -20,7 +20,7 @@ final class ItemTest extends TestCase
      */
     private $item;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->tag = new Tag(['id' => 42, 'parentTagId' => 24]);
 
@@ -30,7 +30,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::getLocationId
      */
-    public function testGetLocationId()
+    public function testGetLocationId(): void
     {
         $this->assertEquals(42, $this->item->getLocationId());
     }
@@ -39,7 +39,7 @@ final class ItemTest extends TestCase
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::__construct
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::getValue
      */
-    public function testGetValue()
+    public function testGetValue(): void
     {
         $this->assertEquals(42, $this->item->getValue());
     }
@@ -47,7 +47,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::getName
      */
-    public function testGetName()
+    public function testGetName(): void
     {
         $this->assertEquals('Keyword', $this->item->getName());
     }
@@ -55,7 +55,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::getParentId
      */
-    public function testGetParentId()
+    public function testGetParentId(): void
     {
         $this->assertEquals(24, $this->item->getParentId());
     }
@@ -63,7 +63,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::isVisible
      */
-    public function testIsVisible()
+    public function testIsVisible(): void
     {
         $this->assertTrue($this->item->isVisible());
     }
@@ -71,7 +71,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::isSelectable
      */
-    public function testIsSelectable()
+    public function testIsSelectable(): void
     {
         $this->assertTrue($this->item->isSelectable());
     }
@@ -79,7 +79,7 @@ final class ItemTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Item\EzTags\Item::getTag
      */
-    public function testGetTag()
+    public function testGetTag(): void
     {
         $this->assertEquals($this->tag, $this->item->getTag());
     }

@@ -10,12 +10,12 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Priority implements ColumnValueProviderInterface
 {
-    public function getValue(ItemInterface $item)
+    public function getValue(ItemInterface $item): ?string
     {
         if (!$item instanceof EzPublishInterface) {
             return null;
         }
 
-        return $item->getLocation()->priority;
+        return (string) $item->getLocation()->priority;
     }
 }

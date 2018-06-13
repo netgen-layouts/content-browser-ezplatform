@@ -10,6 +10,7 @@ use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Item\EzTags\Item;
 use Netgen\ContentBrowser\Item\EzTags\Location;
+use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
@@ -45,7 +46,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @param array $languages
      */
-    public function setLanguages(array $languages = null)
+    public function setLanguages(array $languages = null): void
     {
         $this->languages = is_array($languages) ? $languages : [];
     }
@@ -55,7 +56,7 @@ class EzTagsBackend implements BackendInterface
         return [$this->loadLocation(0)];
     }
 
-    public function loadLocation($id)
+    public function loadLocation($id): LocationInterface
     {
         if (empty($id)) {
             return $this->buildLocation();
@@ -64,7 +65,7 @@ class EzTagsBackend implements BackendInterface
         return $this->loadItem($id);
     }
 
-    public function loadItem($id)
+    public function loadItem($id): ItemInterface
     {
         try {
             $tag = $this->tagsService->loadTag($id);
@@ -93,7 +94,7 @@ class EzTagsBackend implements BackendInterface
         return $this->buildItems($tags);
     }
 
-    public function getSubLocationsCount(LocationInterface $location)
+    public function getSubLocationsCount(LocationInterface $location): int
     {
         if (!$location instanceof EzTagsInterface) {
             return 0;
@@ -119,7 +120,7 @@ class EzTagsBackend implements BackendInterface
         return $this->buildItems($tags);
     }
 
-    public function getSubItemsCount(LocationInterface $location)
+    public function getSubItemsCount(LocationInterface $location): int
     {
         if (!$location instanceof EzTagsInterface) {
             return 0;
@@ -147,7 +148,7 @@ class EzTagsBackend implements BackendInterface
         return $this->buildItems($tags);
     }
 
-    public function searchCount($searchText)
+    public function searchCount($searchText): int
     {
         if (empty($this->languages)) {
             return 0;
@@ -161,10 +162,8 @@ class EzTagsBackend implements BackendInterface
 
     /**
      * Builds the location.
-     *
-     * @return \Netgen\ContentBrowser\Item\EzTags\Location
      */
-    private function buildLocation()
+    private function buildLocation(): Location
     {
         $tag = $this->getRootTag();
 
@@ -178,12 +177,8 @@ class EzTagsBackend implements BackendInterface
 
     /**
      * Builds the item from provided tag.
-     *
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag $tag
-     *
-     * @return \Netgen\ContentBrowser\Item\EzTags\Item
      */
-    private function buildItem(Tag $tag)
+    private function buildItem(Tag $tag): Item
     {
         $tagName = $this->translationHelper->getTranslatedByMethod(
             $tag,
@@ -200,10 +195,10 @@ class EzTagsBackend implements BackendInterface
      *
      * @return \Netgen\ContentBrowser\Item\EzTags\Item[]
      */
-    private function buildItems(array $tags)
+    private function buildItems(array $tags): array
     {
         return array_map(
-            function (Tag $tag) {
+            function (Tag $tag): Item {
                 return $this->buildItem($tag);
             },
             $tags
@@ -212,10 +207,8 @@ class EzTagsBackend implements BackendInterface
 
     /**
      * Builds the root tag.
-     *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    private function getRootTag()
+    private function getRootTag(): Tag
     {
         return new Tag(
             [

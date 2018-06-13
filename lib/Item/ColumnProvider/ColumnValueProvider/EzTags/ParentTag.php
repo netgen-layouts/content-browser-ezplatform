@@ -28,14 +28,14 @@ final class ParentTag implements ColumnValueProviderInterface
         $this->translationHelper = $translationHelper;
     }
 
-    public function getValue(ItemInterface $item)
+    public function getValue(ItemInterface $item): ?string
     {
         if (!$item instanceof EzTagsInterface) {
             return null;
         }
 
         return $this->tagsService->sudo(
-            function (TagsService $tagsService) use ($item) {
+            function (TagsService $tagsService) use ($item): string {
                 if (empty($item->getTag()->parentTagId)) {
                     return '(No parent)';
                 }

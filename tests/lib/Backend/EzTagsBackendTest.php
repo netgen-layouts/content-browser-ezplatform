@@ -37,7 +37,7 @@ final class EzTagsBackendTest extends TestCase
      */
     private $backend;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->tagsServiceMock = $this->createMock(TagsService::class);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
@@ -58,7 +58,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getRootTag
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::setLanguages
      */
-    public function testGetDefaultSections()
+    public function testGetDefaultSections(): void
     {
         $this->tagsServiceMock
             ->expects($this->never())
@@ -76,7 +76,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadLocation
      */
-    public function testLoadLocation()
+    public function testLoadLocation(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -95,7 +95,7 @@ final class EzTagsBackendTest extends TestCase
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
      * @expectedExceptionMessage Item with ID 1 not found.
      */
-    public function testLoadLocationThrowsNotFoundException()
+    public function testLoadLocationThrowsNotFoundException(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -111,7 +111,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getRootTag
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadLocation
      */
-    public function testLoadRootLocation()
+    public function testLoadRootLocation(): void
     {
         $this->tagsServiceMock
             ->expects($this->never())
@@ -127,7 +127,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::loadItem
      */
-    public function testLoadItem()
+    public function testLoadItem(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -146,7 +146,7 @@ final class EzTagsBackendTest extends TestCase
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
      * @expectedExceptionMessage Item with ID 1 not found.
      */
-    public function testLoadItemThrowsNotFoundException()
+    public function testLoadItemThrowsNotFoundException(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -162,7 +162,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubLocations
      */
-    public function testGetSubLocations()
+    public function testGetSubLocations(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -186,7 +186,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubLocations
      */
-    public function testGetSubLocationsWithInvalidItem()
+    public function testGetSubLocationsWithInvalidItem(): void
     {
         $this->tagsServiceMock
             ->expects($this->never())
@@ -200,7 +200,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubLocationsCount
      */
-    public function testGetSubLocationsCount()
+    public function testGetSubLocationsCount(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -216,7 +216,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubLocationsCount
      */
-    public function testGetSubLocationsCountWithInvalidItem()
+    public function testGetSubLocationsCountWithInvalidItem(): void
     {
         $this->tagsServiceMock
             ->expects($this->never())
@@ -232,7 +232,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItems
      */
-    public function testGetSubItems()
+    public function testGetSubItems(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -259,7 +259,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItems
      */
-    public function testGetSubItemsWithOffsetAndLimit()
+    public function testGetSubItemsWithOffsetAndLimit(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -288,7 +288,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItems
      */
-    public function testGetSubItemsWithInvalidItem()
+    public function testGetSubItemsWithInvalidItem(): void
     {
         $this->tagsServiceMock
             ->expects($this->never())
@@ -302,7 +302,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItemsCount
      */
-    public function testGetSubItemsCount()
+    public function testGetSubItemsCount(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -318,7 +318,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSubItemsCount
      */
-    public function testGetSubItemsCountWithInvalidItem()
+    public function testGetSubItemsCountWithInvalidItem(): void
     {
         $this->tagsServiceMock
             ->expects($this->never())
@@ -334,7 +334,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::search
      */
-    public function testSearch()
+    public function testSearch(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -361,7 +361,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::search
      */
-    public function testSearchWithNoLanguages()
+    public function testSearchWithNoLanguages(): void
     {
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
@@ -382,7 +382,7 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::search
      */
-    public function testSearchWithOffsetAndLimit()
+    public function testSearchWithOffsetAndLimit(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -407,7 +407,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::searchCount
      */
-    public function testSearchCount()
+    public function testSearchCount(): void
     {
         $this->tagsServiceMock
             ->expects($this->once())
@@ -427,7 +427,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::searchCount
      */
-    public function testSearchCountWithNoLanguages()
+    public function testSearchCountWithNoLanguages(): void
     {
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
@@ -451,7 +451,7 @@ final class EzTagsBackendTest extends TestCase
      *
      * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
-    private function getTag($id = null, $parentTagId = null)
+    private function getTag($id = null, $parentTagId = null): Tag
     {
         return new Tag(
             [
