@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\ContentBrowser\Item\EzPublish;
 
 use eZ\Publish\API\Repository\Values\Content\Content;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags;
 
 use eZ\Publish\Core\Helper\TranslationHelper;

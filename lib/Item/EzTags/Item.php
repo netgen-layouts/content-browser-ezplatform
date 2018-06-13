@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\ContentBrowser\Item\EzTags;
 
 use Netgen\ContentBrowser\Item\ItemInterface;

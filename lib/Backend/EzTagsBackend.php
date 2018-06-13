@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Netgen\ContentBrowser\Backend;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
