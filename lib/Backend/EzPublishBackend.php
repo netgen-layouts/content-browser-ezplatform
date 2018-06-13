@@ -172,7 +172,7 @@ class EzPublishBackend implements BackendInterface
                     return 0;
                 }
 
-                return ($sortMap[$item1->getLocationId()] < $sortMap[$item2->getLocationId()]) ? -1 : 1;
+                return $sortMap[$item1->getLocationId()] <=> $sortMap[$item2->getLocationId()];
             }
         );
 
