@@ -396,7 +396,7 @@ class EzPublishBackend implements BackendInterface
             $this->config->getItemType() === 'ezlocation' ?
                 $location->id :
                 $location->contentInfo->id,
-            (string) $name,
+            $name,
             $this->isSelectable($content)
         );
     }

@@ -143,6 +143,12 @@ final class EzPublishBackendTest extends TestCase
             ->will($this->returnValue($this->contentServiceMock));
 
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
+
+        $this->translationHelperMock
+            ->expects($this->any())
+            ->method('getTranslatedContentNameByContentInfo')
+            ->willReturn('Name');
+
         $this->defaultSections = [2, 43, 5];
         $this->languages = ['eng-GB', 'cro-HR'];
 
