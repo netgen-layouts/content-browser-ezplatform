@@ -123,7 +123,7 @@ class EzPublishBackend implements BackendInterface
     /**
      * Sets the current languages.
      *
-     * @param array $languages
+     * @param string[] $languages
      */
     public function setLanguages(array $languages = null): void
     {
@@ -132,8 +132,6 @@ class EzPublishBackend implements BackendInterface
 
     /**
      * Sets the default sections to the backend.
-     *
-     * @param array $defaultSections
      */
     public function setDefaultSections(array $defaultSections = null): void
     {
@@ -142,8 +140,6 @@ class EzPublishBackend implements BackendInterface
 
     /**
      * Sets the list of default content types for the location tree.
-     *
-     * @param array $locationContentTypes
      */
     public function setLocationContentTypes(array $locationContentTypes = null): void
     {
@@ -404,8 +400,6 @@ class EzPublishBackend implements BackendInterface
     /**
      * Builds the items from search result and its hits.
      *
-     * @param \eZ\Publish\API\Repository\Values\Content\Search\SearchResult $searchResult
-     *
      * @return \Netgen\ContentBrowser\Item\EzPublish\Item[]
      */
     private function buildItems(SearchResult $searchResult): array
@@ -439,8 +433,6 @@ class EzPublishBackend implements BackendInterface
 
     /**
      * Returns the sort clause based on provided parent location.
-     *
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $parentLocation
      *
      * @return \eZ\Publish\API\Repository\Values\Content\Query\SortClause[]
      */

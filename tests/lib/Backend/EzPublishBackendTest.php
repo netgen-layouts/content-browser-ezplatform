@@ -673,9 +673,9 @@ final class EzPublishBackendTest extends TestCase
     /**
      * Returns the location object used in tests.
      *
-     * @param int $id
-     * @param int $parentLocationId
-     * @param int $contentId
+     * @param int|string $id
+     * @param int|string $parentLocationId
+     * @param int|string $contentId
      *
      * @return \eZ\Publish\Core\Repository\Values\Content\Location
      */

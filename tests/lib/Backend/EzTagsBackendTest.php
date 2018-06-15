@@ -446,8 +446,8 @@ final class EzTagsBackendTest extends TestCase
     /**
      * Returns the tag object used in tests.
      *
-     * @param int $id
-     * @param int $parentTagId
+     * @param int|string $id
+     * @param int|string $parentTagId
      *
      * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */

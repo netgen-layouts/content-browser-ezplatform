@@ -44,7 +44,7 @@ class EzTagsBackend implements BackendInterface
     /**
      * Sets the current languages.
      *
-     * @param array $languages
+     * @param string[] $languages
      */
     public function setLanguages(array $languages = null): void
     {
