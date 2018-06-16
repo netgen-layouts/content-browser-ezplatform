@@ -10,7 +10,7 @@ parameters:
     netgen_content_browser.default.backend.ezpublish.default_sections: [2, 43, 5]
 
 services:
-    # Alias to eZ Publish search service, allowing for replacement
+    # Alias to eZ Platform search service, allowing for replacement
     # of search service with other implementations system wide
 
     netgen_content_browser.ezpublish.search_service:
