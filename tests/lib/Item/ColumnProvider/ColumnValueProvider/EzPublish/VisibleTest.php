@@ -39,7 +39,7 @@ final class VisibleTest extends TestCase
             'Name'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             'No',
             $this->provider->getValue($item)
         );

@@ -39,7 +39,7 @@ final class LocationIdTest extends TestCase
             'Name'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             '42',
             $this->provider->getValue($item)
         );

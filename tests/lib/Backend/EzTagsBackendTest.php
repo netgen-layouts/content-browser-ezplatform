@@ -69,7 +69,7 @@ final class EzTagsBackendTest extends TestCase
         $this->assertCount(1, $locations);
 
         $this->assertInstanceOf(LocationInterface::class, $locations[0]);
-        $this->assertEquals(0, $locations[0]->getLocationId());
+        $this->assertSame(0, $locations[0]->getLocationId());
     }
 
     /**
@@ -87,7 +87,7 @@ final class EzTagsBackendTest extends TestCase
         $location = $this->backend->loadLocation(1);
 
         $this->assertInstanceOf(LocationInterface::class, $location);
-        $this->assertEquals(1, $location->getLocationId());
+        $this->assertSame(1, $location->getLocationId());
     }
 
     /**
@@ -120,7 +120,7 @@ final class EzTagsBackendTest extends TestCase
         $location = $this->backend->loadLocation(0);
 
         $this->assertInstanceOf(LocationInterface::class, $location);
-        $this->assertEquals(0, $location->getLocationId());
+        $this->assertSame(0, $location->getLocationId());
     }
 
     /**
@@ -138,7 +138,7 @@ final class EzTagsBackendTest extends TestCase
         $item = $this->backend->loadItem(1);
 
         $this->assertInstanceOf(ItemInterface::class, $item);
-        $this->assertEquals(1, $item->getValue());
+        $this->assertSame(1, $item->getValue());
     }
 
     /**
@@ -179,7 +179,7 @@ final class EzTagsBackendTest extends TestCase
         $this->assertCount(2, $locations);
         foreach ($locations as $location) {
             $this->assertInstanceOf(LocationInterface::class, $location);
-            $this->assertEquals(1, $location->getParentId());
+            $this->assertSame(1, $location->getParentId());
         }
     }
 
@@ -194,7 +194,7 @@ final class EzTagsBackendTest extends TestCase
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        $this->assertEquals([], $locations);
+        $this->assertSame([], $locations);
     }
 
     /**
@@ -210,7 +210,7 @@ final class EzTagsBackendTest extends TestCase
 
         $count = $this->backend->getSubLocationsCount(new Item($this->getTag(1), 'tag'));
 
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
     }
 
     /**
@@ -224,7 +224,7 @@ final class EzTagsBackendTest extends TestCase
 
         $count = $this->backend->getSubLocationsCount(new StubLocation(0));
 
-        $this->assertEquals(0, $count);
+        $this->assertSame(0, $count);
     }
 
     /**
@@ -250,7 +250,7 @@ final class EzTagsBackendTest extends TestCase
         foreach ($items as $item) {
             $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
-            $this->assertEquals(1, $item->getParentId());
+            $this->assertSame(1, $item->getParentId());
         }
     }
 
@@ -281,7 +281,7 @@ final class EzTagsBackendTest extends TestCase
         foreach ($items as $item) {
             $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
-            $this->assertEquals(1, $item->getParentId());
+            $this->assertSame(1, $item->getParentId());
         }
     }
 
@@ -296,7 +296,7 @@ final class EzTagsBackendTest extends TestCase
 
         $locations = $this->backend->getSubItems(new StubLocation(0));
 
-        $this->assertEquals([], $locations);
+        $this->assertSame([], $locations);
     }
 
     /**
@@ -312,7 +312,7 @@ final class EzTagsBackendTest extends TestCase
 
         $count = $this->backend->getSubItemsCount(new Item($this->getTag(1), 'tag'));
 
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
     }
 
     /**
@@ -326,7 +326,7 @@ final class EzTagsBackendTest extends TestCase
 
         $count = $this->backend->getSubItemsCount(new StubLocation(0));
 
-        $this->assertEquals(0, $count);
+        $this->assertSame(0, $count);
     }
 
     /**
@@ -421,7 +421,7 @@ final class EzTagsBackendTest extends TestCase
 
         $count = $this->backend->searchCount('test');
 
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
     }
 
     /**
@@ -440,7 +440,7 @@ final class EzTagsBackendTest extends TestCase
 
         $count = $this->backend->searchCount('test');
 
-        $this->assertEquals(0, $count);
+        $this->assertSame(0, $count);
     }
 
     /**

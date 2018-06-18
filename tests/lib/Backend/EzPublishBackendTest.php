@@ -199,9 +199,9 @@ final class EzPublishBackendTest extends TestCase
             $this->assertInstanceOf(LocationInterface::class, $location);
         }
 
-        $this->assertEquals(2, $locations[0]->getLocationId());
-        $this->assertEquals(43, $locations[1]->getLocationId());
-        $this->assertEquals(5, $locations[2]->getLocationId());
+        $this->assertSame(2, $locations[0]->getLocationId());
+        $this->assertSame(43, $locations[1]->getLocationId());
+        $this->assertSame(5, $locations[2]->getLocationId());
     }
 
     /**
@@ -228,7 +228,7 @@ final class EzPublishBackendTest extends TestCase
         $location = $this->backend->loadLocation(2);
 
         $this->assertInstanceOf(LocationInterface::class, $location);
-        $this->assertEquals(2, $location->getLocationId());
+        $this->assertSame(2, $location->getLocationId());
     }
 
     /**
@@ -281,7 +281,7 @@ final class EzPublishBackendTest extends TestCase
         $item = $this->backend->loadItem(2);
 
         $this->assertInstanceOf(ItemInterface::class, $item);
-        $this->assertEquals(2, $item->getValue());
+        $this->assertSame(2, $item->getValue());
     }
 
     /**
@@ -322,7 +322,7 @@ final class EzPublishBackendTest extends TestCase
         $item = $this->backend->loadItem(2);
 
         $this->assertInstanceOf(ItemInterface::class, $item);
-        $this->assertEquals(2, $item->getValue());
+        $this->assertSame(2, $item->getValue());
     }
 
     /**
@@ -394,7 +394,7 @@ final class EzPublishBackendTest extends TestCase
         $this->assertCount(2, $locations);
         foreach ($locations as $location) {
             $this->assertInstanceOf(LocationInterface::class, $location);
-            $this->assertEquals(2, $location->getParentId());
+            $this->assertSame(2, $location->getParentId());
         }
     }
 
@@ -409,7 +409,7 @@ final class EzPublishBackendTest extends TestCase
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        $this->assertEquals([], $locations);
+        $this->assertSame([], $locations);
     }
 
     /**
@@ -442,7 +442,7 @@ final class EzPublishBackendTest extends TestCase
             new Item($this->getLocation(2), new Content(), 2, 'location')
         );
 
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
     }
 
     /**
@@ -485,7 +485,7 @@ final class EzPublishBackendTest extends TestCase
         foreach ($items as $item) {
             $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
-            $this->assertEquals(2, $item->getParentId());
+            $this->assertSame(2, $item->getParentId());
         }
     }
 
@@ -531,7 +531,7 @@ final class EzPublishBackendTest extends TestCase
         foreach ($items as $item) {
             $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
-            $this->assertEquals(2, $item->getParentId());
+            $this->assertSame(2, $item->getParentId());
         }
     }
 
@@ -546,7 +546,7 @@ final class EzPublishBackendTest extends TestCase
 
         $items = $this->backend->getSubItems(new StubLocation(0));
 
-        $this->assertEquals([], $items);
+        $this->assertSame([], $items);
     }
 
     /**
@@ -575,7 +575,7 @@ final class EzPublishBackendTest extends TestCase
             new Item($this->getLocation(2), new Content(), 2, 'location')
         );
 
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
     }
 
     /**
@@ -667,7 +667,7 @@ final class EzPublishBackendTest extends TestCase
 
         $count = $this->backend->searchCount('test');
 
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
     }
 
     /**

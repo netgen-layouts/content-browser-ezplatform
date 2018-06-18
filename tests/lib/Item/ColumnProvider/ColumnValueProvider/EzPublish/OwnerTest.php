@@ -106,7 +106,7 @@ final class OwnerTest extends TestCase
             ->with($this->equalTo($ownerContentInfo))
             ->will($this->returnValue('Owner name'));
 
-        $this->assertEquals(
+        $this->assertSame(
             'Owner name',
             $this->provider->getValue($item)
         );
@@ -148,7 +148,7 @@ final class OwnerTest extends TestCase
             ->expects($this->never())
             ->method('getTranslatedContentNameByContentInfo');
 
-        $this->assertEquals('', $this->provider->getValue($item));
+        $this->assertSame('', $this->provider->getValue($item));
     }
 
     /**

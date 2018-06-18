@@ -33,7 +33,7 @@ final class LocationTest extends TestCase
      */
     public function testGetLocationId(): void
     {
-        $this->assertEquals(42, $this->location->getLocationId());
+        $this->assertSame(42, $this->location->getLocationId());
     }
 
     /**
@@ -41,7 +41,7 @@ final class LocationTest extends TestCase
      */
     public function testGetName(): void
     {
-        $this->assertEquals('Keyword', $this->location->getName());
+        $this->assertSame('Keyword', $this->location->getName());
     }
 
     /**
@@ -49,7 +49,7 @@ final class LocationTest extends TestCase
      */
     public function testGetParentId(): void
     {
-        $this->assertEquals(24, $this->location->getParentId());
+        $this->assertSame(24, $this->location->getParentId());
     }
 
     /**
@@ -57,6 +57,6 @@ final class LocationTest extends TestCase
      */
     public function testGetTag(): void
     {
-        $this->assertEquals($this->tag, $this->location->getTag());
+        $this->assertSame($this->tag, $this->location->getTag());
     }
 }
