@@ -123,9 +123,9 @@ class EzPublishBackend implements BackendInterface
     /**
      * Sets the current languages.
      *
-     * @param string[] $languages
+     * @param string[]|null $languages
      */
-    public function setLanguages(array $languages = null): void
+    public function setLanguages(?array $languages = null): void
     {
         $this->languages = is_array($languages) ? $languages : [];
     }
@@ -133,7 +133,7 @@ class EzPublishBackend implements BackendInterface
     /**
      * Sets the default sections to the backend.
      */
-    public function setDefaultSections(array $defaultSections = null): void
+    public function setDefaultSections(?array $defaultSections = null): void
     {
         $this->defaultSections = is_array($defaultSections) ? $defaultSections : [];
     }
@@ -141,7 +141,7 @@ class EzPublishBackend implements BackendInterface
     /**
      * Sets the list of default content types for the location tree.
      */
-    public function setLocationContentTypes(array $locationContentTypes = null): void
+    public function setLocationContentTypes(?array $locationContentTypes = null): void
     {
         if (is_array($locationContentTypes) && !empty($locationContentTypes)) {
             $this->locationContentTypes = $locationContentTypes;
