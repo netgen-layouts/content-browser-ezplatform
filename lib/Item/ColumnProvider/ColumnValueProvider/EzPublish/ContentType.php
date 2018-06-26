@@ -36,7 +36,7 @@ final class ContentType implements ColumnValueProviderInterface
 
         return $this->repository->sudo(
             function (Repository $repository) use ($item): string {
-                return $this->translationHelper->getTranslatedByMethod(
+                return (string) $this->translationHelper->getTranslatedByMethod(
                     $repository->getContentTypeService()->loadContentType(
                         $item->getContent()->contentInfo->contentTypeId
                     ),
