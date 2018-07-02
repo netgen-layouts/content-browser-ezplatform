@@ -196,6 +196,7 @@ final class EzPublishBackendTest extends TestCase
         $this->assertCount(3, $locations);
 
         foreach ($locations as $location) {
+            $this->assertInstanceOf(Item::class, $location);
             $this->assertInstanceOf(LocationInterface::class, $location);
         }
 
@@ -227,7 +228,7 @@ final class EzPublishBackendTest extends TestCase
 
         $location = $this->backend->loadLocation(2);
 
-        $this->assertInstanceOf(LocationInterface::class, $location);
+        $this->assertInstanceOf(Item::class, $location);
         $this->assertSame(2, $location->getLocationId());
     }
 
@@ -280,7 +281,7 @@ final class EzPublishBackendTest extends TestCase
 
         $item = $this->backend->loadItem(2);
 
-        $this->assertInstanceOf(ItemInterface::class, $item);
+        $this->assertInstanceOf(Item::class, $item);
         $this->assertSame(2, $item->getValue());
     }
 
@@ -321,7 +322,7 @@ final class EzPublishBackendTest extends TestCase
 
         $item = $this->backend->loadItem(2);
 
-        $this->assertInstanceOf(ItemInterface::class, $item);
+        $this->assertInstanceOf(Item::class, $item);
         $this->assertSame(2, $item->getValue());
     }
 
@@ -393,6 +394,7 @@ final class EzPublishBackendTest extends TestCase
 
         $this->assertCount(2, $locations);
         foreach ($locations as $location) {
+            $this->assertInstanceOf(Item::class, $location);
             $this->assertInstanceOf(LocationInterface::class, $location);
             $this->assertSame(2, $location->getParentId());
         }
@@ -608,6 +610,7 @@ final class EzPublishBackendTest extends TestCase
 
         $this->assertCount(2, $items);
         foreach ($items as $item) {
+            $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
         }
     }
@@ -642,6 +645,7 @@ final class EzPublishBackendTest extends TestCase
 
         $this->assertCount(2, $items);
         foreach ($items as $item) {
+            $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
         }
     }

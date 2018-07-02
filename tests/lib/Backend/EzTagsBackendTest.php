@@ -8,6 +8,7 @@ use eZ\Publish\Core\Base\Exceptions\NotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use Netgen\ContentBrowser\Backend\EzTagsBackend;
 use Netgen\ContentBrowser\Item\EzTags\Item;
+use Netgen\ContentBrowser\Item\EzTags\Location;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\ContentBrowser\Tests\Stubs\Location as StubLocation;
@@ -68,6 +69,7 @@ final class EzTagsBackendTest extends TestCase
 
         $this->assertCount(1, $locations);
 
+        $this->assertInstanceOf(Location::class, $locations[0]);
         $this->assertInstanceOf(LocationInterface::class, $locations[0]);
         $this->assertSame(0, $locations[0]->getLocationId());
     }
@@ -86,7 +88,7 @@ final class EzTagsBackendTest extends TestCase
 
         $location = $this->backend->loadLocation(1);
 
-        $this->assertInstanceOf(LocationInterface::class, $location);
+        $this->assertInstanceOf(Item::class, $location);
         $this->assertSame(1, $location->getLocationId());
     }
 
@@ -119,7 +121,7 @@ final class EzTagsBackendTest extends TestCase
 
         $location = $this->backend->loadLocation(0);
 
-        $this->assertInstanceOf(LocationInterface::class, $location);
+        $this->assertInstanceOf(Location::class, $location);
         $this->assertSame(0, $location->getLocationId());
     }
 
@@ -137,7 +139,7 @@ final class EzTagsBackendTest extends TestCase
 
         $item = $this->backend->loadItem(1);
 
-        $this->assertInstanceOf(ItemInterface::class, $item);
+        $this->assertInstanceOf(Item::class, $item);
         $this->assertSame(1, $item->getValue());
     }
 
@@ -178,6 +180,7 @@ final class EzTagsBackendTest extends TestCase
 
         $this->assertCount(2, $locations);
         foreach ($locations as $location) {
+            $this->assertInstanceOf(Item::class, $location);
             $this->assertInstanceOf(LocationInterface::class, $location);
             $this->assertSame(1, $location->getParentId());
         }
@@ -352,6 +355,7 @@ final class EzTagsBackendTest extends TestCase
 
         $this->assertCount(2, $items);
         foreach ($items as $item) {
+            $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
         }
     }
@@ -400,6 +404,7 @@ final class EzTagsBackendTest extends TestCase
 
         $this->assertCount(2, $items);
         foreach ($items as $item) {
+            $this->assertInstanceOf(Item::class, $item);
             $this->assertInstanceOf(ItemInterface::class, $item);
         }
     }
