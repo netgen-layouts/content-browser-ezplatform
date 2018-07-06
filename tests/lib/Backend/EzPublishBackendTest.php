@@ -188,7 +188,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $locations = $this->backend->getDefaultSections();
@@ -223,7 +223,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $location = $this->backend->loadLocation(2);
@@ -248,7 +248,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $this->backend->loadLocation(2);
@@ -276,7 +276,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $item = $this->backend->loadItem(2);
@@ -317,7 +317,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $item = $this->backend->loadItem(2);
@@ -346,7 +346,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $this->backend->loadItem(2);
@@ -385,7 +385,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $locations = $this->backend->getSubLocations(
@@ -437,7 +437,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->getSubLocationsCount(
@@ -476,7 +476,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
@@ -520,7 +520,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
@@ -570,7 +570,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->getSubItemsCount(
@@ -603,7 +603,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->search('test');
@@ -638,7 +638,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $items = $this->backend->search('test', 5, 10);
@@ -666,7 +666,7 @@ final class EzPublishBackendTest extends TestCase
         $this->searchServiceMock
             ->expects($this->once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->equalTo(['languages' => $this->languages]))
+            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
         $count = $this->backend->searchCount('test');

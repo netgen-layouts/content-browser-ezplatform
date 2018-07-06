@@ -83,7 +83,7 @@ final class EzTagsBackendTest extends TestCase
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('loadTag')
-            ->with($this->equalTo(1))
+            ->with($this->identicalTo(1))
             ->will($this->returnValue($this->getTag(1)));
 
         $location = $this->backend->loadLocation(1);
@@ -102,7 +102,7 @@ final class EzTagsBackendTest extends TestCase
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('loadTag')
-            ->with($this->equalTo(1))
+            ->with($this->identicalTo(1))
             ->will($this->throwException(new NotFoundException('tag', 1)));
 
         $this->backend->loadLocation(1);
@@ -134,7 +134,7 @@ final class EzTagsBackendTest extends TestCase
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('loadTag')
-            ->with($this->equalTo(1))
+            ->with($this->identicalTo(1))
             ->will($this->returnValue($this->getTag(1)));
 
         $item = $this->backend->loadItem(1);
@@ -153,7 +153,7 @@ final class EzTagsBackendTest extends TestCase
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('loadTag')
-            ->with($this->equalTo(1))
+            ->with($this->identicalTo(1))
             ->will($this->throwException(new NotFoundException('tag', 1)));
 
         $this->backend->loadItem(1);
@@ -166,17 +166,19 @@ final class EzTagsBackendTest extends TestCase
      */
     public function testGetSubLocations(): void
     {
+        $tag = $this->getTag(1);
+
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('loadTagChildren')
             ->with(
-                $this->equalTo($this->getTag(1)),
-                $this->equalTo(0),
-                $this->equalTo(-1)
+                $this->identicalTo($tag),
+                $this->identicalTo(0),
+                $this->identicalTo(-1)
             )
             ->will($this->returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
-        $locations = $this->backend->getSubLocations(new Item($this->getTag(1), 'tag'));
+        $locations = $this->backend->getSubLocations(new Item($tag, 'tag'));
 
         $this->assertCount(2, $locations);
         foreach ($locations as $location) {
@@ -205,13 +207,15 @@ final class EzTagsBackendTest extends TestCase
      */
     public function testGetSubLocationsCount(): void
     {
+        $tag = $this->getTag(1);
+
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('getTagChildrenCount')
-            ->with($this->equalTo($this->getTag(1)))
+            ->with($this->identicalTo($tag))
             ->will($this->returnValue(2));
 
-        $count = $this->backend->getSubLocationsCount(new Item($this->getTag(1), 'tag'));
+        $count = $this->backend->getSubLocationsCount(new Item($tag, 'tag'));
 
         $this->assertSame(2, $count);
     }
@@ -237,17 +241,19 @@ final class EzTagsBackendTest extends TestCase
      */
     public function testGetSubItems(): void
     {
+        $tag = $this->getTag(1);
+
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('loadTagChildren')
             ->with(
-                $this->equalTo($this->getTag(1)),
-                $this->equalTo(0),
-                $this->equalTo(25)
+                $this->identicalTo($tag),
+                $this->identicalTo(0),
+                $this->identicalTo(25)
             )
             ->will($this->returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
-        $items = $this->backend->getSubItems(new Item($this->getTag(1), 'tag'));
+        $items = $this->backend->getSubItems(new Item($tag, 'tag'));
 
         $this->assertCount(2, $items);
         foreach ($items as $item) {
@@ -264,18 +270,20 @@ final class EzTagsBackendTest extends TestCase
      */
     public function testGetSubItemsWithOffsetAndLimit(): void
     {
+        $tag = $this->getTag(1);
+
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('loadTagChildren')
             ->with(
-                $this->equalTo($this->getTag(1)),
-                $this->equalTo(5),
-                $this->equalTo(10)
+                $this->identicalTo($tag),
+                $this->identicalTo(5),
+                $this->identicalTo(10)
             )
             ->will($this->returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
         $items = $this->backend->getSubItems(
-            new Item($this->getTag(1), 'tag'),
+            new Item($tag, 'tag'),
             5,
             10
         );
@@ -307,13 +315,15 @@ final class EzTagsBackendTest extends TestCase
      */
     public function testGetSubItemsCount(): void
     {
+        $tag = $this->getTag(1);
+
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('getTagChildrenCount')
-            ->with($this->equalTo($this->getTag(1)))
+            ->with($this->identicalTo($tag))
             ->will($this->returnValue(2));
 
-        $count = $this->backend->getSubItemsCount(new Item($this->getTag(1), 'tag'));
+        $count = $this->backend->getSubItemsCount(new Item($tag, 'tag'));
 
         $this->assertSame(2, $count);
     }
@@ -343,11 +353,11 @@ final class EzTagsBackendTest extends TestCase
             ->expects($this->once())
             ->method('loadTagsByKeyword')
             ->with(
-                $this->equalTo('test'),
-                $this->equalTo('eng-GB'),
-                $this->equalTo(true),
-                $this->equalTo(0),
-                $this->equalTo(25)
+                $this->identicalTo('test'),
+                $this->identicalTo('eng-GB'),
+                $this->identicalTo(true),
+                $this->identicalTo(0),
+                $this->identicalTo(25)
             )
             ->will($this->returnValue([$this->getTag(), $this->getTag()]));
 
@@ -392,11 +402,11 @@ final class EzTagsBackendTest extends TestCase
             ->expects($this->once())
             ->method('loadTagsByKeyword')
             ->with(
-                $this->equalTo('test'),
-                $this->equalTo('eng-GB'),
-                $this->equalTo(true),
-                $this->equalTo(5),
-                $this->equalTo(10)
+                $this->identicalTo('test'),
+                $this->identicalTo('eng-GB'),
+                $this->identicalTo(true),
+                $this->identicalTo(5),
+                $this->identicalTo(10)
             )
             ->will($this->returnValue([$this->getTag(), $this->getTag()]));
 
@@ -418,9 +428,9 @@ final class EzTagsBackendTest extends TestCase
             ->expects($this->once())
             ->method('getTagsByKeywordCount')
             ->with(
-                $this->equalTo('test'),
-                $this->equalTo('eng-GB'),
-                $this->equalTo(true)
+                $this->identicalTo('test'),
+                $this->identicalTo('eng-GB'),
+                $this->identicalTo(true)
             )
             ->will($this->returnValue(2));
 

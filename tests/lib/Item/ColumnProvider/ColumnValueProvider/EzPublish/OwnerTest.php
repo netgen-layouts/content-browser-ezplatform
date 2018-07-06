@@ -97,13 +97,13 @@ final class OwnerTest extends TestCase
         $this->contentServiceMock
             ->expects($this->once())
             ->method('loadContentInfo')
-            ->with($this->equalTo(42))
+            ->with($this->identicalTo(42))
             ->will($this->returnValue($ownerContentInfo));
 
         $this->translationHelperMock
             ->expects($this->once())
             ->method('getTranslatedContentNameByContentInfo')
-            ->with($this->equalTo($ownerContentInfo))
+            ->with($this->identicalTo($ownerContentInfo))
             ->will($this->returnValue('Owner name'));
 
         $this->assertSame(
@@ -141,7 +141,7 @@ final class OwnerTest extends TestCase
         $this->contentServiceMock
             ->expects($this->once())
             ->method('loadContentInfo')
-            ->with($this->equalTo(42))
+            ->with($this->identicalTo(42))
             ->will($this->throwException(new NotFoundException('user', 42)));
 
         $this->translationHelperMock

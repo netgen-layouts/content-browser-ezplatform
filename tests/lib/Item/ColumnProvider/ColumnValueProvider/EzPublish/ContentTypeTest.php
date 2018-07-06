@@ -101,13 +101,13 @@ final class ContentTypeTest extends TestCase
         $this->contentTypeServiceMock
             ->expects($this->once())
             ->method('loadContentType')
-            ->with($this->equalTo(42))
+            ->with($this->identicalTo(42))
             ->will($this->returnValue($contentType));
 
         $this->translationHelperMock
             ->expects($this->once())
             ->method('getTranslatedByMethod')
-            ->with($this->equalTo($contentType), $this->equalTo('getName'))
+            ->with($this->identicalTo($contentType), $this->identicalTo('getName'))
             ->will($this->returnValue('Content type'));
 
         $this->assertSame(

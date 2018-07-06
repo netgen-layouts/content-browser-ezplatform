@@ -60,13 +60,13 @@ final class ParentTagTest extends TestCase
         $this->tagsServiceMock
             ->expects($this->once())
             ->method('loadTag')
-            ->with($this->equalTo(42))
+            ->with($this->identicalTo(42))
             ->will($this->returnValue($parentTag));
 
         $this->translationHelperMock
             ->expects($this->once())
             ->method('getTranslatedByMethod')
-            ->with($this->equalTo($parentTag), $this->equalTo('getKeyword'))
+            ->with($this->identicalTo($parentTag), $this->identicalTo('getKeyword'))
             ->will($this->returnValue('Parent tag'));
 
         $this->assertSame(

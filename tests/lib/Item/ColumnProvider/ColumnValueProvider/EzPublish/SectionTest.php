@@ -92,7 +92,7 @@ final class SectionTest extends TestCase
         $this->sectionServiceMock
             ->expects($this->once())
             ->method('loadSection')
-            ->with($this->equalTo(42))
+            ->with($this->identicalTo(42))
             ->will($this->returnValue($section));
 
         $this->assertSame(
