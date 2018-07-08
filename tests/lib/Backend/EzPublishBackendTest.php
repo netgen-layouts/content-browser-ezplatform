@@ -235,7 +235,7 @@ final class EzPublishBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadLocation
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
-     * @expectedExceptionMessage Location with ID 2 not found.
+     * @expectedExceptionMessage Location with ID "2" not found.
      */
     public function testLoadLocationThrowsNotFoundException(): void
     {
@@ -329,7 +329,7 @@ final class EzPublishBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::loadItem
      * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
-     * @expectedExceptionMessage Item with ID 2 not found.
+     * @expectedExceptionMessage Item with value "2" not found.
      */
     public function testLoadItemThrowsNotFoundException(): void
     {

@@ -65,15 +65,15 @@ class EzTagsBackend implements BackendInterface
         return $this->loadItem($id);
     }
 
-    public function loadItem($id): ItemInterface
+    public function loadItem($value): ItemInterface
     {
         try {
-            $tag = $this->tagsService->loadTag($id);
+            $tag = $this->tagsService->loadTag($value);
         } catch (APINotFoundException $e) {
             throw new NotFoundException(
                 sprintf(
-                    'Item with ID %s not found.',
-                    $id
+                    'Item with value "%s" not found.',
+                    $value
                 )
             );
         }

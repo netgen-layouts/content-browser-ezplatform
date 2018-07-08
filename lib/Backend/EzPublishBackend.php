@@ -192,19 +192,19 @@ class EzPublishBackend implements BackendInterface
 
         throw new NotFoundException(
             sprintf(
-                'Location with ID %s not found.',
+                'Location with ID "%s" not found.',
                 $id
             )
         );
     }
 
-    public function loadItem($id): ItemInterface
+    public function loadItem($value): ItemInterface
     {
         $criteria = [];
         if ($this->config->getItemType() === 'ezlocation') {
-            $criteria[] = new Criterion\LocationId($id);
+            $criteria[] = new Criterion\LocationId($value);
         } elseif ($this->config->getItemType() === 'ezcontent') {
-            $criteria[] = new Criterion\ContentId($id);
+            $criteria[] = new Criterion\ContentId($value);
             $criteria[] = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
         }
 
@@ -222,8 +222,8 @@ class EzPublishBackend implements BackendInterface
 
         throw new NotFoundException(
             sprintf(
-                'Item with ID %s not found.',
-                $id
+                'Item with value "%s" not found.',
+                $value
             )
         );
     }
