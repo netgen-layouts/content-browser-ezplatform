@@ -30,11 +30,6 @@ final class OwnerTest extends TestCase
     private $contentServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    private $translationHelperMock;
-
-    /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Owner
      */
     private $provider;
@@ -57,11 +52,9 @@ final class OwnerTest extends TestCase
             ->method('getContentService')
             ->will($this->returnValue($this->contentServiceMock));
 
-        $this->translationHelperMock = $this->createMock(TranslationHelper::class);
-
         $this->provider = new Owner(
             $this->repositoryMock,
-            $this->translationHelperMock
+            $this->createMock(TranslationHelper::class)
         );
     }
 
@@ -92,19 +85,18 @@ final class OwnerTest extends TestCase
             'Name'
         );
 
-        $ownerContentInfo = new ContentInfo();
+        $ownerContentInfo = new VersionInfo(
+            [
+                'prioritizedNameLanguageCode' => 'eng-GB',
+                'names' => ['eng-GB' => 'Owner name'],
+            ]
+        );
 
         $this->contentServiceMock
             ->expects($this->once())
-            ->method('loadContentInfo')
+            ->method('loadVersionInfoById')
             ->with($this->identicalTo(42))
             ->will($this->returnValue($ownerContentInfo));
-
-        $this->translationHelperMock
-            ->expects($this->once())
-            ->method('getTranslatedContentNameByContentInfo')
-            ->with($this->identicalTo($ownerContentInfo))
-            ->will($this->returnValue('Owner name'));
 
         $this->assertSame(
             'Owner name',
@@ -140,13 +132,9 @@ final class OwnerTest extends TestCase
 
         $this->contentServiceMock
             ->expects($this->once())
-            ->method('loadContentInfo')
+            ->method('loadVersionInfoById')
             ->with($this->identicalTo(42))
             ->will($this->throwException(new NotFoundException('user', 42)));
-
-        $this->translationHelperMock
-            ->expects($this->never())
-            ->method('getTranslatedContentNameByContentInfo');
 
         $this->assertSame('', $this->provider->getValue($item));
     }

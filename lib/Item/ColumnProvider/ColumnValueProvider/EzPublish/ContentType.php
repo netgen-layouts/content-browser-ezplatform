@@ -6,6 +6,7 @@ namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublis
 
 use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\Repository\Values\MultiLanguageNameTrait;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
@@ -36,12 +37,18 @@ final class ContentType implements ColumnValueProviderInterface
 
         return $this->repository->sudo(
             function (Repository $repository) use ($item): string {
-                return (string) $this->translationHelper->getTranslatedByMethod(
-                    $repository->getContentTypeService()->loadContentType(
-                        $item->getContent()->contentInfo->contentTypeId
-                    ),
-                    'getName'
+                $contentType = $repository->getContentTypeService()->loadContentType(
+                    $item->getContent()->contentInfo->contentTypeId
                 );
+
+                if (trait_exists(MultiLanguageNameTrait::class)) {
+                    return $contentType->getName() ?? '';
+                }
+
+                // @deprecated BC layer for getting content type name in eZ Publish 5
+                // Remove when support for eZ Publish 5 ends
+
+                return (string) $this->translationHelper->getTranslatedByMethod($contentType, 'getName');
             }
         );
     }

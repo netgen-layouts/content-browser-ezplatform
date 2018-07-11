@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\Repository\Values\MultiLanguageNameTrait;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Config\ConfigurationInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
@@ -374,6 +375,7 @@ class EzPublishBackend implements BackendInterface
         /** @var \eZ\Publish\API\Repository\Values\Content\Location $location */
         $location = $searchHit->valueObject;
 
+        /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
         $content = $this->repository->sudo(
             function (Repository $repository) use ($location): Content {
                 return $repository->getContentService()->loadContentByContentInfo(
@@ -382,18 +384,30 @@ class EzPublishBackend implements BackendInterface
             }
         );
 
-        $name = $this->translationHelper->getTranslatedContentNameByContentInfo(
-            $location->contentInfo
-        );
-
         return new Item(
             $location,
             $content,
             $this->config->getItemType() === 'ezlocation' ?
                 $location->id :
                 $location->contentInfo->id,
-            $name,
+            $this->getContentName($content),
             $this->isSelectable($content)
+        );
+    }
+
+    /**
+     * @deprecated BC layer for getting content name in eZ Publish 5
+     * Remove when support for eZ Publish 5 ends, and load the content name
+     * from the Item entity directly
+     */
+    private function getContentName(Content $content): string
+    {
+        if (trait_exists(MultiLanguageNameTrait::class)) {
+            return $content->getVersionInfo()->getName() ?? '';
+        }
+
+        return $this->translationHelper->getTranslatedContentNameByContentInfo(
+            $content->getVersionInfo()->getContentInfo()
         );
     }
 

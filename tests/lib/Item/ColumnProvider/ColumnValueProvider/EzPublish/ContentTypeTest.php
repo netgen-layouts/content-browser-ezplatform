@@ -30,11 +30,6 @@ final class ContentTypeTest extends TestCase
     private $contentTypeServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    private $translationHelperMock;
-
-    /**
      * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentType
      */
     private $provider;
@@ -57,11 +52,9 @@ final class ContentTypeTest extends TestCase
             ->method('getContentTypeService')
             ->will($this->returnValue($this->contentTypeServiceMock));
 
-        $this->translationHelperMock = $this->createMock(TranslationHelper::class);
-
         $this->provider = new ContentType(
             $this->repositoryMock,
-            $this->translationHelperMock
+            $this->createMock(TranslationHelper::class)
         );
     }
 
@@ -94,6 +87,8 @@ final class ContentTypeTest extends TestCase
 
         $contentType = new EzContentType(
             [
+                'names' => ['eng-GB' => 'Content type'],
+                'mainLanguageCode' => 'eng-GB',
                 'fieldDefinitions' => [],
             ]
         );
@@ -103,12 +98,6 @@ final class ContentTypeTest extends TestCase
             ->method('loadContentType')
             ->with($this->identicalTo(42))
             ->will($this->returnValue($contentType));
-
-        $this->translationHelperMock
-            ->expects($this->once())
-            ->method('getTranslatedByMethod')
-            ->with($this->identicalTo($contentType), $this->identicalTo('getName'))
-            ->will($this->returnValue('Content type'));
 
         $this->assertSame(
             'Content type',
