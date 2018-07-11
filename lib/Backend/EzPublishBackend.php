@@ -117,7 +117,9 @@ class EzPublishBackend implements BackendInterface
 
         if ($this->config->hasParameter('location_content_types')) {
             $locationContentTypes = $this->config->getParameter('location_content_types');
-            $this->locationContentTypes = array_map('trim', explode(',', $locationContentTypes));
+            if (is_array($locationContentTypes) && !empty($locationContentTypes)) {
+                $this->locationContentTypes = array_map('trim', explode(',', $locationContentTypes));
+            }
         }
     }
 
@@ -128,7 +130,7 @@ class EzPublishBackend implements BackendInterface
      */
     public function setLanguages(?array $languages = null): void
     {
-        $this->languages = is_array($languages) ? $languages : [];
+        $this->languages = $languages ?? [];
     }
 
     /**
@@ -136,7 +138,7 @@ class EzPublishBackend implements BackendInterface
      */
     public function setDefaultSections(?array $defaultSections = null): void
     {
-        $this->defaultSections = is_array($defaultSections) ? $defaultSections : [];
+        $this->defaultSections = $defaultSections ?? [];
     }
 
     /**
@@ -144,7 +146,9 @@ class EzPublishBackend implements BackendInterface
      */
     public function setLocationContentTypes(?array $locationContentTypes = null): void
     {
-        if (is_array($locationContentTypes) && !empty($locationContentTypes)) {
+        $locationContentTypes = $locationContentTypes ?? [];
+
+        if (!empty($locationContentTypes)) {
             $this->locationContentTypes = $locationContentTypes;
         }
     }
@@ -475,8 +479,10 @@ class EzPublishBackend implements BackendInterface
 
         if ($this->allowedContentTypeIds === null) {
             $allowedContentTypes = $this->config->getParameter('allowed_content_types');
-            $allowedContentTypes = array_map('trim', explode(',', $allowedContentTypes));
-            $this->allowedContentTypeIds = $this->getContentTypeIds($allowedContentTypes);
+            if (is_array($allowedContentTypes) && !empty($allowedContentTypes)) {
+                $allowedContentTypes = array_map('trim', explode(',', $allowedContentTypes));
+                $this->allowedContentTypeIds = $this->getContentTypeIds($allowedContentTypes);
+            }
         }
 
         return in_array($content->contentInfo->contentTypeId, $this->allowedContentTypeIds, true);

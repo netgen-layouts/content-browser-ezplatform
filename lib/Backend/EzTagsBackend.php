@@ -48,7 +48,7 @@ class EzTagsBackend implements BackendInterface
      */
     public function setLanguages(?array $languages = null): void
     {
-        $this->languages = is_array($languages) ? $languages : [];
+        $this->languages = $languages ?? [];
     }
 
     public function getDefaultSections()
