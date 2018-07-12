@@ -407,7 +407,7 @@ class EzPublishBackend implements BackendInterface
     private function getContentName(Content $content): string
     {
         if (trait_exists(MultiLanguageNameTrait::class)) {
-            return $content->getVersionInfo()->getName() ?? '';
+            return $content->getName() ?? '';
         }
 
         return $this->translationHelper->getTranslatedContentNameByContentInfo(
