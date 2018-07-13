@@ -456,6 +456,13 @@ class EzPublishBackend implements BackendInterface
      */
     private function getSortClause(Location $parentLocation): array
     {
+        if (method_exists($parentLocation, 'getSortClauses')) {
+            return $parentLocation->getSortClauses();
+        }
+
+        // @deprecated BC layer for eZ Publish 5
+        // Remove when support for eZ Publish 5 ends, together with mapping constants
+
         $sortType = $parentLocation->sortField;
         $sortDirection = $this->sortDirections[$parentLocation->sortOrder];
 
