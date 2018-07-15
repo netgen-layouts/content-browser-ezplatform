@@ -117,7 +117,7 @@ class EzPublishBackend implements BackendInterface
 
         if ($this->config->hasParameter('location_content_types')) {
             $locationContentTypes = $this->config->getParameter('location_content_types');
-            if (is_array($locationContentTypes) && !empty($locationContentTypes)) {
+            if (is_string($locationContentTypes) && !empty($locationContentTypes)) {
                 $this->locationContentTypes = array_map('trim', explode(',', $locationContentTypes));
             }
         }
@@ -486,7 +486,7 @@ class EzPublishBackend implements BackendInterface
 
         if ($this->allowedContentTypeIds === null) {
             $allowedContentTypes = $this->config->getParameter('allowed_content_types');
-            if (is_array($allowedContentTypes) && !empty($allowedContentTypes)) {
+            if (is_string($allowedContentTypes) && !empty($allowedContentTypes)) {
                 $allowedContentTypes = array_map('trim', explode(',', $allowedContentTypes));
                 $this->allowedContentTypeIds = $this->getContentTypeIds($allowedContentTypes);
             }
