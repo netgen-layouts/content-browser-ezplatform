@@ -157,7 +157,7 @@ final class EzPublishBackendTest extends TestCase
             $this->searchServiceMock,
             $this->contentTypeHandlerMock,
             $this->translationHelperMock,
-            new Configuration('ezlocation', 'eZ location')
+            new Configuration('ezlocation', 'eZ location', [])
         );
 
         $this->backend->setLanguages($this->languages);
@@ -296,7 +296,7 @@ final class EzPublishBackendTest extends TestCase
             $this->searchServiceMock,
             $this->contentTypeHandlerMock,
             $this->translationHelperMock,
-            new Configuration('ezcontent', 'eZ content')
+            new Configuration('ezcontent', 'eZ content', [])
         );
 
         $this->backend->setLanguages($this->languages);
