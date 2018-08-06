@@ -28,12 +28,11 @@ final class SetLocationContentTypesListener implements EventSubscriberInterface
 
     public function onConfigLoad(ConfigLoadEvent $event): void
     {
-        $config = $event->getConfig();
-
-        if (!in_array($config->getItemType(), ['ezcontent', 'ezlocation'], true)) {
+        if (!in_array($event->getItemType(), ['ezcontent', 'ezlocation'], true)) {
             return;
         }
 
+        $config = $event->getConfig();
         if ($config->hasParameter('location_content_types')) {
             return;
         }
