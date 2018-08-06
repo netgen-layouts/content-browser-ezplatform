@@ -485,11 +485,17 @@ class EzPublishBackend implements BackendInterface
         }
 
         if ($this->allowedContentTypeIds === null) {
+            $this->allowedContentTypeIds = [];
+
             $allowedContentTypes = $this->config->getParameter('allowed_content_types');
             if (is_string($allowedContentTypes) && !empty($allowedContentTypes)) {
                 $allowedContentTypes = array_map('trim', explode(',', $allowedContentTypes));
                 $this->allowedContentTypeIds = $this->getContentTypeIds($allowedContentTypes);
             }
+        }
+
+        if (empty($this->allowedContentTypeIds)) {
+            return true;
         }
 
         return in_array($content->contentInfo->contentTypeId, $this->allowedContentTypeIds, true);
