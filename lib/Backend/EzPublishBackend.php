@@ -55,16 +55,6 @@ class EzPublishBackend implements BackendInterface
     private $config;
 
     /**
-     * @var string[]
-     */
-    private $defaultLocationContentTypes = [];
-
-    /**
-     * @var int[]
-     */
-    private $defaultSections = [];
-
-    /**
      * @var array
      */
     private $languages = [];
@@ -126,25 +116,12 @@ class EzPublishBackend implements BackendInterface
         $this->languages = $languages ?? [];
     }
 
-    /**
-     * Sets the list of default content types for the location tree.
-     */
-    public function setLocationContentTypes(?array $defaultLocationContentTypes = null): void
-    {
-        $this->defaultLocationContentTypes = $defaultLocationContentTypes ?? [];
-    }
-
-    /**
-     * Sets the defaultSections to be used by the backend.
-     */
-    public function setSections(?array $defaultSections = null): void
-    {
-        $this->defaultSections = $defaultSections ?? [];
-    }
-
     public function getSections()
     {
         $sectionIds = $this->getSectionIds();
+        if (empty($sectionIds)) {
+            return [];
+        }
 
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($sectionIds);
@@ -232,14 +209,17 @@ class EzPublishBackend implements BackendInterface
 
         if ($this->locationContentTypeIds === null) {
             $this->locationContentTypeIds = $this->getContentTypeIds(
-                $this->getLocationContentTypesFromConfig()
+                $this->getLocationContentTypes()
             );
         }
 
         $criteria = [
             new Criterion\ParentLocationId($location->getLocationId()),
-            new Criterion\ContentTypeId($this->locationContentTypeIds),
         ];
+
+        if (!empty($this->locationContentTypeIds)) {
+            $criteria[] = new Criterion\ContentTypeId($this->locationContentTypeIds);
+        }
 
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd($criteria);
@@ -258,14 +238,17 @@ class EzPublishBackend implements BackendInterface
     {
         if ($this->locationContentTypeIds === null) {
             $this->locationContentTypeIds = $this->getContentTypeIds(
-                $this->getLocationContentTypesFromConfig()
+                $this->getLocationContentTypes()
             );
         }
 
         $criteria = [
             new Criterion\ParentLocationId($location->getLocationId()),
-            new Criterion\ContentTypeId($this->locationContentTypeIds),
         ];
+
+        if (!empty($this->locationContentTypeIds)) {
+            $criteria[] = new Criterion\ContentTypeId($this->locationContentTypeIds);
+        }
 
         $query = new LocationQuery();
         $query->limit = 0;
@@ -492,16 +475,20 @@ class EzPublishBackend implements BackendInterface
         return in_array($content->contentInfo->contentTypeId, $this->allowedContentTypeIds, true);
     }
 
-    private function getLocationContentTypesFromConfig()
+    private function getLocationContentTypes()
     {
         if ($this->config->hasParameter('location_content_types')) {
             $locationContentTypes = $this->config->getParameter('location_content_types');
             if (is_string($locationContentTypes) && !empty($locationContentTypes)) {
                 return array_map('trim', explode(',', $locationContentTypes));
             }
+
+            if (is_array($locationContentTypes) && !empty($locationContentTypes)) {
+                return $locationContentTypes;
+            }
         }
 
-        return $this->defaultLocationContentTypes;
+        return [];
     }
 
     private function getSectionIds()
@@ -511,8 +498,12 @@ class EzPublishBackend implements BackendInterface
             if (is_string($sections) && !empty($sections)) {
                 return array_map('intval', explode(',', $sections));
             }
+
+            if (is_array($sections) && !empty($sections)) {
+                return $sections;
+            }
         }
 
-        return $this->defaultSections;
+        return [];
     }
 }

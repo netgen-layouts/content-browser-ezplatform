@@ -7,7 +7,7 @@ parameters:
         - user_group
         - folder
 
-    netgen_content_browser.default.backend.ezpublish.sections: [2, 43, 5]
+    netgen_content_browser.default.backend.ezpublish.default_sections: [2, 43, 5]
 
 services:
     # Alias to eZ Platform search service, allowing for replacement
@@ -31,8 +31,6 @@ services:
         lazy: true
         calls:
             - [setLanguages, ["$languages$"]]
-            - [setSections, ["$backend.ezpublish.sections;netgen_content_browser$"]]
-            - [setLocationContentTypes, ["$backend.ezpublish.location_content_types;netgen_content_browser$"]]
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezlocation }
 
@@ -48,10 +46,26 @@ services:
         lazy: true
         calls:
             - [setLanguages, ["$languages$"]]
-            - [setSections, ["$backend.ezpublish.sections;netgen_content_browser$"]]
-            - [setLocationContentTypes, ["$backend.ezpublish.location_content_types;netgen_content_browser$"]]
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezcontent }
+
+    # Config load events
+
+    netgen_content_browser.event_listener.ezpublish.set_sections:
+        class: Netgen\Bundle\ContentBrowserBundle\EventListener\EzPublish\SetSectionsListener
+        # public: false
+        arguments:
+            - "@ezpublish.config.resolver"
+        tags:
+            - { name: kernel.event_subscriber }
+
+    netgen_content_browser.event_listener.ezpublish.set_location_content_types:
+        class: Netgen\Bundle\ContentBrowserBundle\EventListener\EzPublish\SetLocationContentTypesListener
+        # public: false
+        arguments:
+            - "@ezpublish.config.resolver"
+        tags:
+            - { name: kernel.event_subscriber }
 
     # Column value providers
 
