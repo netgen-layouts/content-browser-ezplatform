@@ -76,6 +76,7 @@ final class EzPublishBackendTest extends TestCase
 
     public function setUp(): void
     {
+        $this->defaultSections = [2, 43, 5];
         $this->locationContentTypes = ['frontpage' => 24, 'category' => 42];
 
         $this->contentTypeHandlerMock = $this->createMock(Handler::class);
@@ -149,7 +150,10 @@ final class EzPublishBackendTest extends TestCase
             ->method('getTranslatedContentNameByContentInfo')
             ->willReturn('Name');
 
-        $this->defaultSections = [2, 43, 5];
+        $configuration = new Configuration('ezlocation', 'eZ location', []);
+        $configuration->setParameter('sections', $this->defaultSections);
+        $configuration->setParameter('location_content_types', array_keys($this->locationContentTypes));
+
         $this->languages = ['eng-GB', 'cro-HR'];
 
         $this->backend = new EzPublishBackend(
@@ -157,12 +161,10 @@ final class EzPublishBackendTest extends TestCase
             $this->searchServiceMock,
             $this->contentTypeHandlerMock,
             $this->translationHelperMock,
-            new Configuration('ezlocation', 'eZ location', [])
+            $configuration
         );
 
         $this->backend->setLanguages($this->languages);
-        $this->backend->setSections($this->defaultSections);
-        $this->backend->setLocationContentTypes(array_keys($this->locationContentTypes));
     }
 
     /**
