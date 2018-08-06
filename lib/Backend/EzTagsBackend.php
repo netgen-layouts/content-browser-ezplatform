@@ -51,7 +51,7 @@ class EzTagsBackend implements BackendInterface
         $this->languages = $languages ?? [];
     }
 
-    public function getDefaultSections()
+    public function getSections()
     {
         return [$this->loadLocation(0)];
     }

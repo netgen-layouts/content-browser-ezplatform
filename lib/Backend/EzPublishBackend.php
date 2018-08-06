@@ -142,10 +142,12 @@ class EzPublishBackend implements BackendInterface
         $this->defaultSections = $defaultSections ?? [];
     }
 
-    public function getDefaultSections()
+    public function getSections()
     {
+        $sectionIds = $this->getSectionIds();
+
         $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId($this->getSections());
+        $query->filter = new Criterion\LocationId($sectionIds);
 
         $result = $this->searchService->findLocations(
             $query,
@@ -154,7 +156,7 @@ class EzPublishBackend implements BackendInterface
 
         $items = $this->buildItems($result);
 
-        $sortMap = array_flip($this->getSections());
+        $sortMap = array_flip($sectionIds);
 
         usort(
             $items,
@@ -230,7 +232,7 @@ class EzPublishBackend implements BackendInterface
 
         if ($this->locationContentTypeIds === null) {
             $this->locationContentTypeIds = $this->getContentTypeIds(
-                $this->getLocationContentTypes()
+                $this->getLocationContentTypesFromConfig()
             );
         }
 
@@ -256,7 +258,7 @@ class EzPublishBackend implements BackendInterface
     {
         if ($this->locationContentTypeIds === null) {
             $this->locationContentTypeIds = $this->getContentTypeIds(
-                $this->getLocationContentTypes()
+                $this->getLocationContentTypesFromConfig()
             );
         }
 
@@ -490,7 +492,7 @@ class EzPublishBackend implements BackendInterface
         return in_array($content->contentInfo->contentTypeId, $this->allowedContentTypeIds, true);
     }
 
-    private function getLocationContentTypes()
+    private function getLocationContentTypesFromConfig()
     {
         if ($this->config->hasParameter('location_content_types')) {
             $locationContentTypes = $this->config->getParameter('location_content_types');
@@ -502,7 +504,7 @@ class EzPublishBackend implements BackendInterface
         return $this->defaultLocationContentTypes;
     }
 
-    private function getSections()
+    private function getSectionIds()
     {
         if ($this->config->hasParameter('sections')) {
             $sections = $this->config->getParameter('sections');

@@ -55,17 +55,17 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::__construct
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::buildLocation
-     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getDefaultSections
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getRootTag
+     * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::getSections
      * @covers \Netgen\ContentBrowser\Backend\EzTagsBackend::setLanguages
      */
-    public function testGetDefaultSections(): void
+    public function testGetSections(): void
     {
         $this->tagsServiceMock
             ->expects($this->never())
             ->method('loadTag');
 
-        $locations = $this->backend->getDefaultSections();
+        $locations = $this->backend->getSections();
 
         $this->assertCount(1, $locations);
 

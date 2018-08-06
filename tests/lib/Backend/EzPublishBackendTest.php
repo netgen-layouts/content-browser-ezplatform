@@ -170,10 +170,10 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::buildItems
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getContentTypeIds
-     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getDefaultSections
+     * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::getSections
      * @covers \Netgen\ContentBrowser\Backend\EzPublishBackend::isSelectable
      */
-    public function testGetDefaultSections(): void
+    public function testGetSections(): void
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($this->defaultSections);
@@ -191,7 +191,7 @@ final class EzPublishBackendTest extends TestCase
             ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
             ->will($this->returnValue($searchResult));
 
-        $locations = $this->backend->getDefaultSections();
+        $locations = $this->backend->getSections();
 
         $this->assertCount(3, $locations);
 
