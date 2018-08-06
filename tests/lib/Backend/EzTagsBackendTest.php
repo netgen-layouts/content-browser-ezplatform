@@ -31,7 +31,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @var array
      */
-    private $languages = [];
+    private $languages;
 
     /**
      * @var \Netgen\ContentBrowser\Backend\EzTagsBackend
