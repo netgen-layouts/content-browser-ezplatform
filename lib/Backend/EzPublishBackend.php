@@ -17,7 +17,7 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Values\MultiLanguageNameTrait;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
-use Netgen\ContentBrowser\Config\ConfigurationInterface;
+use Netgen\ContentBrowser\Config\Configuration;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
 use Netgen\ContentBrowser\Item\EzPublish\Item;
@@ -50,7 +50,7 @@ class EzPublishBackend implements BackendInterface
     private $translationHelper;
 
     /**
-     * @var \Netgen\ContentBrowser\Config\ConfigurationInterface
+     * @var \Netgen\ContentBrowser\Config\Configuration
      */
     private $config;
 
@@ -97,7 +97,7 @@ class EzPublishBackend implements BackendInterface
         SearchService $searchService,
         Handler $contentTypeHandler,
         TranslationHelper $translationHelper,
-        ConfigurationInterface $config
+        Configuration $config
     ) {
         $this->repository = $repository;
         $this->searchService = $searchService;
