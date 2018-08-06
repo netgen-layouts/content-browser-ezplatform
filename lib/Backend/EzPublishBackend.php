@@ -57,7 +57,7 @@ class EzPublishBackend implements BackendInterface
     /**
      * @var string[]
      */
-    private $locationContentTypes = [];
+    private $defaultLocationContentTypes = [];
 
     /**
      * @var int[]
@@ -114,13 +114,6 @@ class EzPublishBackend implements BackendInterface
         $this->contentTypeHandler = $contentTypeHandler;
         $this->translationHelper = $translationHelper;
         $this->config = $config;
-
-        if ($this->config->hasParameter('location_content_types')) {
-            $locationContentTypes = $this->config->getParameter('location_content_types');
-            if (is_string($locationContentTypes) && !empty($locationContentTypes)) {
-                $this->locationContentTypes = array_map('trim', explode(',', $locationContentTypes));
-            }
-        }
     }
 
     /**
@@ -134,29 +127,25 @@ class EzPublishBackend implements BackendInterface
     }
 
     /**
-     * Sets the default sections to the backend.
+     * Sets the list of default content types for the location tree.
      */
-    public function setDefaultSections(?array $defaultSections = null): void
+    public function setLocationContentTypes(?array $defaultLocationContentTypes = null): void
     {
-        $this->defaultSections = $defaultSections ?? [];
+        $this->defaultLocationContentTypes = $defaultLocationContentTypes ?? [];
     }
 
     /**
-     * Sets the list of default content types for the location tree.
+     * Sets the defaultSections to be used by the backend.
      */
-    public function setLocationContentTypes(?array $locationContentTypes = null): void
+    public function setSections(?array $defaultSections = null): void
     {
-        $locationContentTypes = $locationContentTypes ?? [];
-
-        if (!empty($locationContentTypes)) {
-            $this->locationContentTypes = $locationContentTypes;
-        }
+        $this->defaultSections = $defaultSections ?? [];
     }
 
     public function getDefaultSections()
     {
         $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId($this->defaultSections);
+        $query->filter = new Criterion\LocationId($this->getSections());
 
         $result = $this->searchService->findLocations(
             $query,
@@ -165,7 +154,7 @@ class EzPublishBackend implements BackendInterface
 
         $items = $this->buildItems($result);
 
-        $sortMap = array_flip($this->defaultSections);
+        $sortMap = array_flip($this->getSections());
 
         usort(
             $items,
@@ -241,7 +230,7 @@ class EzPublishBackend implements BackendInterface
 
         if ($this->locationContentTypeIds === null) {
             $this->locationContentTypeIds = $this->getContentTypeIds(
-                $this->locationContentTypes
+                $this->getLocationContentTypes()
             );
         }
 
@@ -267,7 +256,7 @@ class EzPublishBackend implements BackendInterface
     {
         if ($this->locationContentTypeIds === null) {
             $this->locationContentTypeIds = $this->getContentTypeIds(
-                $this->locationContentTypes
+                $this->getLocationContentTypes()
             );
         }
 
@@ -499,5 +488,29 @@ class EzPublishBackend implements BackendInterface
         }
 
         return in_array($content->contentInfo->contentTypeId, $this->allowedContentTypeIds, true);
+    }
+
+    private function getLocationContentTypes()
+    {
+        if ($this->config->hasParameter('location_content_types')) {
+            $locationContentTypes = $this->config->getParameter('location_content_types');
+            if (is_string($locationContentTypes) && !empty($locationContentTypes)) {
+                return array_map('trim', explode(',', $locationContentTypes));
+            }
+        }
+
+        return $this->defaultLocationContentTypes;
+    }
+
+    private function getSections()
+    {
+        if ($this->config->hasParameter('sections')) {
+            $sections = $this->config->getParameter('sections');
+            if (is_string($sections) && !empty($sections)) {
+                return array_map('intval', explode(',', $sections));
+            }
+        }
+
+        return $this->defaultSections;
     }
 }

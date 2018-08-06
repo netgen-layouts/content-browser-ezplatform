@@ -7,7 +7,7 @@ parameters:
         - user_group
         - folder
 
-    netgen_content_browser.default.backend.ezpublish.default_sections: [2, 43, 5]
+    netgen_content_browser.default.backend.ezpublish.sections: [2, 43, 5]
 
 services:
     # Alias to eZ Platform search service, allowing for replacement
@@ -31,7 +31,7 @@ services:
         lazy: true
         calls:
             - [setLanguages, ["$languages$"]]
-            - [setDefaultSections, ["$backend.ezpublish.default_sections;netgen_content_browser$"]]
+            - [setSections, ["$backend.ezpublish.sections;netgen_content_browser$"]]
             - [setLocationContentTypes, ["$backend.ezpublish.location_content_types;netgen_content_browser$"]]
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezlocation }
@@ -48,7 +48,7 @@ services:
         lazy: true
         calls:
             - [setLanguages, ["$languages$"]]
-            - [setDefaultSections, ["$backend.ezpublish.default_sections;netgen_content_browser$"]]
+            - [setSections, ["$backend.ezpublish.sections;netgen_content_browser$"]]
             - [setLocationContentTypes, ["$backend.ezpublish.location_content_types;netgen_content_browser$"]]
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezcontent }

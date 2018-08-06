@@ -161,7 +161,7 @@ final class EzPublishBackendTest extends TestCase
         );
 
         $this->backend->setLanguages($this->languages);
-        $this->backend->setDefaultSections($this->defaultSections);
+        $this->backend->setSections($this->defaultSections);
         $this->backend->setLocationContentTypes(array_keys($this->locationContentTypes));
     }
 
