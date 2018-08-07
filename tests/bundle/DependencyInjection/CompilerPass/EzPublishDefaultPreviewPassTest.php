@@ -35,8 +35,8 @@ final class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
         $this->compile();
 
         foreach (['default', 'cro', 'admin'] as $scope) {
-            self::assertContainerBuilderHasParameter("ezsettings.{$scope}.content_view");
-            self::assertContainerBuilderHasParameter("ezsettings.{$scope}.location_view");
+            $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.content_view");
+            $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.location_view");
 
             $contentView = $this->container->getParameter("ezsettings.{$scope}.content_view");
             self::assertArrayHasKey('ngcb_preview', $contentView);
