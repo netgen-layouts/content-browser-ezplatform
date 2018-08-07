@@ -475,7 +475,7 @@ class EzPublishBackend implements BackendInterface
         return in_array($content->contentInfo->contentTypeId, $this->allowedContentTypeIds, true);
     }
 
-    private function getLocationContentTypes()
+    private function getLocationContentTypes(): array
     {
         if ($this->config->hasParameter('location_content_types')) {
             $locationContentTypes = $this->config->getParameter('location_content_types');
@@ -491,7 +491,7 @@ class EzPublishBackend implements BackendInterface
         return [];
     }
 
-    private function getSectionIds()
+    private function getSectionIds(): array
     {
         if ($this->config->hasParameter('sections')) {
             $sections = $this->config->getParameter('sections');
