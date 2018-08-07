@@ -39,7 +39,7 @@ final class VisibleTest extends TestCase
             'Name'
         );
 
-        $this->assertSame(
+        self::assertSame(
             'No',
             $this->provider->getValue($item)
         );
@@ -50,6 +50,6 @@ final class VisibleTest extends TestCase
      */
     public function testGetValueWithInvalidItem(): void
     {
-        $this->assertNull($this->provider->getValue(new StubItem()));
+        self::assertNull($this->provider->getValue(new StubItem()));
     }
 }

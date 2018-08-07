@@ -35,26 +35,26 @@ final class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
         $this->compile();
 
         foreach (['default', 'cro', 'admin'] as $scope) {
-            $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.content_view");
-            $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.location_view");
+            self::assertContainerBuilderHasParameter("ezsettings.{$scope}.content_view");
+            self::assertContainerBuilderHasParameter("ezsettings.{$scope}.location_view");
 
             $contentView = $this->container->getParameter("ezsettings.{$scope}.content_view");
-            $this->assertArrayHasKey('ngcb_preview', $contentView);
-            $this->assertArrayHasKey('___ngcb_preview_default___', $contentView['ngcb_preview']);
+            self::assertArrayHasKey('ngcb_preview', $contentView);
+            self::assertArrayHasKey('___ngcb_preview_default___', $contentView['ngcb_preview']);
 
-            $this->assertArrayHasKey('full', $contentView);
-            $this->assertArrayHasKey('full_rule', $contentView['full']);
+            self::assertArrayHasKey('full', $contentView);
+            self::assertArrayHasKey('full_rule', $contentView['full']);
 
             $locationView = $this->container->getParameter("ezsettings.{$scope}.location_view");
-            $this->assertArrayHasKey('ngcb_preview', $locationView);
-            $this->assertArrayHasKey('___ngcb_preview_default___', $locationView['ngcb_preview']);
+            self::assertArrayHasKey('ngcb_preview', $locationView);
+            self::assertArrayHasKey('___ngcb_preview_default___', $locationView['ngcb_preview']);
 
-            $this->assertArrayHasKey('rule1', $locationView['ngcb_preview']);
-            $this->assertArrayHasKey('rule2', $locationView['ngcb_preview']);
+            self::assertArrayHasKey('rule1', $locationView['ngcb_preview']);
+            self::assertArrayHasKey('rule2', $locationView['ngcb_preview']);
         }
 
-        $this->assertFalse($this->container->hasParameter('ezsettings.eng.content_view'));
-        $this->assertFalse($this->container->hasParameter('ezsettings.eng.location_view'));
+        self::assertFalse($this->container->hasParameter('ezsettings.eng.content_view'));
+        self::assertFalse($this->container->hasParameter('ezsettings.eng.location_view'));
     }
 
     /**
@@ -64,7 +64,7 @@ final class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
     {
         $this->compile();
 
-        $this->assertInstanceOf(FrozenParameterBag::class, $this->container->getParameterBag());
+        self::assertInstanceOf(FrozenParameterBag::class, $this->container->getParameterBag());
     }
 
     protected function registerCompilerPass(ContainerBuilder $container): void

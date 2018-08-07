@@ -58,18 +58,18 @@ final class ParentTagTest extends TestCase
         $parentTag = new Tag(['keywords' => ['eng-GB', 'Parent tag']]);
 
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTag')
-            ->with($this->identicalTo(42))
-            ->will($this->returnValue($parentTag));
+            ->with(self::identicalTo(42))
+            ->will(self::returnValue($parentTag));
 
         $this->translationHelperMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getTranslatedByMethod')
-            ->with($this->identicalTo($parentTag), $this->identicalTo('getKeyword'))
-            ->will($this->returnValue('Parent tag'));
+            ->with(self::identicalTo($parentTag), self::identicalTo('getKeyword'))
+            ->will(self::returnValue('Parent tag'));
 
-        $this->assertSame(
+        self::assertSame(
             'Parent tag',
             $this->provider->getValue($item)
         );
@@ -90,14 +90,14 @@ final class ParentTagTest extends TestCase
         );
 
         $this->tagsServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('loadTag');
 
         $this->translationHelperMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('getTranslatedByMethod');
 
-        $this->assertSame(
+        self::assertSame(
             '(No parent)',
             $this->provider->getValue($item)
         );
@@ -108,6 +108,6 @@ final class ParentTagTest extends TestCase
      */
     public function testGetValueWithInvalidItem(): void
     {
-        $this->assertNull($this->provider->getValue(new StubItem()));
+        self::assertNull($this->provider->getValue(new StubItem()));
     }
 }

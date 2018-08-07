@@ -60,7 +60,7 @@ final class ItemTest extends TestCase
      */
     public function testGetLocationId(): void
     {
-        $this->assertSame(22, $this->item->getLocationId());
+        self::assertSame(22, $this->item->getLocationId());
     }
 
     /**
@@ -69,7 +69,7 @@ final class ItemTest extends TestCase
      */
     public function testGetValue(): void
     {
-        $this->assertSame(42, $this->item->getValue());
+        self::assertSame(42, $this->item->getValue());
     }
 
     /**
@@ -77,7 +77,7 @@ final class ItemTest extends TestCase
      */
     public function testGetName(): void
     {
-        $this->assertSame('Some name', $this->item->getName());
+        self::assertSame('Some name', $this->item->getName());
     }
 
     /**
@@ -85,7 +85,7 @@ final class ItemTest extends TestCase
      */
     public function testGetParentId(): void
     {
-        $this->assertSame(24, $this->item->getParentId());
+        self::assertSame(24, $this->item->getParentId());
     }
 
     /**
@@ -101,7 +101,7 @@ final class ItemTest extends TestCase
 
         $this->item = new Item($this->location, $this->content, 42, 'Some name');
 
-        $this->assertNull($this->item->getParentId());
+        self::assertNull($this->item->getParentId());
     }
 
     /**
@@ -109,7 +109,7 @@ final class ItemTest extends TestCase
      */
     public function testIsVisible(): void
     {
-        $this->assertFalse($this->item->isVisible());
+        self::assertFalse($this->item->isVisible());
     }
 
     /**
@@ -117,7 +117,7 @@ final class ItemTest extends TestCase
      */
     public function testIsSelectable(): void
     {
-        $this->assertFalse($this->item->isSelectable());
+        self::assertFalse($this->item->isSelectable());
     }
 
     /**
@@ -125,7 +125,7 @@ final class ItemTest extends TestCase
      */
     public function testGetLocation(): void
     {
-        $this->assertSame($this->location, $this->item->getLocation());
+        self::assertSame($this->location, $this->item->getLocation());
     }
 
     /**
@@ -133,6 +133,6 @@ final class ItemTest extends TestCase
      */
     public function testGetContent(): void
     {
-        $this->assertSame($this->content, $this->item->getContent());
+        self::assertSame($this->content, $this->item->getContent());
     }
 }

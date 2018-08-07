@@ -62,16 +62,16 @@ final class EzTagsBackendTest extends TestCase
     public function testGetSections(): void
     {
         $this->tagsServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('loadTag');
 
         $locations = $this->backend->getSections();
 
-        $this->assertCount(1, $locations);
+        self::assertCount(1, $locations);
 
-        $this->assertInstanceOf(Location::class, $locations[0]);
-        $this->assertInstanceOf(LocationInterface::class, $locations[0]);
-        $this->assertSame(0, $locations[0]->getLocationId());
+        self::assertInstanceOf(Location::class, $locations[0]);
+        self::assertInstanceOf(LocationInterface::class, $locations[0]);
+        self::assertSame(0, $locations[0]->getLocationId());
     }
 
     /**
@@ -81,15 +81,15 @@ final class EzTagsBackendTest extends TestCase
     public function testLoadLocation(): void
     {
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTag')
-            ->with($this->identicalTo(1))
-            ->will($this->returnValue($this->getTag(1)));
+            ->with(self::identicalTo(1))
+            ->will(self::returnValue($this->getTag(1)));
 
         $location = $this->backend->loadLocation(1);
 
-        $this->assertInstanceOf(Item::class, $location);
-        $this->assertSame(1, $location->getLocationId());
+        self::assertInstanceOf(Item::class, $location);
+        self::assertSame(1, $location->getLocationId());
     }
 
     /**
@@ -100,10 +100,10 @@ final class EzTagsBackendTest extends TestCase
     public function testLoadLocationThrowsNotFoundException(): void
     {
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTag')
-            ->with($this->identicalTo(1))
-            ->will($this->throwException(new NotFoundException('tag', 1)));
+            ->with(self::identicalTo(1))
+            ->will(self::throwException(new NotFoundException('tag', 1)));
 
         $this->backend->loadLocation(1);
     }
@@ -116,13 +116,13 @@ final class EzTagsBackendTest extends TestCase
     public function testLoadRootLocation(): void
     {
         $this->tagsServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('loadTag');
 
         $location = $this->backend->loadLocation(0);
 
-        $this->assertInstanceOf(Location::class, $location);
-        $this->assertSame(0, $location->getLocationId());
+        self::assertInstanceOf(Location::class, $location);
+        self::assertSame(0, $location->getLocationId());
     }
 
     /**
@@ -132,15 +132,15 @@ final class EzTagsBackendTest extends TestCase
     public function testLoadItem(): void
     {
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTag')
-            ->with($this->identicalTo(1))
-            ->will($this->returnValue($this->getTag(1)));
+            ->with(self::identicalTo(1))
+            ->will(self::returnValue($this->getTag(1)));
 
         $item = $this->backend->loadItem(1);
 
-        $this->assertInstanceOf(Item::class, $item);
-        $this->assertSame(1, $item->getValue());
+        self::assertInstanceOf(Item::class, $item);
+        self::assertSame(1, $item->getValue());
     }
 
     /**
@@ -151,10 +151,10 @@ final class EzTagsBackendTest extends TestCase
     public function testLoadItemThrowsNotFoundException(): void
     {
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTag')
-            ->with($this->identicalTo(1))
-            ->will($this->throwException(new NotFoundException('tag', 1)));
+            ->with(self::identicalTo(1))
+            ->will(self::throwException(new NotFoundException('tag', 1)));
 
         $this->backend->loadItem(1);
     }
@@ -169,22 +169,22 @@ final class EzTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTagChildren')
             ->with(
-                $this->identicalTo($tag),
-                $this->identicalTo(0),
-                $this->identicalTo(-1)
+                self::identicalTo($tag),
+                self::identicalTo(0),
+                self::identicalTo(-1)
             )
-            ->will($this->returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
+            ->will(self::returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
         $locations = $this->backend->getSubLocations(new Item($tag, 'tag'));
 
-        $this->assertCount(2, $locations);
+        self::assertCount(2, $locations);
         foreach ($locations as $location) {
-            $this->assertInstanceOf(Item::class, $location);
-            $this->assertInstanceOf(LocationInterface::class, $location);
-            $this->assertSame(1, $location->getParentId());
+            self::assertInstanceOf(Item::class, $location);
+            self::assertInstanceOf(LocationInterface::class, $location);
+            self::assertSame(1, $location->getParentId());
         }
     }
 
@@ -194,12 +194,12 @@ final class EzTagsBackendTest extends TestCase
     public function testGetSubLocationsWithInvalidItem(): void
     {
         $this->tagsServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('loadTagChildren');
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        $this->assertSame([], $locations);
+        self::assertSame([], $locations);
     }
 
     /**
@@ -210,14 +210,14 @@ final class EzTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getTagChildrenCount')
-            ->with($this->identicalTo($tag))
-            ->will($this->returnValue(2));
+            ->with(self::identicalTo($tag))
+            ->will(self::returnValue(2));
 
         $count = $this->backend->getSubLocationsCount(new Item($tag, 'tag'));
 
-        $this->assertSame(2, $count);
+        self::assertSame(2, $count);
     }
 
     /**
@@ -226,12 +226,12 @@ final class EzTagsBackendTest extends TestCase
     public function testGetSubLocationsCountWithInvalidItem(): void
     {
         $this->tagsServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('getTagChildrenCount');
 
         $count = $this->backend->getSubLocationsCount(new StubLocation(0));
 
-        $this->assertSame(0, $count);
+        self::assertSame(0, $count);
     }
 
     /**
@@ -244,22 +244,22 @@ final class EzTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTagChildren')
             ->with(
-                $this->identicalTo($tag),
-                $this->identicalTo(0),
-                $this->identicalTo(25)
+                self::identicalTo($tag),
+                self::identicalTo(0),
+                self::identicalTo(25)
             )
-            ->will($this->returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
+            ->will(self::returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
         $items = $this->backend->getSubItems(new Item($tag, 'tag'));
 
-        $this->assertCount(2, $items);
+        self::assertCount(2, $items);
         foreach ($items as $item) {
-            $this->assertInstanceOf(Item::class, $item);
-            $this->assertInstanceOf(ItemInterface::class, $item);
-            $this->assertSame(1, $item->getParentId());
+            self::assertInstanceOf(Item::class, $item);
+            self::assertInstanceOf(ItemInterface::class, $item);
+            self::assertSame(1, $item->getParentId());
         }
     }
 
@@ -273,14 +273,14 @@ final class EzTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTagChildren')
             ->with(
-                $this->identicalTo($tag),
-                $this->identicalTo(5),
-                $this->identicalTo(10)
+                self::identicalTo($tag),
+                self::identicalTo(5),
+                self::identicalTo(10)
             )
-            ->will($this->returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
+            ->will(self::returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
         $items = $this->backend->getSubItems(
             new Item($tag, 'tag'),
@@ -288,11 +288,11 @@ final class EzTagsBackendTest extends TestCase
             10
         );
 
-        $this->assertCount(2, $items);
+        self::assertCount(2, $items);
         foreach ($items as $item) {
-            $this->assertInstanceOf(Item::class, $item);
-            $this->assertInstanceOf(ItemInterface::class, $item);
-            $this->assertSame(1, $item->getParentId());
+            self::assertInstanceOf(Item::class, $item);
+            self::assertInstanceOf(ItemInterface::class, $item);
+            self::assertSame(1, $item->getParentId());
         }
     }
 
@@ -302,12 +302,12 @@ final class EzTagsBackendTest extends TestCase
     public function testGetSubItemsWithInvalidItem(): void
     {
         $this->tagsServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('loadTagChildren');
 
         $locations = $this->backend->getSubItems(new StubLocation(0));
 
-        $this->assertSame([], $locations);
+        self::assertSame([], $locations);
     }
 
     /**
@@ -318,14 +318,14 @@ final class EzTagsBackendTest extends TestCase
         $tag = $this->getTag(1);
 
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getTagChildrenCount')
-            ->with($this->identicalTo($tag))
-            ->will($this->returnValue(2));
+            ->with(self::identicalTo($tag))
+            ->will(self::returnValue(2));
 
         $count = $this->backend->getSubItemsCount(new Item($tag, 'tag'));
 
-        $this->assertSame(2, $count);
+        self::assertSame(2, $count);
     }
 
     /**
@@ -334,12 +334,12 @@ final class EzTagsBackendTest extends TestCase
     public function testGetSubItemsCountWithInvalidItem(): void
     {
         $this->tagsServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('getTagChildrenCount');
 
         $count = $this->backend->getSubItemsCount(new StubLocation(0));
 
-        $this->assertSame(0, $count);
+        self::assertSame(0, $count);
     }
 
     /**
@@ -350,23 +350,23 @@ final class EzTagsBackendTest extends TestCase
     public function testSearch(): void
     {
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTagsByKeyword')
             ->with(
-                $this->identicalTo('test'),
-                $this->identicalTo('eng-GB'),
-                $this->identicalTo(true),
-                $this->identicalTo(0),
-                $this->identicalTo(25)
+                self::identicalTo('test'),
+                self::identicalTo('eng-GB'),
+                self::identicalTo(true),
+                self::identicalTo(0),
+                self::identicalTo(25)
             )
-            ->will($this->returnValue([$this->getTag(), $this->getTag()]));
+            ->will(self::returnValue([$this->getTag(), $this->getTag()]));
 
         $items = $this->backend->search('test');
 
-        $this->assertCount(2, $items);
+        self::assertCount(2, $items);
         foreach ($items as $item) {
-            $this->assertInstanceOf(Item::class, $item);
-            $this->assertInstanceOf(ItemInterface::class, $item);
+            self::assertInstanceOf(Item::class, $item);
+            self::assertInstanceOf(ItemInterface::class, $item);
         }
     }
 
@@ -383,12 +383,12 @@ final class EzTagsBackendTest extends TestCase
         );
 
         $this->tagsServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('loadTagsByKeyword');
 
         $items = $this->backend->search('test');
 
-        $this->assertCount(0, $items);
+        self::assertCount(0, $items);
     }
 
     /**
@@ -399,23 +399,23 @@ final class EzTagsBackendTest extends TestCase
     public function testSearchWithOffsetAndLimit(): void
     {
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadTagsByKeyword')
             ->with(
-                $this->identicalTo('test'),
-                $this->identicalTo('eng-GB'),
-                $this->identicalTo(true),
-                $this->identicalTo(5),
-                $this->identicalTo(10)
+                self::identicalTo('test'),
+                self::identicalTo('eng-GB'),
+                self::identicalTo(true),
+                self::identicalTo(5),
+                self::identicalTo(10)
             )
-            ->will($this->returnValue([$this->getTag(), $this->getTag()]));
+            ->will(self::returnValue([$this->getTag(), $this->getTag()]));
 
         $items = $this->backend->search('test', 5, 10);
 
-        $this->assertCount(2, $items);
+        self::assertCount(2, $items);
         foreach ($items as $item) {
-            $this->assertInstanceOf(Item::class, $item);
-            $this->assertInstanceOf(ItemInterface::class, $item);
+            self::assertInstanceOf(Item::class, $item);
+            self::assertInstanceOf(ItemInterface::class, $item);
         }
     }
 
@@ -425,18 +425,18 @@ final class EzTagsBackendTest extends TestCase
     public function testSearchCount(): void
     {
         $this->tagsServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('getTagsByKeywordCount')
             ->with(
-                $this->identicalTo('test'),
-                $this->identicalTo('eng-GB'),
-                $this->identicalTo(true)
+                self::identicalTo('test'),
+                self::identicalTo('eng-GB'),
+                self::identicalTo(true)
             )
-            ->will($this->returnValue(2));
+            ->will(self::returnValue(2));
 
         $count = $this->backend->searchCount('test');
 
-        $this->assertSame(2, $count);
+        self::assertSame(2, $count);
     }
 
     /**
@@ -450,12 +450,12 @@ final class EzTagsBackendTest extends TestCase
         );
 
         $this->tagsServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('getTagsByKeywordCount');
 
         $count = $this->backend->searchCount('test');
 
-        $this->assertSame(0, $count);
+        self::assertSame(0, $count);
     }
 
     /**

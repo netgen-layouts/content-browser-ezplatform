@@ -40,17 +40,17 @@ final class OwnerTest extends TestCase
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentService']);
 
         $this->repositoryMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('sudo')
-            ->with($this->anything())
-            ->will($this->returnCallback(function (callable $callback) {
+            ->with(self::anything())
+            ->will(self::returnCallback(function (callable $callback) {
                 return $callback($this->repositoryMock);
             }));
 
         $this->repositoryMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getContentService')
-            ->will($this->returnValue($this->contentServiceMock));
+            ->will(self::returnValue($this->contentServiceMock));
 
         $this->provider = new Owner(
             $this->repositoryMock,
@@ -93,12 +93,12 @@ final class OwnerTest extends TestCase
         );
 
         $this->contentServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadVersionInfoById')
-            ->with($this->identicalTo(42))
-            ->will($this->returnValue($ownerContentInfo));
+            ->with(self::identicalTo(42))
+            ->will(self::returnValue($ownerContentInfo));
 
-        $this->assertSame(
+        self::assertSame(
             'Owner name',
             $this->provider->getValue($item)
         );
@@ -131,12 +131,12 @@ final class OwnerTest extends TestCase
         );
 
         $this->contentServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadVersionInfoById')
-            ->with($this->identicalTo(42))
-            ->will($this->throwException(new NotFoundException('user', 42)));
+            ->with(self::identicalTo(42))
+            ->will(self::throwException(new NotFoundException('user', 42)));
 
-        $this->assertSame('', $this->provider->getValue($item));
+        self::assertSame('', $this->provider->getValue($item));
     }
 
     /**
@@ -144,6 +144,6 @@ final class OwnerTest extends TestCase
      */
     public function testGetValueWithInvalidItem(): void
     {
-        $this->assertNull($this->provider->getValue(new StubItem()));
+        self::assertNull($this->provider->getValue(new StubItem()));
     }
 }

@@ -36,7 +36,7 @@ final class ParentTagIdTest extends TestCase
             'Name'
         );
 
-        $this->assertSame(
+        self::assertSame(
             '42',
             $this->provider->getValue($item)
         );
@@ -47,6 +47,6 @@ final class ParentTagIdTest extends TestCase
      */
     public function testGetValueWithInvalidItem(): void
     {
-        $this->assertNull($this->provider->getValue(new StubItem()));
+        self::assertNull($this->provider->getValue(new StubItem()));
     }
 }

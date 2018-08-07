@@ -39,17 +39,17 @@ final class SectionTest extends TestCase
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getSectionService']);
 
         $this->repositoryMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('sudo')
-            ->with($this->anything())
-            ->will($this->returnCallback(function (callable $callback) {
+            ->with(self::anything())
+            ->will(self::returnCallback(function (callable $callback) {
                 return $callback($this->repositoryMock);
             }));
 
         $this->repositoryMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getSectionService')
-            ->will($this->returnValue($this->sectionServiceMock));
+            ->will(self::returnValue($this->sectionServiceMock));
 
         $this->provider = new Section(
             $this->repositoryMock
@@ -90,12 +90,12 @@ final class SectionTest extends TestCase
         );
 
         $this->sectionServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadSection')
-            ->with($this->identicalTo(42))
-            ->will($this->returnValue($section));
+            ->with(self::identicalTo(42))
+            ->will(self::returnValue($section));
 
-        $this->assertSame(
+        self::assertSame(
             'Section name',
             $this->provider->getValue($item)
         );
@@ -106,6 +106,6 @@ final class SectionTest extends TestCase
      */
     public function testGetValueWithInvalidItem(): void
     {
-        $this->assertNull($this->provider->getValue(new StubItem()));
+        self::assertNull($this->provider->getValue(new StubItem()));
     }
 }

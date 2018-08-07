@@ -81,10 +81,10 @@ final class EzPublishBackendTest extends TestCase
 
         $this->contentTypeHandlerMock = $this->createMock(Handler::class);
         $this->contentTypeHandlerMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('loadByIdentifier')
             ->will(
-                $this->returnCallback(function (string $identifier): Type {
+                self::returnCallback(function (string $identifier): Type {
                     return new Type(
                         [
                             'id' => $this->locationContentTypes[$identifier],
@@ -103,10 +103,10 @@ final class EzPublishBackendTest extends TestCase
         );
 
         $this->repositoryMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('sudo')
-            ->with($this->anything())
-            ->will($this->returnCallback(
+            ->with(self::anything())
+            ->will(self::returnCallback(
                 function (callable $callback) {
                     return $callback($this->repositoryMock);
                 }
@@ -116,10 +116,10 @@ final class EzPublishBackendTest extends TestCase
         $this->contentServiceMock = $this->createMock(ContentService::class);
 
         $this->contentServiceMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('loadContentByContentInfo')
-            ->with($this->isInstanceOf(ContentInfo::class))
-            ->will($this->returnCallback(
+            ->with(self::isInstanceOf(ContentInfo::class))
+            ->will(self::returnCallback(
                 function (ContentInfo $contentInfo): Content {
                     return new Content(
                         [
@@ -134,19 +134,19 @@ final class EzPublishBackendTest extends TestCase
             ));
 
         $this->repositoryMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getSearchService')
-            ->will($this->returnValue($this->searchServiceMock));
+            ->will(self::returnValue($this->searchServiceMock));
 
         $this->repositoryMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getContentService')
-            ->will($this->returnValue($this->contentServiceMock));
+            ->will(self::returnValue($this->contentServiceMock));
 
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
 
         $this->translationHelperMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getTranslatedContentNameByContentInfo')
             ->willReturn('Name');
 
@@ -188,23 +188,23 @@ final class EzPublishBackendTest extends TestCase
         ];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $locations = $this->backend->getSections();
 
-        $this->assertCount(3, $locations);
+        self::assertCount(3, $locations);
 
         foreach ($locations as $location) {
-            $this->assertInstanceOf(Item::class, $location);
-            $this->assertInstanceOf(LocationInterface::class, $location);
+            self::assertInstanceOf(Item::class, $location);
+            self::assertInstanceOf(LocationInterface::class, $location);
         }
 
-        $this->assertSame(2, $locations[0]->getLocationId());
-        $this->assertSame(43, $locations[1]->getLocationId());
-        $this->assertSame(5, $locations[2]->getLocationId());
+        self::assertSame(2, $locations[0]->getLocationId());
+        self::assertSame(43, $locations[1]->getLocationId());
+        self::assertSame(5, $locations[2]->getLocationId());
     }
 
     /**
@@ -223,15 +223,15 @@ final class EzPublishBackendTest extends TestCase
         ];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $location = $this->backend->loadLocation(2);
 
-        $this->assertInstanceOf(Item::class, $location);
-        $this->assertSame(2, $location->getLocationId());
+        self::assertInstanceOf(Item::class, $location);
+        self::assertSame(2, $location->getLocationId());
     }
 
     /**
@@ -248,10 +248,10 @@ final class EzPublishBackendTest extends TestCase
         $searchResult->searchHits = [];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $this->backend->loadLocation(2);
     }
@@ -276,15 +276,15 @@ final class EzPublishBackendTest extends TestCase
         ];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $item = $this->backend->loadItem(2);
 
-        $this->assertInstanceOf(Item::class, $item);
-        $this->assertSame(2, $item->getValue());
+        self::assertInstanceOf(Item::class, $item);
+        self::assertSame(2, $item->getValue());
     }
 
     /**
@@ -317,15 +317,15 @@ final class EzPublishBackendTest extends TestCase
         ];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $item = $this->backend->loadItem(2);
 
-        $this->assertInstanceOf(Item::class, $item);
-        $this->assertSame(2, $item->getValue());
+        self::assertInstanceOf(Item::class, $item);
+        self::assertSame(2, $item->getValue());
     }
 
     /**
@@ -346,10 +346,10 @@ final class EzPublishBackendTest extends TestCase
         $searchResult->searchHits = [];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $this->backend->loadItem(2);
     }
@@ -385,20 +385,20 @@ final class EzPublishBackendTest extends TestCase
         ];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $locations = $this->backend->getSubLocations(
             new Item($this->getLocation(2), new Content(), 2, 'location')
         );
 
-        $this->assertCount(2, $locations);
+        self::assertCount(2, $locations);
         foreach ($locations as $location) {
-            $this->assertInstanceOf(Item::class, $location);
-            $this->assertInstanceOf(LocationInterface::class, $location);
-            $this->assertSame(2, $location->getParentId());
+            self::assertInstanceOf(Item::class, $location);
+            self::assertInstanceOf(LocationInterface::class, $location);
+            self::assertSame(2, $location->getParentId());
         }
     }
 
@@ -408,12 +408,12 @@ final class EzPublishBackendTest extends TestCase
     public function testGetSubLocationsWithInvalidItem(): void
     {
         $this->searchServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('findLocations');
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        $this->assertSame([], $locations);
+        self::assertSame([], $locations);
     }
 
     /**
@@ -437,16 +437,16 @@ final class EzPublishBackendTest extends TestCase
         $searchResult->totalCount = 2;
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $count = $this->backend->getSubLocationsCount(
             new Item($this->getLocation(2), new Content(), 2, 'location')
         );
 
-        $this->assertSame(2, $count);
+        self::assertSame(2, $count);
     }
 
     /**
@@ -476,20 +476,20 @@ final class EzPublishBackendTest extends TestCase
         ];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
             new Item($this->getLocation(2), new Content(), 2, 'location')
         );
 
-        $this->assertCount(2, $items);
+        self::assertCount(2, $items);
         foreach ($items as $item) {
-            $this->assertInstanceOf(Item::class, $item);
-            $this->assertInstanceOf(ItemInterface::class, $item);
-            $this->assertSame(2, $item->getParentId());
+            self::assertInstanceOf(Item::class, $item);
+            self::assertInstanceOf(ItemInterface::class, $item);
+            self::assertSame(2, $item->getParentId());
         }
     }
 
@@ -520,10 +520,10 @@ final class EzPublishBackendTest extends TestCase
         ];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
             new Item($this->getLocation(2), new Content(), 2, 'location'),
@@ -531,11 +531,11 @@ final class EzPublishBackendTest extends TestCase
             10
         );
 
-        $this->assertCount(2, $items);
+        self::assertCount(2, $items);
         foreach ($items as $item) {
-            $this->assertInstanceOf(Item::class, $item);
-            $this->assertInstanceOf(ItemInterface::class, $item);
-            $this->assertSame(2, $item->getParentId());
+            self::assertInstanceOf(Item::class, $item);
+            self::assertInstanceOf(ItemInterface::class, $item);
+            self::assertSame(2, $item->getParentId());
         }
     }
 
@@ -545,12 +545,12 @@ final class EzPublishBackendTest extends TestCase
     public function testGetSubItemsWithInvalidItem(): void
     {
         $this->searchServiceMock
-            ->expects($this->never())
+            ->expects(self::never())
             ->method('findLocations');
 
         $items = $this->backend->getSubItems(new StubLocation(0));
 
-        $this->assertSame([], $items);
+        self::assertSame([], $items);
     }
 
     /**
@@ -570,16 +570,16 @@ final class EzPublishBackendTest extends TestCase
         $searchResult->totalCount = 2;
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $count = $this->backend->getSubItemsCount(
             new Item($this->getLocation(2), new Content(), 2, 'location')
         );
 
-        $this->assertSame(2, $count);
+        self::assertSame(2, $count);
     }
 
     /**
@@ -603,17 +603,17 @@ final class EzPublishBackendTest extends TestCase
         ];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $items = $this->backend->search('test');
 
-        $this->assertCount(2, $items);
+        self::assertCount(2, $items);
         foreach ($items as $item) {
-            $this->assertInstanceOf(Item::class, $item);
-            $this->assertInstanceOf(ItemInterface::class, $item);
+            self::assertInstanceOf(Item::class, $item);
+            self::assertInstanceOf(ItemInterface::class, $item);
         }
     }
 
@@ -638,17 +638,17 @@ final class EzPublishBackendTest extends TestCase
         ];
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $items = $this->backend->search('test', 5, 10);
 
-        $this->assertCount(2, $items);
+        self::assertCount(2, $items);
         foreach ($items as $item) {
-            $this->assertInstanceOf(Item::class, $item);
-            $this->assertInstanceOf(ItemInterface::class, $item);
+            self::assertInstanceOf(Item::class, $item);
+            self::assertInstanceOf(ItemInterface::class, $item);
         }
     }
 
@@ -666,14 +666,14 @@ final class EzPublishBackendTest extends TestCase
         $searchResult->totalCount = 2;
 
         $this->searchServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('findLocations')
-            ->with($this->equalTo($query), $this->identicalTo(['languages' => $this->languages]))
-            ->will($this->returnValue($searchResult));
+            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->will(self::returnValue($searchResult));
 
         $count = $this->backend->searchCount('test');
 
-        $this->assertSame(2, $count);
+        self::assertSame(2, $count);
     }
 
     /**

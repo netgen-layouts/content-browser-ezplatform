@@ -42,7 +42,7 @@ final class ModifiedTest extends TestCase
             'Name'
         );
 
-        $this->assertSame(
+        self::assertSame(
             '17.07.2016 18:15:42',
             $this->provider->getValue($item)
         );
@@ -53,6 +53,6 @@ final class ModifiedTest extends TestCase
      */
     public function testGetValueWithInvalidItem(): void
     {
-        $this->assertNull($this->provider->getValue(new StubItem()));
+        self::assertNull($this->provider->getValue(new StubItem()));
     }
 }

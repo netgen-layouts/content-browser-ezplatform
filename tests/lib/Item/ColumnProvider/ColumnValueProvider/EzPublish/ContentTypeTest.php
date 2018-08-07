@@ -40,17 +40,17 @@ final class ContentTypeTest extends TestCase
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentTypeService']);
 
         $this->repositoryMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('sudo')
-            ->with($this->anything())
-            ->will($this->returnCallback(function (callable $callback) {
+            ->with(self::anything())
+            ->will(self::returnCallback(function (callable $callback) {
                 return $callback($this->repositoryMock);
             }));
 
         $this->repositoryMock
-            ->expects($this->any())
+            ->expects(self::any())
             ->method('getContentTypeService')
-            ->will($this->returnValue($this->contentTypeServiceMock));
+            ->will(self::returnValue($this->contentTypeServiceMock));
 
         $this->provider = new ContentType(
             $this->repositoryMock,
@@ -94,12 +94,12 @@ final class ContentTypeTest extends TestCase
         );
 
         $this->contentTypeServiceMock
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('loadContentType')
-            ->with($this->identicalTo(42))
-            ->will($this->returnValue($contentType));
+            ->with(self::identicalTo(42))
+            ->will(self::returnValue($contentType));
 
-        $this->assertSame(
+        self::assertSame(
             'Content type',
             $this->provider->getValue($item)
         );
@@ -110,6 +110,6 @@ final class ContentTypeTest extends TestCase
      */
     public function testGetValueWithInvalidItem(): void
     {
-        $this->assertNull($this->provider->getValue(new StubItem()));
+        self::assertNull($this->provider->getValue(new StubItem()));
     }
 }
