@@ -22,8 +22,6 @@ use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Backend\EzPublishBackend;
 use Netgen\ContentBrowser\Config\Configuration;
 use Netgen\ContentBrowser\Item\EzPublish\Item;
-use Netgen\ContentBrowser\Item\ItemInterface;
-use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\ContentBrowser\Tests\Stubs\Location as StubLocation;
 use PHPUnit\Framework\TestCase;
 
@@ -196,11 +194,7 @@ final class EzPublishBackendTest extends TestCase
         $locations = $this->backend->getSections();
 
         self::assertCount(3, $locations);
-
-        foreach ($locations as $location) {
-            self::assertInstanceOf(Item::class, $location);
-            self::assertInstanceOf(LocationInterface::class, $location);
-        }
+        self::assertContainsOnlyInstancesOf(Item::class, $locations);
 
         self::assertSame(2, $locations[0]->getLocationId());
         self::assertSame(43, $locations[1]->getLocationId());
@@ -395,9 +389,9 @@ final class EzPublishBackendTest extends TestCase
         );
 
         self::assertCount(2, $locations);
+        self::assertContainsOnlyInstancesOf(Item::class, $locations);
+
         foreach ($locations as $location) {
-            self::assertInstanceOf(Item::class, $location);
-            self::assertInstanceOf(LocationInterface::class, $location);
             self::assertSame(2, $location->getParentId());
         }
     }
@@ -486,9 +480,9 @@ final class EzPublishBackendTest extends TestCase
         );
 
         self::assertCount(2, $items);
+        self::assertContainsOnlyInstancesOf(Item::class, $items);
+
         foreach ($items as $item) {
-            self::assertInstanceOf(Item::class, $item);
-            self::assertInstanceOf(ItemInterface::class, $item);
             self::assertSame(2, $item->getParentId());
         }
     }
@@ -532,9 +526,9 @@ final class EzPublishBackendTest extends TestCase
         );
 
         self::assertCount(2, $items);
+        self::assertContainsOnlyInstancesOf(Item::class, $items);
+
         foreach ($items as $item) {
-            self::assertInstanceOf(Item::class, $item);
-            self::assertInstanceOf(ItemInterface::class, $item);
             self::assertSame(2, $item->getParentId());
         }
     }
@@ -611,10 +605,7 @@ final class EzPublishBackendTest extends TestCase
         $items = $this->backend->search('test');
 
         self::assertCount(2, $items);
-        foreach ($items as $item) {
-            self::assertInstanceOf(Item::class, $item);
-            self::assertInstanceOf(ItemInterface::class, $item);
-        }
+        self::assertContainsOnlyInstancesOf(Item::class, $items);
     }
 
     /**
@@ -646,10 +637,7 @@ final class EzPublishBackendTest extends TestCase
         $items = $this->backend->search('test', 5, 10);
 
         self::assertCount(2, $items);
-        foreach ($items as $item) {
-            self::assertInstanceOf(Item::class, $item);
-            self::assertInstanceOf(ItemInterface::class, $item);
-        }
+        self::assertContainsOnlyInstancesOf(Item::class, $items);
     }
 
     /**
