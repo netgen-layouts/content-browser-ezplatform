@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Tests\Item\EzPublish;
+namespace Netgen\ContentBrowser\Ez\Tests\Item\EzPublish;
 
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
-use Netgen\ContentBrowser\Item\EzPublish\Item;
+use Netgen\ContentBrowser\Ez\Item\EzPublish\Item;
 use PHPUnit\Framework\TestCase;
 
 final class ItemTest extends TestCase
@@ -24,7 +24,7 @@ final class ItemTest extends TestCase
     private $content;
 
     /**
-     * @var \Netgen\ContentBrowser\Item\EzPublish\Item
+     * @var \Netgen\ContentBrowser\Ez\Item\EzPublish\Item
      */
     private $item;
 
@@ -56,7 +56,7 @@ final class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getLocationId
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::getLocationId
      */
     public function testGetLocationId(): void
     {
@@ -64,8 +64,8 @@ final class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::__construct
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::__construct
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::getValue
      */
     public function testGetValue(): void
     {
@@ -73,7 +73,7 @@ final class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getName
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::getName
      */
     public function testGetName(): void
     {
@@ -81,7 +81,7 @@ final class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getParentId
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::getParentId
      */
     public function testGetParentId(): void
     {
@@ -89,7 +89,7 @@ final class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getParentId
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::getParentId
      */
     public function testGetParentIdWithRootLocation(): void
     {
@@ -105,7 +105,7 @@ final class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::isVisible
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::isVisible
      */
     public function testIsVisible(): void
     {
@@ -113,7 +113,7 @@ final class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::isSelectable
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::isSelectable
      */
     public function testIsSelectable(): void
     {
@@ -121,7 +121,7 @@ final class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getLocation
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::getLocation
      */
     public function testGetLocation(): void
     {
@@ -129,7 +129,7 @@ final class ItemTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzPublish\Item::getContent
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzPublish\Item::getContent
      */
     public function testGetContent(): void
     {

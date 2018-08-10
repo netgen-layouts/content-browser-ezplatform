@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Backend;
+namespace Netgen\ContentBrowser\Ez\Backend;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use Netgen\ContentBrowser\Backend\BackendInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
-use Netgen\ContentBrowser\Item\EzTags\EzTagsInterface;
-use Netgen\ContentBrowser\Item\EzTags\Item;
-use Netgen\ContentBrowser\Item\EzTags\Location;
+use Netgen\ContentBrowser\Ez\Item\EzTags\EzTagsInterface;
+use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
+use Netgen\ContentBrowser\Ez\Item\EzTags\Location;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
@@ -193,7 +194,7 @@ class EzTagsBackend implements BackendInterface
      *
      * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
      *
-     * @return \Netgen\ContentBrowser\Item\EzTags\Item[]
+     * @return \Netgen\ContentBrowser\Ez\Item\EzTags\Item[]
      */
     private function buildItems(array $tags): array
     {

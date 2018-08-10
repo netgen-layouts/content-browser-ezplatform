@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzTags;
+namespace Netgen\ContentBrowser\Ez\Tests\Item\ColumnProvider\ColumnValueProvider\EzTags;
 
 use eZ\Publish\Core\Helper\TranslationHelper;
-use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag;
-use Netgen\ContentBrowser\Item\EzTags\Item;
-use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
+use Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag;
+use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
+use Netgen\ContentBrowser\Ez\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\Core\Repository\TagsService;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +25,7 @@ final class ParentTagTest extends TestCase
     private $translationHelperMock;
 
     /**
-     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
+     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
      */
     private $provider;
 
@@ -41,8 +41,8 @@ final class ParentTagTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::__construct
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::__construct
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::getValue
      */
     public function testGetValue(): void
     {
@@ -76,7 +76,7 @@ final class ParentTagTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::getValue
      */
     public function testGetValueWithNoParentTag(): void
     {
@@ -104,7 +104,7 @@ final class ParentTagTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag::getValue
      */
     public function testGetValueWithInvalidItem(): void
     {

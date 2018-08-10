@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Backend;
+namespace Netgen\ContentBrowser\Ez\Backend;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\API\Repository\Repository;
@@ -17,10 +17,11 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Values\MultiLanguageNameTrait;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
+use Netgen\ContentBrowser\Backend\BackendInterface;
 use Netgen\ContentBrowser\Config\Configuration;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
-use Netgen\ContentBrowser\Item\EzPublish\EzPublishInterface;
-use Netgen\ContentBrowser\Item\EzPublish\Item;
+use Netgen\ContentBrowser\Ez\Item\EzPublish\EzPublishInterface;
+use Netgen\ContentBrowser\Ez\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 
@@ -392,7 +393,7 @@ class EzPublishBackend implements BackendInterface
     /**
      * Builds the items from search result and its hits.
      *
-     * @return \Netgen\ContentBrowser\Item\EzPublish\Item[]
+     * @return \Netgen\ContentBrowser\Ez\Item\EzPublish\Item[]
      */
     private function buildItems(SearchResult $searchResult): array
     {

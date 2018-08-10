@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags;
+namespace Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags;
 
+use Netgen\ContentBrowser\Ez\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
-use Netgen\ContentBrowser\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Modified implements ColumnValueProviderInterface

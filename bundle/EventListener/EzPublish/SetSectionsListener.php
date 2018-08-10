@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\ContentBrowserBundle\EventListener\EzPublish;
+namespace Netgen\Bundle\ContentBrowserEzPlatformBundle\EventListener\EzPublish;
 
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\ContentBrowser\Event\ConfigLoadEvent;

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzTags;
+namespace Netgen\ContentBrowser\Ez\Tests\Item\ColumnProvider\ColumnValueProvider\EzTags;
 
 use DateTimeImmutable;
-use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified;
-use Netgen\ContentBrowser\Item\EzTags\Item;
-use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
+use Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified;
+use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
+use Netgen\ContentBrowser\Ez\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
 final class ModifiedTest extends TestCase
 {
     /**
-     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
+     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
      */
     private $provider;
 
@@ -24,8 +24,8 @@ final class ModifiedTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::__construct
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::__construct
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::getValue
      */
     public function testGetValue(): void
     {
@@ -49,7 +49,7 @@ final class ModifiedTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified::getValue
      */
     public function testGetValueWithInvalidItem(): void
     {

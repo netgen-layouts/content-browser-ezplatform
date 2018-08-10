@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
+namespace Netgen\ContentBrowser\Ez\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
 use eZ\Publish\API\Repository\SectionService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
@@ -11,9 +11,9 @@ use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
-use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section;
-use Netgen\ContentBrowser\Item\EzPublish\Item;
-use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
+use Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section;
+use Netgen\ContentBrowser\Ez\Item\EzPublish\Item;
+use Netgen\ContentBrowser\Ez\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
 final class SectionTest extends TestCase
@@ -29,7 +29,7 @@ final class SectionTest extends TestCase
     private $sectionServiceMock;
 
     /**
-     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section
+     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section
      */
     private $provider;
 
@@ -57,8 +57,8 @@ final class SectionTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::__construct
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::__construct
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::getValue
      */
     public function testGetValue(): void
     {
@@ -102,7 +102,7 @@ final class SectionTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\Section::getValue
      */
     public function testGetValueWithInvalidItem(): void
     {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Tests\Item\EzTags;
+namespace Netgen\ContentBrowser\Ez\Tests\Item\EzTags;
 
-use Netgen\ContentBrowser\Item\EzTags\Location;
+use Netgen\ContentBrowser\Ez\Item\EzTags\Location;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +16,7 @@ final class LocationTest extends TestCase
     private $tag;
 
     /**
-     * @var \Netgen\ContentBrowser\Item\EzTags\Location
+     * @var \Netgen\ContentBrowser\Ez\Item\EzTags\Location
      */
     private $location;
 
@@ -28,8 +28,8 @@ final class LocationTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzTags\Location::__construct
-     * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getLocationId
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzTags\Location::__construct
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzTags\Location::getLocationId
      */
     public function testGetLocationId(): void
     {
@@ -37,7 +37,7 @@ final class LocationTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getName
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzTags\Location::getName
      */
     public function testGetName(): void
     {
@@ -45,7 +45,7 @@ final class LocationTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getParentId
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzTags\Location::getParentId
      */
     public function testGetParentId(): void
     {
@@ -53,7 +53,7 @@ final class LocationTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\EzTags\Location::getTag
+     * @covers \Netgen\ContentBrowser\Ez\Item\EzTags\Location::getTag
      */
     public function testGetTag(): void
     {

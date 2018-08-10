@@ -1,0 +1,6 @@
+parameters:
+    netgen_content_browser.ezpublish.default_item_template: '@@NetgenContentBrowserEzPlatform/ezpublish/item.html.twig'
+    netgen_content_browser.ezpublish.default_preview_template: '@@NetgenContentBrowserEzPlatform/ezpublish/ngcb_preview.html.twig'
+    netgen_content_browser.ezpublish.default_thumbnail_template: '@@NetgenContentBrowserEzPlatform/ezpublish/columns/thumbnail.html.twig'
+
+    netgen_content_browser.eztags.default_item_template: '@@NetgenContentBrowserEzPlatform/eztags/item.html.twig'

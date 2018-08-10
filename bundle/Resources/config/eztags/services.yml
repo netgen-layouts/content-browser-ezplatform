@@ -1,6 +1,6 @@
 services:
     netgen_content_browser.backend.eztags:
-        class: Netgen\ContentBrowser\Backend\EzTagsBackend
+        class: Netgen\ContentBrowser\Ez\Backend\EzTagsBackend
         public: false
         # Needs to be lazy since we're injecting "languages" dynamic param
         lazy: true
@@ -13,19 +13,19 @@ services:
             - { name: netgen_content_browser.backend, item_type: eztags }
 
     netgen_content_browser.column_value_provider.eztags.tag_id:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId
+        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId
         public: false
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags\tag_id }
 
     netgen_content_browser.column_value_provider.eztags.parent_tag_id:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId
+        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId
         public: false
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags\parent_tag_id }
 
     netgen_content_browser.column_value_provider.eztags.parent_tag:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
+        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
         public: false
         arguments:
             - "@ezpublish.api.service.tags"
@@ -34,7 +34,7 @@ services:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags\parent_tag }
 
     netgen_content_browser.column_value_provider.eztags.modified:
-        class: Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
+        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
         public: false
         arguments:
             - "%netgen_content_browser.columns.date_format%"

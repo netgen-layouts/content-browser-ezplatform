@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
+namespace Netgen\ContentBrowser\Ez\Tests\Item\ColumnProvider\ColumnValueProvider\EzPublish;
 
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible;
-use Netgen\ContentBrowser\Item\EzPublish\Item;
-use Netgen\ContentBrowser\Tests\Stubs\Item as StubItem;
+use Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible;
+use Netgen\ContentBrowser\Ez\Item\EzPublish\Item;
+use Netgen\ContentBrowser\Ez\Tests\Stubs\Item as StubItem;
 use PHPUnit\Framework\TestCase;
 
 final class VisibleTest extends TestCase
 {
     /**
-     * @var \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible
+     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible
      */
     private $provider;
 
@@ -24,7 +24,7 @@ final class VisibleTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible::getValue
      */
     public function testGetValue(): void
     {
@@ -46,7 +46,7 @@ final class VisibleTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible::getValue
+     * @covers \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\Visible::getValue
      */
     public function testGetValueWithInvalidItem(): void
     {

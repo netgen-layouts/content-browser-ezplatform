@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Netgen\Bundle\ContentBrowserBundle\Tests\DependencyInjection\CompilerPass;
+namespace Netgen\Bundle\ContentBrowserEzPlatformBundle\Tests\DependencyInjection\CompilerPass;
 
 use Matthias\SymfonyDependencyInjectionTest\PhpUnit\AbstractCompilerPassTestCase;
-use Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass;
+use Netgen\Bundle\ContentBrowserEzPlatformBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\FrozenParameterBag;
 
 final class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
 {
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::addDefaultPreviewRule
-     * @covers \Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::process
+     * @covers \Netgen\Bundle\ContentBrowserEzPlatformBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::addDefaultPreviewRule
+     * @covers \Netgen\Bundle\ContentBrowserEzPlatformBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::process
      */
     public function testProcess(): void
     {
@@ -58,7 +58,7 @@ final class EzPublishDefaultPreviewPassTest extends AbstractCompilerPassTestCase
     }
 
     /**
-     * @covers \Netgen\Bundle\ContentBrowserBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::process
+     * @covers \Netgen\Bundle\ContentBrowserEzPlatformBundle\DependencyInjection\CompilerPass\EzPublishDefaultPreviewPass::process
      */
     public function testProcessWithEmptyContainer(): void
     {

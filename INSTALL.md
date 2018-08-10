@@ -1,48 +1,26 @@
-Netgen Content Browser installation instructions
-================================================
+Netgen Content Browser & eZ Platform installation instructions
+==============================================================
 
 Use Composer
 ------------
 
-Run the following command to install Netgen Content Browser:
+Run the following command to install Netgen Content Browser & eZ Platform
+integration:
 
 ```
-composer require netgen/content-browser
+composer require netgen/content-browser-ezplatform
 ```
 
-Activate the bundles
---------------------
+Activate the bundle
+-------------------
 
-Activate the Content Browser in your kernel class with all required bundles:
+Activate the integration bundle in your kernel class:
 
 ```
 ...
 
-$bundles[] = new WhiteOctober\PagerfantaBundle\WhiteOctoberPagerfantaBundle();
-$bundles[] = new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle();
 $bundles[] = new Netgen\Bundle\ContentBrowserBundle\NetgenContentBrowserBundle();
-$bundles[] = new Netgen\Bundle\ContentBrowserUIBundle\NetgenContentBrowserUIBundle();
+$bundles[] = new Netgen\Bundle\ContentBrowserEzPlatformBundle\NetgenContentBrowserEzPlatformBundle();
 
 return $bundles;
-```
-
-Activate the routes
--------------------
-
-Add the following to your main `routing.yml` file to activate Content Browser
-routes:
-
-```
-netgen_content_browser:
-    resource: "@NetgenContentBrowserBundle/Resources/config/routing.yml"
-    prefix: "%netgen_content_browser.route_prefix%"
-```
-
-Install assets
---------------
-
-Run the following from your repo root to install Content Browser assets:
-
-```
-php app/console assets:install --symlink --relative
 ```
