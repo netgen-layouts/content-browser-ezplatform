@@ -1,7 +1,7 @@
 {
     "name": "netgen/content-browser-ezplatform",
     "description": "Netgen Content Browser & eZ Platform integration",
-    "license": "proprietary",
+    "license": "GPL-2.0-only",
     "authors": [
         {
             "name": "Netgen",
