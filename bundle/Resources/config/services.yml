@@ -1,11 +1,12 @@
 parameters:
     netgen_content_browser.default.backend.ezpublish.location_content_types:
-        - ng_frontpage
-        - ng_category
-        - ng_landing_page
-        - ng_container
-        - user_group
         - folder
+        - ng_category
+        - ng_container
+        - ng_frontpage
+        - ng_landing_page
+        - ng_topic
+        - user_group
 
     netgen_content_browser.default.backend.ezpublish.default_sections: [2, 43, 5]
 
