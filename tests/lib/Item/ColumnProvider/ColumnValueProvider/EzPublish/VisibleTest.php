@@ -35,8 +35,7 @@ final class VisibleTest extends TestCase
                 ]
             ),
             new Content(),
-            24,
-            'Name'
+            24
         );
 
         self::assertSame(

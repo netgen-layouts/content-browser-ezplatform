@@ -27,11 +27,6 @@ final class Item implements ItemInterface, LocationInterface, EzPublishInterface
     private $value;
 
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @var bool
      */
     private $selectable;
@@ -40,15 +35,13 @@ final class Item implements ItemInterface, LocationInterface, EzPublishInterface
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param int|string $value
-     * @param string $name
      * @param bool $selectable
      */
-    public function __construct(Location $location, Content $content, $value, string $name, bool $selectable = true)
+    public function __construct(Location $location, Content $content, $value, bool $selectable = true)
     {
         $this->location = $location;
         $this->content = $content;
         $this->value = $value;
-        $this->name = $name;
         $this->selectable = $selectable;
     }
 
@@ -64,7 +57,7 @@ final class Item implements ItemInterface, LocationInterface, EzPublishInterface
 
     public function getName(): string
     {
-        return $this->name;
+        return $this->content->getName() ?? '';
     }
 
     public function getParentId()

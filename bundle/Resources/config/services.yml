@@ -27,7 +27,6 @@ services:
             - "@ezpublish.api.repository"
             - "@netgen_content_browser.ezpublish.search_service"
             - "@ezpublish.spi.persistence.content_type_handler"
-            - "@ezpublish.translation_helper"
             - "@netgen_content_browser.config.ezlocation"
         lazy: true
         calls:
@@ -42,7 +41,6 @@ services:
             - "@ezpublish.api.repository"
             - "@netgen_content_browser.ezpublish.search_service"
             - "@ezpublish.spi.persistence.content_type_handler"
-            - "@ezpublish.translation_helper"
             - "@netgen_content_browser.config.ezcontent"
         lazy: true
         calls:
@@ -87,7 +85,6 @@ services:
         public: false
         arguments:
             - "@ezpublish.api.repository"
-            - "@ezpublish.translation_helper"
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\content_type }
 
@@ -112,7 +109,6 @@ services:
         public: false
         arguments:
             - "@ezpublish.api.repository"
-            - "@ezpublish.translation_helper"
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\owner }
 

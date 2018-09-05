@@ -7,7 +7,6 @@ namespace Netgen\ContentBrowser\Ez\Tests\Item\ColumnProvider\ColumnValueProvider
 use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\Core\Base\Exceptions\NotFoundException;
-use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
@@ -53,8 +52,7 @@ final class OwnerTest extends TestCase
             ->will(self::returnValue($this->contentServiceMock));
 
         $this->provider = new Owner(
-            $this->repositoryMock,
-            $this->createMock(TranslationHelper::class)
+            $this->repositoryMock
         );
     }
 
@@ -81,8 +79,7 @@ final class OwnerTest extends TestCase
         $item = new Item(
             new Location(),
             $content,
-            24,
-            'Name'
+            24
         );
 
         $ownerContentInfo = new VersionInfo(
@@ -126,8 +123,7 @@ final class OwnerTest extends TestCase
         $item = new Item(
             new Location(),
             $content,
-            24,
-            'Name'
+            24
         );
 
         $this->contentServiceMock

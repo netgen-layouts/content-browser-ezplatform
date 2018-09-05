@@ -34,6 +34,8 @@ final class ItemTest extends TestCase
             [
                 'versionInfo' => new VersionInfo(
                     [
+                        'prioritizedNameLanguageCode' => 'eng-GB',
+                        'names' => ['eng-GB' => 'Some name'],
                         'contentInfo' => new ContentInfo(
                             [
                                 'id' => 42,
@@ -52,7 +54,7 @@ final class ItemTest extends TestCase
             ]
         );
 
-        $this->item = new Item($this->location, $this->content, 42, 'Some name', false);
+        $this->item = new Item($this->location, $this->content, 42, false);
     }
 
     /**
@@ -99,7 +101,7 @@ final class ItemTest extends TestCase
             ]
         );
 
-        $this->item = new Item($this->location, $this->content, 42, 'Some name');
+        $this->item = new Item($this->location, $this->content, 42);
 
         self::assertNull($this->item->getParentId());
     }

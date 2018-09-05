@@ -79,8 +79,7 @@ final class SectionTest extends TestCase
         $item = new Item(
             new Location(),
             $content,
-            24,
-            'Name'
+            24
         );
 
         $section = new EzSection(

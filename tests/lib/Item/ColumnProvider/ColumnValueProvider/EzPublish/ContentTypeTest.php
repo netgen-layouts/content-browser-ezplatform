@@ -6,7 +6,6 @@ namespace Netgen\ContentBrowser\Ez\Tests\Item\ColumnProvider\ColumnValueProvider
 
 use eZ\Publish\API\Repository\ContentTypeService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
-use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
@@ -53,8 +52,7 @@ final class ContentTypeTest extends TestCase
             ->will(self::returnValue($this->contentTypeServiceMock));
 
         $this->provider = new ContentType(
-            $this->repositoryMock,
-            $this->createMock(TranslationHelper::class)
+            $this->repositoryMock
         );
     }
 
@@ -81,8 +79,7 @@ final class ContentTypeTest extends TestCase
         $item = new Item(
             new Location(),
             $content,
-            24,
-            'Name'
+            24
         );
 
         $contentType = new EzContentType(

@@ -12,7 +12,6 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
-use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
@@ -46,11 +45,6 @@ final class EzPublishBackendTest extends TestCase
      * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler&\PHPUnit\Framework\MockObject\MockObject
      */
     private $contentTypeHandlerMock;
-
-    /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper&\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $translationHelperMock;
 
     /**
      * @var array
@@ -141,13 +135,6 @@ final class EzPublishBackendTest extends TestCase
             ->method('getContentService')
             ->will(self::returnValue($this->contentServiceMock));
 
-        $this->translationHelperMock = $this->createMock(TranslationHelper::class);
-
-        $this->translationHelperMock
-            ->expects(self::any())
-            ->method('getTranslatedContentNameByContentInfo')
-            ->willReturn('Name');
-
         $configuration = new Configuration('ezlocation', 'eZ location', []);
         $configuration->setParameter('sections', $this->defaultSections);
         $configuration->setParameter('location_content_types', array_keys($this->locationContentTypes));
@@ -158,7 +145,6 @@ final class EzPublishBackendTest extends TestCase
             $this->repositoryMock,
             $this->searchServiceMock,
             $this->contentTypeHandlerMock,
-            $this->translationHelperMock,
             $configuration
         );
 
@@ -291,7 +277,6 @@ final class EzPublishBackendTest extends TestCase
             $this->repositoryMock,
             $this->searchServiceMock,
             $this->contentTypeHandlerMock,
-            $this->translationHelperMock,
             new Configuration('ezcontent', 'eZ content', [])
         );
 
@@ -352,7 +337,6 @@ final class EzPublishBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::buildItems
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::getContentTypeIds
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::getSortClause
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::getSubLocations
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::isSelectable
      */
@@ -385,7 +369,7 @@ final class EzPublishBackendTest extends TestCase
             ->will(self::returnValue($searchResult));
 
         $locations = $this->backend->getSubLocations(
-            new Item($this->getLocation(2), new Content(), 2, 'location')
+            new Item($this->getLocation(2), new Content(), 2)
         );
 
         self::assertCount(2, $locations);
@@ -437,7 +421,7 @@ final class EzPublishBackendTest extends TestCase
             ->will(self::returnValue($searchResult));
 
         $count = $this->backend->getSubLocationsCount(
-            new Item($this->getLocation(2), new Content(), 2, 'location')
+            new Item($this->getLocation(2), new Content(), 2)
         );
 
         self::assertSame(2, $count);
@@ -446,7 +430,6 @@ final class EzPublishBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::getSortClause
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::isSelectable
      */
@@ -476,7 +459,7 @@ final class EzPublishBackendTest extends TestCase
             ->will(self::returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
-            new Item($this->getLocation(2), new Content(), 2, 'location')
+            new Item($this->getLocation(2), new Content(), 2)
         );
 
         self::assertCount(2, $items);
@@ -490,7 +473,6 @@ final class EzPublishBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::buildItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::getSortClause
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::getSubItems
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::isSelectable
      */
@@ -520,7 +502,7 @@ final class EzPublishBackendTest extends TestCase
             ->will(self::returnValue($searchResult));
 
         $items = $this->backend->getSubItems(
-            new Item($this->getLocation(2), new Content(), 2, 'location'),
+            new Item($this->getLocation(2), new Content(), 2),
             5,
             10
         );
@@ -570,7 +552,7 @@ final class EzPublishBackendTest extends TestCase
             ->will(self::returnValue($searchResult));
 
         $count = $this->backend->getSubItemsCount(
-            new Item($this->getLocation(2), new Content(), 2, 'location')
+            new Item($this->getLocation(2), new Content(), 2)
         );
 
         self::assertSame(2, $count);

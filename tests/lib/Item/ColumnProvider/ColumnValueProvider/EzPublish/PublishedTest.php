@@ -53,8 +53,7 @@ final class PublishedTest extends TestCase
         $item = new Item(
             new Location(),
             $content,
-            24,
-            'Name'
+            24
         );
 
         self::assertSame(
