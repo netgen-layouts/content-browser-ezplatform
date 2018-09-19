@@ -83,7 +83,7 @@ class EzPublishBackend implements BackendInterface
         $this->languages = $languages ?? [];
     }
 
-    public function getSections()
+    public function getSections(): iterable
     {
         $sectionIds = $this->getSectionIds();
         if (empty($sectionIds)) {
@@ -168,7 +168,7 @@ class EzPublishBackend implements BackendInterface
         );
     }
 
-    public function getSubLocations(LocationInterface $location)
+    public function getSubLocations(LocationInterface $location): iterable
     {
         if (!$location instanceof EzPublishInterface) {
             return [];
@@ -229,7 +229,7 @@ class EzPublishBackend implements BackendInterface
         return $result->totalCount ?? 0;
     }
 
-    public function getSubItems(LocationInterface $location, $offset = 0, $limit = 25)
+    public function getSubItems(LocationInterface $location, int $offset = 0, int $limit = 25): iterable
     {
         if (!$location instanceof EzPublishInterface) {
             return [];
@@ -271,7 +271,7 @@ class EzPublishBackend implements BackendInterface
         return $result->totalCount ?? 0;
     }
 
-    public function search($searchText, $offset = 0, $limit = 25)
+    public function search(string $searchText, int $offset = 0, int $limit = 25): iterable
     {
         $query = new LocationQuery();
 
@@ -292,7 +292,7 @@ class EzPublishBackend implements BackendInterface
         return $this->buildItems($result);
     }
 
-    public function searchCount($searchText): int
+    public function searchCount(string $searchText): int
     {
         $query = new LocationQuery();
 

@@ -67,10 +67,7 @@ final class EzTagsBackendTest extends TestCase
         $locations = $this->backend->getSections();
 
         self::assertCount(1, $locations);
-
-        self::assertInstanceOf(Location::class, $locations[0]);
-        self::assertInstanceOf(LocationInterface::class, $locations[0]);
-        self::assertSame(0, $locations[0]->getLocationId());
+        self::assertContainsOnlyInstancesOf(LocationInterface::class, $locations);
     }
 
     /**
@@ -198,7 +195,8 @@ final class EzTagsBackendTest extends TestCase
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        self::assertSame([], $locations);
+        self::assertInternalType('array', $locations);
+        self::assertEmpty($locations);
     }
 
     /**
@@ -306,7 +304,8 @@ final class EzTagsBackendTest extends TestCase
 
         $locations = $this->backend->getSubItems(new StubLocation(0));
 
-        self::assertSame([], $locations);
+        self::assertInternalType('array', $locations);
+        self::assertEmpty($locations);
     }
 
     /**

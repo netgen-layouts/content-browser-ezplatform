@@ -181,10 +181,6 @@ final class EzPublishBackendTest extends TestCase
 
         self::assertCount(3, $locations);
         self::assertContainsOnlyInstancesOf(Item::class, $locations);
-
-        self::assertSame(2, $locations[0]->getLocationId());
-        self::assertSame(43, $locations[1]->getLocationId());
-        self::assertSame(5, $locations[2]->getLocationId());
     }
 
     /**
@@ -391,7 +387,8 @@ final class EzPublishBackendTest extends TestCase
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        self::assertSame([], $locations);
+        self::assertInternalType('array', $locations);
+        self::assertEmpty($locations);
     }
 
     /**
@@ -526,7 +523,8 @@ final class EzPublishBackendTest extends TestCase
 
         $items = $this->backend->getSubItems(new StubLocation(0));
 
-        self::assertSame([], $items);
+        self::assertInternalType('array', $items);
+        self::assertEmpty($items);
     }
 
     /**
