@@ -41,7 +41,7 @@
             "Netgen\\ContentBrowser\\": "vendor/netgen/content-browser/lib/"
         },
         "files": [
-            "vendor/symfony/var-dumper/Resources/functions/dump.php"
+            "vendor/symfony/symfony/src/Symfony/Component/VarDumper/Resources/functions/dump.php"
         ]
     },
     "minimum-stability": "dev",
