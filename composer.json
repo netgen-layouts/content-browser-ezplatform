@@ -2,6 +2,7 @@
     "name": "netgen/content-browser-ezplatform",
     "description": "Netgen Content Browser & eZ Platform integration",
     "license": "GPL-2.0-only",
+    "type": "symfony-bundle",
     "authors": [
         {
             "name": "Netgen",
