@@ -50,9 +50,6 @@
     "extra": {
         "branch-alias": {
             "dev-master": "0.12.x-dev"
-        },
-        "symfony": {
-            "require": "~3.4.0"
         }
     }
 }
