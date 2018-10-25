@@ -19,6 +19,7 @@ use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Config\Configuration;
+use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Backend\EzPublishBackend;
 use Netgen\ContentBrowser\Ez\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Ez\Tests\Stubs\Location as StubLocation;
@@ -212,11 +213,12 @@ final class EzPublishBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::loadLocation
-     * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
-     * @expectedExceptionMessage Location with ID "2" not found.
      */
     public function testLoadLocationThrowsNotFoundException(): void
     {
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage('Location with ID "2" not found.');
+
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId(2);
 
@@ -305,11 +307,12 @@ final class EzPublishBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPublishBackend::loadItem
-     * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
-     * @expectedExceptionMessage Item with value "2" not found.
      */
     public function testLoadItemThrowsNotFoundException(): void
     {
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage('Item with value "2" not found.');
+
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd(
             [

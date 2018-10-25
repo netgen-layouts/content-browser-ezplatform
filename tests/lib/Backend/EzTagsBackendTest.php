@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Netgen\ContentBrowser\Ez\Tests\Backend;
 
-use eZ\Publish\Core\Base\Exceptions\NotFoundException;
+use eZ\Publish\Core\Base\Exceptions\NotFoundException as EzNotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Backend\EzTagsBackend;
 use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
 use Netgen\ContentBrowser\Ez\Item\EzTags\Location;
@@ -90,16 +91,17 @@ final class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::loadLocation
-     * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
-     * @expectedExceptionMessage Item with value "1" not found.
      */
     public function testLoadLocationThrowsNotFoundException(): void
     {
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage('Item with value "1" not found.');
+
         $this->tagsServiceMock
             ->expects(self::once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
-            ->will(self::throwException(new NotFoundException('tag', 1)));
+            ->will(self::throwException(new EzNotFoundException('tag', 1)));
 
         $this->backend->loadLocation(1);
     }
@@ -141,16 +143,17 @@ final class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::loadItem
-     * @expectedException \Netgen\ContentBrowser\Exceptions\NotFoundException
-     * @expectedExceptionMessage Item with value "1" not found.
      */
     public function testLoadItemThrowsNotFoundException(): void
     {
+        $this->expectException(NotFoundException::class);
+        $this->expectExceptionMessage('Item with value "1" not found.');
+
         $this->tagsServiceMock
             ->expects(self::once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
-            ->will(self::throwException(new NotFoundException('tag', 1)));
+            ->will(self::throwException(new EzNotFoundException('tag', 1)));
 
         $this->backend->loadItem(1);
     }
