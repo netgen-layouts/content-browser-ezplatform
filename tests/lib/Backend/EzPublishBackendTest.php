@@ -466,6 +466,8 @@ final class EzPublishBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $items);
 
         foreach ($items as $item) {
+            // Additional InstanceOf assertion to make PHPStan happy
+            self::assertInstanceOf(Item::class, $item);
             self::assertSame(2, $item->getParentId());
         }
     }
@@ -511,6 +513,8 @@ final class EzPublishBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $items);
 
         foreach ($items as $item) {
+            // Additional InstanceOf assertion to make PHPStan happy
+            self::assertInstanceOf(Item::class, $item);
             self::assertSame(2, $item->getParentId());
         }
     }

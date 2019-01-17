@@ -119,7 +119,7 @@ class EzPublishBackend implements BackendInterface
     public function loadLocation($id): LocationInterface
     {
         $query = new LocationQuery();
-        $query->filter = new Criterion\LocationId($id);
+        $query->filter = new Criterion\LocationId((int) $id);
 
         $result = $this->searchService->findLocations(
             $query,
@@ -142,9 +142,9 @@ class EzPublishBackend implements BackendInterface
     {
         $criteria = [];
         if ($this->config->getItemType() === 'ezlocation') {
-            $criteria[] = new Criterion\LocationId($value);
+            $criteria[] = new Criterion\LocationId((int) $value);
         } elseif ($this->config->getItemType() === 'ezcontent') {
-            $criteria[] = new Criterion\ContentId($value);
+            $criteria[] = new Criterion\ContentId((int) $value);
             $criteria[] = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
         }
 
@@ -356,6 +356,8 @@ class EzPublishBackend implements BackendInterface
 
     /**
      * Returns content type IDs for all existing content types.
+     *
+     * @return int[]
      */
     private function getContentTypeIds(array $contentTypeIdentifiers): array
     {
@@ -415,6 +417,9 @@ class EzPublishBackend implements BackendInterface
         return [];
     }
 
+    /**
+     * @return int[]
+     */
     private function getSectionIds(): array
     {
         if ($this->config->hasParameter('sections')) {
