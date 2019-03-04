@@ -23,10 +23,13 @@ use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Backend\EzPublishBackend;
 use Netgen\ContentBrowser\Ez\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Ez\Tests\Stubs\Location as StubLocation;
+use Netgen\ContentBrowser\Tests\TestCase\LegacyTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 
 final class EzPublishBackendTest extends TestCase
 {
+    use LegacyTestCaseTrait;
+
     /**
      * @var \eZ\Publish\API\Repository\Repository&\PHPUnit\Framework\MockObject\MockObject
      */
@@ -390,7 +393,7 @@ final class EzPublishBackendTest extends TestCase
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        self::assertInternalType('array', $locations);
+        self::assertIsArray($locations);
         self::assertEmpty($locations);
     }
 
@@ -530,7 +533,7 @@ final class EzPublishBackendTest extends TestCase
 
         $items = $this->backend->getSubItems(new StubLocation(0));
 
-        self::assertInternalType('array', $items);
+        self::assertIsArray($items);
         self::assertEmpty($items);
     }
 

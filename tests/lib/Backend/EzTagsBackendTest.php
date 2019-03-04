@@ -12,12 +12,15 @@ use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
 use Netgen\ContentBrowser\Ez\Item\EzTags\Location;
 use Netgen\ContentBrowser\Ez\Tests\Stubs\Location as StubLocation;
 use Netgen\ContentBrowser\Item\LocationInterface;
+use Netgen\ContentBrowser\Tests\TestCase\LegacyTestCaseTrait;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use PHPUnit\Framework\TestCase;
 
 final class EzTagsBackendTest extends TestCase
 {
+    use LegacyTestCaseTrait;
+
     /**
      * @var \Netgen\TagsBundle\API\Repository\TagsService&\PHPUnit\Framework\MockObject\MockObject
      */
@@ -198,7 +201,7 @@ final class EzTagsBackendTest extends TestCase
 
         $locations = $this->backend->getSubLocations(new StubLocation(0));
 
-        self::assertInternalType('array', $locations);
+        self::assertIsArray($locations);
         self::assertEmpty($locations);
     }
 
@@ -311,7 +314,7 @@ final class EzTagsBackendTest extends TestCase
 
         $locations = $this->backend->getSubItems(new StubLocation(0));
 
-        self::assertInternalType('array', $locations);
+        self::assertIsArray($locations);
         self::assertEmpty($locations);
     }
 
