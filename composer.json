@@ -17,6 +17,7 @@
         "phpunit/phpunit": "^7.5 || ^8.0",
         "symfony/phpunit-bridge": "^4.2",
         "phpstan/phpstan": "^0.11",
+        "phpstan/phpstan-strict-rules": "^0.11",
         "phpstan/phpstan-phpunit": "^0.11",
         "matthiasnoback/symfony-dependency-injection-test": "^3.1 || ^4.0",
         "netgen/tagsbundle": "^3.3",
