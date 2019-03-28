@@ -36,7 +36,7 @@ final class ParentTag implements ColumnValueProviderInterface
 
         return $this->tagsService->sudo(
             function (TagsService $tagsService) use ($item): string {
-                if (empty($item->getTag()->parentTagId)) {
+                if (in_array($item->getTag()->parentTagId, [0, null], true)) {
                     return '(No parent)';
                 }
 

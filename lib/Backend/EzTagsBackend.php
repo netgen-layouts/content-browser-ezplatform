@@ -59,7 +59,7 @@ class EzTagsBackend implements BackendInterface
 
     public function loadLocation($id): LocationInterface
     {
-        if (empty($id)) {
+        if (in_array($id, [0, null], true)) {
             return $this->buildLocation();
         }
 
@@ -134,7 +134,7 @@ class EzTagsBackend implements BackendInterface
 
     public function search(string $searchText, int $offset = 0, int $limit = 25): iterable
     {
-        if (empty($this->languages)) {
+        if (count($this->languages) === 0) {
             return [];
         }
 
@@ -151,7 +151,7 @@ class EzTagsBackend implements BackendInterface
 
     public function searchCount(string $searchText): int
     {
-        if (empty($this->languages)) {
+        if (count($this->languages) === 0) {
             return 0;
         }
 

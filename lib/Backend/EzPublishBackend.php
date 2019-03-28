@@ -86,7 +86,7 @@ class EzPublishBackend implements BackendInterface
     public function getSections(): iterable
     {
         $sectionIds = $this->getSectionIds();
-        if (empty($sectionIds)) {
+        if (count($sectionIds) === 0) {
             return [];
         }
 
@@ -126,7 +126,7 @@ class EzPublishBackend implements BackendInterface
             ['languages' => $this->languages]
         );
 
-        if (!empty($result->searchHits)) {
+        if (count($result->searchHits) > 0) {
             return $this->buildItem($result->searchHits[0]);
         }
 
@@ -156,7 +156,7 @@ class EzPublishBackend implements BackendInterface
             ['languages' => $this->languages]
         );
 
-        if (!empty($result->searchHits)) {
+        if (count($result->searchHits) > 0) {
             return $this->buildItem($result->searchHits[0]);
         }
 
@@ -184,7 +184,7 @@ class EzPublishBackend implements BackendInterface
             new Criterion\ParentLocationId($location->getLocationId()),
         ];
 
-        if (!empty($this->locationContentTypeIds)) {
+        if (count($this->locationContentTypeIds) > 0) {
             $criteria[] = new Criterion\ContentTypeId($this->locationContentTypeIds);
         }
 
@@ -213,7 +213,7 @@ class EzPublishBackend implements BackendInterface
             new Criterion\ParentLocationId($location->getLocationId()),
         ];
 
-        if (!empty($this->locationContentTypeIds)) {
+        if (count($this->locationContentTypeIds) > 0) {
             $criteria[] = new Criterion\ContentTypeId($this->locationContentTypeIds);
         }
 
@@ -275,7 +275,7 @@ class EzPublishBackend implements BackendInterface
     {
         $query = new LocationQuery();
 
-        if (!empty($searchText)) {
+        if (trim($searchText) !== '') {
             $query->query = new Criterion\FullText($searchText);
         }
 
@@ -296,7 +296,7 @@ class EzPublishBackend implements BackendInterface
     {
         $query = new LocationQuery();
 
-        if (!empty($searchText)) {
+        if (trim($searchText) !== '') {
             $query->query = new Criterion\FullText($searchText);
         }
 
@@ -388,13 +388,13 @@ class EzPublishBackend implements BackendInterface
             $this->allowedContentTypeIds = [];
 
             $allowedContentTypes = $this->config->getParameter('allowed_content_types');
-            if (is_string($allowedContentTypes) && !empty($allowedContentTypes)) {
+            if (is_string($allowedContentTypes) && $allowedContentTypes !== '') {
                 $allowedContentTypes = array_map('trim', explode(',', $allowedContentTypes));
                 $this->allowedContentTypeIds = $this->getContentTypeIds($allowedContentTypes);
             }
         }
 
-        if (empty($this->allowedContentTypeIds)) {
+        if (count($this->allowedContentTypeIds) === 0) {
             return true;
         }
 
@@ -405,11 +405,11 @@ class EzPublishBackend implements BackendInterface
     {
         if ($this->config->hasParameter('location_content_types')) {
             $locationContentTypes = $this->config->getParameter('location_content_types');
-            if (is_string($locationContentTypes) && !empty($locationContentTypes)) {
+            if (is_string($locationContentTypes) && $locationContentTypes !== '') {
                 return array_map('trim', explode(',', $locationContentTypes));
             }
 
-            if (is_array($locationContentTypes) && !empty($locationContentTypes)) {
+            if (is_array($locationContentTypes) && count($locationContentTypes) > 0) {
                 return $locationContentTypes;
             }
         }
@@ -424,11 +424,11 @@ class EzPublishBackend implements BackendInterface
     {
         if ($this->config->hasParameter('sections')) {
             $sections = $this->config->getParameter('sections');
-            if (is_string($sections) && !empty($sections)) {
+            if (is_string($sections) && $sections !== '') {
                 return array_map('intval', explode(',', $sections));
             }
 
-            if (is_array($sections) && !empty($sections)) {
+            if (is_array($sections) && count($sections) > 0) {
                 return $sections;
             }
         }
