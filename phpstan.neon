@@ -7,6 +7,5 @@ parameters:
         - '#Method Netgen\\ContentBrowser\\Ez\\Backend\\EzTagsBackend::loadLocation\(\) should return Netgen\\ContentBrowser\\Item\\LocationInterface but returns Netgen\\ContentBrowser\\Item\\ItemInterface.#'
 
         # eZ Platform
-        - '#Call to an undefined method eZ\\Publish\\API\\Repository\\Repository::sudo\(\)#'
         - '#Call to an undefined method Netgen\\TagsBundle\\API\\Repository\\TagsService::sudo\(\)#'
         - '#Criterion\\ParentLocationId constructor expects array<int>\|int, int\|string given.#'
