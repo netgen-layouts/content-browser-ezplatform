@@ -3,8 +3,12 @@ includes:
 
 parameters:
     ignoreErrors:
-        # Content Browser specifics
-        - '#Method Netgen\\ContentBrowser\\Ez\\Backend\\EzTagsBackend::loadLocation\(\) should return Netgen\\ContentBrowser\\Item\\LocationInterface but returns Netgen\\ContentBrowser\\Item\\ItemInterface.#'
-
         # eZ Platform
-        - '#Criterion\\ParentLocationId constructor expects array<int>\|int, int\|string given.#'
+        -
+            message: '#Criterion\\ParentLocationId constructor expects array<int>\|int, int\|string given.#'
+            path: lib/Backend/EzPublishBackend.php
+
+        # Content Browser specifics
+        -
+            message: '#Method Netgen\\ContentBrowser\\Ez\\Backend\\EzTagsBackend::loadLocation\(\) should return Netgen\\ContentBrowser\\Item\\LocationInterface but returns Netgen\\ContentBrowser\\Item\\ItemInterface.#'
+            path: lib/Backend/EzTagsBackend.php
