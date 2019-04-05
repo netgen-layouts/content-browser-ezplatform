@@ -116,7 +116,7 @@ final class EzPublishBackendTest extends TestCase
             ->method('loadContentByContentInfo')
             ->with(self::isInstanceOf(ContentInfo::class))
             ->willReturnCallback(
-                function (ContentInfo $contentInfo): Content {
+                static function (ContentInfo $contentInfo): Content {
                     return new Content(
                         [
                             'versionInfo' => new VersionInfo(

@@ -28,7 +28,7 @@ final class ContentType implements ColumnValueProviderInterface
         }
 
         return $this->repository->sudo(
-            function (Repository $repository) use ($item): string {
+            static function (Repository $repository) use ($item): string {
                 $contentType = $repository->getContentTypeService()->loadContentType(
                     $item->getContent()->contentInfo->contentTypeId
                 );

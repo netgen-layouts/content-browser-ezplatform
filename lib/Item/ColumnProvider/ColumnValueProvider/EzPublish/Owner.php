@@ -29,7 +29,7 @@ final class Owner implements ColumnValueProviderInterface
         }
 
         return $this->repository->sudo(
-            function (Repository $repository) use ($item): string {
+            static function (Repository $repository) use ($item): string {
                 try {
                     $ownerVersionInfo = $repository->getContentService()->loadVersionInfoById(
                         $item->getContent()->contentInfo->ownerId

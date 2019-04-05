@@ -104,7 +104,7 @@ class EzPublishBackend implements BackendInterface
 
         usort(
             $items,
-            function (LocationInterface $item1, LocationInterface $item2) use ($sortMap): int {
+            static function (LocationInterface $item1, LocationInterface $item2) use ($sortMap): int {
                 if ($item1->getLocationId() === $item2->getLocationId()) {
                     return 0;
                 }
@@ -322,7 +322,7 @@ class EzPublishBackend implements BackendInterface
 
         /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
         $content = $this->repository->sudo(
-            function (Repository $repository) use ($location): Content {
+            static function (Repository $repository) use ($location): Content {
                 return $repository->getContentService()->loadContentByContentInfo(
                     $location->contentInfo
                 );
