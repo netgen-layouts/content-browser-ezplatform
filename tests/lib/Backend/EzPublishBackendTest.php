@@ -79,14 +79,14 @@ final class EzPublishBackendTest extends TestCase
         $this->contentTypeHandlerMock
             ->expects(self::any())
             ->method('loadByIdentifier')
-            ->will(
-                self::returnCallback(function (string $identifier): Type {
+            ->willReturnCallback(
+                function (string $identifier): Type {
                     return new Type(
                         [
                             'id' => $this->locationContentTypes[$identifier],
                         ]
                     );
-                })
+                }
             );
 
         $this->repositoryMock = $this->createPartialMock(
@@ -102,11 +102,11 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::any())
             ->method('sudo')
             ->with(self::anything())
-            ->will(self::returnCallback(
+            ->willReturnCallback(
                 function (callable $callback) {
                     return $callback($this->repositoryMock);
                 }
-            ));
+            );
 
         $this->searchServiceMock = $this->createMock(SearchService::class);
         $this->contentServiceMock = $this->createMock(ContentService::class);
@@ -115,7 +115,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::any())
             ->method('loadContentByContentInfo')
             ->with(self::isInstanceOf(ContentInfo::class))
-            ->will(self::returnCallback(
+            ->willReturnCallback(
                 function (ContentInfo $contentInfo): Content {
                     return new Content(
                         [
@@ -127,17 +127,17 @@ final class EzPublishBackendTest extends TestCase
                         ]
                     );
                 }
-            ));
+            );
 
         $this->repositoryMock
             ->expects(self::any())
             ->method('getSearchService')
-            ->will(self::returnValue($this->searchServiceMock));
+            ->willReturn($this->searchServiceMock);
 
         $this->repositoryMock
             ->expects(self::any())
             ->method('getContentService')
-            ->will(self::returnValue($this->contentServiceMock));
+            ->willReturn($this->contentServiceMock);
 
         $configuration = new Configuration('ezlocation', 'eZ location', []);
         $configuration->setParameter('sections', $this->defaultSections);
@@ -179,7 +179,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $locations = $this->backend->getSections();
 
@@ -206,7 +206,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $location = $this->backend->loadLocation(2);
 
@@ -232,7 +232,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $this->backend->loadLocation(2);
     }
@@ -260,7 +260,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $item = $this->backend->loadItem(2);
 
@@ -300,7 +300,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $item = $this->backend->loadItem(2);
 
@@ -330,7 +330,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $this->backend->loadItem(2);
     }
@@ -368,7 +368,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $locations = $this->backend->getSubLocations(
             new Item($this->getLocation(2), new Content(), 2)
@@ -421,7 +421,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $count = $this->backend->getSubLocationsCount(
             new Item($this->getLocation(2), new Content(), 2)
@@ -459,7 +459,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
             new Item($this->getLocation(2), new Content(), 2)
@@ -504,7 +504,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
             new Item($this->getLocation(2), new Content(), 2),
@@ -557,7 +557,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $count = $this->backend->getSubItemsCount(
             new Item($this->getLocation(2), new Content(), 2)
@@ -590,7 +590,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $items = $this->backend->search('test');
 
@@ -622,7 +622,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $items = $this->backend->search('test', 5, 10);
 
@@ -647,7 +647,7 @@ final class EzPublishBackendTest extends TestCase
             ->expects(self::once())
             ->method('findLocations')
             ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
-            ->will(self::returnValue($searchResult));
+            ->willReturn($searchResult);
 
         $count = $this->backend->searchCount('test');
 

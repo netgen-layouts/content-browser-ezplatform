@@ -42,14 +42,16 @@ final class SectionTest extends TestCase
             ->expects(self::any())
             ->method('sudo')
             ->with(self::anything())
-            ->will(self::returnCallback(function (callable $callback) {
-                return $callback($this->repositoryMock);
-            }));
+            ->willReturnCallback(
+                function (callable $callback) {
+                    return $callback($this->repositoryMock);
+                }
+            );
 
         $this->repositoryMock
             ->expects(self::any())
             ->method('getSectionService')
-            ->will(self::returnValue($this->sectionServiceMock));
+            ->willReturn($this->sectionServiceMock);
 
         $this->provider = new Section(
             $this->repositoryMock
@@ -92,7 +94,7 @@ final class SectionTest extends TestCase
             ->expects(self::once())
             ->method('loadSection')
             ->with(self::identicalTo(42))
-            ->will(self::returnValue($section));
+            ->willReturn($section);
 
         self::assertSame(
             'Section name',

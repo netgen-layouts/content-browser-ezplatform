@@ -84,7 +84,7 @@ final class EzTagsBackendTest extends TestCase
             ->expects(self::once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
-            ->will(self::returnValue($this->getTag(1)));
+            ->willReturn($this->getTag(1));
 
         $location = $this->backend->loadLocation(1);
 
@@ -104,7 +104,7 @@ final class EzTagsBackendTest extends TestCase
             ->expects(self::once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
-            ->will(self::throwException(new EzNotFoundException('tag', 1)));
+            ->willThrowException(new EzNotFoundException('tag', 1));
 
         $this->backend->loadLocation(1);
     }
@@ -136,7 +136,7 @@ final class EzTagsBackendTest extends TestCase
             ->expects(self::once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
-            ->will(self::returnValue($this->getTag(1)));
+            ->willReturn($this->getTag(1));
 
         $item = $this->backend->loadItem(1);
 
@@ -156,7 +156,7 @@ final class EzTagsBackendTest extends TestCase
             ->expects(self::once())
             ->method('loadTag')
             ->with(self::identicalTo(1))
-            ->will(self::throwException(new EzNotFoundException('tag', 1)));
+            ->willThrowException(new EzNotFoundException('tag', 1));
 
         $this->backend->loadItem(1);
     }
@@ -178,7 +178,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(0),
                 self::identicalTo(-1)
             )
-            ->will(self::returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
+            ->willReturn([$this->getTag(null, 1), $this->getTag(null, 1)]);
 
         $locations = $this->backend->getSubLocations(new Item($tag, 'tag'));
 
@@ -216,7 +216,7 @@ final class EzTagsBackendTest extends TestCase
             ->expects(self::once())
             ->method('getTagChildrenCount')
             ->with(self::identicalTo($tag))
-            ->will(self::returnValue(2));
+            ->willReturn(2);
 
         $count = $this->backend->getSubLocationsCount(new Item($tag, 'tag'));
 
@@ -254,7 +254,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(0),
                 self::identicalTo(25)
             )
-            ->will(self::returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
+            ->willReturn([$this->getTag(null, 1), $this->getTag(null, 1)]);
 
         $items = $this->backend->getSubItems(new Item($tag, 'tag'));
 
@@ -285,7 +285,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(5),
                 self::identicalTo(10)
             )
-            ->will(self::returnValue([$this->getTag(null, 1), $this->getTag(null, 1)]));
+            ->willReturn([$this->getTag(null, 1), $this->getTag(null, 1)]);
 
         $items = $this->backend->getSubItems(
             new Item($tag, 'tag'),
@@ -329,7 +329,7 @@ final class EzTagsBackendTest extends TestCase
             ->expects(self::once())
             ->method('getTagChildrenCount')
             ->with(self::identicalTo($tag))
-            ->will(self::returnValue(2));
+            ->willReturn(2);
 
         $count = $this->backend->getSubItemsCount(new Item($tag, 'tag'));
 
@@ -367,7 +367,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(0),
                 self::identicalTo(25)
             )
-            ->will(self::returnValue([$this->getTag(), $this->getTag()]));
+            ->willReturn([$this->getTag(), $this->getTag()]);
 
         $items = $this->backend->search('test');
 
@@ -413,7 +413,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(5),
                 self::identicalTo(10)
             )
-            ->will(self::returnValue([$this->getTag(), $this->getTag()]));
+            ->willReturn([$this->getTag(), $this->getTag()]);
 
         $items = $this->backend->search('test', 5, 10);
 
@@ -434,7 +434,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo('eng-GB'),
                 self::identicalTo(true)
             )
-            ->will(self::returnValue(2));
+            ->willReturn(2);
 
         $count = $this->backend->searchCount('test');
 

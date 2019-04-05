@@ -61,13 +61,13 @@ final class ParentTagTest extends TestCase
             ->expects(self::once())
             ->method('loadTag')
             ->with(self::identicalTo(42))
-            ->will(self::returnValue($parentTag));
+            ->willReturn($parentTag);
 
         $this->translationHelperMock
             ->expects(self::once())
             ->method('getTranslatedByMethod')
             ->with(self::identicalTo($parentTag), self::identicalTo('getKeyword'))
-            ->will(self::returnValue('Parent tag'));
+            ->willReturn('Parent tag');
 
         self::assertSame(
             'Parent tag',

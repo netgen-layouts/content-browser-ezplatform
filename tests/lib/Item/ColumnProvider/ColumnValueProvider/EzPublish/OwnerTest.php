@@ -42,14 +42,16 @@ final class OwnerTest extends TestCase
             ->expects(self::any())
             ->method('sudo')
             ->with(self::anything())
-            ->will(self::returnCallback(function (callable $callback) {
-                return $callback($this->repositoryMock);
-            }));
+            ->willReturnCallback(
+                function (callable $callback) {
+                    return $callback($this->repositoryMock);
+                }
+            );
 
         $this->repositoryMock
             ->expects(self::any())
             ->method('getContentService')
-            ->will(self::returnValue($this->contentServiceMock));
+            ->willReturn($this->contentServiceMock);
 
         $this->provider = new Owner(
             $this->repositoryMock
@@ -93,7 +95,7 @@ final class OwnerTest extends TestCase
             ->expects(self::once())
             ->method('loadVersionInfoById')
             ->with(self::identicalTo(42))
-            ->will(self::returnValue($ownerContentInfo));
+            ->willReturn($ownerContentInfo);
 
         self::assertSame(
             'Owner name',
@@ -130,7 +132,7 @@ final class OwnerTest extends TestCase
             ->expects(self::once())
             ->method('loadVersionInfoById')
             ->with(self::identicalTo(42))
-            ->will(self::throwException(new NotFoundException('user', 42)));
+            ->willThrowException(new NotFoundException('user', 42));
 
         self::assertSame('', $this->provider->getValue($item));
     }

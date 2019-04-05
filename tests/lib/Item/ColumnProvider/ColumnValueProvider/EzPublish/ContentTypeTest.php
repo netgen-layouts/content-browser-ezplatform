@@ -42,14 +42,16 @@ final class ContentTypeTest extends TestCase
             ->expects(self::any())
             ->method('sudo')
             ->with(self::anything())
-            ->will(self::returnCallback(function (callable $callback) {
-                return $callback($this->repositoryMock);
-            }));
+            ->willReturnCallback(
+                function (callable $callback) {
+                    return $callback($this->repositoryMock);
+                }
+            );
 
         $this->repositoryMock
             ->expects(self::any())
             ->method('getContentTypeService')
-            ->will(self::returnValue($this->contentTypeServiceMock));
+            ->willReturn($this->contentTypeServiceMock);
 
         $this->provider = new ContentType(
             $this->repositoryMock
@@ -94,7 +96,7 @@ final class ContentTypeTest extends TestCase
             ->expects(self::once())
             ->method('loadContentType')
             ->with(self::identicalTo(42))
-            ->will(self::returnValue($contentType));
+            ->willReturn($contentType);
 
         self::assertSame(
             'Content type',
