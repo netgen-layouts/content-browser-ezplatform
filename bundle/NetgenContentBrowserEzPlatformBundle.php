@@ -12,6 +12,6 @@ final class NetgenContentBrowserEzPlatformBundle extends Bundle
 {
     public function build(ContainerBuilder $container): void
     {
-        $container->addCompilerPass(new CompilerPass\EzPublishDefaultPreviewPass());
+        $container->addCompilerPass(new CompilerPass\EzPlatformDefaultPreviewPass());
     }
 }

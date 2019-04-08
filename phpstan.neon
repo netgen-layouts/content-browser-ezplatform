@@ -6,7 +6,7 @@ parameters:
         # eZ Platform
         -
             message: '#Criterion\\ParentLocationId constructor expects array<int>\|int, int\|string given.#'
-            path: lib/Backend/EzPublishBackend.php
+            path: lib/Backend/EzPlatformBackend.php
 
         # Content Browser specifics
         -

@@ -2,41 +2,41 @@ item_types:
     ezlocation:
         name: item_types.ezlocation
         preview:
-            template: '%netgen_content_browser.ezpublish.default_item_template%'
+            template: '%netgen_content_browser.ezplatform.default_item_template%'
         columns:
             name:
                 name: columns.name
                 value_provider: name
             location_id:
-                name: columns.ezpublish.location_id
-                value_provider: ezpublish\location_id
+                name: columns.ezplatform.location_id
+                value_provider: ezplatform\location_id
             content_id:
-                name: columns.ezpublish.content_id
-                value_provider: ezpublish\content_id
+                name: columns.ezplatform.content_id
+                value_provider: ezplatform\content_id
             thumbnail:
-                name: columns.ezpublish.thumbnail
-                template: '%netgen_content_browser.ezpublish.default_thumbnail_template%'
+                name: columns.ezplatform.thumbnail
+                template: '%netgen_content_browser.ezplatform.default_thumbnail_template%'
             type:
-                name: columns.ezpublish.type
-                value_provider: ezpublish\content_type
+                name: columns.ezplatform.type
+                value_provider: ezplatform\content_type
             visible:
-                name: columns.ezpublish.visible
-                value_provider: ezpublish\visible
+                name: columns.ezplatform.visible
+                value_provider: ezplatform\visible
             owner:
-                name: columns.ezpublish.owner
-                value_provider: ezpublish\owner
+                name: columns.ezplatform.owner
+                value_provider: ezplatform\owner
             modified:
-                name: columns.ezpublish.modified
-                value_provider: ezpublish\modified
+                name: columns.ezplatform.modified
+                value_provider: ezplatform\modified
             published:
-                name: columns.ezpublish.published
-                value_provider: ezpublish\published
+                name: columns.ezplatform.published
+                value_provider: ezplatform\published
             priority:
-                name: columns.ezpublish.priority
-                value_provider: ezpublish\priority
+                name: columns.ezplatform.priority
+                value_provider: ezplatform\priority
             section:
-                name: columns.ezpublish.section
-                value_provider: ezpublish\section
+                name: columns.ezplatform.section
+                value_provider: ezplatform\section
         default_columns:
             - name
             - type
@@ -45,41 +45,41 @@ item_types:
     ezcontent:
         name: item_types.ezcontent
         preview:
-            template: '%netgen_content_browser.ezpublish.default_item_template%'
+            template: '%netgen_content_browser.ezplatform.default_item_template%'
         columns:
             name:
                 name: columns.name
                 value_provider: name
             location_id:
-                name: columns.ezpublish.location_id
-                value_provider: ezpublish\location_id
+                name: columns.ezplatform.location_id
+                value_provider: ezplatform\location_id
             content_id:
-                name: columns.ezpublish.content_id
-                value_provider: ezpublish\content_id
+                name: columns.ezplatform.content_id
+                value_provider: ezplatform\content_id
             thumbnail:
-                name: columns.ezpublish.thumbnail
-                template: '%netgen_content_browser.ezpublish.default_thumbnail_template%'
+                name: columns.ezplatform.thumbnail
+                template: '%netgen_content_browser.ezplatform.default_thumbnail_template%'
             type:
-                name: columns.ezpublish.type
-                value_provider: ezpublish\content_type
+                name: columns.ezplatform.type
+                value_provider: ezplatform\content_type
             visible:
-                name: columns.ezpublish.visible
-                value_provider: ezpublish\visible
+                name: columns.ezplatform.visible
+                value_provider: ezplatform\visible
             owner:
-                name: columns.ezpublish.owner
-                value_provider: ezpublish\owner
+                name: columns.ezplatform.owner
+                value_provider: ezplatform\owner
             modified:
-                name: columns.ezpublish.modified
-                value_provider: ezpublish\modified
+                name: columns.ezplatform.modified
+                value_provider: ezplatform\modified
             published:
-                name: columns.ezpublish.published
-                value_provider: ezpublish\published
+                name: columns.ezplatform.published
+                value_provider: ezplatform\published
             priority:
-                name: columns.ezpublish.priority
-                value_provider: ezpublish\priority
+                name: columns.ezplatform.priority
+                value_provider: ezplatform\priority
             section:
-                name: columns.ezpublish.section
-                value_provider: ezpublish\section
+                name: columns.ezplatform.section
+                value_provider: ezplatform\section
         default_columns:
             - name
             - type
