@@ -23,13 +23,10 @@ use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Backend\EzPublishBackend;
 use Netgen\ContentBrowser\Ez\Item\EzPublish\Item;
 use Netgen\ContentBrowser\Ez\Tests\Stubs\Location as StubLocation;
-use Netgen\ContentBrowser\Tests\TestCase\LegacyTestCaseTrait;
 use PHPUnit\Framework\TestCase;
 
 final class EzPublishBackendTest extends TestCase
 {
-    use LegacyTestCaseTrait;
-
     /**
      * @var \eZ\Publish\API\Repository\Repository&\PHPUnit\Framework\MockObject\MockObject
      */
