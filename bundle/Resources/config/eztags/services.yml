@@ -1,7 +1,6 @@
 services:
     netgen_content_browser.backend.eztags:
         class: Netgen\ContentBrowser\Ez\Backend\EzTagsBackend
-        public: false
         # Needs to be lazy since we're injecting "languages" dynamic param
         lazy: true
         arguments:
@@ -14,19 +13,16 @@ services:
 
     netgen_content_browser.column_value_provider.eztags.tag_id:
         class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\TagId
-        public: false
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags\tag_id }
 
     netgen_content_browser.column_value_provider.eztags.parent_tag_id:
         class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId
-        public: false
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags\parent_tag_id }
 
     netgen_content_browser.column_value_provider.eztags.parent_tag:
         class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
-        public: false
         arguments:
             - "@ezpublish.api.service.tags"
             - "@ezpublish.translation_helper"
@@ -35,7 +31,6 @@ services:
 
     netgen_content_browser.column_value_provider.eztags.modified:
         class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
-        public: false
         arguments:
             - "%netgen_content_browser.columns.date_format%"
         tags:
