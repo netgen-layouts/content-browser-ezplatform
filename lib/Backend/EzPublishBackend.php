@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Netgen\ContentBrowser\Ez\Backend;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
-use eZ\Publish\API\Repository\Repository;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -26,11 +25,6 @@ use Netgen\ContentBrowser\Item\LocationInterface;
  */
 class EzPublishBackend implements BackendInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\Repository
-     */
-    private $repository;
-
     /**
      * @var \eZ\Publish\API\Repository\SearchService
      */
@@ -62,12 +56,10 @@ class EzPublishBackend implements BackendInterface
     private $allowedContentTypeIds;
 
     public function __construct(
-        Repository $repository,
         SearchService $searchService,
         Handler $contentTypeHandler,
         Configuration $config
     ) {
-        $this->repository = $repository;
         $this->searchService = $searchService;
         $this->contentTypeHandler = $contentTypeHandler;
         $this->config = $config;
@@ -320,22 +312,12 @@ class EzPublishBackend implements BackendInterface
         /** @var \eZ\Publish\API\Repository\Values\Content\Location $location */
         $location = $searchHit->valueObject;
 
-        /** @var \eZ\Publish\API\Repository\Values\Content\Content $content */
-        $content = $this->repository->sudo(
-            static function (Repository $repository) use ($location): Content {
-                return $repository->getContentService()->loadContentByContentInfo(
-                    $location->contentInfo
-                );
-            }
-        );
-
         return new Item(
             $location,
-            $content,
             $this->config->getItemType() === 'ezlocation' ?
                 $location->id :
                 $location->contentInfo->id,
-            $this->isSelectable($content)
+            $this->isSelectable($location->getContent())
         );
     }
 

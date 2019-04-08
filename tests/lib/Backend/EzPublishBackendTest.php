@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\ContentBrowser\Ez\Tests\Backend;
 
-use eZ\Publish\API\Repository\ContentService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -12,10 +11,8 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
-use eZ\Publish\Core\Repository\Repository;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use eZ\Publish\SPI\Persistence\Content\Type;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Config\Configuration;
@@ -28,19 +25,9 @@ use PHPUnit\Framework\TestCase;
 final class EzPublishBackendTest extends TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\Repository&\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $repositoryMock;
-
-    /**
      * @var \eZ\Publish\API\Repository\SearchService&\PHPUnit\Framework\MockObject\MockObject
      */
     private $searchServiceMock;
-
-    /**
-     * @var \eZ\Publish\API\Repository\ContentService&\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $contentServiceMock;
 
     /**
      * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler&\PHPUnit\Framework\MockObject\MockObject
@@ -86,55 +73,7 @@ final class EzPublishBackendTest extends TestCase
                 }
             );
 
-        $this->repositoryMock = $this->createPartialMock(
-            Repository::class,
-            [
-                'sudo',
-                'getSearchService',
-                'getContentService',
-            ]
-        );
-
-        $this->repositoryMock
-            ->expects(self::any())
-            ->method('sudo')
-            ->with(self::anything())
-            ->willReturnCallback(
-                function (callable $callback) {
-                    return $callback($this->repositoryMock);
-                }
-            );
-
         $this->searchServiceMock = $this->createMock(SearchService::class);
-        $this->contentServiceMock = $this->createMock(ContentService::class);
-
-        $this->contentServiceMock
-            ->expects(self::any())
-            ->method('loadContentByContentInfo')
-            ->with(self::isInstanceOf(ContentInfo::class))
-            ->willReturnCallback(
-                static function (ContentInfo $contentInfo): Content {
-                    return new Content(
-                        [
-                            'versionInfo' => new VersionInfo(
-                                [
-                                    'contentInfo' => $contentInfo,
-                                ]
-                            ),
-                        ]
-                    );
-                }
-            );
-
-        $this->repositoryMock
-            ->expects(self::any())
-            ->method('getSearchService')
-            ->willReturn($this->searchServiceMock);
-
-        $this->repositoryMock
-            ->expects(self::any())
-            ->method('getContentService')
-            ->willReturn($this->contentServiceMock);
 
         $configuration = new Configuration('ezlocation', 'eZ location', []);
         $configuration->setParameter('sections', $this->defaultSections);
@@ -143,7 +82,6 @@ final class EzPublishBackendTest extends TestCase
         $this->languages = ['eng-GB', 'cro-HR'];
 
         $this->backend = new EzPublishBackend(
-            $this->repositoryMock,
             $this->searchServiceMock,
             $this->contentTypeHandlerMock,
             $configuration
@@ -272,7 +210,6 @@ final class EzPublishBackendTest extends TestCase
     public function testLoadItemWithContent(): void
     {
         $this->backend = new EzPublishBackend(
-            $this->repositoryMock,
             $this->searchServiceMock,
             $this->contentTypeHandlerMock,
             new Configuration('ezcontent', 'eZ content', [])
@@ -368,7 +305,7 @@ final class EzPublishBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $locations = $this->backend->getSubLocations(
-            new Item($this->getLocation(2), new Content(), 2)
+            new Item($this->getLocation(2), 2)
         );
 
         self::assertCount(2, $locations);
@@ -421,7 +358,7 @@ final class EzPublishBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubLocationsCount(
-            new Item($this->getLocation(2), new Content(), 2)
+            new Item($this->getLocation(2), 2)
         );
 
         self::assertSame(2, $count);
@@ -459,7 +396,7 @@ final class EzPublishBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
-            new Item($this->getLocation(2), new Content(), 2)
+            new Item($this->getLocation(2), 2)
         );
 
         self::assertCount(2, $items);
@@ -504,7 +441,7 @@ final class EzPublishBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
-            new Item($this->getLocation(2), new Content(), 2),
+            new Item($this->getLocation(2), 2),
             5,
             10
         );
@@ -557,7 +494,7 @@ final class EzPublishBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubItemsCount(
-            new Item($this->getLocation(2), new Content(), 2)
+            new Item($this->getLocation(2), 2)
         );
 
         self::assertSame(2, $count);
@@ -666,6 +603,7 @@ final class EzPublishBackendTest extends TestCase
             [
                 'id' => $id,
                 'parentLocationId' => $parentLocationId,
+                'content' => new Content(),
                 'contentInfo' => new ContentInfo(
                     [
                         'id' => $contentId,

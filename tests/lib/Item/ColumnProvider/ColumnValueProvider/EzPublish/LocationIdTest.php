@@ -31,10 +31,10 @@ final class LocationIdTest extends TestCase
         $item = new Item(
             new Location(
                 [
+                    'content' => new Content(),
                     'id' => 42,
                 ]
             ),
-            new Content(),
             24
         );
 

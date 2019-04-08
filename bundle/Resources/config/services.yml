@@ -22,7 +22,6 @@ services:
     netgen_content_browser.backend.ezlocation:
         class: Netgen\ContentBrowser\Ez\Backend\EzPublishBackend
         arguments:
-            - "@ezpublish.api.repository"
             - "@netgen_content_browser.ezpublish.search_service"
             - "@ezpublish.spi.persistence.content_type_handler"
             - "@netgen_content_browser.config.ezlocation"
@@ -35,7 +34,6 @@ services:
     netgen_content_browser.backend.ezcontent:
         class: Netgen\ContentBrowser\Ez\Backend\EzPublishBackend
         arguments:
-            - "@ezpublish.api.repository"
             - "@netgen_content_browser.ezpublish.search_service"
             - "@ezpublish.spi.persistence.content_type_handler"
             - "@netgen_content_browser.config.ezcontent"
@@ -75,8 +73,6 @@ services:
 
     netgen_content_browser.column_value_provider.ezpublish.content_type:
         class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPublish\ContentType
-        arguments:
-            - "@ezpublish.api.repository"
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezpublish\content_type }
 

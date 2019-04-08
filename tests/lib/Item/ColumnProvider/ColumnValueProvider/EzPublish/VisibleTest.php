@@ -31,10 +31,10 @@ final class VisibleTest extends TestCase
         $item = new Item(
             new Location(
                 [
+                    'content' => new Content(),
                     'invisible' => true,
                 ]
             ),
-            new Content(),
             24
         );
 

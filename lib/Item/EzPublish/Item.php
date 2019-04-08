@@ -33,14 +33,13 @@ final class Item implements ItemInterface, LocationInterface, EzPublishInterface
 
     /**
      * @param \eZ\Publish\API\Repository\Values\Content\Location $location
-     * @param \eZ\Publish\API\Repository\Values\Content\Content $content
      * @param int|string $value
      * @param bool $selectable
      */
-    public function __construct(Location $location, Content $content, $value, bool $selectable = true)
+    public function __construct(Location $location, $value, bool $selectable = true)
     {
         $this->location = $location;
-        $this->content = $content;
+        $this->content = $location->getContent();
         $this->value = $value;
         $this->selectable = $selectable;
     }

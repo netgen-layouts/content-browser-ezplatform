@@ -49,12 +49,13 @@ final class ItemTest extends TestCase
         $this->location = new Location(
             [
                 'id' => 22,
+                'content' => $this->content,
                 'parentLocationId' => 24,
                 'invisible' => true,
             ]
         );
 
-        $this->item = new Item($this->location, $this->content, 42, false);
+        $this->item = new Item($this->location, 42, false);
     }
 
     /**
@@ -97,11 +98,12 @@ final class ItemTest extends TestCase
     {
         $this->location = new Location(
             [
+                'content' => $this->content,
                 'parentLocationId' => 1,
             ]
         );
 
-        $this->item = new Item($this->location, $this->content, 42);
+        $this->item = new Item($this->location, 42);
 
         self::assertNull($this->item->getParentId());
     }

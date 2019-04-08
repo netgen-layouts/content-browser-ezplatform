@@ -79,8 +79,7 @@ final class OwnerTest extends TestCase
         );
 
         $item = new Item(
-            new Location(),
-            $content,
+            new Location(['content' => $content]),
             24
         );
 
@@ -123,8 +122,7 @@ final class OwnerTest extends TestCase
         );
 
         $item = new Item(
-            new Location(),
-            $content,
+            new Location(['content' => $content]),
             24
         );
 

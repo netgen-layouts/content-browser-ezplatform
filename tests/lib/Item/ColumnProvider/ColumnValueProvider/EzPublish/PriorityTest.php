@@ -31,10 +31,10 @@ final class PriorityTest extends TestCase
         $item = new Item(
             new Location(
                 [
+                    'content' => new Content(),
                     'priority' => 5,
                 ]
             ),
-            new Content(),
             24
         );
 
