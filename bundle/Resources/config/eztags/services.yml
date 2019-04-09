@@ -4,7 +4,7 @@ services:
         # Needs to be lazy since we're injecting "languages" dynamic param
         lazy: true
         arguments:
-            - "@ezpublish.api.service.tags"
+            - "@eztags.api.service.tags"
             - "@ezpublish.translation_helper"
         calls:
             - [setLanguages, ["$languages$"]]
@@ -24,7 +24,7 @@ services:
     netgen_content_browser.column_value_provider.eztags.parent_tag:
         class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
         arguments:
-            - "@ezpublish.api.service.tags"
+            - "@eztags.api.service.tags"
             - "@ezpublish.translation_helper"
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: eztags\parent_tag }
