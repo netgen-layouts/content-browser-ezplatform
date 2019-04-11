@@ -59,7 +59,7 @@ class EzTagsBackend implements BackendInterface
 
     public function loadLocation($id): LocationInterface
     {
-        if (in_array($id, [0, null], true)) {
+        if (in_array($id, ['0', 0, null], true)) {
             return $this->buildLocation();
         }
 
