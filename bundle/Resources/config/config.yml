@@ -2,7 +2,7 @@ item_types:
     ezlocation:
         name: item_types.ezlocation
         preview:
-            template: '%netgen_content_browser.ezplatform.default_item_template%'
+            template: '%netgen_content_browser.ezplatform.item_template%'
         columns:
             name:
                 name: columns.name
@@ -15,7 +15,7 @@ item_types:
                 value_provider: ezplatform\content_id
             thumbnail:
                 name: columns.ezplatform.thumbnail
-                template: '%netgen_content_browser.ezplatform.default_thumbnail_template%'
+                template: '%netgen_content_browser.ezplatform.thumbnail_template%'
             type:
                 name: columns.ezplatform.type
                 value_provider: ezplatform\content_type
@@ -45,7 +45,7 @@ item_types:
     ezcontent:
         name: item_types.ezcontent
         preview:
-            template: '%netgen_content_browser.ezplatform.default_item_template%'
+            template: '%netgen_content_browser.ezplatform.item_template%'
         columns:
             name:
                 name: columns.name
@@ -58,7 +58,7 @@ item_types:
                 value_provider: ezplatform\content_id
             thumbnail:
                 name: columns.ezplatform.thumbnail
-                template: '%netgen_content_browser.ezplatform.default_thumbnail_template%'
+                template: '%netgen_content_browser.ezplatform.thumbnail_template%'
             type:
                 name: columns.ezplatform.type
                 value_provider: ezplatform\content_type

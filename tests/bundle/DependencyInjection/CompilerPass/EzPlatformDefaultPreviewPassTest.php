@@ -18,7 +18,7 @@ final class EzPlatformDefaultPreviewPassTest extends AbstractCompilerPassTestCas
     public function testProcess(): void
     {
         $this->setParameter('ezpublish.siteaccess.list', ['cro', 'eng', 'admin']);
-        $this->setParameter('netgen_content_browser.ezplatform.default_preview_template', 'template.html.twig');
+        $this->setParameter('netgen_content_browser.ezplatform.preview_template', 'template.html.twig');
 
         foreach (['default', 'cro', 'admin'] as $scope) {
             $this->setParameter(

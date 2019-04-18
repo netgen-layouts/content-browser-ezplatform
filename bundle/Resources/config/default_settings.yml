@@ -1,6 +1,6 @@
 parameters:
-    netgen_content_browser.ezplatform.default_item_template: '@@NetgenContentBrowserEzPlatform/ezplatform/item.html.twig'
-    netgen_content_browser.ezplatform.default_preview_template: '@@NetgenContentBrowserEzPlatform/ezplatform/ngcb_preview.html.twig'
-    netgen_content_browser.ezplatform.default_thumbnail_template: '@@NetgenContentBrowserEzPlatform/ezplatform/columns/thumbnail.html.twig'
+    netgen_content_browser.ezplatform.item_template: '@@NetgenContentBrowserEzPlatform/ezplatform/item.html.twig'
+    netgen_content_browser.ezplatform.preview_template: '@@NetgenContentBrowserEzPlatform/ezplatform/ngcb_preview.html.twig'
+    netgen_content_browser.ezplatform.thumbnail_template: '@@NetgenContentBrowserEzPlatform/ezplatform/columns/thumbnail.html.twig'
 
-    netgen_content_browser.eztags.default_item_template: '@@NetgenContentBrowserEzPlatform/eztags/item.html.twig'
+    netgen_content_browser.eztags.item_template: '@@NetgenContentBrowserEzPlatform/eztags/item.html.twig'
