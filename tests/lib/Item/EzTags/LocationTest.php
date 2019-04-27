@@ -20,7 +20,7 @@ final class LocationTest extends TestCase
      */
     private $location;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->tag = new Tag(['id' => 42, 'parentTagId' => 24]);
 

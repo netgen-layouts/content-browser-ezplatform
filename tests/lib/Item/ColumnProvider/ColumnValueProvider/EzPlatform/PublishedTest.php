@@ -21,7 +21,7 @@ final class PublishedTest extends TestCase
      */
     private $provider;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->provider = new Published('d.m.Y H:i:s');
     }

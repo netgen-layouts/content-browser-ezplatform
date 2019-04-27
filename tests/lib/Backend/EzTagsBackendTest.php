@@ -38,7 +38,7 @@ final class EzTagsBackendTest extends TestCase
      */
     private $backend;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->tagsServiceMock = $this->createMock(TagsService::class);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);

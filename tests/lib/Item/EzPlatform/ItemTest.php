@@ -28,7 +28,7 @@ final class ItemTest extends TestCase
      */
     private $item;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->content = new Content(
             [

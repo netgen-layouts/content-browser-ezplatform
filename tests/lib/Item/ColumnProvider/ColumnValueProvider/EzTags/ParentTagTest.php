@@ -29,7 +29,7 @@ final class ParentTagTest extends TestCase
      */
     private $provider;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->tagsServiceMock = $this->createPartialMock(TagsService::class, ['loadTag']);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);

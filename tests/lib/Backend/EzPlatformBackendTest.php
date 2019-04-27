@@ -54,7 +54,7 @@ final class EzPlatformBackendTest extends TestCase
      */
     private $backend;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->defaultSections = [2, 43, 5];
         $this->locationContentTypes = ['frontpage' => 24, 'category' => 42];

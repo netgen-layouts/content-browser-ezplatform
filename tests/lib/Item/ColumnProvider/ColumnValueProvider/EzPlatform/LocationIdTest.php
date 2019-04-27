@@ -18,7 +18,7 @@ final class LocationIdTest extends TestCase
      */
     private $provider;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->provider = new LocationId();
     }

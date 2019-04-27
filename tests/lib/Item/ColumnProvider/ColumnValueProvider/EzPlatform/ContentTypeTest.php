@@ -21,7 +21,7 @@ final class ContentTypeTest extends TestCase
      */
     private $provider;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->provider = new ContentType();
     }

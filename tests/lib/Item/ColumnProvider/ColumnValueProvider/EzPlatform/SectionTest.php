@@ -33,7 +33,7 @@ final class SectionTest extends TestCase
      */
     private $provider;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->sectionServiceMock = $this->createMock(SectionService::class);
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getSectionService']);
