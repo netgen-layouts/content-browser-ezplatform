@@ -1,8 +1,6 @@
-Netgen Content Browser & eZ Platform installation instructions
-==============================================================
+# Netgen Content Browser & eZ Platform installation instructions
 
-Use Composer
-------------
+## Use Composer
 
 Run the following command to install Netgen Content Browser & eZ Platform
 integration:
@@ -11,8 +9,7 @@ integration:
 composer require netgen/content-browser-ezplatform
 ```
 
-Activate the bundle
--------------------
+## Activate the bundle
 
 Activate the integration bundle in your kernel class:
 

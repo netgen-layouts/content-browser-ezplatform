@@ -1,11 +1,10 @@
-Netgen Content Browser & eZ Platform integration
-================================================
+# Netgen Content Browser & eZ Platform integration
 
-# Installation instructions
+## Installation instructions
 
 [INSTALL.md](INSTALL.md)
 
-# Running tests
+## Running tests
 
 Running tests requires that you have complete vendors installed, so run
 `composer install` before running the tests.
