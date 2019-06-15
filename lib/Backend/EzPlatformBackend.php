@@ -173,7 +173,7 @@ class EzPlatformBackend implements BackendInterface
         }
 
         $criteria = [
-            new Criterion\ParentLocationId($location->getLocationId()),
+            new Criterion\ParentLocationId((int) $location->getLocationId()),
         ];
 
         if (count($this->locationContentTypeIds) > 0) {
@@ -202,7 +202,7 @@ class EzPlatformBackend implements BackendInterface
         }
 
         $criteria = [
-            new Criterion\ParentLocationId($location->getLocationId()),
+            new Criterion\ParentLocationId((int) $location->getLocationId()),
         ];
 
         if (count($this->locationContentTypeIds) > 0) {
@@ -228,7 +228,7 @@ class EzPlatformBackend implements BackendInterface
         }
 
         $criteria = [
-            new Criterion\ParentLocationId($location->getLocationId()),
+            new Criterion\ParentLocationId((int) $location->getLocationId()),
         ];
 
         $query = new LocationQuery();
@@ -248,7 +248,7 @@ class EzPlatformBackend implements BackendInterface
     public function getSubItemsCount(LocationInterface $location): int
     {
         $criteria = [
-            new Criterion\ParentLocationId($location->getLocationId()),
+            new Criterion\ParentLocationId((int) $location->getLocationId()),
         ];
 
         $query = new LocationQuery();

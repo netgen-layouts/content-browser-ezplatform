@@ -1,14 +1,2 @@
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
-
-parameters:
-    ignoreErrors:
-        # eZ Platform
-        -
-            message: '#Criterion\\ParentLocationId constructor expects array<int>\|int, int\|string given.#'
-            path: lib/Backend/EzPlatformBackend.php
-
-        # Content Browser specifics
-        -
-            message: '#Method Netgen\\ContentBrowser\\Ez\\Backend\\EzTagsBackend::loadLocation\(\) should return Netgen\\ContentBrowser\\Item\\LocationInterface but returns Netgen\\ContentBrowser\\Item\\ItemInterface.#'
-            path: lib/Backend/EzTagsBackend.php

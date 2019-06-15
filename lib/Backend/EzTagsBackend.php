@@ -63,23 +63,12 @@ class EzTagsBackend implements BackendInterface
             return $this->buildLocation();
         }
 
-        return $this->loadItem($id);
+        return $this->internalLoadItem($id);
     }
 
     public function loadItem($value): ItemInterface
     {
-        try {
-            $tag = $this->tagsService->loadTag($value);
-        } catch (APINotFoundException $e) {
-            throw new NotFoundException(
-                sprintf(
-                    'Item with value "%s" not found.',
-                    $value
-                )
-            );
-        }
-
-        return $this->buildItem($tag);
+        return $this->internalLoadItem($value);
     }
 
     public function getSubLocations(LocationInterface $location): iterable
@@ -174,6 +163,29 @@ class EzTagsBackend implements BackendInterface
         );
 
         return new Location($tag, (string) $tagName);
+    }
+
+    /**
+     * Returns the item for provided value.
+     *
+     * @param int|string $value
+     *
+     * @return \Netgen\ContentBrowser\Ez\Item\EzTags\Item
+     */
+    private function internalLoadItem($value): Item
+    {
+        try {
+            $tag = $this->tagsService->loadTag($value);
+        } catch (APINotFoundException $e) {
+            throw new NotFoundException(
+                sprintf(
+                    'Item with value "%s" not found.',
+                    $value
+                )
+            );
+        }
+
+        return $this->buildItem($tag);
     }
 
     /**

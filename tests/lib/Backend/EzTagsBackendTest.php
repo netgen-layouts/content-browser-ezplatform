@@ -73,6 +73,7 @@ final class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::buildItem
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::internalLoadItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::loadLocation
      */
     public function testLoadLocation(): void
@@ -90,6 +91,7 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::internalLoadItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::loadLocation
      */
     public function testLoadLocationThrowsNotFoundException(): void
@@ -125,6 +127,7 @@ final class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::buildItem
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::internalLoadItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::loadItem
      */
     public function testLoadItem(): void
@@ -142,6 +145,7 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::internalLoadItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::loadItem
      */
     public function testLoadItemThrowsNotFoundException(): void
