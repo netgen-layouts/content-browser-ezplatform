@@ -1,6 +1,7 @@
 {% set content = item.content %}
 
-{% if content.fields.image is defined and not ez_is_field_empty(content, 'image') %}
+{# We should use ez_field_is_empty function, but it does not exist on eZ kernel 7.5 #}
+{% if content.fields.image is defined and not content.fields.image.value.uri is empty %}
     {% set image_alias = ez_image_alias(content.field('image'), content.versionInfo, 'ngcb_thumbnail') %}
 
     <img src="{{ asset(image_alias.uri) }}" />
