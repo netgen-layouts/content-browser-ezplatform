@@ -101,7 +101,7 @@ class EzPlatformBackend implements BackendInterface
                     return 0;
                 }
 
-                return $sortMap[$item1->getLocationId()] <=> $sortMap[$item2->getLocationId()];
+                return $sortMap[(int) $item1->getLocationId()] <=> $sortMap[(int) $item2->getLocationId()];
             }
         );
 
