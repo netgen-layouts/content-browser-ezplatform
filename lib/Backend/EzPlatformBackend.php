@@ -11,6 +11,7 @@ use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Backend\BackendInterface;
 use Netgen\ContentBrowser\Config\Configuration;
@@ -20,10 +21,7 @@ use Netgen\ContentBrowser\Ez\Item\EzPlatform\Item;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 
-/**
- * @final
- */
-class EzPlatformBackend implements BackendInterface
+final class EzPlatformBackend implements BackendInterface
 {
     /**
      * @var \eZ\Publish\API\Repository\SearchService
@@ -36,14 +34,14 @@ class EzPlatformBackend implements BackendInterface
     private $contentTypeHandler;
 
     /**
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
+     */
+    private $configResolver;
+
+    /**
      * @var \Netgen\ContentBrowser\Config\Configuration
      */
     private $config;
-
-    /**
-     * @var array
-     */
-    private $languages = [];
 
     /**
      * @var int[]
@@ -58,21 +56,13 @@ class EzPlatformBackend implements BackendInterface
     public function __construct(
         SearchService $searchService,
         Handler $contentTypeHandler,
+        ConfigResolverInterface $configResolver,
         Configuration $config
     ) {
         $this->searchService = $searchService;
         $this->contentTypeHandler = $contentTypeHandler;
+        $this->configResolver = $configResolver;
         $this->config = $config;
-    }
-
-    /**
-     * Sets the current languages.
-     *
-     * @param string[]|null $languages
-     */
-    public function setLanguages(?array $languages = null): void
-    {
-        $this->languages = $languages ?? [];
     }
 
     public function getSections(): iterable
@@ -87,7 +77,7 @@ class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->languages]
+            ['languages' => $this->configResolver->getParameter('languages')]
         );
 
         $items = $this->buildItems($result);
@@ -115,7 +105,7 @@ class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->languages]
+            ['languages' => $this->configResolver->getParameter('languages')]
         );
 
         if (count($result->searchHits) > 0) {
@@ -145,7 +135,7 @@ class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->languages]
+            ['languages' => $this->configResolver->getParameter('languages')]
         );
 
         if (count($result->searchHits) > 0) {
@@ -187,7 +177,7 @@ class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->languages]
+            ['languages' => $this->configResolver->getParameter('languages')]
         );
 
         return $this->buildItems($result);
@@ -215,7 +205,7 @@ class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->languages]
+            ['languages' => $this->configResolver->getParameter('languages')]
         );
 
         return $result->totalCount ?? 0;
@@ -239,7 +229,7 @@ class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->languages]
+            ['languages' => $this->configResolver->getParameter('languages')]
         );
 
         return $this->buildItems($result);
@@ -257,7 +247,7 @@ class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->languages]
+            ['languages' => $this->configResolver->getParameter('languages')]
         );
 
         return $result->totalCount ?? 0;
@@ -278,7 +268,7 @@ class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->languages]
+            ['languages' => $this->configResolver->getParameter('languages')]
         );
 
         return $this->buildItems($result);
@@ -298,7 +288,7 @@ class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->languages]
+            ['languages' => $this->configResolver->getParameter('languages')]
         );
 
         return $result->totalCount ?? 0;

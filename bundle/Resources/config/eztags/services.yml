@@ -1,13 +1,10 @@
 services:
     netgen_content_browser.backend.eztags:
         class: Netgen\ContentBrowser\Ez\Backend\EzTagsBackend
-        # Needs to be lazy since we're injecting "languages" dynamic param
-        lazy: true
         arguments:
             - "@eztags.api.service.tags"
             - "@ezpublish.translation_helper"
-        calls:
-            - [setLanguages, ["$languages$"]]
+            - "@ezpublish.config.resolver"
         tags:
             - { name: netgen_content_browser.backend, item_type: eztags }
 

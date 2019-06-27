@@ -6,6 +6,7 @@ namespace Netgen\ContentBrowser\Ez\Tests\Backend;
 
 use eZ\Publish\Core\Base\Exceptions\NotFoundException as EzNotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Backend\EzTagsBackend;
 use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
@@ -29,9 +30,9 @@ final class EzTagsBackendTest extends TestCase
     private $translationHelperMock;
 
     /**
-     * @var array
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface&\PHPUnit\Framework\MockObject\MockObject
      */
-    private $languages;
+    private $configResolverMock;
 
     /**
      * @var \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend
@@ -42,14 +43,19 @@ final class EzTagsBackendTest extends TestCase
     {
         $this->tagsServiceMock = $this->createMock(TagsService::class);
         $this->translationHelperMock = $this->createMock(TranslationHelper::class);
-        $this->languages = ['eng-GB', 'cro-HR'];
+        $this->configResolverMock = $this->createMock(ConfigResolverInterface::class);
+
+        $this->configResolverMock
+            ->expects(self::any())
+            ->method('getParameter')
+            ->with(self::identicalTo('languages'))
+            ->willReturn(['eng-GB', 'cro-HR']);
 
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->translationHelperMock
+            $this->translationHelperMock,
+            $this->configResolverMock
         );
-
-        $this->backend->setLanguages($this->languages);
     }
 
     /**
@@ -57,7 +63,6 @@ final class EzTagsBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::buildLocation
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::getRootTag
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::getSections
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::setLanguages
      */
     public function testGetSections(): void
     {
@@ -383,9 +388,18 @@ final class EzTagsBackendTest extends TestCase
      */
     public function testSearchWithNoLanguages(): void
     {
+        $configResolverMock = $this->createMock(ConfigResolverInterface::class);
+
+        $configResolverMock
+            ->expects(self::at(0))
+            ->method('getParameter')
+            ->with(self::identicalTo('languages'))
+            ->willReturn([]);
+
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->translationHelperMock
+            $this->translationHelperMock,
+            $configResolverMock
         );
 
         $this->tagsServiceMock
@@ -447,9 +461,18 @@ final class EzTagsBackendTest extends TestCase
      */
     public function testSearchCountWithNoLanguages(): void
     {
+        $configResolverMock = $this->createMock(ConfigResolverInterface::class);
+
+        $configResolverMock
+            ->expects(self::at(0))
+            ->method('getParameter')
+            ->with(self::identicalTo('languages'))
+            ->willReturn([]);
+
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
-            $this->translationHelperMock
+            $this->translationHelperMock,
+            $configResolverMock
         );
 
         $this->tagsServiceMock

@@ -11,6 +11,7 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Query\SortClause\ContentName;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
+use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
 use eZ\Publish\SPI\Persistence\Content\Type;
@@ -35,6 +36,11 @@ final class EzPlatformBackendTest extends TestCase
     private $contentTypeHandlerMock;
 
     /**
+     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface&\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $configResolverMock;
+
+    /**
      * @var array
      */
     private $locationContentTypes;
@@ -43,11 +49,6 @@ final class EzPlatformBackendTest extends TestCase
      * @var array
      */
     private $defaultSections;
-
-    /**
-     * @var array
-     */
-    private $languages;
 
     /**
      * @var \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend
@@ -75,19 +76,23 @@ final class EzPlatformBackendTest extends TestCase
 
         $this->searchServiceMock = $this->createMock(SearchService::class);
 
+        $this->configResolverMock = $this->createMock(ConfigResolverInterface::class);
+        $this->configResolverMock
+            ->expects(self::any())
+            ->method('getParameter')
+            ->with(self::identicalTo('languages'))
+            ->willReturn(['eng-GB', 'cro-HR']);
+
         $configuration = new Configuration('ezlocation', 'eZ location', []);
         $configuration->setParameter('sections', $this->defaultSections);
         $configuration->setParameter('location_content_types', array_keys($this->locationContentTypes));
 
-        $this->languages = ['eng-GB', 'cro-HR'];
-
         $this->backend = new EzPlatformBackend(
             $this->searchServiceMock,
             $this->contentTypeHandlerMock,
+            $this->configResolverMock,
             $configuration
         );
-
-        $this->backend->setLanguages($this->languages);
     }
 
     /**
@@ -113,7 +118,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $locations = $this->backend->getSections();
@@ -140,7 +145,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $location = $this->backend->loadLocation(2);
@@ -166,7 +171,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $this->backend->loadLocation(2);
@@ -194,7 +199,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $item = $this->backend->loadItem(2);
@@ -212,10 +217,9 @@ final class EzPlatformBackendTest extends TestCase
         $this->backend = new EzPlatformBackend(
             $this->searchServiceMock,
             $this->contentTypeHandlerMock,
+            $this->configResolverMock,
             new Configuration('ezcontent', 'eZ content', [])
         );
-
-        $this->backend->setLanguages($this->languages);
 
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd(
@@ -233,7 +237,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $item = $this->backend->loadItem(2);
@@ -263,7 +267,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $this->backend->loadItem(2);
@@ -301,7 +305,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $locations = $this->backend->getSubLocations(
@@ -354,7 +358,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubLocationsCount(
@@ -392,7 +396,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
@@ -437,7 +441,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
@@ -490,7 +494,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubItemsCount(
@@ -523,7 +527,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $items = $this->backend->search('test');
@@ -555,7 +559,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $items = $this->backend->search('test', 5, 10);
@@ -580,7 +584,7 @@ final class EzPlatformBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => $this->languages]))
+            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
             ->willReturn($searchResult);
 
         $count = $this->backend->searchCount('test');

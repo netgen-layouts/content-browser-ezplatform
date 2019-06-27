@@ -24,10 +24,8 @@ services:
         arguments:
             - "@netgen_content_browser.ezplatform.search_service"
             - "@ezpublish.spi.persistence.content_type_handler"
+            - "@ezpublish.config.resolver"
             - "@netgen_content_browser.config.ezlocation"
-        lazy: true
-        calls:
-            - [setLanguages, ["$languages$"]]
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezlocation }
 
@@ -36,10 +34,8 @@ services:
         arguments:
             - "@netgen_content_browser.ezplatform.search_service"
             - "@ezpublish.spi.persistence.content_type_handler"
+            - "@ezpublish.config.resolver"
             - "@netgen_content_browser.config.ezcontent"
-        lazy: true
-        calls:
-            - [setLanguages, ["$languages$"]]
         tags:
             -  { name: netgen_content_browser.backend, item_type: ezcontent }
 
