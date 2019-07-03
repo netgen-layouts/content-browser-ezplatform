@@ -186,7 +186,10 @@ final class EzTagsBackendTest extends TestCase
             )
             ->willReturn([$this->getTag(null, 1), $this->getTag(null, 1)]);
 
-        $locations = $this->backend->getSubLocations(new Item($tag, 'tag'));
+        $locations = [];
+        foreach ($this->backend->getSubLocations(new Item($tag, 'tag')) as $location) {
+            $locations[] = $location;
+        }
 
         self::assertCount(2, $locations);
         self::assertContainsOnlyInstancesOf(Item::class, $locations);
@@ -262,7 +265,10 @@ final class EzTagsBackendTest extends TestCase
             )
             ->willReturn([$this->getTag(null, 1), $this->getTag(null, 1)]);
 
-        $items = $this->backend->getSubItems(new Item($tag, 'tag'));
+        $items = [];
+        foreach ($this->backend->getSubItems(new Item($tag, 'tag')) as $item) {
+            $items[] = $item;
+        }
 
         self::assertCount(2, $items);
         self::assertContainsOnlyInstancesOf(Item::class, $items);
@@ -293,11 +299,10 @@ final class EzTagsBackendTest extends TestCase
             )
             ->willReturn([$this->getTag(null, 1), $this->getTag(null, 1)]);
 
-        $items = $this->backend->getSubItems(
-            new Item($tag, 'tag'),
-            5,
-            10
-        );
+        $items = [];
+        foreach ($this->backend->getSubItems(new Item($tag, 'tag'), 5, 10) as $item) {
+            $items[] = $item;
+        }
 
         self::assertCount(2, $items);
         self::assertContainsOnlyInstancesOf(Item::class, $items);
@@ -375,7 +380,10 @@ final class EzTagsBackendTest extends TestCase
             )
             ->willReturn([$this->getTag(), $this->getTag()]);
 
-        $items = $this->backend->search('test');
+        $items = [];
+        foreach ($this->backend->search('test') as $item) {
+            $items[] = $item;
+        }
 
         self::assertCount(2, $items);
         self::assertContainsOnlyInstancesOf(Item::class, $items);
@@ -430,7 +438,10 @@ final class EzTagsBackendTest extends TestCase
             )
             ->willReturn([$this->getTag(), $this->getTag()]);
 
-        $items = $this->backend->search('test', 5, 10);
+        $items = [];
+        foreach ($this->backend->search('test', 5, 10) as $item) {
+            $items[] = $item;
+        }
 
         self::assertCount(2, $items);
         self::assertContainsOnlyInstancesOf(Item::class, $items);

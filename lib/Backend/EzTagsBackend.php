@@ -7,6 +7,7 @@ namespace Netgen\ContentBrowser\Ez\Backend;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
+use Generator;
 use Netgen\ContentBrowser\Backend\BackendInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Item\EzTags\EzTagsInterface;
@@ -199,19 +200,12 @@ final class EzTagsBackend implements BackendInterface
 
     /**
      * Builds the items from provided tags.
-     *
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
-     *
-     * @return \Netgen\ContentBrowser\Ez\Item\EzTags\Item[]
      */
-    private function buildItems(array $tags): array
+    private function buildItems(iterable $tags): Generator
     {
-        return array_map(
-            function (Tag $tag): Item {
-                return $this->buildItem($tag);
-            },
-            $tags
-        );
+        foreach ($tags as $tag) {
+            yield $this->buildItem($tag);
+        }
     }
 
     /**
