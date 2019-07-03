@@ -172,7 +172,7 @@ final class EzTagsBackend implements BackendInterface
     private function internalLoadItem($value): Item
     {
         try {
-            $tag = $this->tagsService->loadTag($value);
+            $tag = $this->tagsService->loadTag((int) $value);
         } catch (APINotFoundException $e) {
             throw new NotFoundException(
                 sprintf(
