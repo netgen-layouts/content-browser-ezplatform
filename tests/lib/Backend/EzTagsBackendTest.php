@@ -15,6 +15,7 @@ use Netgen\ContentBrowser\Ez\Tests\Stubs\Location as StubLocation;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use Netgen\TagsBundle\API\Repository\Values\Tags\TagList;
 use PHPUnit\Framework\TestCase;
 
 final class EzTagsBackendTest extends TestCase
@@ -184,7 +185,9 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(0),
                 self::identicalTo(-1)
             )
-            ->willReturn([$this->getTag(null, 1), $this->getTag(null, 1)]);
+            ->willReturn(
+                $this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)])
+            );
 
         $locations = [];
         foreach ($this->backend->getSubLocations(new Item($tag, 'tag')) as $location) {
@@ -263,7 +266,9 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(0),
                 self::identicalTo(25)
             )
-            ->willReturn([$this->getTag(null, 1), $this->getTag(null, 1)]);
+            ->willReturn(
+                $this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)])
+            );
 
         $items = [];
         foreach ($this->backend->getSubItems(new Item($tag, 'tag')) as $item) {
@@ -297,7 +302,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(5),
                 self::identicalTo(10)
             )
-            ->willReturn([$this->getTag(null, 1), $this->getTag(null, 1)]);
+            ->willReturn($this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
         $items = [];
         foreach ($this->backend->getSubItems(new Item($tag, 'tag'), 5, 10) as $item) {
@@ -378,7 +383,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(0),
                 self::identicalTo(25)
             )
-            ->willReturn([$this->getTag(), $this->getTag()]);
+            ->willReturn($this->getTagsList([$this->getTag(), $this->getTag()]));
 
         $items = [];
         foreach ($this->backend->search('test') as $item) {
@@ -436,7 +441,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(5),
                 self::identicalTo(10)
             )
-            ->willReturn([$this->getTag(), $this->getTag()]);
+            ->willReturn($this->getTagsList([$this->getTag(), $this->getTag()]));
 
         $items = [];
         foreach ($this->backend->search('test', 5, 10) as $item) {
@@ -511,5 +516,17 @@ final class EzTagsBackendTest extends TestCase
                 'parentTagId' => $parentTagId,
             ]
         );
+    }
+
+    /**
+     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
+     */
+    private function getTagsList(array $tags): iterable
+    {
+        if (class_exists(TagList::class)) {
+            return new TagList($tags);
+        }
+
+        return $tags;
     }
 }
