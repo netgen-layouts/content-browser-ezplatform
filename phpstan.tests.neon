@@ -2,3 +2,9 @@ includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
     - vendor/phpstan/phpstan-phpunit/rules.neon
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#Netgen\\TagsBundle\\API\\Repository\\Values\\Tags\\TagList#'
+            path: tests/lib/Backend/EzTagsBackendTest.php
