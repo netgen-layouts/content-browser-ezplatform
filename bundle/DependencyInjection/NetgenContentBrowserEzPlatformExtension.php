@@ -21,12 +21,12 @@ final class NetgenContentBrowserEzPlatformExtension extends Extension implements
             new FileLocator(__DIR__ . '/../Resources/config')
         );
 
-        $loader->load('services.yml');
+        $loader->load('services.yaml');
 
         $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
 
         if (in_array('NetgenTagsBundle', $activatedBundles, true)) {
-            $loader->load('eztags/services.yml');
+            $loader->load('eztags/services.yaml');
         }
     }
 
@@ -37,15 +37,15 @@ final class NetgenContentBrowserEzPlatformExtension extends Extension implements
             new FileLocator(__DIR__ . '/../Resources/config')
         );
 
-        $loader->load('default_settings.yml');
+        $loader->load('default_settings.yaml');
 
-        $this->doPrepend($container, 'config.yml', 'netgen_content_browser');
-        $this->doPrepend($container, 'image.yml', 'ezpublish');
+        $this->doPrepend($container, 'config.yaml', 'netgen_content_browser');
+        $this->doPrepend($container, 'image.yaml', 'ezpublish');
 
         $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
 
         if (in_array('NetgenTagsBundle', $activatedBundles, true)) {
-            $this->doPrepend($container, 'eztags/config.yml', 'netgen_content_browser');
+            $this->doPrepend($container, 'eztags/config.yaml', 'netgen_content_browser');
         }
     }
 
