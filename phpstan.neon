@@ -1,2 +1,8 @@
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    ignoreErrors:
+        # Disable errors about missing value types in various Symfony based classes
+
+        - '#Method .+Listener::getSubscribedEvents\(\) return type has no value type specified in iterable type array.#'

@@ -520,6 +520,8 @@ final class EzTagsBackendTest extends TestCase
 
     /**
      * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
+     *
+     * @return iterable<\Netgen\TagsBundle\API\Repository\Values\Tags\Tag>
      */
     private function getTagsList(array $tags): iterable
     {

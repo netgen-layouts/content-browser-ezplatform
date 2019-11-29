@@ -329,6 +329,8 @@ final class EzPlatformBackend implements BackendInterface
     /**
      * Returns content type IDs for all existing content types.
      *
+     * @param string[] $contentTypeIdentifiers
+     *
      * @return int[]
      */
     private function getContentTypeIds(array $contentTypeIdentifiers): array
@@ -373,6 +375,9 @@ final class EzPlatformBackend implements BackendInterface
         return in_array($content->contentInfo->contentTypeId, $this->allowedContentTypeIds, true);
     }
 
+    /**
+     * @return string[]
+     */
     private function getLocationContentTypes(): array
     {
         if ($this->config->hasParameter('location_content_types')) {

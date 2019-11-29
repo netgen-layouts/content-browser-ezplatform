@@ -49,11 +49,15 @@ final class EzPlatformDefaultPreviewPass implements CompilerPassInterface
     /**
      * Adds the default eZ content preview template to default scope as a fallback
      * when no preview rules are defined.
+     *
+     * @param array<string, array>|null $scopeRules
+     * @param array<string, mixed> $defaultRule
+     *
+     * @return array<string, mixed>
      */
     private function addDefaultPreviewRule(?array $scopeRules, array $defaultRule): array
     {
-        $scopeRules = is_array($scopeRules) ? $scopeRules : [];
-
+        $scopeRules = $scopeRules ?? [];
         $contentBrowserRules = $scopeRules['ngcb_preview'] ?? [];
 
         $contentBrowserRules += [

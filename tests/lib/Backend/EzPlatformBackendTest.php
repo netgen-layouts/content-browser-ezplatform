@@ -41,12 +41,12 @@ final class EzPlatformBackendTest extends TestCase
     private $configResolverMock;
 
     /**
-     * @var array
+     * @var array<string, int>
      */
     private $locationContentTypes;
 
     /**
-     * @var array
+     * @var int[]
      */
     private $defaultSections;
 
