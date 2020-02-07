@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Netgen\ContentBrowser\Ez\Backend;
 
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\Content;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
 use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
-use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
+use eZ\Publish\API\Repository\Values\Content\Search\SearchResult as EzSearchResult;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Backend\BackendInterface;
+use Netgen\ContentBrowser\Backend\SearchQuery;
+use Netgen\ContentBrowser\Backend\SearchResult;
+use Netgen\ContentBrowser\Backend\SearchResultInterface;
 use Netgen\ContentBrowser\Config\Configuration;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Item\EzPlatform\EzPlatformInterface;
@@ -27,6 +31,11 @@ final class EzPlatformBackend implements BackendInterface
      * @var \eZ\Publish\API\Repository\SearchService
      */
     private $searchService;
+
+    /**
+     * @var \eZ\Publish\API\Repository\LocationService
+     */
+    private $locationService;
 
     /**
      * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler
@@ -55,11 +64,13 @@ final class EzPlatformBackend implements BackendInterface
 
     public function __construct(
         SearchService $searchService,
+        LocationService $locationService,
         Handler $contentTypeHandler,
         ConfigResolverInterface $configResolver,
         Configuration $config
     ) {
         $this->searchService = $searchService;
+        $this->locationService = $locationService;
         $this->contentTypeHandler = $contentTypeHandler;
         $this->configResolver = $configResolver;
         $this->config = $config;
@@ -255,34 +266,76 @@ final class EzPlatformBackend implements BackendInterface
 
     public function search(string $searchText, int $offset = 0, int $limit = 25): iterable
     {
+        $searchQuery = new SearchQuery($searchText);
+        $searchQuery->setOffset($offset);
+        $searchQuery->setLimit($limit);
+
+        $searchResult = $this->searchItems($searchQuery);
+
+        return $searchResult->getResults();
+    }
+
+    public function searchCount(string $searchText): int
+    {
+        return $this->searchItemsCount(new SearchQuery($searchText));
+    }
+
+    public function searchItems(SearchQuery $searchQuery): SearchResultInterface
+    {
         $query = new LocationQuery();
 
+        $searchText = $searchQuery->getSearchText();
         if (trim($searchText) !== '') {
             $query->query = new Criterion\FullText($searchText);
         }
 
-        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
+        $criteria = [
+            new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+        ];
 
-        $query->offset = $offset;
-        $query->limit = $limit;
+        $searchLocation = $searchQuery->getLocation();
+        if ($searchLocation instanceof LocationInterface) {
+            $location = $this->locationService->loadLocation($searchLocation->getLocationId());
+
+            $criteria[] = new Criterion\Subtree($location->pathString);
+            $criteria[] = new Criterion\LogicalNot(new Criterion\LocationId($location->id));
+        }
+
+        $query->filter = new Criterion\LogicalAnd($criteria);
+
+        $query->offset = $searchQuery->getOffset();
+        $query->limit = $searchQuery->getLimit();
 
         $result = $this->searchService->findLocations(
             $query,
             ['languages' => $this->configResolver->getParameter('languages')]
         );
 
-        return $this->buildItems($result);
+        return new SearchResult($this->buildItems($result));
     }
 
-    public function searchCount(string $searchText): int
+    public function searchItemsCount(SearchQuery $searchQuery): int
     {
         $query = new LocationQuery();
 
+        $searchText = $searchQuery->getSearchText();
         if (trim($searchText) !== '') {
             $query->query = new Criterion\FullText($searchText);
         }
 
-        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
+        $criteria = [
+            new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+        ];
+
+        $searchLocation = $searchQuery->getLocation();
+        if ($searchLocation instanceof LocationInterface) {
+            $location = $this->locationService->loadLocation($searchLocation->getLocationId());
+
+            $criteria[] = new Criterion\Subtree($location->pathString);
+            $criteria[] = new Criterion\LogicalNot(new Criterion\LocationId($location->id));
+        }
+
+        $query->filter = new Criterion\LogicalAnd($criteria);
 
         $query->limit = 0;
 
@@ -316,7 +369,7 @@ final class EzPlatformBackend implements BackendInterface
      *
      * @return \Netgen\ContentBrowser\Ez\Item\EzPlatform\Item[]
      */
-    private function buildItems(SearchResult $searchResult): array
+    private function buildItems(EzSearchResult $searchResult): array
     {
         return array_map(
             function (SearchHit $searchHit): Item {

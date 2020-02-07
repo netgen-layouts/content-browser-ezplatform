@@ -23,6 +23,7 @@ services:
         class: Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend
         arguments:
             - "@netgen_content_browser.ezplatform.search_service"
+            - "@ezpublish.api.service.location"
             - "@ezpublish.spi.persistence.content_type_handler"
             - "@ezpublish.config.resolver"
             - "@netgen_content_browser.config.ezlocation"
@@ -33,6 +34,7 @@ services:
         class: Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend
         arguments:
             - "@netgen_content_browser.ezplatform.search_service"
+            - "@ezpublish.api.service.location"
             - "@ezpublish.spi.persistence.content_type_handler"
             - "@ezpublish.config.resolver"
             - "@netgen_content_browser.config.ezcontent"

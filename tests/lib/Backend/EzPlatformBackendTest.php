@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\ContentBrowser\Ez\Tests\Backend;
 
+use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\ContentInfo;
 use eZ\Publish\API\Repository\Values\Content\LocationQuery;
@@ -29,6 +30,11 @@ final class EzPlatformBackendTest extends TestCase
      * @var \eZ\Publish\API\Repository\SearchService&\PHPUnit\Framework\MockObject\MockObject
      */
     private $searchServiceMock;
+
+    /**
+     * @var \eZ\Publish\API\Repository\LocationService&\PHPUnit\Framework\MockObject\MockObject
+     */
+    private $locationServiceMock;
 
     /**
      * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler&\PHPUnit\Framework\MockObject\MockObject
@@ -75,6 +81,7 @@ final class EzPlatformBackendTest extends TestCase
             );
 
         $this->searchServiceMock = $this->createMock(SearchService::class);
+        $this->locationServiceMock = $this->createMock(LocationService::class);
 
         $this->configResolverMock = $this->createMock(ConfigResolverInterface::class);
         $this->configResolverMock
@@ -89,6 +96,7 @@ final class EzPlatformBackendTest extends TestCase
 
         $this->backend = new EzPlatformBackend(
             $this->searchServiceMock,
+            $this->locationServiceMock,
             $this->contentTypeHandlerMock,
             $this->configResolverMock,
             $configuration
@@ -216,6 +224,7 @@ final class EzPlatformBackendTest extends TestCase
     {
         $this->backend = new EzPlatformBackend(
             $this->searchServiceMock,
+            $this->locationServiceMock,
             $this->contentTypeHandlerMock,
             $this->configResolverMock,
             new Configuration('ezcontent', 'eZ content', [])
@@ -516,7 +525,11 @@ final class EzPlatformBackendTest extends TestCase
         $query->offset = 0;
         $query->limit = 25;
         $query->query = new Criterion\FullText('test');
-        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
+        $query->filter = new Criterion\LogicalAnd(
+            [
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+            ]
+        );
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = [
@@ -548,7 +561,11 @@ final class EzPlatformBackendTest extends TestCase
         $query->offset = 5;
         $query->limit = 10;
         $query->query = new Criterion\FullText('test');
-        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
+        $query->filter = new Criterion\LogicalAnd(
+            [
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+            ]
+        );
 
         $searchResult = new SearchResult();
         $searchResult->searchHits = [
@@ -576,7 +593,11 @@ final class EzPlatformBackendTest extends TestCase
         $query = new LocationQuery();
         $query->limit = 0;
         $query->query = new Criterion\FullText('test');
-        $query->filter = new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN);
+        $query->filter = new Criterion\LogicalAnd(
+            [
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+            ]
+        );
 
         $searchResult = new SearchResult();
         $searchResult->totalCount = 2;
