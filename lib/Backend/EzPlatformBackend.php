@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Netgen\ContentBrowser\Ez\Backend;
 
-use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\API\Repository\LocationService;
 use eZ\Publish\API\Repository\SearchService;
 use eZ\Publish\API\Repository\Values\Content\Content;
@@ -13,7 +12,6 @@ use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchHit;
 use eZ\Publish\API\Repository\Values\Content\Search\SearchResult as EzSearchResult;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
-use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Backend\BackendInterface;
 use Netgen\ContentBrowser\Backend\SearchQuery;
 use Netgen\ContentBrowser\Backend\SearchResult;
@@ -38,11 +36,6 @@ final class EzPlatformBackend implements BackendInterface
     private $locationService;
 
     /**
-     * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler
-     */
-    private $contentTypeHandler;
-
-    /**
      * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
      */
     private $configResolver;
@@ -53,25 +46,23 @@ final class EzPlatformBackend implements BackendInterface
     private $config;
 
     /**
-     * @var int[]
+     * @var string[]|null
      */
-    private $locationContentTypeIds;
+    private $locationContentTypes;
 
     /**
-     * @var int[]
+     * @var string[]|null
      */
-    private $allowedContentTypeIds;
+    private $allowedContentTypes;
 
     public function __construct(
         SearchService $searchService,
         LocationService $locationService,
-        Handler $contentTypeHandler,
         ConfigResolverInterface $configResolver,
         Configuration $config
     ) {
         $this->searchService = $searchService;
         $this->locationService = $locationService;
-        $this->contentTypeHandler = $contentTypeHandler;
         $this->configResolver = $configResolver;
         $this->config = $config;
     }
@@ -167,18 +158,16 @@ final class EzPlatformBackend implements BackendInterface
             return [];
         }
 
-        if ($this->locationContentTypeIds === null) {
-            $this->locationContentTypeIds = $this->getContentTypeIds(
-                $this->getLocationContentTypes()
-            );
+        if ($this->locationContentTypes === null) {
+            $this->locationContentTypes = $this->getLocationContentTypes();
         }
 
         $criteria = [
             new Criterion\ParentLocationId((int) $location->getLocationId()),
         ];
 
-        if (count($this->locationContentTypeIds) > 0) {
-            $criteria[] = new Criterion\ContentTypeId($this->locationContentTypeIds);
+        if (count($this->locationContentTypes) > 0) {
+            $criteria[] = new Criterion\ContentTypeIdentifier($this->locationContentTypes);
         }
 
         $query = new LocationQuery();
@@ -196,18 +185,16 @@ final class EzPlatformBackend implements BackendInterface
 
     public function getSubLocationsCount(LocationInterface $location): int
     {
-        if ($this->locationContentTypeIds === null) {
-            $this->locationContentTypeIds = $this->getContentTypeIds(
-                $this->getLocationContentTypes()
-            );
+        if ($this->locationContentTypes === null) {
+            $this->locationContentTypes = $this->getLocationContentTypes();
         }
 
         $criteria = [
             new Criterion\ParentLocationId((int) $location->getLocationId()),
         ];
 
-        if (count($this->locationContentTypeIds) > 0) {
-            $criteria[] = new Criterion\ContentTypeId($this->locationContentTypeIds);
+        if (count($this->locationContentTypes) > 0) {
+            $criteria[] = new Criterion\ContentTypeIdentifier($this->locationContentTypes);
         }
 
         $query = new LocationQuery();
@@ -380,29 +367,6 @@ final class EzPlatformBackend implements BackendInterface
     }
 
     /**
-     * Returns content type IDs for all existing content types.
-     *
-     * @param string[] $contentTypeIdentifiers
-     *
-     * @return int[]
-     */
-    private function getContentTypeIds(array $contentTypeIdentifiers): array
-    {
-        $idList = [];
-
-        foreach ($contentTypeIdentifiers as $identifier) {
-            try {
-                $contentType = $this->contentTypeHandler->loadByIdentifier($identifier);
-                $idList[] = $contentType->id;
-            } catch (APINotFoundException $e) {
-                continue;
-            }
-        }
-
-        return $idList;
-    }
-
-    /**
      * Returns if the provided content is selectable.
      */
     private function isSelectable(Content $content): bool
@@ -411,21 +375,20 @@ final class EzPlatformBackend implements BackendInterface
             return true;
         }
 
-        if ($this->allowedContentTypeIds === null) {
-            $this->allowedContentTypeIds = [];
+        if ($this->allowedContentTypes === null) {
+            $this->allowedContentTypes = [];
 
             $allowedContentTypes = $this->config->getParameter('allowed_content_types');
             if (is_string($allowedContentTypes) && $allowedContentTypes !== '') {
-                $allowedContentTypes = array_map('trim', explode(',', $allowedContentTypes));
-                $this->allowedContentTypeIds = $this->getContentTypeIds($allowedContentTypes);
+                $this->allowedContentTypes = array_map('trim', explode(',', $allowedContentTypes));
             }
         }
 
-        if (count($this->allowedContentTypeIds) === 0) {
+        if (count($this->allowedContentTypes) === 0) {
             return true;
         }
 
-        return in_array($content->contentInfo->contentTypeId, $this->allowedContentTypeIds, true);
+        return in_array($content->getContentType()->identifier, $this->allowedContentTypes, true);
     }
 
     /**

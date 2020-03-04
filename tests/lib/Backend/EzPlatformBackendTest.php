@@ -15,8 +15,6 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
-use eZ\Publish\SPI\Persistence\Content\Type;
-use eZ\Publish\SPI\Persistence\Content\Type\Handler;
 use Netgen\ContentBrowser\Config\Configuration;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend;
@@ -37,17 +35,12 @@ final class EzPlatformBackendTest extends TestCase
     private $locationServiceMock;
 
     /**
-     * @var \eZ\Publish\SPI\Persistence\Content\Type\Handler&\PHPUnit\Framework\MockObject\MockObject
-     */
-    private $contentTypeHandlerMock;
-
-    /**
      * @var \eZ\Publish\Core\MVC\ConfigResolverInterface&\PHPUnit\Framework\MockObject\MockObject
      */
     private $configResolverMock;
 
     /**
-     * @var array<string, int>
+     * @var string[]
      */
     private $locationContentTypes;
 
@@ -64,21 +57,7 @@ final class EzPlatformBackendTest extends TestCase
     protected function setUp(): void
     {
         $this->defaultSections = [2, 43, 5];
-        $this->locationContentTypes = ['frontpage' => 24, 'category' => 42];
-
-        $this->contentTypeHandlerMock = $this->createMock(Handler::class);
-        $this->contentTypeHandlerMock
-            ->expects(self::any())
-            ->method('loadByIdentifier')
-            ->willReturnCallback(
-                function (string $identifier): Type {
-                    return new Type(
-                        [
-                            'id' => $this->locationContentTypes[$identifier],
-                        ]
-                    );
-                }
-            );
+        $this->locationContentTypes = ['frontpage', 'category'];
 
         $this->searchServiceMock = $this->createMock(SearchService::class);
         $this->locationServiceMock = $this->createMock(LocationService::class);
@@ -92,12 +71,11 @@ final class EzPlatformBackendTest extends TestCase
 
         $configuration = new Configuration('ezlocation', 'eZ location', []);
         $configuration->setParameter('sections', $this->defaultSections);
-        $configuration->setParameter('location_content_types', array_keys($this->locationContentTypes));
+        $configuration->setParameter('location_content_types', $this->locationContentTypes);
 
         $this->backend = new EzPlatformBackend(
             $this->searchServiceMock,
             $this->locationServiceMock,
-            $this->contentTypeHandlerMock,
             $this->configResolverMock,
             $configuration
         );
@@ -107,7 +85,6 @@ final class EzPlatformBackendTest extends TestCase
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::__construct
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::buildItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::getContentTypeIds
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::getSections
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::isSelectable
      */
@@ -225,7 +202,6 @@ final class EzPlatformBackendTest extends TestCase
         $this->backend = new EzPlatformBackend(
             $this->searchServiceMock,
             $this->locationServiceMock,
-            $this->contentTypeHandlerMock,
             $this->configResolverMock,
             new Configuration('ezcontent', 'eZ content', [])
         );
@@ -285,7 +261,6 @@ final class EzPlatformBackendTest extends TestCase
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::buildItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::getContentTypeIds
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::getSubLocations
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::isSelectable
      */
@@ -297,9 +272,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\ParentLocationId(2),
-                new Criterion\ContentTypeId(
-                    array_values($this->locationContentTypes)
-                ),
+                new Criterion\ContentTypeIdentifier($this->locationContentTypes),
             ]
         );
 
@@ -345,7 +318,6 @@ final class EzPlatformBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::getContentTypeIds
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::getSubLocationsCount
      */
     public function testGetSubLocationsCount(): void
@@ -355,9 +327,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\ParentLocationId(2),
-                new Criterion\ContentTypeId(
-                    array_values($this->locationContentTypes)
-                ),
+                new Criterion\ContentTypeIdentifier($this->locationContentTypes),
             ]
         );
 

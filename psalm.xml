@@ -11,11 +11,4 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
-
-    <issueHandlers>
-        <!-- level 3 issues - slightly lazy code writing, but provably low false-negatives -->
-
-        <PropertyNotSetInConstructor errorLevel="info" />
-        <DocblockTypeContradiction errorLevel="info" />
-    </issueHandlers>
 </psalm>
