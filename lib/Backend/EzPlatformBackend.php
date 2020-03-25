@@ -282,7 +282,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $searchLocation = $searchQuery->getLocation();
         if ($searchLocation instanceof LocationInterface) {
-            $location = $this->locationService->loadLocation($searchLocation->getLocationId());
+            $location = $this->locationService->loadLocation((int) $searchLocation->getLocationId());
 
             $criteria[] = new Criterion\Subtree($location->pathString);
             $criteria[] = new Criterion\LogicalNot(new Criterion\LocationId($location->id));
@@ -316,7 +316,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $searchLocation = $searchQuery->getLocation();
         if ($searchLocation instanceof LocationInterface) {
-            $location = $this->locationService->loadLocation($searchLocation->getLocationId());
+            $location = $this->locationService->loadLocation((int) $searchLocation->getLocationId());
 
             $criteria[] = new Criterion\Subtree($location->pathString);
             $criteria[] = new Criterion\LogicalNot(new Criterion\LocationId($location->id));
