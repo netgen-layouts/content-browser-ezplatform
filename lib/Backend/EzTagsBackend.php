@@ -201,7 +201,7 @@ final class EzTagsBackend implements BackendInterface
     /**
      * Builds the items from provided tags.
      *
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
+     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\TagList|\Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
      *
      * @return \Generator<\Netgen\ContentBrowser\Ez\Item\EzTags\Item>
      */
