@@ -17,6 +17,9 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use function count;
+use function in_array;
+use function sprintf;
 
 final class EzTagsBackend implements BackendInterface
 {

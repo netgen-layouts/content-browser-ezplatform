@@ -22,6 +22,16 @@ use Netgen\ContentBrowser\Ez\Item\EzPlatform\EzPlatformInterface;
 use Netgen\ContentBrowser\Ez\Item\EzPlatform\Item;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
+use function array_flip;
+use function array_map;
+use function count;
+use function explode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function sprintf;
+use function trim;
+use function usort;
 
 final class EzPlatformBackend implements BackendInterface
 {

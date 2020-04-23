@@ -6,6 +6,7 @@ namespace Netgen\Bundle\ContentBrowserEzPlatformBundle\DependencyInjection\Compi
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use function array_merge;
 
 final class EzPlatformDefaultPreviewPass implements CompilerPassInterface
 {
