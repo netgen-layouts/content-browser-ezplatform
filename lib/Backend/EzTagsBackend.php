@@ -169,8 +169,6 @@ final class EzTagsBackend implements BackendInterface
      * Returns the item for provided value.
      *
      * @param int|string $value
-     *
-     * @return \Netgen\ContentBrowser\Ez\Item\EzTags\Item
      */
     private function internalLoadItem($value): Item
     {

@@ -32,9 +32,7 @@ final class Item implements ItemInterface, LocationInterface, EzPlatformInterfac
     private $selectable;
 
     /**
-     * @param \eZ\Publish\API\Repository\Values\Content\Location $location
      * @param int|string $value
-     * @param bool $selectable
      */
     public function __construct(Location $location, $value, bool $selectable = true)
     {

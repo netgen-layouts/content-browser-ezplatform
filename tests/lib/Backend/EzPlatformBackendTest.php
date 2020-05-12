@@ -589,8 +589,6 @@ final class EzPlatformBackendTest extends TestCase
      * @param int|string $id
      * @param int|string $parentLocationId
      * @param int|string $contentId
-     *
-     * @return \eZ\Publish\Core\Repository\Values\Content\Location
      */
     private function getLocation($id = null, $parentLocationId = null, $contentId = null): Location
     {

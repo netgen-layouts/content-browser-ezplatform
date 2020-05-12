@@ -506,8 +506,6 @@ final class EzTagsBackendTest extends TestCase
      *
      * @param int|string $id
      * @param int|string $parentTagId
-     *
-     * @return \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
      */
     private function getTag($id = null, $parentTagId = null): Tag
     {
