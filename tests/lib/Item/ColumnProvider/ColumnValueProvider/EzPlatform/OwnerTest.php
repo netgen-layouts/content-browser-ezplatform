@@ -83,18 +83,22 @@ final class OwnerTest extends TestCase
             24
         );
 
-        $ownerContentInfo = new VersionInfo(
+        $ownerContent = new Content(
             [
-                'prioritizedNameLanguageCode' => 'eng-GB',
-                'names' => ['eng-GB' => 'Owner name'],
+                'versionInfo' => new VersionInfo(
+                    [
+                        'prioritizedNameLanguageCode' => 'eng-GB',
+                        'names' => ['eng-GB' => 'Owner name'],
+                    ]
+                ),
             ]
         );
 
         $this->contentServiceMock
             ->expects(self::once())
-            ->method('loadVersionInfoById')
+            ->method('loadContent')
             ->with(self::identicalTo(42))
-            ->willReturn($ownerContentInfo);
+            ->willReturn($ownerContent);
 
         self::assertSame(
             'Owner name',
@@ -128,7 +132,7 @@ final class OwnerTest extends TestCase
 
         $this->contentServiceMock
             ->expects(self::once())
-            ->method('loadVersionInfoById')
+            ->method('loadContent')
             ->with(self::identicalTo(42))
             ->willThrowException(new NotFoundException('user', 42));
 
