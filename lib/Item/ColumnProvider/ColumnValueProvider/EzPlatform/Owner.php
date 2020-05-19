@@ -31,7 +31,7 @@ final class Owner implements ColumnValueProviderInterface
         return $this->repository->sudo(
             static function (Repository $repository) use ($item): string {
                 try {
-                    $ownerVersionInfo = $repository->getContentService()->loadVersionInfoById(
+                    $ownerContent = $repository->getContentService()->loadContent(
                         $item->getContent()->contentInfo->ownerId
                     );
                 } catch (NotFoundException $e) {
@@ -39,7 +39,7 @@ final class Owner implements ColumnValueProviderInterface
                     return '';
                 }
 
-                return $ownerVersionInfo->getName() ?? '';
+                return $ownerContent->getName() ?? '';
             }
         );
     }
