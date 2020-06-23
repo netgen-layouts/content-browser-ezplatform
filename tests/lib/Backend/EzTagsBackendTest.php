@@ -405,7 +405,6 @@ final class EzTagsBackendTest extends TestCase
         $configResolverMock = $this->createMock(ConfigResolverInterface::class);
 
         $configResolverMock
-            ->expects(self::at(0))
             ->method('getParameter')
             ->with(self::identicalTo('languages'))
             ->willReturn([]);
@@ -481,7 +480,6 @@ final class EzTagsBackendTest extends TestCase
         $configResolverMock = $this->createMock(ConfigResolverInterface::class);
 
         $configResolverMock
-            ->expects(self::at(0))
             ->method('getParameter')
             ->with(self::identicalTo('languages'))
             ->willReturn([]);
