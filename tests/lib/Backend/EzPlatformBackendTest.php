@@ -25,17 +25,17 @@ use PHPUnit\Framework\TestCase;
 final class EzPlatformBackendTest extends TestCase
 {
     /**
-     * @var \eZ\Publish\API\Repository\SearchService&\PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\API\Repository\SearchService
      */
     private $searchServiceMock;
 
     /**
-     * @var \eZ\Publish\API\Repository\LocationService&\PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\API\Repository\LocationService
      */
     private $locationServiceMock;
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface&\PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\Core\MVC\ConfigResolverInterface,
      */
     private $configResolverMock;
 

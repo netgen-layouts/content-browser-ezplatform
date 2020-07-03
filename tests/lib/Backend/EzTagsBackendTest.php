@@ -22,17 +22,17 @@ use function class_exists;
 final class EzTagsBackendTest extends TestCase
 {
     /**
-     * @var \Netgen\TagsBundle\API\Repository\TagsService&\PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject&\Netgen\TagsBundle\API\Repository\TagsService
      */
     private $tagsServiceMock;
 
     /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper&\PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\Core\Helper\TranslationHelper
      */
     private $translationHelperMock;
 
     /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface&\PHPUnit\Framework\MockObject\MockObject
+     * @var \PHPUnit\Framework\MockObject\MockObject
      */
     private $configResolverMock;
 
