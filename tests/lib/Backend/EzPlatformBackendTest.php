@@ -15,6 +15,7 @@ use eZ\Publish\API\Repository\Values\Content\Search\SearchResult;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use eZ\Publish\Core\Repository\Values\Content\Content;
 use eZ\Publish\Core\Repository\Values\Content\Location;
+use Netgen\ContentBrowser\Backend\SearchQuery;
 use Netgen\ContentBrowser\Config\Configuration;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend;
@@ -579,6 +580,110 @@ final class EzPlatformBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $count = $this->backend->searchCount('test');
+
+        self::assertSame(2, $count);
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::buildItem
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::isSelectable
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::searchItems
+     */
+    public function testSearchItems(): void
+    {
+        $searchQuery = new LocationQuery();
+        $searchQuery->offset = 0;
+        $searchQuery->limit = 25;
+        $searchQuery->query = new Criterion\FullText('test');
+        $searchQuery->filter = new Criterion\LogicalAnd(
+            [
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+            ]
+        );
+
+        $searchResult = new SearchResult();
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation()]),
+            new SearchHit(['valueObject' => $this->getLocation()]),
+        ];
+
+        $this->searchServiceMock
+            ->expects(self::once())
+            ->method('findLocations')
+            ->with(self::equalTo($searchQuery), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->willReturn($searchResult);
+
+        $result = $this->backend->searchItems(new SearchQuery('test'));
+
+        self::assertCount(2, $result->getResults());
+        self::assertContainsOnlyInstancesOf(Item::class, $result->getResults());
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::buildItem
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::buildItems
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::isSelectable
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::searchItems
+     */
+    public function testSearchItemsWithOffsetAndLimit(): void
+    {
+        $searchQuery = new LocationQuery();
+        $searchQuery->offset = 5;
+        $searchQuery->limit = 10;
+        $searchQuery->query = new Criterion\FullText('test');
+        $searchQuery->filter = new Criterion\LogicalAnd(
+            [
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+            ]
+        );
+
+        $searchResult = new SearchResult();
+        $searchResult->searchHits = [
+            new SearchHit(['valueObject' => $this->getLocation()]),
+            new SearchHit(['valueObject' => $this->getLocation()]),
+        ];
+
+        $this->searchServiceMock
+            ->expects(self::once())
+            ->method('findLocations')
+            ->with(self::equalTo($searchQuery), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->willReturn($searchResult);
+
+        $query = new SearchQuery('test');
+        $query->setOffset(5);
+        $query->setLimit(10);
+
+        $result = $this->backend->searchItems($query);
+
+        self::assertCount(2, $result->getResults());
+        self::assertContainsOnlyInstancesOf(Item::class, $result->getResults());
+    }
+
+    /**
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend::searchItemsCount
+     */
+    public function testSearchItemsCount(): void
+    {
+        $searchQuery = new LocationQuery();
+        $searchQuery->limit = 0;
+        $searchQuery->query = new Criterion\FullText('test');
+        $searchQuery->filter = new Criterion\LogicalAnd(
+            [
+                new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
+            ]
+        );
+
+        $searchResult = new SearchResult();
+        $searchResult->totalCount = 2;
+
+        $this->searchServiceMock
+            ->expects(self::once())
+            ->method('findLocations')
+            ->with(self::equalTo($searchQuery), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->willReturn($searchResult);
+
+        $count = $this->backend->searchItemsCount(new SearchQuery('test'));
 
         self::assertSame(2, $count);
     }

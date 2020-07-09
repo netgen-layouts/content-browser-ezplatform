@@ -9,6 +9,9 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Generator;
 use Netgen\ContentBrowser\Backend\BackendInterface;
+use Netgen\ContentBrowser\Backend\SearchQuery;
+use Netgen\ContentBrowser\Backend\SearchResult;
+use Netgen\ContentBrowser\Backend\SearchResultInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
@@ -119,24 +122,40 @@ final class EzTagsBackend implements BackendInterface
 
     public function search(string $searchText, int $offset = 0, int $limit = 25): iterable
     {
-        $languages = $this->configResolver->getParameter('languages');
+        $searchQuery = new SearchQuery($searchText);
+        $searchQuery->setOffset($offset);
+        $searchQuery->setLimit($limit);
 
-        if (count($languages) === 0) {
-            return [];
-        }
+        $searchResult = $this->searchItems($searchQuery);
 
-        $tags = $this->tagsService->loadTagsByKeyword(
-            $searchText,
-            $languages[0],
-            true,
-            $offset,
-            $limit
-        );
-
-        return $this->buildItems($tags);
+        return $searchResult->getResults();
     }
 
     public function searchCount(string $searchText): int
+    {
+        return $this->searchItemsCount(new SearchQuery($searchText));
+    }
+
+    public function searchItems(SearchQuery $searchQuery): SearchResultInterface
+    {
+        $languages = $this->configResolver->getParameter('languages');
+
+        if (count($languages) === 0) {
+            return new SearchResult();
+        }
+
+        $tags = $this->tagsService->loadTagsByKeyword(
+            $searchQuery->getSearchText(),
+            $languages[0],
+            true,
+            $searchQuery->getOffset(),
+            $searchQuery->getLimit()
+        );
+
+        return new SearchResult($this->buildItems($tags));
+    }
+
+    public function searchItemsCount(SearchQuery $searchQuery): int
     {
         $languages = $this->configResolver->getParameter('languages');
 
@@ -145,7 +164,7 @@ final class EzTagsBackend implements BackendInterface
         }
 
         return $this->tagsService->getTagsByKeywordCount(
-            $searchText,
+            $searchQuery->getSearchText(),
             $languages[0]
         );
     }
