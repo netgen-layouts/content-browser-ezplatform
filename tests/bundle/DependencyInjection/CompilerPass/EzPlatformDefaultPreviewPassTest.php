@@ -44,6 +44,7 @@ final class EzPlatformDefaultPreviewPassTest extends AbstractContainerBuilderTes
             $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.content_view");
             $this->assertContainerBuilderHasParameter("ezsettings.{$scope}.location_view");
 
+            /** @var array<string, mixed[]> $contentView */
             $contentView = $this->container->getParameter("ezsettings.{$scope}.content_view");
             self::assertArrayHasKey('ngcb_preview', $contentView);
             self::assertArrayHasKey('___ngcb_preview_default___', $contentView['ngcb_preview']);
@@ -51,6 +52,7 @@ final class EzPlatformDefaultPreviewPassTest extends AbstractContainerBuilderTes
             self::assertArrayHasKey('full', $contentView);
             self::assertArrayHasKey('full_rule', $contentView['full']);
 
+            /** @var array<string, mixed[]> $locationView */
             $locationView = $this->container->getParameter("ezsettings.{$scope}.location_view");
             self::assertArrayHasKey('ngcb_preview', $locationView);
             self::assertArrayHasKey('___ngcb_preview_default___', $locationView['ngcb_preview']);

@@ -11,9 +11,8 @@ use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
-use function array_keys;
+use function array_key_exists;
 use function file_get_contents;
-use function in_array;
 
 final class NetgenContentBrowserEzPlatformExtension extends Extension implements PrependExtensionInterface
 {
@@ -29,9 +28,10 @@ final class NetgenContentBrowserEzPlatformExtension extends Extension implements
 
         $loader->load('services.yaml');
 
-        $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
+        /** @var array<string, string> $activatedBundles */
+        $activatedBundles = $container->getParameter('kernel.bundles');
 
-        if (in_array('NetgenTagsBundle', $activatedBundles, true)) {
+        if (array_key_exists('NetgenTagsBundle', $activatedBundles)) {
             $loader->load('eztags/services.yaml');
         }
     }
@@ -48,9 +48,10 @@ final class NetgenContentBrowserEzPlatformExtension extends Extension implements
         $this->doPrepend($container, 'config.yaml', 'netgen_content_browser');
         $this->doPrepend($container, 'image.yaml', 'ezpublish');
 
-        $activatedBundles = array_keys($container->getParameter('kernel.bundles'));
+        /** @var array<string, string> $activatedBundles */
+        $activatedBundles = $container->getParameter('kernel.bundles');
 
-        if (in_array('NetgenTagsBundle', $activatedBundles, true)) {
+        if (array_key_exists('NetgenTagsBundle', $activatedBundles)) {
             $this->doPrepend($container, 'eztags/config.yaml', 'netgen_content_browser');
         }
     }
