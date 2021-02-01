@@ -13,4 +13,14 @@
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
+
+    <issueHandlers>
+        <!-- eZ Platform -->
+
+        <RedundantCastGivenDocblockType>
+            <errorLevel type="suppress">
+                <file name="lib/Item/EzPlatform/Item.php" />
+            </errorLevel>
+        </RedundantCastGivenDocblockType>
+    </issueHandlers>
 </psalm>
