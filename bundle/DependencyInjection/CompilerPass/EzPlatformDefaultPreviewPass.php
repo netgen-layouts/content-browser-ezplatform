@@ -6,7 +6,6 @@ namespace Netgen\Bundle\ContentBrowserEzPlatformBundle\DependencyInjection\Compi
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use function array_merge;
 
 final class EzPlatformDefaultPreviewPass implements CompilerPassInterface
 {
@@ -26,7 +25,7 @@ final class EzPlatformDefaultPreviewPass implements CompilerPassInterface
 
         /** @var string[] $siteAccessList */
         $siteAccessList = $container->getParameter('ezpublish.siteaccess.list');
-        $scopes = array_merge(['default'], $siteAccessList);
+        $scopes = [...['default'], ...$siteAccessList];
 
         foreach ($scopes as $scope) {
             $scopeParams = [
