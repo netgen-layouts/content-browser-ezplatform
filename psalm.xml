@@ -16,10 +16,16 @@
     <issueHandlers>
         <!-- eZ Platform -->
 
-        <RedundantCastGivenDocblockType>
+        <RedundantCastGivenDocblockType errorLevel="suppress" />
+        <RedundantConditionGivenDocblockType errorLevel="suppress" />
+        <DocblockTypeContradiction errorLevel="suppress" />
+
+        <!-- Content Browser specifics -->
+
+        <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
-                <file name="lib/Item/EzPlatform/Item.php" />
+                <file name="lib/Backend/EzPlatformBackend.php" />
             </errorLevel>
-        </RedundantCastGivenDocblockType>
+        </PropertyNotSetInConstructor>
     </issueHandlers>
 </psalm>
