@@ -10,15 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 final class ItemTest extends TestCase
 {
-    /**
-     * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
-     */
-    private $tag;
+    private Tag $tag;
 
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\EzTags\Item
-     */
-    private $item;
+    private Item $item;
 
     protected function setUp(): void
     {

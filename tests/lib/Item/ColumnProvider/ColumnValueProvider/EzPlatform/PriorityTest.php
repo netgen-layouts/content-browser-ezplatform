@@ -13,10 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 final class PriorityTest extends TestCase
 {
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Priority
-     */
-    private $provider;
+    private Priority $provider;
 
     protected function setUp(): void
     {

@@ -16,6 +16,7 @@ use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\API\Repository\Values\Tags\TagList;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use function class_exists;
 
@@ -24,22 +25,16 @@ final class EzTagsBackendTest extends TestCase
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject&\Netgen\TagsBundle\API\Repository\TagsService
      */
-    private $tagsServiceMock;
+    private MockObject $tagsServiceMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\Core\Helper\TranslationHelper
      */
-    private $translationHelperMock;
+    private MockObject $translationHelperMock;
 
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    private $configResolverMock;
+    private MockObject $configResolverMock;
 
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend
-     */
-    private $backend;
+    private EzTagsBackend $backend;
 
     protected function setUp(): void
     {

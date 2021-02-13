@@ -15,10 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ContentIdTest extends TestCase
 {
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\ContentId
-     */
-    private $provider;
+    private ContentId $provider;
 
     protected function setUp(): void
     {

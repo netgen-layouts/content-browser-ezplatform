@@ -14,24 +14,16 @@ use eZ\Publish\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Section;
 use Netgen\ContentBrowser\Ez\Item\EzPlatform\Item;
 use Netgen\ContentBrowser\Ez\Tests\Stubs\Item as StubItem;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class SectionTest extends TestCase
 {
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    private $repositoryMock;
+    private MockObject $repositoryMock;
 
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    private $sectionServiceMock;
+    private MockObject $sectionServiceMock;
 
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Section
-     */
-    private $provider;
+    private Section $provider;
 
     protected function setUp(): void
     {

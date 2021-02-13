@@ -16,10 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 final class PublishedTest extends TestCase
 {
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Published
-     */
-    private $provider;
+    private Published $provider;
 
     protected function setUp(): void
     {

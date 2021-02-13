@@ -12,10 +12,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ParentTagIdTest extends TestCase
 {
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTagId
-     */
-    private $provider;
+    private ParentTagId $provider;
 
     protected function setUp(): void
     {

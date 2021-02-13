@@ -11,10 +11,7 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Section implements ColumnValueProviderInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\Repository
-     */
-    private $repository;
+    private Repository $repository;
 
     public function __construct(Repository $repository)
     {

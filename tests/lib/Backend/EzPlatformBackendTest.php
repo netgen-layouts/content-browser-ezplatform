@@ -21,6 +21,7 @@ use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend;
 use Netgen\ContentBrowser\Ez\Item\EzPlatform\Item;
 use Netgen\ContentBrowser\Ez\Tests\Stubs\Location as StubLocation;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class EzPlatformBackendTest extends TestCase
@@ -28,32 +29,29 @@ final class EzPlatformBackendTest extends TestCase
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\API\Repository\SearchService
      */
-    private $searchServiceMock;
+    private MockObject $searchServiceMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\API\Repository\LocationService
      */
-    private $locationServiceMock;
+    private MockObject $locationServiceMock;
 
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\Core\MVC\ConfigResolverInterface,
      */
-    private $configResolverMock;
+    private MockObject $configResolverMock;
 
     /**
      * @var string[]
      */
-    private $locationContentTypes;
+    private array $locationContentTypes;
 
     /**
      * @var int[]
      */
-    private $defaultSections;
+    private array $defaultSections;
 
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend
-     */
-    private $backend;
+    private EzPlatformBackend $backend;
 
     protected function setUp(): void
     {

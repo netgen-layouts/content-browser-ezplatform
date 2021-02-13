@@ -12,10 +12,7 @@ use function in_array;
 
 final class SetSectionsListener implements EventSubscriberInterface
 {
-    /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    private $configResolver;
+    private ConfigResolverInterface $configResolver;
 
     public function __construct(ConfigResolverInterface $configResolver)
     {

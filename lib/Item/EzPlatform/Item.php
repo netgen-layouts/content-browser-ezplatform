@@ -11,25 +11,16 @@ use Netgen\ContentBrowser\Item\LocationInterface;
 
 final class Item implements ItemInterface, LocationInterface, EzPlatformInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Location
-     */
-    private $location;
+    private Location $location;
 
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
-     */
-    private $content;
+    private Content $content;
 
     /**
      * @var int|string
      */
     private $value;
 
-    /**
-     * @var bool
-     */
-    private $selectable;
+    private bool $selectable;
 
     /**
      * @param int|string $value

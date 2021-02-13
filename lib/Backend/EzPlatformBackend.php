@@ -35,35 +35,23 @@ use function usort;
 
 final class EzPlatformBackend implements BackendInterface
 {
-    /**
-     * @var \eZ\Publish\API\Repository\SearchService
-     */
-    private $searchService;
+    private SearchService $searchService;
 
-    /**
-     * @var \eZ\Publish\API\Repository\LocationService
-     */
-    private $locationService;
+    private LocationService $locationService;
 
-    /**
-     * @var \eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    private $configResolver;
+    private ConfigResolverInterface $configResolver;
 
-    /**
-     * @var \Netgen\ContentBrowser\Config\Configuration
-     */
-    private $config;
+    private Configuration $config;
 
     /**
      * @var string[]|null
      */
-    private $locationContentTypes;
+    private ?array $locationContentTypes;
 
     /**
      * @var string[]|null
      */
-    private $allowedContentTypes;
+    private ?array $allowedContentTypes;
 
     public function __construct(
         SearchService $searchService,

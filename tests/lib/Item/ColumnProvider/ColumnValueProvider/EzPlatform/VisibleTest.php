@@ -13,10 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 final class VisibleTest extends TestCase
 {
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Visible
-     */
-    private $provider;
+    private Visible $provider;
 
     protected function setUp(): void
     {

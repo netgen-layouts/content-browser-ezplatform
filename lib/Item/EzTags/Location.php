@@ -9,15 +9,9 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
 final class Location implements LocationInterface, EzTagsInterface
 {
-    /**
-     * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
-     */
-    private $tag;
+    private Tag $tag;
 
-    /**
-     * @var string
-     */
-    private $name;
+    private string $name;
 
     public function __construct(Tag $tag, string $name)
     {

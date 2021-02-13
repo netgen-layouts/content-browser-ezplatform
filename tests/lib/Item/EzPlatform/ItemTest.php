@@ -13,20 +13,11 @@ use PHPUnit\Framework\TestCase;
 
 final class ItemTest extends TestCase
 {
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Location
-     */
-    private $location;
+    private Location $location;
 
-    /**
-     * @var \eZ\Publish\API\Repository\Values\Content\Content
-     */
-    private $content;
+    private Content $content;
 
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\EzPlatform\Item
-     */
-    private $item;
+    private Item $item;
 
     protected function setUp(): void
     {

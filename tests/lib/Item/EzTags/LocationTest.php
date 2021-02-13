@@ -10,15 +10,9 @@ use PHPUnit\Framework\TestCase;
 
 final class LocationTest extends TestCase
 {
-    /**
-     * @var \Netgen\TagsBundle\API\Repository\Values\Tags\Tag
-     */
-    private $tag;
+    private Tag $tag;
 
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\EzTags\Location
-     */
-    private $location;
+    private Location $location;
 
     protected function setUp(): void
     {

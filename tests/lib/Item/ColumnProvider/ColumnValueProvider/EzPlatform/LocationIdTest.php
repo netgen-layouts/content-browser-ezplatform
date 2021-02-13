@@ -13,10 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 final class LocationIdTest extends TestCase
 {
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\LocationId
-     */
-    private $provider;
+    private LocationId $provider;
 
     protected function setUp(): void
     {

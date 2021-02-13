@@ -13,10 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ModifiedTest extends TestCase
 {
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\Modified
-     */
-    private $provider;
+    private Modified $provider;
 
     protected function setUp(): void
     {

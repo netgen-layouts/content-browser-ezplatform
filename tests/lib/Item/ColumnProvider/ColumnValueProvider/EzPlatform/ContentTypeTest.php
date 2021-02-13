@@ -16,10 +16,7 @@ use PHPUnit\Framework\TestCase;
 
 final class ContentTypeTest extends TestCase
 {
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\ContentType
-     */
-    private $provider;
+    private ContentType $provider;
 
     protected function setUp(): void
     {

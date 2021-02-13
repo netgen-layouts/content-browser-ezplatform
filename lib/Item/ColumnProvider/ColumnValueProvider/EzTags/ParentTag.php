@@ -13,15 +13,9 @@ use function in_array;
 
 final class ParentTag implements ColumnValueProviderInterface
 {
-    /**
-     * @var \Netgen\TagsBundle\API\Repository\TagsService
-     */
-    private $tagsService;
+    private TagsService $tagsService;
 
-    /**
-     * @var \eZ\Publish\Core\Helper\TranslationHelper
-     */
-    private $translationHelper;
+    private TranslationHelper $translationHelper;
 
     public function __construct(TagsService $tagsService, TranslationHelper $translationHelper)
     {

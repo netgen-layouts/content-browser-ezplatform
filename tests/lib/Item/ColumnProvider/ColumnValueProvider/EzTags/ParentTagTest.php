@@ -10,24 +10,16 @@ use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
 use Netgen\ContentBrowser\Ez\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\Core\Repository\TagsService;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 final class ParentTagTest extends TestCase
 {
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    private $tagsServiceMock;
+    private MockObject $tagsServiceMock;
 
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
-     */
-    private $translationHelperMock;
+    private MockObject $translationHelperMock;
 
-    /**
-     * @var \Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzTags\ParentTag
-     */
-    private $provider;
+    private ParentTag $provider;
 
     protected function setUp(): void
     {
