@@ -33,14 +33,14 @@ final class Item implements ItemInterface, LocationInterface, EzPlatformInterfac
         $this->selectable = $selectable;
     }
 
-    public function getLocationId()
+    public function getLocationId(): int
     {
-        return $this->location->id;
+        return (int) $this->location->id;
     }
 
-    public function getValue()
+    public function getValue(): int
     {
-        return $this->value;
+        return (int) $this->value;
     }
 
     public function getName(): string
@@ -48,7 +48,7 @@ final class Item implements ItemInterface, LocationInterface, EzPlatformInterfac
         return $this->content->getName() ?? '';
     }
 
-    public function getParentId()
+    public function getParentId(): ?int
     {
         $parentId = (int) $this->location->parentLocationId;
 

@@ -20,14 +20,14 @@ final class Item implements ItemInterface, LocationInterface, EzTagsInterface
         $this->name = $name;
     }
 
-    public function getLocationId()
+    public function getLocationId(): int
     {
-        return $this->tag->id;
+        return (int) $this->tag->id;
     }
 
-    public function getValue()
+    public function getValue(): int
     {
-        return $this->tag->id;
+        return (int) $this->tag->id;
     }
 
     public function getName(): string
@@ -35,9 +35,9 @@ final class Item implements ItemInterface, LocationInterface, EzTagsInterface
         return $this->name;
     }
 
-    public function getParentId()
+    public function getParentId(): ?int
     {
-        return $this->tag->parentTagId;
+        return $this->tag->parentTagId !== null ? (int) $this->tag->parentTagId : null;
     }
 
     public function isVisible(): bool

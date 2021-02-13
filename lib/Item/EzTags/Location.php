@@ -19,9 +19,9 @@ final class Location implements LocationInterface, EzTagsInterface
         $this->name = $name;
     }
 
-    public function getLocationId()
+    public function getLocationId(): int
     {
-        return $this->tag->id;
+        return (int) $this->tag->id;
     }
 
     public function getName(): string
@@ -29,9 +29,9 @@ final class Location implements LocationInterface, EzTagsInterface
         return $this->name;
     }
 
-    public function getParentId()
+    public function getParentId(): ?int
     {
-        return $this->tag->parentTagId;
+        return $this->tag->parentTagId !== null ? (int) $this->tag->parentTagId : null;
     }
 
     public function getTag(): Tag
