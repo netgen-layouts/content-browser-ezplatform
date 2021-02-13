@@ -156,9 +156,7 @@ final class EzPlatformBackend implements BackendInterface
             return [];
         }
 
-        if ($this->locationContentTypes === null) {
-            $this->locationContentTypes = $this->getLocationContentTypes();
-        }
+        $this->locationContentTypes ??= $this->getLocationContentTypes();
 
         $criteria = [
             new Criterion\ParentLocationId((int) $location->getLocationId()),
@@ -183,9 +181,7 @@ final class EzPlatformBackend implements BackendInterface
 
     public function getSubLocationsCount(LocationInterface $location): int
     {
-        if ($this->locationContentTypes === null) {
-            $this->locationContentTypes = $this->getLocationContentTypes();
-        }
+        $this->locationContentTypes ??= $this->getLocationContentTypes();
 
         $criteria = [
             new Criterion\ParentLocationId((int) $location->getLocationId()),
