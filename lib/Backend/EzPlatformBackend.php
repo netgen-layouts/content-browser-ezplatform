@@ -357,9 +357,7 @@ final class EzPlatformBackend implements BackendInterface
     private function buildItems(EzSearchResult $searchResult): array
     {
         return array_map(
-            function (SearchHit $searchHit): Item {
-                return $this->buildItem($searchHit);
-            },
+            fn (SearchHit $searchHit): Item => $this->buildItem($searchHit),
             $searchResult->searchHits
         );
     }
