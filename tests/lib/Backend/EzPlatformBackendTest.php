@@ -688,12 +688,8 @@ final class EzPlatformBackendTest extends TestCase
 
     /**
      * Returns the location object used in tests.
-     *
-     * @param int|string $id
-     * @param int|string $parentLocationId
-     * @param int|string $contentId
      */
-    private function getLocation($id = null, $parentLocationId = null, $contentId = null): Location
+    private function getLocation(?int $id = null, ?int $parentLocationId = null, ?int $contentId = null): Location
     {
         return new Location(
             [

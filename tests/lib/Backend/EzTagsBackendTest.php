@@ -496,11 +496,8 @@ final class EzTagsBackendTest extends TestCase
 
     /**
      * Returns the tag object used in tests.
-     *
-     * @param int|string $id
-     * @param int|string $parentTagId
      */
-    private function getTag($id = null, $parentTagId = null): Tag
+    private function getTag(?int $id = null, ?int $parentTagId = null): Tag
     {
         return new Tag(
             [

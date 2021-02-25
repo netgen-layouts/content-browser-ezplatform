@@ -339,8 +339,8 @@ final class EzPlatformBackend implements BackendInterface
         return new Item(
             $location,
             $this->config->getItemType() === 'ezlocation' ?
-                $location->id :
-                $location->contentInfo->id,
+                (int) $location->id :
+                (int) $location->contentInfo->id,
             $this->isSelectable($location->getContent())
         );
     }

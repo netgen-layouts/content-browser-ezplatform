@@ -15,17 +15,11 @@ final class Item implements ItemInterface, LocationInterface, EzPlatformInterfac
 
     private Content $content;
 
-    /**
-     * @var int|string
-     */
-    private $value;
+    private int $value;
 
     private bool $selectable;
 
-    /**
-     * @param int|string $value
-     */
-    public function __construct(Location $location, $value, bool $selectable = true)
+    public function __construct(Location $location, int $value, bool $selectable = true)
     {
         $this->location = $location;
         $this->content = $location->getContent();
@@ -40,7 +34,7 @@ final class Item implements ItemInterface, LocationInterface, EzPlatformInterfac
 
     public function getValue(): int
     {
-        return (int) $this->value;
+        return $this->value;
     }
 
     public function getName(): string

@@ -53,12 +53,12 @@ final class EzTagsBackend implements BackendInterface
             return $this->buildLocation();
         }
 
-        return $this->internalLoadItem($id);
+        return $this->internalLoadItem((int) $id);
     }
 
     public function loadItem($value): ItemInterface
     {
-        return $this->internalLoadItem($value);
+        return $this->internalLoadItem((int) $value);
     }
 
     public function getSubLocations(LocationInterface $location): iterable
@@ -177,13 +177,11 @@ final class EzTagsBackend implements BackendInterface
 
     /**
      * Returns the item for provided value.
-     *
-     * @param int|string $value
      */
-    private function internalLoadItem($value): Item
+    private function internalLoadItem(int $value): Item
     {
         try {
-            $tag = $this->tagsService->loadTag((int) $value);
+            $tag = $this->tagsService->loadTag($value);
         } catch (APINotFoundException $e) {
             throw new NotFoundException(
                 sprintf(
