@@ -9,10 +9,9 @@ use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Backend\EzTagsBackend;
+use Netgen\ContentBrowser\Ez\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
-use Netgen\ContentBrowser\Ez\Item\EzTags\Location;
 use Netgen\ContentBrowser\Ez\Tests\Stubs\Location as StubLocation;
-use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\API\Repository\Values\Tags\TagList;
@@ -57,7 +56,7 @@ final class EzTagsBackendTest extends TestCase
 
     /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::__construct
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::buildLocation
+     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::buildRootItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::getRootTag
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::getSections
      */
@@ -67,10 +66,13 @@ final class EzTagsBackendTest extends TestCase
             ->expects(self::never())
             ->method('loadTag');
 
-        $locations = $this->backend->getSections();
+        $locations = [...$this->backend->getSections()];
 
         self::assertCount(1, $locations);
-        self::assertContainsOnlyInstancesOf(LocationInterface::class, $locations);
+
+        $location = $locations[0];
+
+        self::assertInstanceOf(EzTagsInterface::class, $location);
     }
 
     /**
@@ -88,7 +90,6 @@ final class EzTagsBackendTest extends TestCase
 
         $location = $this->backend->loadLocation(1);
 
-        self::assertInstanceOf(Item::class, $location);
         self::assertSame(1, $location->getLocationId());
     }
 
@@ -111,23 +112,6 @@ final class EzTagsBackendTest extends TestCase
     }
 
     /**
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::buildLocation
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::getRootTag
-     * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::loadLocation
-     */
-    public function testLoadRootLocation(): void
-    {
-        $this->tagsServiceMock
-            ->expects(self::never())
-            ->method('loadTag');
-
-        $location = $this->backend->loadLocation(0);
-
-        self::assertInstanceOf(Location::class, $location);
-        self::assertSame(0, $location->getLocationId());
-    }
-
-    /**
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::buildItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::internalLoadItem
      * @covers \Netgen\ContentBrowser\Ez\Backend\EzTagsBackend::loadItem
@@ -142,7 +126,6 @@ final class EzTagsBackendTest extends TestCase
 
         $item = $this->backend->loadItem(1);
 
-        self::assertInstanceOf(Item::class, $item);
         self::assertSame(1, $item->getValue());
     }
 

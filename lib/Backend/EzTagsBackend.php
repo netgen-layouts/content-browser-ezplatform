@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Netgen\ContentBrowser\Ez\Backend;
 
+use DateTimeImmutable;
 use eZ\Publish\API\Repository\Exceptions\NotFoundException as APINotFoundException;
 use eZ\Publish\Core\Helper\TranslationHelper;
 use eZ\Publish\Core\MVC\ConfigResolverInterface;
@@ -15,13 +16,10 @@ use Netgen\ContentBrowser\Backend\SearchResultInterface;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
-use Netgen\ContentBrowser\Ez\Item\EzTags\Location;
-use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use function count;
-use function in_array;
 use function sprintf;
 
 final class EzTagsBackend implements BackendInterface
@@ -44,19 +42,19 @@ final class EzTagsBackend implements BackendInterface
 
     public function getSections(): iterable
     {
-        return [$this->loadLocation(0)];
+        yield $this->buildRootItem();
     }
 
-    public function loadLocation($id): LocationInterface
+    public function loadLocation($id): Item
     {
-        if (in_array($id, ['0', 0, null], true)) {
-            return $this->buildLocation();
+        if ((int) $id === 0) {
+            return $this->buildRootItem();
         }
 
         return $this->internalLoadItem((int) $id);
     }
 
-    public function loadItem($value): ItemInterface
+    public function loadItem($value): Item
     {
         return $this->internalLoadItem((int) $value);
     }
@@ -161,9 +159,9 @@ final class EzTagsBackend implements BackendInterface
     }
 
     /**
-     * Builds the location.
+     * Builds the root item.
      */
-    private function buildLocation(): Location
+    private function buildRootItem(): Item
     {
         $tag = $this->getRootTag();
 
@@ -172,7 +170,7 @@ final class EzTagsBackend implements BackendInterface
             'getKeyword'
         );
 
-        return new Location($tag, (string) $tagName);
+        return new Item($tag, (string) $tagName);
     }
 
     /**
@@ -235,6 +233,7 @@ final class EzTagsBackend implements BackendInterface
                 ],
                 'mainLanguageCode' => 'eng-GB',
                 'alwaysAvailable' => true,
+                'modificationDate' => new DateTimeImmutable(),
             ]
         );
     }

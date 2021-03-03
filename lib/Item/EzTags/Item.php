@@ -47,7 +47,7 @@ final class Item implements ItemInterface, LocationInterface, EzTagsInterface
 
     public function isSelectable(): bool
     {
-        return true;
+        return $this->tag->id !== 0;
     }
 
     public function getTag(): Tag
