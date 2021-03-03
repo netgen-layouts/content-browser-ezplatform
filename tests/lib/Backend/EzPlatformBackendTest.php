@@ -134,7 +134,6 @@ final class EzPlatformBackendTest extends TestCase
 
         $location = $this->backend->loadLocation(2);
 
-        self::assertInstanceOf(Item::class, $location);
         self::assertSame(2, $location->getLocationId());
     }
 
@@ -188,7 +187,6 @@ final class EzPlatformBackendTest extends TestCase
 
         $item = $this->backend->loadItem(2);
 
-        self::assertInstanceOf(Item::class, $item);
         self::assertSame(2, $item->getValue());
     }
 
@@ -226,7 +224,6 @@ final class EzPlatformBackendTest extends TestCase
 
         $item = $this->backend->loadItem(2);
 
-        self::assertInstanceOf(Item::class, $item);
         self::assertSame(2, $item->getValue());
     }
 

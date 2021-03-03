@@ -25,7 +25,7 @@ final class Location implements LocationInterface
 
     public function getName(): string
     {
-        return 'This is a name';
+        return 'This is a name (' . $this->id . ')';
     }
 
     public function getParentId(): ?int

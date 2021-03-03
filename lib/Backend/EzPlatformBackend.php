@@ -20,7 +20,6 @@ use Netgen\ContentBrowser\Config\Configuration;
 use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Item\EzPlatform\EzPlatformInterface;
 use Netgen\ContentBrowser\Ez\Item\EzPlatform\Item;
-use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use function array_flip;
 use function array_map;
@@ -98,7 +97,7 @@ final class EzPlatformBackend implements BackendInterface
         return $items;
     }
 
-    public function loadLocation($id): LocationInterface
+    public function loadLocation($id): Item
     {
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId((int) $id);
@@ -120,7 +119,7 @@ final class EzPlatformBackend implements BackendInterface
         );
     }
 
-    public function loadItem($value): ItemInterface
+    public function loadItem($value): Item
     {
         $criteria = [];
         if ($this->config->getItemType() === 'ezlocation') {

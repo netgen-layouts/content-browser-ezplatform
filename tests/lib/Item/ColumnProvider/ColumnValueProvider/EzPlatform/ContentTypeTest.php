@@ -67,6 +67,6 @@ final class ContentTypeTest extends TestCase
      */
     public function testGetValueWithInvalidItem(): void
     {
-        self::assertNull($this->provider->getValue(new StubItem()));
+        self::assertNull($this->provider->getValue(new StubItem(42)));
     }
 }
