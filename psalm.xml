@@ -20,6 +20,12 @@
         <RedundantConditionGivenDocblockType errorLevel="suppress" />
         <DocblockTypeContradiction errorLevel="suppress" />
 
+        <DuplicateArrayKey>
+            <errorLevel type="suppress">
+                <file name="bundle/DependencyInjection/CompilerPass/EzPlatformDefaultPreviewPass.php" />
+            </errorLevel>
+        </DuplicateArrayKey>
+
         <!-- Content Browser specifics -->
 
         <PropertyNotSetInConstructor>
