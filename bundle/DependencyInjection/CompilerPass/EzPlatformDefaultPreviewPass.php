@@ -17,7 +17,7 @@ final class EzPlatformDefaultPreviewPass implements CompilerPassInterface
 
         $defaultRule = [
             'template' => $container->getParameter(
-                'netgen_content_browser.ezplatform.preview_template'
+                'netgen_content_browser.ezplatform.preview_template',
             ),
             'match' => [],
             'params' => [],

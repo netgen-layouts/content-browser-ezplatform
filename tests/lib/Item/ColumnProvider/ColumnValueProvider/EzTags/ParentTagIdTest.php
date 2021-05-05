@@ -28,14 +28,14 @@ final class ParentTagIdTest extends TestCase
             new Tag(
                 [
                     'parentTagId' => 42,
-                ]
+                ],
             ),
-            'Name'
+            'Name',
         );
 
         self::assertSame(
             '42',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 

@@ -35,7 +35,7 @@ final class SectionTest extends TestCase
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock)
+                fn (callable $callback) => $callback($this->repositoryMock),
             );
 
         $this->repositoryMock
@@ -44,7 +44,7 @@ final class SectionTest extends TestCase
             ->willReturn($this->sectionServiceMock);
 
         $this->provider = new Section(
-            $this->repositoryMock
+            $this->repositoryMock,
         );
     }
 
@@ -61,22 +61,22 @@ final class SectionTest extends TestCase
                         'contentInfo' => new ContentInfo(
                             [
                                 'sectionId' => 42,
-                            ]
+                            ],
                         ),
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
 
         $item = new Item(
             new Location(['content' => $content]),
-            24
+            24,
         );
 
         $section = new EzSection(
             [
                 'name' => 'Section name',
-            ]
+            ],
         );
 
         $this->sectionServiceMock
@@ -87,7 +87,7 @@ final class SectionTest extends TestCase
 
         self::assertSame(
             'Section name',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 

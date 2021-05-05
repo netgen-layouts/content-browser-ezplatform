@@ -40,21 +40,21 @@ final class ModifiedTest extends TestCase
                         'contentInfo' => new ContentInfo(
                             [
                                 'modificationDate' => $date,
-                            ]
+                            ],
                         ),
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
 
         $item = new Item(
             new Location(['content' => $content]),
-            24
+            24,
         );
 
         self::assertSame(
             '17.07.2016 18:15:42',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 

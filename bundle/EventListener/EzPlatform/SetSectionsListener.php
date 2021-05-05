@@ -39,8 +39,8 @@ final class SetSectionsListener implements EventSubscriberInterface
             'sections',
             $this->configResolver->getParameter(
                 'backend.ezplatform.default_sections',
-                'netgen_content_browser'
-            )
+                'netgen_content_browser',
+            ),
         );
     }
 }

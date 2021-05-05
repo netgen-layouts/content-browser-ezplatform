@@ -23,7 +23,7 @@ final class NetgenContentBrowserEzPlatformExtension extends Extension implements
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../Resources/config')
+            new FileLocator(__DIR__ . '/../Resources/config'),
         );
 
         $loader->load('services.yaml');
@@ -40,7 +40,7 @@ final class NetgenContentBrowserEzPlatformExtension extends Extension implements
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__ . '/../Resources/config')
+            new FileLocator(__DIR__ . '/../Resources/config'),
         );
 
         $loader->load('default_settings.yaml');

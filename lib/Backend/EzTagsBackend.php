@@ -66,7 +66,7 @@ final class EzTagsBackend implements BackendInterface
         }
 
         $tags = $this->tagsService->loadTagChildren(
-            $location->getTag()
+            $location->getTag(),
         );
 
         return $this->buildItems($tags);
@@ -79,7 +79,7 @@ final class EzTagsBackend implements BackendInterface
         }
 
         return $this->tagsService->getTagChildrenCount(
-            $location->getTag()
+            $location->getTag(),
         );
     }
 
@@ -92,7 +92,7 @@ final class EzTagsBackend implements BackendInterface
         $tags = $this->tagsService->loadTagChildren(
             $location->getTag(),
             $offset,
-            $limit
+            $limit,
         );
 
         return $this->buildItems($tags);
@@ -105,7 +105,7 @@ final class EzTagsBackend implements BackendInterface
         }
 
         return $this->tagsService->getTagChildrenCount(
-            $location->getTag()
+            $location->getTag(),
         );
     }
 
@@ -138,7 +138,7 @@ final class EzTagsBackend implements BackendInterface
             $languages[0],
             true,
             $searchQuery->getOffset(),
-            $searchQuery->getLimit()
+            $searchQuery->getLimit(),
         );
 
         return new SearchResult($this->buildItems($tags));
@@ -154,7 +154,7 @@ final class EzTagsBackend implements BackendInterface
 
         return $this->tagsService->getTagsByKeywordCount(
             $searchQuery->getSearchText(),
-            $languages[0]
+            $languages[0],
         );
     }
 
@@ -167,7 +167,7 @@ final class EzTagsBackend implements BackendInterface
 
         $tagName = $this->translationHelper->getTranslatedByMethod(
             $tag,
-            'getKeyword'
+            'getKeyword',
         );
 
         return new Item($tag, (string) $tagName);
@@ -184,8 +184,8 @@ final class EzTagsBackend implements BackendInterface
             throw new NotFoundException(
                 sprintf(
                     'Item with value "%s" not found.',
-                    $value
-                )
+                    $value,
+                ),
             );
         }
 
@@ -199,7 +199,7 @@ final class EzTagsBackend implements BackendInterface
     {
         $tagName = $this->translationHelper->getTranslatedByMethod(
             $tag,
-            'getKeyword'
+            'getKeyword',
         );
 
         return new Item($tag, (string) $tagName);
@@ -234,7 +234,7 @@ final class EzTagsBackend implements BackendInterface
                 'mainLanguageCode' => 'eng-GB',
                 'alwaysAvailable' => true,
                 'modificationDate' => new DateTimeImmutable(),
-            ]
+            ],
         );
     }
 }

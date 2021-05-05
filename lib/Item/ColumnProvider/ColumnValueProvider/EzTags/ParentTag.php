@@ -37,9 +37,9 @@ final class ParentTag implements ColumnValueProviderInterface
 
                 return (string) $this->translationHelper->getTranslatedByMethod(
                     $tagsService->loadTag($item->getTag()->parentTagId),
-                    'getKeyword'
+                    'getKeyword',
                 );
-            }
+            },
         );
     }
 }

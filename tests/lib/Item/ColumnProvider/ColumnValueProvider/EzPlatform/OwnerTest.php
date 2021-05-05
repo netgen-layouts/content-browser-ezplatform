@@ -35,7 +35,7 @@ final class OwnerTest extends TestCase
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
-                fn (callable $callback) => $callback($this->repositoryMock)
+                fn (callable $callback) => $callback($this->repositoryMock),
             );
 
         $this->repositoryMock
@@ -44,7 +44,7 @@ final class OwnerTest extends TestCase
             ->willReturn($this->contentServiceMock);
 
         $this->provider = new Owner(
-            $this->repositoryMock
+            $this->repositoryMock,
         );
     }
 
@@ -61,16 +61,16 @@ final class OwnerTest extends TestCase
                         'contentInfo' => new ContentInfo(
                             [
                                 'ownerId' => 42,
-                            ]
+                            ],
                         ),
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
 
         $item = new Item(
             new Location(['content' => $content]),
-            24
+            24,
         );
 
         $ownerContent = new Content(
@@ -79,9 +79,9 @@ final class OwnerTest extends TestCase
                     [
                         'prioritizedNameLanguageCode' => 'eng-GB',
                         'names' => ['eng-GB' => 'Owner name'],
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
 
         $this->contentServiceMock
@@ -92,7 +92,7 @@ final class OwnerTest extends TestCase
 
         self::assertSame(
             'Owner name',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 
@@ -108,16 +108,16 @@ final class OwnerTest extends TestCase
                         'contentInfo' => new ContentInfo(
                             [
                                 'ownerId' => 42,
-                            ]
+                            ],
                         ),
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
 
         $item = new Item(
             new Location(['content' => $content]),
-            24
+            24,
         );
 
         $this->contentServiceMock

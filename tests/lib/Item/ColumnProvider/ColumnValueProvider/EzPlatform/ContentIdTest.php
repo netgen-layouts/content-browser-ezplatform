@@ -34,21 +34,21 @@ final class ContentIdTest extends TestCase
                         'contentInfo' => new ContentInfo(
                             [
                                 'id' => 42,
-                            ]
+                            ],
                         ),
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
 
         $item = new Item(
             new Location(['content' => $content]),
-            24
+            24,
         );
 
         self::assertSame(
             '42',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 

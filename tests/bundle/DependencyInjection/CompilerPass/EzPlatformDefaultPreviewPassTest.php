@@ -29,12 +29,12 @@ final class EzPlatformDefaultPreviewPassTest extends AbstractContainerBuilderTes
         foreach (['default', 'cro', 'admin'] as $scope) {
             $this->setParameter(
                 "ezsettings.{$scope}.content_view",
-                ['full' => ['full_rule' => []]]
+                ['full' => ['full_rule' => []]],
             );
 
             $this->setParameter(
                 "ezsettings.{$scope}.location_view",
-                ['ngcb_preview' => ['rule1' => [], 'rule2' => []]]
+                ['ngcb_preview' => ['rule1' => [], 'rule2' => []]],
             );
         }
 

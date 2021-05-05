@@ -30,14 +30,14 @@ final class LocationIdTest extends TestCase
                 [
                     'content' => new Content(),
                     'id' => 42,
-                ]
+                ],
             ),
-            24
+            24,
         );
 
         self::assertSame(
             '42',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 

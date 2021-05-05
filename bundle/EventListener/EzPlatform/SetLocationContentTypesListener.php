@@ -39,8 +39,8 @@ final class SetLocationContentTypesListener implements EventSubscriberInterface
             'location_content_types',
             $this->configResolver->getParameter(
                 'backend.ezplatform.location_content_types',
-                'netgen_content_browser'
-            )
+                'netgen_content_browser',
+            ),
         );
     }
 }

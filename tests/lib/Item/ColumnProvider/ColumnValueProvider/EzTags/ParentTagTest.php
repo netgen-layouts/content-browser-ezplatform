@@ -28,7 +28,7 @@ final class ParentTagTest extends TestCase
 
         $this->provider = new ParentTag(
             $this->tagsServiceMock,
-            $this->translationHelperMock
+            $this->translationHelperMock,
         );
     }
 
@@ -42,9 +42,9 @@ final class ParentTagTest extends TestCase
             new Tag(
                 [
                     'parentTagId' => 42,
-                ]
+                ],
             ),
-            'Name'
+            'Name',
         );
 
         $parentTag = new Tag(['keywords' => ['eng-GB', 'Parent tag']]);
@@ -63,7 +63,7 @@ final class ParentTagTest extends TestCase
 
         self::assertSame(
             'Parent tag',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 
@@ -76,9 +76,9 @@ final class ParentTagTest extends TestCase
             new Tag(
                 [
                     'parentTagId' => 0,
-                ]
+                ],
             ),
-            'Name'
+            'Name',
         );
 
         $this->tagsServiceMock
@@ -91,7 +91,7 @@ final class ParentTagTest extends TestCase
 
         self::assertSame(
             '(No parent)',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 

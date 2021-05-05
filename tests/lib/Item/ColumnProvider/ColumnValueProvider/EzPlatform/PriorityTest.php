@@ -30,14 +30,14 @@ final class PriorityTest extends TestCase
                 [
                     'content' => new Content(),
                     'priority' => 5,
-                ]
+                ],
             ),
-            24
+            24,
         );
 
         self::assertSame(
             '5',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 

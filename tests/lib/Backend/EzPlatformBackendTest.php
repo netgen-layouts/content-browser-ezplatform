@@ -76,7 +76,7 @@ final class EzPlatformBackendTest extends TestCase
             $this->searchServiceMock,
             $this->locationServiceMock,
             $this->configResolverMock,
-            $configuration
+            $configuration,
         );
     }
 
@@ -171,7 +171,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\LocationId(2),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -200,7 +200,7 @@ final class EzPlatformBackendTest extends TestCase
             $this->searchServiceMock,
             $this->locationServiceMock,
             $this->configResolverMock,
-            new Configuration('ezcontent', 'eZ content', [])
+            new Configuration('ezcontent', 'eZ content', []),
         );
 
         $query = new LocationQuery();
@@ -208,7 +208,7 @@ final class EzPlatformBackendTest extends TestCase
             [
                 new Criterion\ContentId(2),
                 new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -239,7 +239,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\LocationId(2),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -269,7 +269,7 @@ final class EzPlatformBackendTest extends TestCase
             [
                 new Criterion\ParentLocationId(2),
                 new Criterion\ContentTypeIdentifier($this->locationContentTypes),
-            ]
+            ],
         );
 
         $query->sortClauses = [new ContentName(LocationQuery::SORT_ASC)];
@@ -287,7 +287,7 @@ final class EzPlatformBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $locations = $this->backend->getSubLocations(
-            new Item($this->getLocation(2), 2)
+            new Item($this->getLocation(2), 2),
         );
 
         self::assertCount(2, $locations);
@@ -324,7 +324,7 @@ final class EzPlatformBackendTest extends TestCase
             [
                 new Criterion\ParentLocationId(2),
                 new Criterion\ContentTypeIdentifier($this->locationContentTypes),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -337,7 +337,7 @@ final class EzPlatformBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubLocationsCount(
-            new Item($this->getLocation(2), 2)
+            new Item($this->getLocation(2), 2),
         );
 
         self::assertSame(2, $count);
@@ -357,7 +357,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\ParentLocationId(2),
-            ]
+            ],
         );
 
         $query->sortClauses = [new ContentName(LocationQuery::SORT_ASC)];
@@ -375,7 +375,7 @@ final class EzPlatformBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
-            new Item($this->getLocation(2), 2)
+            new Item($this->getLocation(2), 2),
         );
 
         self::assertCount(2, $items);
@@ -402,7 +402,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\ParentLocationId(2),
-            ]
+            ],
         );
 
         $query->sortClauses = [new ContentName(LocationQuery::SORT_ASC)];
@@ -422,7 +422,7 @@ final class EzPlatformBackendTest extends TestCase
         $items = $this->backend->getSubItems(
             new Item($this->getLocation(2), 2),
             5,
-            10
+            10,
         );
 
         self::assertCount(2, $items);
@@ -460,7 +460,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\ParentLocationId(2),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -473,7 +473,7 @@ final class EzPlatformBackendTest extends TestCase
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubItemsCount(
-            new Item($this->getLocation(2), 2)
+            new Item($this->getLocation(2), 2),
         );
 
         self::assertSame(2, $count);
@@ -494,7 +494,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -530,7 +530,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -562,7 +562,7 @@ final class EzPlatformBackendTest extends TestCase
         $query->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -594,7 +594,7 @@ final class EzPlatformBackendTest extends TestCase
         $searchQuery->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -630,7 +630,7 @@ final class EzPlatformBackendTest extends TestCase
         $searchQuery->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -666,7 +666,7 @@ final class EzPlatformBackendTest extends TestCase
         $searchQuery->filter = new Criterion\LogicalAnd(
             [
                 new Criterion\Location\IsMainLocation(Criterion\Location\IsMainLocation::MAIN),
-            ]
+            ],
         );
 
         $searchResult = new SearchResult();
@@ -696,11 +696,11 @@ final class EzPlatformBackendTest extends TestCase
                 'contentInfo' => new ContentInfo(
                     [
                         'id' => $contentId,
-                    ]
+                    ],
                 ),
                 'sortField' => Location::SORT_FIELD_NAME,
                 'sortOrder' => Location::SORT_ORDER_ASC,
-            ]
+            ],
         );
     }
 }

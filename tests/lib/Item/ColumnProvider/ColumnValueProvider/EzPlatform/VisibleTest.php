@@ -30,14 +30,14 @@ final class VisibleTest extends TestCase
                 [
                     'content' => new Content(),
                     'invisible' => true,
-                ]
+                ],
             ),
-            24
+            24,
         );
 
         self::assertSame(
             'No',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 

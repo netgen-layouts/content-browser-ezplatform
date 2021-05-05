@@ -76,7 +76,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->configResolver->getParameter('languages')]
+            ['languages' => $this->configResolver->getParameter('languages')],
         );
 
         $items = $this->buildItems($result);
@@ -91,7 +91,7 @@ final class EzPlatformBackend implements BackendInterface
                 }
 
                 return $sortMap[(int) $item1->getLocationId()] <=> $sortMap[(int) $item2->getLocationId()];
-            }
+            },
         );
 
         return $items;
@@ -104,7 +104,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->configResolver->getParameter('languages')]
+            ['languages' => $this->configResolver->getParameter('languages')],
         );
 
         if (count($result->searchHits) > 0) {
@@ -114,8 +114,8 @@ final class EzPlatformBackend implements BackendInterface
         throw new NotFoundException(
             sprintf(
                 'Location with ID "%s" not found.',
-                $id
-            )
+                $id,
+            ),
         );
     }
 
@@ -134,7 +134,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->configResolver->getParameter('languages')]
+            ['languages' => $this->configResolver->getParameter('languages')],
         );
 
         if (count($result->searchHits) > 0) {
@@ -144,8 +144,8 @@ final class EzPlatformBackend implements BackendInterface
         throw new NotFoundException(
             sprintf(
                 'Item with value "%s" not found.',
-                $value
-            )
+                $value,
+            ),
         );
     }
 
@@ -172,7 +172,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->configResolver->getParameter('languages')]
+            ['languages' => $this->configResolver->getParameter('languages')],
         );
 
         return $this->buildItems($result);
@@ -196,7 +196,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->configResolver->getParameter('languages')]
+            ['languages' => $this->configResolver->getParameter('languages')],
         );
 
         return $result->totalCount ?? 0;
@@ -220,7 +220,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->configResolver->getParameter('languages')]
+            ['languages' => $this->configResolver->getParameter('languages')],
         );
 
         return $this->buildItems($result);
@@ -238,7 +238,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->configResolver->getParameter('languages')]
+            ['languages' => $this->configResolver->getParameter('languages')],
         );
 
         return $result->totalCount ?? 0;
@@ -288,7 +288,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->configResolver->getParameter('languages')]
+            ['languages' => $this->configResolver->getParameter('languages')],
         );
 
         return new SearchResult($this->buildItems($result));
@@ -321,7 +321,7 @@ final class EzPlatformBackend implements BackendInterface
 
         $result = $this->searchService->findLocations(
             $query,
-            ['languages' => $this->configResolver->getParameter('languages')]
+            ['languages' => $this->configResolver->getParameter('languages')],
         );
 
         return $result->totalCount ?? 0;
@@ -340,7 +340,7 @@ final class EzPlatformBackend implements BackendInterface
             $this->config->getItemType() === 'ezlocation' ?
                 (int) $location->id :
                 (int) $location->contentInfo->id,
-            $this->isSelectable($location->getContent())
+            $this->isSelectable($location->getContent()),
         );
     }
 
@@ -353,7 +353,7 @@ final class EzPlatformBackend implements BackendInterface
     {
         return array_map(
             fn (SearchHit $searchHit): Item => $this->buildItem($searchHit),
-            $searchResult->searchHits
+            $searchResult->searchHits,
         );
     }
 

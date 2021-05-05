@@ -29,7 +29,7 @@ final class Owner implements ColumnValueProviderInterface
             static function (Repository $repository) use ($item): string {
                 try {
                     $ownerContent = $repository->getContentService()->loadContent(
-                        $item->getContent()->contentInfo->ownerId
+                        $item->getContent()->contentInfo->ownerId,
                     );
                 } catch (NotFoundException $e) {
                     // Owner might be deleted in eZ database
@@ -37,7 +37,7 @@ final class Owner implements ColumnValueProviderInterface
                 }
 
                 return $ownerContent->getName() ?? '';
-            }
+            },
         );
     }
 }

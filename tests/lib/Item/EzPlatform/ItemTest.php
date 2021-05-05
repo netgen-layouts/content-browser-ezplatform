@@ -30,11 +30,11 @@ final class ItemTest extends TestCase
                         'contentInfo' => new ContentInfo(
                             [
                                 'id' => 42,
-                            ]
+                            ],
                         ),
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
 
         $this->location = new Location(
@@ -43,7 +43,7 @@ final class ItemTest extends TestCase
                 'content' => $this->content,
                 'parentLocationId' => 24,
                 'invisible' => true,
-            ]
+            ],
         );
 
         $this->item = new Item($this->location, 42, false);
@@ -91,7 +91,7 @@ final class ItemTest extends TestCase
             [
                 'content' => $this->content,
                 'parentLocationId' => 1,
-            ]
+            ],
         );
 
         $this->item = new Item($this->location, 42);

@@ -50,7 +50,7 @@ final class EzTagsBackendTest extends TestCase
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
             $this->translationHelperMock,
-            $this->configResolverMock
+            $this->configResolverMock,
         );
     }
 
@@ -162,10 +162,10 @@ final class EzTagsBackendTest extends TestCase
             ->with(
                 self::identicalTo($tag),
                 self::identicalTo(0),
-                self::identicalTo(-1)
+                self::identicalTo(-1),
             )
             ->willReturn(
-                $this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)])
+                $this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)]),
             );
 
         $locations = [];
@@ -243,10 +243,10 @@ final class EzTagsBackendTest extends TestCase
             ->with(
                 self::identicalTo($tag),
                 self::identicalTo(0),
-                self::identicalTo(25)
+                self::identicalTo(25),
             )
             ->willReturn(
-                $this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)])
+                $this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)]),
             );
 
         $items = [];
@@ -279,7 +279,7 @@ final class EzTagsBackendTest extends TestCase
             ->with(
                 self::identicalTo($tag),
                 self::identicalTo(5),
-                self::identicalTo(10)
+                self::identicalTo(10),
             )
             ->willReturn($this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)]));
 
@@ -360,7 +360,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo('eng-GB'),
                 self::identicalTo(true),
                 self::identicalTo(0),
-                self::identicalTo(25)
+                self::identicalTo(25),
             )
             ->willReturn($this->getTagsList([$this->getTag(), $this->getTag()]));
 
@@ -390,7 +390,7 @@ final class EzTagsBackendTest extends TestCase
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
             $this->translationHelperMock,
-            $configResolverMock
+            $configResolverMock,
         );
 
         $this->tagsServiceMock
@@ -417,7 +417,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo('eng-GB'),
                 self::identicalTo(true),
                 self::identicalTo(5),
-                self::identicalTo(10)
+                self::identicalTo(10),
             )
             ->willReturn($this->getTagsList([$this->getTag(), $this->getTag()]));
 
@@ -441,7 +441,7 @@ final class EzTagsBackendTest extends TestCase
             ->with(
                 self::identicalTo('test'),
                 self::identicalTo('eng-GB'),
-                self::identicalTo(true)
+                self::identicalTo(true),
             )
             ->willReturn(2);
 
@@ -465,7 +465,7 @@ final class EzTagsBackendTest extends TestCase
         $this->backend = new EzTagsBackend(
             $this->tagsServiceMock,
             $this->translationHelperMock,
-            $configResolverMock
+            $configResolverMock,
         );
 
         $this->tagsServiceMock
@@ -486,7 +486,7 @@ final class EzTagsBackendTest extends TestCase
             [
                 'id' => $id,
                 'parentTagId' => $parentTagId,
-            ]
+            ],
         );
     }
 

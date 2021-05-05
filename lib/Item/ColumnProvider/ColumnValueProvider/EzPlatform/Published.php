@@ -24,7 +24,7 @@ final class Published implements ColumnValueProviderInterface
         }
 
         return $item->getContent()->contentInfo->publishedDate->format(
-            $this->dateFormat
+            $this->dateFormat,
         );
     }
 }

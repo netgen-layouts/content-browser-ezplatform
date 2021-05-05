@@ -33,7 +33,7 @@ final class ContentTypeTest extends TestCase
                 'names' => ['eng-GB' => 'Content type'],
                 'mainLanguageCode' => 'eng-GB',
                 'fieldDefinitions' => [],
-            ]
+            ],
         );
 
         $content = new Content(
@@ -44,21 +44,21 @@ final class ContentTypeTest extends TestCase
                         'contentInfo' => new ContentInfo(
                             [
                                 'contentTypeId' => 42,
-                            ]
+                            ],
                         ),
-                    ]
+                    ],
                 ),
-            ]
+            ],
         );
 
         $item = new Item(
             new Location(['content' => $content]),
-            24
+            24,
         );
 
         self::assertSame(
             'Content type',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 

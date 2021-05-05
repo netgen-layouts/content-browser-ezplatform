@@ -34,14 +34,14 @@ final class ModifiedTest extends TestCase
             new Tag(
                 [
                     'modificationDate' => $date,
-                ]
+                ],
             ),
-            'Name'
+            'Name',
         );
 
         self::assertSame(
             '17.07.2016 18:15:42',
-            $this->provider->getValue($item)
+            $this->provider->getValue($item),
         );
     }
 
