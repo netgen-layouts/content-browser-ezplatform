@@ -105,6 +105,13 @@ services:
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\section }
 
+    netgen_content_browser.column_value_provider.ezplatform.object_state:
+        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\ObjectState
+        arguments:
+            - "@ezpublish.api.repository"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\object_state }
+
     netgen_content_browser.column_value_provider.ezplatform.visible:
         class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Visible
         tags:

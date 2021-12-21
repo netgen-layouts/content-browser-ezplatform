@@ -37,6 +37,9 @@ item_types:
             section:
                 name: columns.ezplatform.section
                 value_provider: ezplatform\section
+            object_state:
+                name: columns.ezplatform.object_state
+                value_provider: ezplatform\object_state
         default_columns:
             - name
             - type
@@ -80,6 +83,9 @@ item_types:
             section:
                 name: columns.ezplatform.section
                 value_provider: ezplatform\section
+            object_state:
+                name: columns.ezplatform.object_state
+                value_provider: ezplatform\object_state
         default_columns:
             - name
             - type
