@@ -12,6 +12,7 @@ columns.ezplatform.modified: 'Modified'
 columns.ezplatform.published: 'Published'
 columns.ezplatform.priority: 'Priority'
 columns.ezplatform.section: 'Section'
+columns.ezplatform.object_state: 'Object state'
 
 columns.eztags.tag_id: 'Tag ID'
 columns.eztags.parent_tag_id: 'Parent tag ID'
