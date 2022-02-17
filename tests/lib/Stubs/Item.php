@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Ez\Tests\Stubs;
+namespace Netgen\ContentBrowser\Ibexa\Tests\Stubs;
 
 use Netgen\ContentBrowser\Item\ItemInterface;
 

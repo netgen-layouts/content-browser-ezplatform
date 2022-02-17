@@ -1,0 +1,34 @@
+services:
+    netgen_content_browser.backend.netgen_tags:
+        class: Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend
+        arguments:
+            - "@eztags.api.service.tags"
+            - "@Ibexa\\Core\\Helper\\TranslationHelper"
+            - "@ibexa.config.resolver"
+        tags:
+            - { name: netgen_content_browser.backend, item_type: netgen_tags }
+
+    netgen_content_browser.column_value_provider.netgen_tags.tag_id:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\TagId
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: netgen_tags\tag_id }
+
+    netgen_content_browser.column_value_provider.netgen_tags.parent_tag_id:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\ParentTagId
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: netgen_tags\parent_tag_id }
+
+    netgen_content_browser.column_value_provider.netgen_tags.parent_tag:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\ParentTag
+        arguments:
+            - "@eztags.api.service.tags"
+            - "@Ibexa\\Core\\Helper\\TranslationHelper"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: netgen_tags\parent_tag }
+
+    netgen_content_browser.column_value_provider.netgen_tags.modified:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\Modified
+        arguments:
+            - "%netgen_content_browser.columns.date_format%"
+        tags:
+            - { name: netgen_content_browser.column_value_provider, identifier: netgen_tags\modified }

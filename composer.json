@@ -1,6 +1,6 @@
 {
-    "name": "netgen/content-browser-ezplatform",
-    "description": "Netgen Content Browser & eZ Platform integration",
+    "name": "netgen/content-browser-ibexa",
+    "description": "Netgen Content Browser & Ibexa Platform integration",
     "license": "GPL-2.0-only",
     "type": "symfony-bundle",
     "authors": [
@@ -11,7 +11,7 @@
     ],
     "require": {
         "netgen/content-browser": "~1.4.0",
-        "ezsystems/ezplatform-admin-ui": "^1.5 || ^2.3"
+        "ibexa/core": "^4.0"
     },
     "require-dev": {
         "netgen/layouts-coding-standard": "^1.0 || ^2.0",
@@ -24,7 +24,7 @@
         "phpstan/phpstan-phpunit": "^1.0",
         "vimeo/psalm": "^4.7",
         "matthiasnoback/symfony-dependency-injection-test": "^4.2",
-        "netgen/tagsbundle": "^3.4 || ^4.0"
+        "netgen/tagsbundle": "^5.0"
     },
     "scripts": {
         "test": "@php vendor/bin/phpunit --colors=always",
@@ -35,14 +35,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Netgen\\ContentBrowser\\Ez\\": "lib/",
-            "Netgen\\Bundle\\ContentBrowserEzPlatformBundle\\": "bundle/"
+            "Netgen\\ContentBrowser\\Ibexa\\": "lib/",
+            "Netgen\\Bundle\\ContentBrowserIbexaBundle\\": "bundle/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Netgen\\ContentBrowser\\Ez\\Tests\\": "tests/lib/",
-            "Netgen\\Bundle\\ContentBrowserEzPlatformBundle\\Tests\\": "tests/bundle/",
+            "Netgen\\ContentBrowser\\Ibexa\\Tests\\": "tests/lib/",
+            "Netgen\\Bundle\\ContentBrowserIbexaBundle\\Tests\\": "tests/bundle/",
             "Netgen\\ContentBrowser\\Tests\\": "vendor/netgen/content-browser/tests/lib/"
         }
     },

@@ -5,10 +5,10 @@ includes:
 
 parameters:
     ignoreErrors:
-        # eZ Platform
+        # Ibexa Platform
 
         - "#Casting to int something that's already int.#"
 
         # Disable errors about missing value types in various vendor classes
 
-        - '#no value type specified in iterable type eZ\\Publish\\API\\Repository\\Values\\Content\\Search\\SearchResult#'
+        - '#no value type specified in iterable type Ibexa\\Contracts\\Core\\Repository\\Values\\Content\\Search\\SearchResult#'
