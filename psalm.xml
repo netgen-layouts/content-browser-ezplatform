@@ -14,23 +14,17 @@
     </projectFiles>
 
     <issueHandlers>
-        <!-- eZ Platform -->
+        <!-- Ibexa Platform -->
 
         <RedundantCastGivenDocblockType errorLevel="suppress" />
         <RedundantConditionGivenDocblockType errorLevel="suppress" />
         <DocblockTypeContradiction errorLevel="suppress" />
 
-        <DuplicateArrayKey>
-            <errorLevel type="suppress">
-                <file name="bundle/DependencyInjection/CompilerPass/EzPlatformDefaultPreviewPass.php" />
-            </errorLevel>
-        </DuplicateArrayKey>
-
         <!-- Content Browser specifics -->
 
         <PropertyNotSetInConstructor>
             <errorLevel type="suppress">
-                <file name="lib/Backend/EzPlatformBackend.php" />
+                <file name="lib/Backend/IbexaBackend.php" />
             </errorLevel>
         </PropertyNotSetInConstructor>
     </issueHandlers>

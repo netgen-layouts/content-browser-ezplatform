@@ -1,0 +1,25 @@
+item_types:
+    netgen_tags:
+        name: item_types.netgen_tags
+        preview:
+            template: '%netgen_content_browser.netgen_tags.item_template%'
+        columns:
+            name:
+                name: columns.name
+                value_provider: name
+            tag_id:
+                name: columns.netgen_tags.tag_id
+                value_provider: netgen_tags\tag_id
+            parent_tag_id:
+                name: columns.netgen_tags.parent_tag_id
+                value_provider: netgen_tags\parent_tag_id
+            parent_tag:
+                name: columns.netgen_tags.parent_tag
+                value_provider: netgen_tags\parent_tag
+            modified:
+                name: columns.netgen_tags.modified
+                value_provider: netgen_tags\modified
+        default_columns:
+            - name
+            - parent_tag
+            - modified

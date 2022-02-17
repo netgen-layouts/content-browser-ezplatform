@@ -1,5 +1,5 @@
 parameters:
-    netgen_content_browser.default.backend.ezplatform.location_content_types:
+    netgen_content_browser.default.backend.ibexa.location_content_types:
         - folder
         - ng_category
         - ng_container
@@ -8,111 +8,111 @@ parameters:
         - ng_topic
         - user_group
 
-    netgen_content_browser.default.backend.ezplatform.default_sections: [2, 43, 5]
+    netgen_content_browser.default.backend.ibexa.default_sections: [2, 43, 5]
 
 services:
-    # Alias to eZ Platform search service, allowing for replacement
+    # Alias to Ibexa Platform search service, allowing for replacement
     # of search service with other implementations system wide
 
-    netgen_content_browser.ezplatform.search_service:
-        alias: ezpublish.api.service.search
+    netgen_content_browser.ibexa.search_service:
+        alias: ibexa.api.service.search
 
     # Backends
 
-    netgen_content_browser.backend.ezlocation:
-        class: Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend
+    netgen_content_browser.backend.ibexa_location:
+        class: Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend
         arguments:
-            - "@netgen_content_browser.ezplatform.search_service"
-            - "@ezpublish.api.service.location"
-            - "@ezpublish.config.resolver"
-            - "@netgen_content_browser.config.ezlocation"
+            - "@netgen_content_browser.ibexa.search_service"
+            - "@ibexa.api.service.location"
+            - "@ibexa.config.resolver"
+            - "@netgen_content_browser.config.ibexa_location"
         tags:
-            -  { name: netgen_content_browser.backend, item_type: ezlocation }
+            -  { name: netgen_content_browser.backend, item_type: ibexa_location }
 
-    netgen_content_browser.backend.ezcontent:
-        class: Netgen\ContentBrowser\Ez\Backend\EzPlatformBackend
+    netgen_content_browser.backend.ibexa_content:
+        class: Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend
         arguments:
-            - "@netgen_content_browser.ezplatform.search_service"
-            - "@ezpublish.api.service.location"
-            - "@ezpublish.config.resolver"
-            - "@netgen_content_browser.config.ezcontent"
+            - "@netgen_content_browser.ibexa.search_service"
+            - "@ibexa.api.service.location"
+            - "@ibexa.config.resolver"
+            - "@netgen_content_browser.config.ibexa_content"
         tags:
-            -  { name: netgen_content_browser.backend, item_type: ezcontent }
+            -  { name: netgen_content_browser.backend, item_type: ibexa_content }
 
     # Config load events
 
-    netgen_content_browser.event_listener.ezplatform.set_sections:
-        class: Netgen\Bundle\ContentBrowserEzPlatformBundle\EventListener\EzPlatform\SetSectionsListener
+    netgen_content_browser.event_listener.ibexa.set_sections:
+        class: Netgen\Bundle\ContentBrowserIbexaBundle\EventListener\Ibexa\SetSectionsListener
         arguments:
-            - "@ezpublish.config.resolver"
+            - "@ibexa.config.resolver"
         tags:
             - { name: kernel.event_subscriber }
 
-    netgen_content_browser.event_listener.ezplatform.set_location_content_types:
-        class: Netgen\Bundle\ContentBrowserEzPlatformBundle\EventListener\EzPlatform\SetLocationContentTypesListener
+    netgen_content_browser.event_listener.ibexa.set_location_content_types:
+        class: Netgen\Bundle\ContentBrowserIbexaBundle\EventListener\Ibexa\SetLocationContentTypesListener
         arguments:
-            - "@ezpublish.config.resolver"
+            - "@ibexa.config.resolver"
         tags:
             - { name: kernel.event_subscriber }
 
     # Column value providers
 
-    netgen_content_browser.column_value_provider.ezplatform.location_id:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\LocationId
+    netgen_content_browser.column_value_provider.ibexa.location_id:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\LocationId
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\location_id }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\location_id }
 
-    netgen_content_browser.column_value_provider.ezplatform.content_id:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\ContentId
+    netgen_content_browser.column_value_provider.ibexa.content_id:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ContentId
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\content_id }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\content_id }
 
-    netgen_content_browser.column_value_provider.ezplatform.content_type:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\ContentType
+    netgen_content_browser.column_value_provider.ibexa.content_type:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ContentType
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\content_type }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\content_type }
 
-    netgen_content_browser.column_value_provider.ezplatform.modified:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Modified
+    netgen_content_browser.column_value_provider.ibexa.modified:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Modified
         arguments:
             - "%netgen_content_browser.columns.date_format%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\modified }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\modified }
 
-    netgen_content_browser.column_value_provider.ezplatform.published:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Published
+    netgen_content_browser.column_value_provider.ibexa.published:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Published
         arguments:
             - "%netgen_content_browser.columns.date_format%"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\published }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\published }
 
-    netgen_content_browser.column_value_provider.ezplatform.owner:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Owner
+    netgen_content_browser.column_value_provider.ibexa.owner:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Owner
         arguments:
-            - "@ezpublish.api.repository"
+            - "@ibexa.api.repository"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\owner }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\owner }
 
-    netgen_content_browser.column_value_provider.ezplatform.priority:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Priority
+    netgen_content_browser.column_value_provider.ibexa.priority:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Priority
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\priority }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\priority }
 
-    netgen_content_browser.column_value_provider.ezplatform.section:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Section
+    netgen_content_browser.column_value_provider.ibexa.section:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Section
         arguments:
-            - "@ezpublish.api.repository"
+            - "@ibexa.api.repository"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\section }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\section }
 
-    netgen_content_browser.column_value_provider.ezplatform.object_state:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\ObjectState
+    netgen_content_browser.column_value_provider.ibexa.object_state:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ObjectState
         arguments:
-            - "@ezpublish.api.repository"
+            - "@ibexa.api.repository"
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\object_state }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\object_state }
 
-    netgen_content_browser.column_value_provider.ezplatform.visible:
-        class: Netgen\ContentBrowser\Ez\Item\ColumnProvider\ColumnValueProvider\EzPlatform\Visible
+    netgen_content_browser.column_value_provider.ibexa.visible:
+        class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Visible
         tags:
-            - { name: netgen_content_browser.column_value_provider, identifier: ezplatform\visible }
+            - { name: netgen_content_browser.column_value_provider, identifier: ibexa\visible }

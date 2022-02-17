@@ -21,14 +21,14 @@ jobs:
       - uses: actions/checkout@v2
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           coverage: none
 
       # Install Flex as a global dependency to enable usage of extra.symfony.require
       # while keeping Flex recipes from applying
       - run: composer global require --no-scripts symfony/flex
 
-      - run: composer config extra.symfony.require ~5.3.0
+      - run: composer config extra.symfony.require ~5.4.0
 
       - run: composer update --prefer-dist
 
