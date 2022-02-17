@@ -24,7 +24,7 @@
         "phpstan/phpstan-phpunit": "^1.0",
         "vimeo/psalm": "^4.7",
         "matthiasnoback/symfony-dependency-injection-test": "^4.2",
-        "netgen/tagsbundle": "^4.0"
+        "netgen/tagsbundle": "^5.0"
     },
     "scripts": {
         "test": "@php vendor/bin/phpunit --colors=always",
