@@ -2,7 +2,7 @@ services:
     netgen_content_browser.backend.netgen_tags:
         class: Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend
         arguments:
-            - "@eztags.api.service.tags"
+            - "@netgen_tags.api.service.tags"
             - "@Ibexa\\Core\\Helper\\TranslationHelper"
             - "@ibexa.config.resolver"
         tags:
@@ -21,7 +21,7 @@ services:
     netgen_content_browser.column_value_provider.netgen_tags.parent_tag:
         class: Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\ParentTag
         arguments:
-            - "@eztags.api.service.tags"
+            - "@netgen_tags.api.service.tags"
             - "@Ibexa\\Core\\Helper\\TranslationHelper"
         tags:
             - { name: netgen_content_browser.column_value_provider, identifier: netgen_tags\parent_tag }
