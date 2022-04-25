@@ -366,7 +366,7 @@ final class IbexaBackend implements BackendInterface
             return true;
         }
 
-        if ($this->allowedContentTypes === null) {
+        if (!isset($this->allowedContentTypes)) {
             $this->allowedContentTypes = [];
 
             $allowedContentTypes = $this->config->getParameter('allowed_content_types');
