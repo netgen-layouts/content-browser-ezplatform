@@ -165,7 +165,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(-1),
             )
             ->willReturn(
-                $this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)]),
+                $this->getTagsList([$this->getTag(0, 1), $this->getTag(0, 1)]),
             );
 
         $locations = [];
@@ -246,7 +246,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(25),
             )
             ->willReturn(
-                $this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)]),
+                $this->getTagsList([$this->getTag(0, 1), $this->getTag(0, 1)]),
             );
 
         $items = [];
@@ -281,7 +281,7 @@ final class EzTagsBackendTest extends TestCase
                 self::identicalTo(5),
                 self::identicalTo(10),
             )
-            ->willReturn($this->getTagsList([$this->getTag(null, 1), $this->getTag(null, 1)]));
+            ->willReturn($this->getTagsList([$this->getTag(0, 1), $this->getTag(0, 1)]));
 
         $items = [];
         foreach ($this->backend->getSubItems(new Item($tag, 'tag'), 5, 10) as $item) {
@@ -480,7 +480,7 @@ final class EzTagsBackendTest extends TestCase
     /**
      * Returns the tag object used in tests.
      */
-    private function getTag(?int $id = null, ?int $parentTagId = null): Tag
+    private function getTag(int $id = 0, int $parentTagId = 0): Tag
     {
         return new Tag(
             [
