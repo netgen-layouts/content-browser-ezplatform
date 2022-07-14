@@ -10,6 +10,7 @@ use Ibexa\Contracts\Core\Repository\Values\ObjectState\ObjectStateGroup;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\IbexaInterface;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
+
 use function array_map;
 use function count;
 use function implode;

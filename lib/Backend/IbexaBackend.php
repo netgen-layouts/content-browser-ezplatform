@@ -21,6 +21,7 @@ use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\IbexaInterface;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Item\LocationInterface;
+
 use function array_flip;
 use function array_map;
 use function count;
