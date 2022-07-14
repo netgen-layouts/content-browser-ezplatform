@@ -9,6 +9,7 @@ use Netgen\ContentBrowser\Ez\Item\EzTags\EzTagsInterface;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
+
 use function in_array;
 
 final class ParentTag implements ColumnValueProviderInterface

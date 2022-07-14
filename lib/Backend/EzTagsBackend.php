@@ -19,6 +19,7 @@ use Netgen\ContentBrowser\Ez\Item\EzTags\Item;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+
 use function count;
 use function sprintf;
 

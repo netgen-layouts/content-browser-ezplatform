@@ -10,6 +10,7 @@ use eZ\Publish\API\Repository\Values\ObjectState\ObjectStateGroup;
 use Netgen\ContentBrowser\Ez\Item\EzPlatform\EzPlatformInterface;
 use Netgen\ContentBrowser\Item\ColumnProvider\ColumnValueProviderInterface;
 use Netgen\ContentBrowser\Item\ItemInterface;
+
 use function array_map;
 use function count;
 use function implode;

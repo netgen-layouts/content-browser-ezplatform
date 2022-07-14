@@ -21,6 +21,7 @@ use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ez\Item\EzPlatform\EzPlatformInterface;
 use Netgen\ContentBrowser\Ez\Item\EzPlatform\Item;
 use Netgen\ContentBrowser\Item\LocationInterface;
+
 use function array_flip;
 use function array_map;
 use function count;
