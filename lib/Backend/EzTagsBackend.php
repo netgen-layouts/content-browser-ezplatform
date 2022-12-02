@@ -228,7 +228,7 @@ final class EzTagsBackend implements BackendInterface
         return new Tag(
             [
                 'id' => 0,
-                'parentTagId' => null,
+                'parentTagId' => 0,
                 'keywords' => [
                     'eng-GB' => 'All tags',
                 ],
