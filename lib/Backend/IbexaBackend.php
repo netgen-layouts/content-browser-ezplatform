@@ -250,9 +250,7 @@ final class IbexaBackend implements BackendInterface
         $searchQuery->setOffset($offset);
         $searchQuery->setLimit($limit);
 
-        $searchResult = $this->searchItems($searchQuery);
-
-        return $searchResult->getResults();
+        return $this->searchItems($searchQuery)->getResults();
     }
 
     public function searchCount(string $searchText): int

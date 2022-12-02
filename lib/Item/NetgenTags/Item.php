@@ -22,12 +22,12 @@ final class Item implements ItemInterface, LocationInterface, NetgenTagsInterfac
 
     public function getLocationId(): int
     {
-        return (int) $this->tag->id;
+        return $this->tag->id;
     }
 
     public function getValue(): int
     {
-        return (int) $this->tag->id;
+        return $this->tag->id;
     }
 
     public function getName(): string
@@ -37,7 +37,7 @@ final class Item implements ItemInterface, LocationInterface, NetgenTagsInterfac
 
     public function getParentId(): ?int
     {
-        return $this->tag->parentTagId !== 0 ? (int) $this->tag->parentTagId : null;
+        return $this->tag->parentTagId !== 0 ? $this->tag->parentTagId : null;
     }
 
     public function isVisible(): bool
