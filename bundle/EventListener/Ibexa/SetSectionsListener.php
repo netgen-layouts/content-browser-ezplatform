@@ -8,6 +8,7 @@ use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\ContentBrowser\Event\ConfigLoadEvent;
 use Netgen\ContentBrowser\Event\ContentBrowserEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
 use function in_array;
 
 final class SetSectionsListener implements EventSubscriberInterface
