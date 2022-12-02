@@ -37,7 +37,7 @@ final class Item implements ItemInterface, LocationInterface, EzTagsInterface
 
     public function getParentId(): ?int
     {
-        return $this->tag->parentTagId !== null ? (int) $this->tag->parentTagId : null;
+        return $this->tag->parentTagId !== 0 ? (int) $this->tag->parentTagId : null;
     }
 
     public function isVisible(): bool
