@@ -30,6 +30,7 @@ final class ObjectState implements ColumnValueProviderInterface
             return null;
         }
 
+        /** @var \eZ\Publish\API\Repository\Values\ObjectState\ObjectStateGroup[] $groups */
         $groups = $this->repository->sudo(
             static fn (Repository $repository): iterable => $repository
                 ->getObjectStateService()->loadObjectStateGroups(),
