@@ -1,8 +1,8 @@
-# Netgen Content Browser & Ibexa Platform installation instructions
+# Netgen Content Browser & Ibexa CMS installation instructions
 
 ## Use Composer
 
-Run the following command to install Netgen Content Browser & Ibexa Platform
+Run the following command to install Netgen Content Browser & Ibexa CMS
 integration:
 
 ```

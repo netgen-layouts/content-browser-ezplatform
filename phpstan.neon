@@ -5,6 +5,6 @@ includes:
 
 parameters:
     ignoreErrors:
-        # Ibexa Platform
+        # Ibexa CMS
 
         - "#Casting to int something that's already int.#"

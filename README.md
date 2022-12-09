@@ -1,4 +1,4 @@
-# Netgen Content Browser & Ibexa Platform integration
+# Netgen Content Browser & Ibexa CMS integration
 
 ## Installation instructions
 

@@ -15,7 +15,7 @@
     </projectFiles>
 
     <issueHandlers>
-        <!-- Ibexa Platform -->
+        <!-- Ibexa CMS -->
 
         <RedundantCastGivenDocblockType errorLevel="suppress" />
         <RedundantConditionGivenDocblockType errorLevel="suppress" />
