@@ -106,11 +106,12 @@ final class ObjectStateTest extends TestCase
 
         $this->objectStateServiceMock
             ->method('getContentState')
-            ->withConsecutive(
-                [self::identicalTo($contentInfo), self::identicalTo($objectStateGroup1)],
-                [self::identicalTo($contentInfo), self::identicalTo($objectStateGroup2)],
-            )
-            ->willReturnOnConsecutiveCalls($objectState1, $objectState2);
+            ->willReturnMap(
+                [
+                    [$contentInfo, $objectStateGroup1, $objectState1],
+                    [$contentInfo, $objectStateGroup2, $objectState2],
+                ],
+            );
 
         self::assertSame(
             'Object state 1, Object state 2',
