@@ -14,7 +14,7 @@
         "ibexa/core": "^4.3"
     },
     "require-dev": {
-        "netgen/layouts-coding-standard": "^1.0 || ^2.0",
+        "netgen/layouts-coding-standard": "^2.0",
         "phpunit/phpunit": "^9.6 || ^10.0",
         "symfony/phpunit-bridge": "^5.4",
         "symfony/var-dumper": "^5.4",
@@ -25,6 +25,9 @@
         "vimeo/psalm": "^5.4",
         "matthiasnoback/symfony-dependency-injection-test": "^4.3",
         "netgen/tagsbundle": "^5.0"
+    },
+    "config": {
+        "allow-plugins": false
     },
     "config": {
         "allow-plugins": false
