@@ -15,22 +15,18 @@ use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Location as StubLocation;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\API\Repository\Values\Tags\TagList;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(NetgenTagsBackend::class)]
 final class NetgenTagsBackendTest extends TestCase
 {
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&\Netgen\TagsBundle\API\Repository\TagsService
-     */
-    private MockObject $tagsServiceMock;
+    private MockObject&TagsService $tagsServiceMock;
 
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&\Ibexa\Core\Helper\TranslationHelper
-     */
-    private MockObject $translationHelperMock;
+    private MockObject&TranslationHelper $translationHelperMock;
 
-    private MockObject $configResolverMock;
+    private MockObject&ConfigResolverInterface $configResolverMock;
 
     private NetgenTagsBackend $backend;
 
@@ -53,12 +49,6 @@ final class NetgenTagsBackendTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::__construct
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildRootItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getRootTag
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSections
-     */
     public function testGetSections(): void
     {
         $this->tagsServiceMock
@@ -74,11 +64,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertInstanceOf(NetgenTagsInterface::class, $location);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::internalLoadItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::loadLocation
-     */
     public function testLoadLocation(): void
     {
         $this->tagsServiceMock
@@ -92,10 +77,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertSame(1, $location->getLocationId());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::internalLoadItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::loadLocation
-     */
     public function testLoadLocationThrowsNotFoundException(): void
     {
         $this->expectException(NotFoundException::class);
@@ -110,11 +91,6 @@ final class NetgenTagsBackendTest extends TestCase
         $this->backend->loadLocation(1);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::internalLoadItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::loadItem
-     */
     public function testLoadItem(): void
     {
         $this->tagsServiceMock
@@ -128,10 +104,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertSame(1, $item->getValue());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::internalLoadItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::loadItem
-     */
     public function testLoadItemThrowsNotFoundException(): void
     {
         $this->expectException(NotFoundException::class);
@@ -146,11 +118,6 @@ final class NetgenTagsBackendTest extends TestCase
         $this->backend->loadItem(1);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSubLocations
-     */
     public function testGetSubLocations(): void
     {
         $tag = $this->getTag(1);
@@ -164,7 +131,7 @@ final class NetgenTagsBackendTest extends TestCase
                 self::identicalTo(-1),
             )
             ->willReturn(
-                $this->getTagsList([$this->getTag(0, 1), $this->getTag(0, 1)]),
+                new TagList([$this->getTag(0, 1), $this->getTag(0, 1)]),
             );
 
         $locations = [];
@@ -180,9 +147,6 @@ final class NetgenTagsBackendTest extends TestCase
         }
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSubLocations
-     */
     public function testGetSubLocationsWithInvalidItem(): void
     {
         $this->tagsServiceMock
@@ -195,9 +159,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertEmpty($locations);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSubLocationsCount
-     */
     public function testGetSubLocationsCount(): void
     {
         $tag = $this->getTag(1);
@@ -213,9 +174,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertSame(2, $count);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSubLocationsCount
-     */
     public function testGetSubLocationsCountWithInvalidItem(): void
     {
         $this->tagsServiceMock
@@ -227,11 +185,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertSame(0, $count);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSubItems
-     */
     public function testGetSubItems(): void
     {
         $tag = $this->getTag(1);
@@ -245,7 +198,7 @@ final class NetgenTagsBackendTest extends TestCase
                 self::identicalTo(25),
             )
             ->willReturn(
-                $this->getTagsList([$this->getTag(0, 1), $this->getTag(0, 1)]),
+                new TagList([$this->getTag(0, 1), $this->getTag(0, 1)]),
             );
 
         $items = [];
@@ -263,11 +216,6 @@ final class NetgenTagsBackendTest extends TestCase
         }
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSubItems
-     */
     public function testGetSubItemsWithOffsetAndLimit(): void
     {
         $tag = $this->getTag(1);
@@ -280,7 +228,7 @@ final class NetgenTagsBackendTest extends TestCase
                 self::identicalTo(5),
                 self::identicalTo(10),
             )
-            ->willReturn($this->getTagsList([$this->getTag(0, 1), $this->getTag(0, 1)]));
+            ->willReturn(new TagList([$this->getTag(0, 1), $this->getTag(0, 1)]));
 
         $items = [];
         foreach ($this->backend->getSubItems(new Item($tag, 'tag'), 5, 10) as $item) {
@@ -297,9 +245,6 @@ final class NetgenTagsBackendTest extends TestCase
         }
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSubItems
-     */
     public function testGetSubItemsWithInvalidItem(): void
     {
         $this->tagsServiceMock
@@ -312,9 +257,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertEmpty($locations);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSubItemsCount
-     */
     public function testGetSubItemsCount(): void
     {
         $tag = $this->getTag(1);
@@ -330,9 +272,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertSame(2, $count);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::getSubItemsCount
-     */
     public function testGetSubItemsCountWithInvalidItem(): void
     {
         $this->tagsServiceMock
@@ -344,11 +283,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertSame(0, $count);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::search
-     */
     public function testSearch(): void
     {
         $this->tagsServiceMock
@@ -361,7 +295,7 @@ final class NetgenTagsBackendTest extends TestCase
                 self::identicalTo(0),
                 self::identicalTo(25),
             )
-            ->willReturn($this->getTagsList([$this->getTag(), $this->getTag()]));
+            ->willReturn(new TagList([$this->getTag(), $this->getTag()]));
 
         $items = [];
         foreach ($this->backend->search('test') as $item) {
@@ -372,11 +306,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $items);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::search
-     */
     public function testSearchWithNoLanguages(): void
     {
         $configResolverMock = $this->createMock(ConfigResolverInterface::class);
@@ -401,11 +330,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertCount(0, $items);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::search
-     */
     public function testSearchWithOffsetAndLimit(): void
     {
         $this->tagsServiceMock
@@ -418,7 +342,7 @@ final class NetgenTagsBackendTest extends TestCase
                 self::identicalTo(5),
                 self::identicalTo(10),
             )
-            ->willReturn($this->getTagsList([$this->getTag(), $this->getTag()]));
+            ->willReturn(new TagList([$this->getTag(), $this->getTag()]));
 
         $items = [];
         foreach ($this->backend->search('test', 5, 10) as $item) {
@@ -429,9 +353,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $items);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::searchCount
-     */
     public function testSearchCount(): void
     {
         $this->tagsServiceMock
@@ -449,9 +370,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertSame(2, $count);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\NetgenTagsBackend::searchCount
-     */
     public function testSearchCountWithNoLanguages(): void
     {
         $configResolverMock = $this->createMock(ConfigResolverInterface::class);
@@ -487,15 +405,5 @@ final class NetgenTagsBackendTest extends TestCase
                 'parentTagId' => $parentTagId,
             ],
         );
-    }
-
-    /**
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
-     *
-     * @return iterable<\Netgen\TagsBundle\API\Repository\Values\Tags\Tag>
-     */
-    private function getTagsList(array $tags): iterable
-    {
-        return new TagList($tags);
     }
 }

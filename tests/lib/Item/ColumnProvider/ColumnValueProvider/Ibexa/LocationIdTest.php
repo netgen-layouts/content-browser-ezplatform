@@ -9,8 +9,10 @@ use Ibexa\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\LocationId;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(LocationId::class)]
 final class LocationIdTest extends TestCase
 {
     private LocationId $provider;
@@ -20,9 +22,6 @@ final class LocationIdTest extends TestCase
         $this->provider = new LocationId();
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\LocationId::getValue
-     */
     public function testGetValue(): void
     {
         $item = new Item(
@@ -41,9 +40,6 @@ final class LocationIdTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\LocationId::getValue
-     */
     public function testGetValueWithInvalidItem(): void
     {
         self::assertNull($this->provider->getValue(new StubItem(42)));

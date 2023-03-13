@@ -10,14 +10,16 @@ use Netgen\ContentBrowser\Ibexa\Item\NetgenTags\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 use Netgen\TagsBundle\Core\Repository\TagsService;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(ParentTag::class)]
 final class ParentTagTest extends TestCase
 {
-    private MockObject $tagsServiceMock;
+    private MockObject&TagsService $tagsServiceMock;
 
-    private MockObject $translationHelperMock;
+    private MockObject&TranslationHelper $translationHelperMock;
 
     private ParentTag $provider;
 
@@ -32,10 +34,6 @@ final class ParentTagTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\ParentTag::__construct
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\ParentTag::getValue
-     */
     public function testGetValue(): void
     {
         $item = new Item(
@@ -67,9 +65,6 @@ final class ParentTagTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\ParentTag::getValue
-     */
     public function testGetValueWithNoParentTag(): void
     {
         $item = new Item(
@@ -95,9 +90,6 @@ final class ParentTagTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\ParentTag::getValue
-     */
     public function testGetValueWithInvalidItem(): void
     {
         self::assertNull($this->provider->getValue(new StubItem(42)));

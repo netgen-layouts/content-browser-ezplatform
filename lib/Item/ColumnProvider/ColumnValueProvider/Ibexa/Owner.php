@@ -12,11 +12,8 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Owner implements ColumnValueProviderInterface
 {
-    private Repository $repository;
-
-    public function __construct(Repository $repository)
+    public function __construct(private Repository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function getValue(ItemInterface $item): ?string
@@ -31,7 +28,7 @@ final class Owner implements ColumnValueProviderInterface
                     $ownerContent = $repository->getContentService()->loadContent(
                         $item->getContent()->contentInfo->ownerId,
                     );
-                } catch (NotFoundException $e) {
+                } catch (NotFoundException) {
                     // Owner might be deleted in Ibexa database
                     return '';
                 }

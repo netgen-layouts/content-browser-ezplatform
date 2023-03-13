@@ -24,7 +24,6 @@ services:
         arguments:
             - "@netgen_content_browser.ibexa.search_service"
             - "@ibexa.api.service.location"
-            - "@ibexa.config.resolver"
             - "@netgen_content_browser.config.ibexa_location"
         tags:
             -  { name: netgen_content_browser.backend, item_type: ibexa_location }
@@ -34,7 +33,6 @@ services:
         arguments:
             - "@netgen_content_browser.ibexa.search_service"
             - "@ibexa.api.service.location"
-            - "@ibexa.config.resolver"
             - "@netgen_content_browser.config.ibexa_content"
         tags:
             -  { name: netgen_content_browser.backend, item_type: ibexa_content }

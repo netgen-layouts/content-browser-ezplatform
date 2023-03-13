@@ -14,21 +14,23 @@ use Ibexa\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Section;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Section::class)]
 final class SectionTest extends TestCase
 {
-    private MockObject $repositoryMock;
+    private MockObject&Repository $repositoryMock;
 
-    private MockObject $sectionServiceMock;
+    private MockObject&SectionService $sectionServiceMock;
 
     private Section $provider;
 
     protected function setUp(): void
     {
-        $this->sectionServiceMock = $this->createMock(SectionService::class);
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getSectionService']);
+        $this->sectionServiceMock = $this->createMock(SectionService::class);
 
         $this->repositoryMock
             ->expects(self::any())
@@ -48,10 +50,6 @@ final class SectionTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Section::__construct
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Section::getValue
-     */
     public function testGetValue(): void
     {
         $content = new Content(
@@ -91,9 +89,6 @@ final class SectionTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Section::getValue
-     */
     public function testGetValueWithInvalidItem(): void
     {
         self::assertNull($this->provider->getValue(new StubItem(42)));

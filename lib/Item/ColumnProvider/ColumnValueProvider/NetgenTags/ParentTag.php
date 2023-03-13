@@ -14,14 +14,8 @@ use function in_array;
 
 final class ParentTag implements ColumnValueProviderInterface
 {
-    private TagsService $tagsService;
-
-    private TranslationHelper $translationHelper;
-
-    public function __construct(TagsService $tagsService, TranslationHelper $translationHelper)
+    public function __construct(private TagsService $tagsService, private TranslationHelper $translationHelper)
     {
-        $this->tagsService = $tagsService;
-        $this->translationHelper = $translationHelper;
     }
 
     public function getValue(ItemInterface $item): ?string

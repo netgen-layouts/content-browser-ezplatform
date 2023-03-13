@@ -8,8 +8,10 @@ use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTa
 use Netgen\ContentBrowser\Ibexa\Item\NetgenTags\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(TagId::class)]
 final class TagIdTest extends TestCase
 {
     private TagId $provider;
@@ -19,9 +21,6 @@ final class TagIdTest extends TestCase
         $this->provider = new TagId();
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\TagId::getValue
-     */
     public function testGetValue(): void
     {
         $item = new Item(
@@ -39,9 +38,6 @@ final class TagIdTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\NetgenTags\TagId::getValue
-     */
     public function testGetValueWithInvalidItem(): void
     {
         self::assertNull($this->provider->getValue(new StubItem(42)));

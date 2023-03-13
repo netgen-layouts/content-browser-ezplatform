@@ -19,26 +19,18 @@ use Netgen\ContentBrowser\Ibexa\Item\NetgenTags\NetgenTagsInterface;
 use Netgen\ContentBrowser\Item\LocationInterface;
 use Netgen\TagsBundle\API\Repository\TagsService;
 use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
+use Netgen\TagsBundle\API\Repository\Values\Tags\TagList;
 
 use function count;
 use function sprintf;
 
 final class NetgenTagsBackend implements BackendInterface
 {
-    private TagsService $tagsService;
-
-    private TranslationHelper $translationHelper;
-
-    private ConfigResolverInterface $configResolver;
-
     public function __construct(
-        TagsService $tagsService,
-        TranslationHelper $translationHelper,
-        ConfigResolverInterface $configResolver
+        private TagsService $tagsService,
+        private TranslationHelper $translationHelper,
+        private ConfigResolverInterface $configResolver,
     ) {
-        $this->tagsService = $tagsService;
-        $this->translationHelper = $translationHelper;
-        $this->configResolver = $configResolver;
     }
 
     public function getSections(): iterable
@@ -179,7 +171,7 @@ final class NetgenTagsBackend implements BackendInterface
     {
         try {
             $tag = $this->tagsService->loadTag($value);
-        } catch (APINotFoundException $e) {
+        } catch (APINotFoundException) {
             throw new NotFoundException(
                 sprintf(
                     'Item with value "%s" not found.',
@@ -207,11 +199,9 @@ final class NetgenTagsBackend implements BackendInterface
     /**
      * Builds the items from provided tags.
      *
-     * @param \Netgen\TagsBundle\API\Repository\Values\Tags\TagList|\Netgen\TagsBundle\API\Repository\Values\Tags\Tag[] $tags
-     *
      * @return \Generator<\Netgen\ContentBrowser\Ibexa\Item\NetgenTags\Item>
      */
-    private function buildItems(iterable $tags): Generator
+    private function buildItems(TagList $tags): Generator
     {
         foreach ($tags as $tag) {
             yield $this->buildItem($tag);

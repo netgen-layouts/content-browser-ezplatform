@@ -15,21 +15,23 @@ use Ibexa\Core\Repository\Values\ObjectState\ObjectStateGroup;
 use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ObjectState;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(ObjectState::class)]
 final class ObjectStateTest extends TestCase
 {
-    private MockObject $repositoryMock;
+    private MockObject&Repository $repositoryMock;
 
-    private MockObject $objectStateServiceMock;
+    private MockObject&ObjectStateService $objectStateServiceMock;
 
     private ObjectState $provider;
 
     protected function setUp(): void
     {
-        $this->objectStateServiceMock = $this->createMock(ObjectStateService::class);
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getObjectStateService']);
+        $this->objectStateServiceMock = $this->createMock(ObjectStateService::class);
 
         $this->repositoryMock
             ->expects(self::any())
@@ -49,10 +51,6 @@ final class ObjectStateTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ObjectState::__construct
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ObjectState::getValue
-     */
     public function testGetValue(): void
     {
         $contentInfo = new ContentInfo();
@@ -119,10 +117,6 @@ final class ObjectStateTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ObjectState::__construct
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ObjectState::getValue
-     */
     public function testGetValueWithNoStates(): void
     {
         $contentInfo = new ContentInfo();
@@ -153,9 +147,6 @@ final class ObjectStateTest extends TestCase
         self::assertSame('', $this->provider->getValue($item));
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ObjectState::getValue
-     */
     public function testGetValueWithInvalidItem(): void
     {
         self::assertNull($this->provider->getValue(new StubItem(42)));

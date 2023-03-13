@@ -11,7 +11,6 @@ use Ibexa\Contracts\Core\Repository\Values\Content\LocationQuery;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
 use Ibexa\Contracts\Core\Repository\Values\Content\Search\SearchHit;
 use Ibexa\Contracts\Core\Repository\Values\Content\Search\SearchResult as IbexaSearchResult;
-use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Netgen\ContentBrowser\Backend\BackendInterface;
 use Netgen\ContentBrowser\Backend\SearchQuery;
 use Netgen\ContentBrowser\Backend\SearchResult;
@@ -35,14 +34,6 @@ use function usort;
 
 final class IbexaBackend implements BackendInterface
 {
-    private SearchService $searchService;
-
-    private LocationService $locationService;
-
-    private ConfigResolverInterface $configResolver;
-
-    private Configuration $config;
-
     /**
      * @var string[]|null
      */
@@ -54,15 +45,10 @@ final class IbexaBackend implements BackendInterface
     private ?array $allowedContentTypes;
 
     public function __construct(
-        SearchService $searchService,
-        LocationService $locationService,
-        ConfigResolverInterface $configResolver,
-        Configuration $config
+        private SearchService $searchService,
+        private LocationService $locationService,
+        private Configuration $config,
     ) {
-        $this->searchService = $searchService;
-        $this->locationService = $locationService;
-        $this->configResolver = $configResolver;
-        $this->config = $config;
     }
 
     public function getSections(): iterable
@@ -75,10 +61,7 @@ final class IbexaBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId($sectionIds);
 
-        $result = $this->searchService->findLocations(
-            $query,
-            ['languages' => $this->configResolver->getParameter('languages')],
-        );
+        $result = $this->searchService->findLocations($query);
 
         $items = $this->buildItems($result);
 
@@ -103,10 +86,7 @@ final class IbexaBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LocationId((int) $id);
 
-        $result = $this->searchService->findLocations(
-            $query,
-            ['languages' => $this->configResolver->getParameter('languages')],
-        );
+        $result = $this->searchService->findLocations($query);
 
         if (count($result->searchHits) > 0) {
             return $this->buildItem($result->searchHits[0]);
@@ -133,10 +113,7 @@ final class IbexaBackend implements BackendInterface
         $query = new LocationQuery();
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->searchService->findLocations(
-            $query,
-            ['languages' => $this->configResolver->getParameter('languages')],
-        );
+        $result = $this->searchService->findLocations($query);
 
         if (count($result->searchHits) > 0) {
             return $this->buildItem($result->searchHits[0]);
@@ -171,10 +148,7 @@ final class IbexaBackend implements BackendInterface
         $query->limit = 9999;
         $query->sortClauses = $location->getLocation()->getSortClauses();
 
-        $result = $this->searchService->findLocations(
-            $query,
-            ['languages' => $this->configResolver->getParameter('languages')],
-        );
+        $result = $this->searchService->findLocations($query);
 
         return $this->buildItems($result);
     }
@@ -195,10 +169,7 @@ final class IbexaBackend implements BackendInterface
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->searchService->findLocations(
-            $query,
-            ['languages' => $this->configResolver->getParameter('languages')],
-        );
+        $result = $this->searchService->findLocations($query);
 
         return $result->totalCount ?? 0;
     }
@@ -219,10 +190,7 @@ final class IbexaBackend implements BackendInterface
         $query->filter = new Criterion\LogicalAnd($criteria);
         $query->sortClauses = $location->getLocation()->getSortClauses();
 
-        $result = $this->searchService->findLocations(
-            $query,
-            ['languages' => $this->configResolver->getParameter('languages')],
-        );
+        $result = $this->searchService->findLocations($query);
 
         return $this->buildItems($result);
     }
@@ -237,10 +205,7 @@ final class IbexaBackend implements BackendInterface
         $query->limit = 0;
         $query->filter = new Criterion\LogicalAnd($criteria);
 
-        $result = $this->searchService->findLocations(
-            $query,
-            ['languages' => $this->configResolver->getParameter('languages')],
-        );
+        $result = $this->searchService->findLocations($query);
 
         return $result->totalCount ?? 0;
     }
@@ -285,10 +250,7 @@ final class IbexaBackend implements BackendInterface
         $query->offset = $searchQuery->getOffset();
         $query->limit = $searchQuery->getLimit();
 
-        $result = $this->searchService->findLocations(
-            $query,
-            ['languages' => $this->configResolver->getParameter('languages')],
-        );
+        $result = $this->searchService->findLocations($query);
 
         return new SearchResult($this->buildItems($result));
     }
@@ -318,10 +280,7 @@ final class IbexaBackend implements BackendInterface
 
         $query->limit = 0;
 
-        $result = $this->searchService->findLocations(
-            $query,
-            ['languages' => $this->configResolver->getParameter('languages')],
-        );
+        $result = $this->searchService->findLocations($query);
 
         return $result->totalCount ?? 0;
     }

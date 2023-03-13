@@ -11,20 +11,11 @@ use Netgen\ContentBrowser\Item\LocationInterface;
 
 final class Item implements ItemInterface, LocationInterface, IbexaInterface
 {
-    private Location $location;
-
     private Content $content;
 
-    private int $value;
-
-    private bool $selectable;
-
-    public function __construct(Location $location, int $value, bool $selectable = true)
+    public function __construct(private Location $location, private int $value, private bool $selectable = true)
     {
-        $this->location = $location;
         $this->content = $location->getContent();
-        $this->value = $value;
-        $this->selectable = $selectable;
     }
 
     public function getLocationId(): int

@@ -14,21 +14,23 @@ use Ibexa\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Owner;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Owner::class)]
 final class OwnerTest extends TestCase
 {
-    private MockObject $repositoryMock;
+    private MockObject&Repository $repositoryMock;
 
-    private MockObject $contentServiceMock;
+    private MockObject&ContentService $contentServiceMock;
 
     private Owner $provider;
 
     protected function setUp(): void
     {
-        $this->contentServiceMock = $this->createMock(ContentService::class);
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentService']);
+        $this->contentServiceMock = $this->createMock(ContentService::class);
 
         $this->repositoryMock
             ->expects(self::any())
@@ -48,10 +50,6 @@ final class OwnerTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Owner::__construct
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Owner::getValue
-     */
     public function testGetValue(): void
     {
         $content = new Content(
@@ -96,9 +94,6 @@ final class OwnerTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Owner::getValue
-     */
     public function testGetValueWithNonExistingOwner(): void
     {
         $content = new Content(
@@ -129,9 +124,6 @@ final class OwnerTest extends TestCase
         self::assertSame('', $this->provider->getValue($item));
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Owner::getValue
-     */
     public function testGetValueWithInvalidItem(): void
     {
         self::assertNull($this->provider->getValue(new StubItem(42)));

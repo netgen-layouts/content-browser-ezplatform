@@ -11,8 +11,10 @@ use Ibexa\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ContentId;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(ContentId::class)]
 final class ContentIdTest extends TestCase
 {
     private ContentId $provider;
@@ -22,9 +24,6 @@ final class ContentIdTest extends TestCase
         $this->provider = new ContentId();
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ContentId::getValue
-     */
     public function testGetValue(): void
     {
         $content = new Content(
@@ -52,9 +51,6 @@ final class ContentIdTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\ContentId::getValue
-     */
     public function testGetValueWithInvalidItem(): void
     {
         self::assertNull($this->provider->getValue(new StubItem(42)));

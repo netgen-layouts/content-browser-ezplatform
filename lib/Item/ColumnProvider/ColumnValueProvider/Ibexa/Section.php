@@ -11,11 +11,8 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Section implements ColumnValueProviderInterface
 {
-    private Repository $repository;
-
-    public function __construct(Repository $repository)
+    public function __construct(private Repository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function getValue(ItemInterface $item): ?string

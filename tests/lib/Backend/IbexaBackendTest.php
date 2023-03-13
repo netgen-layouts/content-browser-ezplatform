@@ -12,7 +12,6 @@ use Ibexa\Contracts\Core\Repository\Values\Content\Query\Criterion;
 use Ibexa\Contracts\Core\Repository\Values\Content\Query\SortClause\ContentName;
 use Ibexa\Contracts\Core\Repository\Values\Content\Search\SearchHit;
 use Ibexa\Contracts\Core\Repository\Values\Content\Search\SearchResult;
-use Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface;
 use Ibexa\Core\Repository\Values\Content\Content;
 use Ibexa\Core\Repository\Values\Content\Location;
 use Netgen\ContentBrowser\Backend\SearchQuery;
@@ -21,25 +20,16 @@ use Netgen\ContentBrowser\Exceptions\NotFoundException;
 use Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Location as StubLocation;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(IbexaBackend::class)]
 final class IbexaBackendTest extends TestCase
 {
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&\Ibexa\Contracts\Core\Repository\SearchService
-     */
-    private MockObject $searchServiceMock;
+    private MockObject&SearchService $searchServiceMock;
 
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&\Ibexa\Contracts\Core\Repository\LocationService
-     */
-    private MockObject $locationServiceMock;
-
-    /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&\Ibexa\Contracts\Core\SiteAccess\ConfigResolverInterface
-     */
-    private MockObject $configResolverMock;
+    private MockObject&LocationService $locationServiceMock;
 
     /**
      * @var string[]
@@ -61,13 +51,6 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock = $this->createMock(SearchService::class);
         $this->locationServiceMock = $this->createMock(LocationService::class);
 
-        $this->configResolverMock = $this->createMock(ConfigResolverInterface::class);
-        $this->configResolverMock
-            ->expects(self::any())
-            ->method('getParameter')
-            ->with(self::identicalTo('languages'))
-            ->willReturn(['eng-GB', 'cro-HR']);
-
         $configuration = new Configuration('ibexa_location', 'Ibexa location', []);
         $configuration->setParameter('sections', $this->defaultSections);
         $configuration->setParameter('location_content_types', $this->locationContentTypes);
@@ -75,18 +58,10 @@ final class IbexaBackendTest extends TestCase
         $this->backend = new IbexaBackend(
             $this->searchServiceMock,
             $this->locationServiceMock,
-            $this->configResolverMock,
             $configuration,
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::__construct
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::getSections
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     */
     public function testGetSections(): void
     {
         $query = new LocationQuery();
@@ -102,7 +77,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $locations = $this->backend->getSections();
@@ -111,11 +86,6 @@ final class IbexaBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $locations);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::loadLocation
-     */
     public function testLoadLocation(): void
     {
         $query = new LocationQuery();
@@ -129,7 +99,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $location = $this->backend->loadLocation(2);
@@ -137,9 +107,6 @@ final class IbexaBackendTest extends TestCase
         self::assertSame(2, $location->getLocationId());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::loadLocation
-     */
     public function testLoadLocationThrowsNotFoundException(): void
     {
         $this->expectException(NotFoundException::class);
@@ -154,17 +121,12 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $this->backend->loadLocation(2);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::loadItem
-     */
     public function testLoadItem(): void
     {
         $query = new LocationQuery();
@@ -182,7 +144,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $item = $this->backend->loadItem(2);
@@ -190,16 +152,11 @@ final class IbexaBackendTest extends TestCase
         self::assertSame(2, $item->getValue());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::loadItem
-     */
     public function testLoadItemWithContent(): void
     {
         $this->backend = new IbexaBackend(
             $this->searchServiceMock,
             $this->locationServiceMock,
-            $this->configResolverMock,
             new Configuration('ibexa_content', 'Ibexa content', []),
         );
 
@@ -219,7 +176,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $item = $this->backend->loadItem(2);
@@ -227,9 +184,6 @@ final class IbexaBackendTest extends TestCase
         self::assertSame(2, $item->getValue());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::loadItem
-     */
     public function testLoadItemThrowsNotFoundException(): void
     {
         $this->expectException(NotFoundException::class);
@@ -248,18 +202,12 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $this->backend->loadItem(2);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::getSubLocations
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     */
     public function testGetSubLocations(): void
     {
         $query = new LocationQuery();
@@ -283,7 +231,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $locations = $this->backend->getSubLocations(
@@ -298,9 +246,6 @@ final class IbexaBackendTest extends TestCase
         }
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::getSubLocations
-     */
     public function testGetSubLocationsWithInvalidItem(): void
     {
         $this->searchServiceMock
@@ -313,9 +258,6 @@ final class IbexaBackendTest extends TestCase
         self::assertEmpty($locations);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::getSubLocationsCount
-     */
     public function testGetSubLocationsCount(): void
     {
         $query = new LocationQuery();
@@ -333,7 +275,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubLocationsCount(
@@ -343,12 +285,6 @@ final class IbexaBackendTest extends TestCase
         self::assertSame(2, $count);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::getSubItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     */
     public function testGetSubItems(): void
     {
         $query = new LocationQuery();
@@ -371,7 +307,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
@@ -388,12 +324,6 @@ final class IbexaBackendTest extends TestCase
         }
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::getSubItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     */
     public function testGetSubItemsWithOffsetAndLimit(): void
     {
         $query = new LocationQuery();
@@ -416,7 +346,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $items = $this->backend->getSubItems(
@@ -435,9 +365,6 @@ final class IbexaBackendTest extends TestCase
         }
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::getSubItems
-     */
     public function testGetSubItemsWithInvalidItem(): void
     {
         $this->searchServiceMock
@@ -450,9 +377,6 @@ final class IbexaBackendTest extends TestCase
         self::assertEmpty($items);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::getSubItemsCount
-     */
     public function testGetSubItemsCount(): void
     {
         $query = new LocationQuery();
@@ -469,7 +393,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $count = $this->backend->getSubItemsCount(
@@ -479,12 +403,6 @@ final class IbexaBackendTest extends TestCase
         self::assertSame(2, $count);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::search
-     */
     public function testSearch(): void
     {
         $query = new LocationQuery();
@@ -506,7 +424,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $items = $this->backend->search('test');
@@ -515,12 +433,6 @@ final class IbexaBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $items);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::search
-     */
     public function testSearchWithOffsetAndLimit(): void
     {
         $query = new LocationQuery();
@@ -542,7 +454,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $items = $this->backend->search('test', 5, 10);
@@ -551,9 +463,6 @@ final class IbexaBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $items);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::searchCount
-     */
     public function testSearchCount(): void
     {
         $query = new LocationQuery();
@@ -571,7 +480,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($query), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($query))
             ->willReturn($searchResult);
 
         $count = $this->backend->searchCount('test');
@@ -579,12 +488,6 @@ final class IbexaBackendTest extends TestCase
         self::assertSame(2, $count);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::searchItems
-     */
     public function testSearchItems(): void
     {
         $searchQuery = new LocationQuery();
@@ -606,7 +509,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($searchQuery), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
 
         $result = $this->backend->searchItems(new SearchQuery('test'));
@@ -615,12 +518,6 @@ final class IbexaBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $result->getResults());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItem
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::buildItems
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::isSelectable
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::searchItems
-     */
     public function testSearchItemsWithOffsetAndLimit(): void
     {
         $searchQuery = new LocationQuery();
@@ -642,7 +539,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($searchQuery), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
 
         $query = new SearchQuery('test');
@@ -655,9 +552,6 @@ final class IbexaBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $result->getResults());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Backend\IbexaBackend::searchItemsCount
-     */
     public function testSearchItemsCount(): void
     {
         $searchQuery = new LocationQuery();
@@ -675,7 +569,7 @@ final class IbexaBackendTest extends TestCase
         $this->searchServiceMock
             ->expects(self::once())
             ->method('findLocations')
-            ->with(self::equalTo($searchQuery), self::identicalTo(['languages' => ['eng-GB', 'cro-HR']]))
+            ->with(self::equalTo($searchQuery))
             ->willReturn($searchResult);
 
         $count = $this->backend->searchItemsCount(new SearchQuery('test'));

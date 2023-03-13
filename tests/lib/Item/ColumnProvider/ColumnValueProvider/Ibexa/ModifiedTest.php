@@ -12,8 +12,10 @@ use Ibexa\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Modified;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
 use Netgen\ContentBrowser\Ibexa\Tests\Stubs\Item as StubItem;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Modified::class)]
 final class ModifiedTest extends TestCase
 {
     private Modified $provider;
@@ -23,10 +25,6 @@ final class ModifiedTest extends TestCase
         $this->provider = new Modified('d.m.Y H:i:s');
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Modified::__construct
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Modified::getValue
-     */
     public function testGetValue(): void
     {
         $date = new DateTimeImmutable();
@@ -58,9 +56,6 @@ final class ModifiedTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\ColumnProvider\ColumnValueProvider\Ibexa\Modified::getValue
-     */
     public function testGetValueWithInvalidItem(): void
     {
         self::assertNull($this->provider->getValue(new StubItem(42)));

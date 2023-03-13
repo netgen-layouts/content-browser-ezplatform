@@ -9,8 +9,10 @@ use Ibexa\Core\Repository\Values\Content\Content;
 use Ibexa\Core\Repository\Values\Content\Location;
 use Ibexa\Core\Repository\Values\Content\VersionInfo;
 use Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
+#[CoversClass(Item::class)]
 final class ItemTest extends TestCase
 {
     private Location $location;
@@ -49,42 +51,26 @@ final class ItemTest extends TestCase
         $this->item = new Item($this->location, 42, false);
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::getLocationId
-     */
     public function testGetLocationId(): void
     {
         self::assertSame(22, $this->item->getLocationId());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::__construct
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::getValue
-     */
     public function testGetValue(): void
     {
         self::assertSame(42, $this->item->getValue());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::getName
-     */
     public function testGetName(): void
     {
         self::assertSame('Some name', $this->item->getName());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::getParentId
-     */
     public function testGetParentId(): void
     {
         self::assertSame(24, $this->item->getParentId());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::getParentId
-     */
     public function testGetParentIdWithRootLocation(): void
     {
         $this->location = new Location(
@@ -99,33 +85,21 @@ final class ItemTest extends TestCase
         self::assertNull($this->item->getParentId());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::isVisible
-     */
     public function testIsVisible(): void
     {
         self::assertFalse($this->item->isVisible());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::isSelectable
-     */
     public function testIsSelectable(): void
     {
         self::assertFalse($this->item->isSelectable());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::getLocation
-     */
     public function testGetLocation(): void
     {
         self::assertSame($this->location, $this->item->getLocation());
     }
 
-    /**
-     * @covers \Netgen\ContentBrowser\Ibexa\Item\Ibexa\Item::getContent
-     */
     public function testGetContent(): void
     {
         self::assertSame($this->content, $this->item->getContent());
