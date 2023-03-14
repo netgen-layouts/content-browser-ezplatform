@@ -23,17 +23,15 @@ final class Owner implements ColumnValueProviderInterface
         }
 
         return $this->repository->sudo(
-            static function (Repository $repository) use ($item): string {
+            function () use ($item): string {
                 try {
-                    $ownerContent = $repository->getContentService()->loadContent(
+                    return $this->repository->getContentService()->loadContent(
                         $item->getContent()->contentInfo->ownerId,
-                    );
+                    )->getName() ?? '';
                 } catch (NotFoundException) {
                     // Owner might be deleted in Ibexa database
                     return '';
                 }
-
-                return $ownerContent->getName() ?? '';
             },
         );
     }
