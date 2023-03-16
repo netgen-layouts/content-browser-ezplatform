@@ -46,12 +46,12 @@ final class EzPlatformBackend implements BackendInterface
     /**
      * @var string[]|null
      */
-    private ?array $locationContentTypes;
+    private ?array $locationContentTypes = null;
 
     /**
      * @var string[]|null
      */
-    private ?array $allowedContentTypes;
+    private ?array $allowedContentTypes = null;
 
     public function __construct(
         SearchService $searchService,
