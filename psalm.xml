@@ -17,15 +17,5 @@
         <!-- Ibexa CMS -->
 
         <RedundantCastGivenDocblockType errorLevel="suppress" />
-        <RedundantConditionGivenDocblockType errorLevel="suppress" />
-        <DocblockTypeContradiction errorLevel="suppress" />
-
-        <!-- Content Browser specifics -->
-
-        <PropertyNotSetInConstructor>
-            <errorLevel type="suppress">
-                <file name="lib/Backend/IbexaBackend.php" />
-            </errorLevel>
-        </PropertyNotSetInConstructor>
     </issueHandlers>
 </psalm>
