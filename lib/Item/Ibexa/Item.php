@@ -15,7 +15,7 @@ final class Item implements ItemInterface, LocationInterface, IbexaInterface
 
     public function __construct(private Location $location, private int $value, private bool $selectable = true)
     {
-        $this->content = $location->getContent();
+        $this->content = $this->location->getContent();
     }
 
     public function getLocationId(): int
