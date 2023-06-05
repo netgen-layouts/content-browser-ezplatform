@@ -63,7 +63,6 @@ final class EzPlatformBackendTest extends TestCase
 
         $this->configResolverMock = $this->createMock(ConfigResolverInterface::class);
         $this->configResolverMock
-            ->expects(self::any())
             ->method('getParameter')
             ->with(self::identicalTo('languages'))
             ->willReturn(['eng-GB', 'cro-HR']);

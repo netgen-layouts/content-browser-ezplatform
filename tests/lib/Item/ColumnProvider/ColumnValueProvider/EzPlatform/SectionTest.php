@@ -31,7 +31,6 @@ final class SectionTest extends TestCase
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getSectionService']);
 
         $this->repositoryMock
-            ->expects(self::any())
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
@@ -39,7 +38,6 @@ final class SectionTest extends TestCase
             );
 
         $this->repositoryMock
-            ->expects(self::any())
             ->method('getSectionService')
             ->willReturn($this->sectionServiceMock);
 

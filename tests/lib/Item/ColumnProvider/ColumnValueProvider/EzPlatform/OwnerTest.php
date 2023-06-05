@@ -31,7 +31,6 @@ final class OwnerTest extends TestCase
         $this->repositoryMock = $this->createPartialMock(Repository::class, ['sudo', 'getContentService']);
 
         $this->repositoryMock
-            ->expects(self::any())
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
@@ -39,7 +38,6 @@ final class OwnerTest extends TestCase
             );
 
         $this->repositoryMock
-            ->expects(self::any())
             ->method('getContentService')
             ->willReturn($this->contentServiceMock);
 
