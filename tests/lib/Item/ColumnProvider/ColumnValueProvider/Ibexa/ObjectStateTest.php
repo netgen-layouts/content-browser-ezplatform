@@ -34,7 +34,6 @@ final class ObjectStateTest extends TestCase
         $this->objectStateServiceMock = $this->createMock(ObjectStateService::class);
 
         $this->repositoryMock
-            ->expects(self::any())
             ->method('sudo')
             ->with(self::anything())
             ->willReturnCallback(
@@ -42,7 +41,6 @@ final class ObjectStateTest extends TestCase
             );
 
         $this->repositoryMock
-            ->expects(self::any())
             ->method('getObjectStateService')
             ->willReturn($this->objectStateServiceMock);
 
