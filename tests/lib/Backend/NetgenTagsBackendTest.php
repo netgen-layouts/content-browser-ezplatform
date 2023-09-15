@@ -209,8 +209,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $items);
 
         foreach ($items as $item) {
-            // Additional InstanceOf assertion to make PHPStan happy
-            self::assertInstanceOf(Item::class, $item);
             self::assertSame(1, $item->getParentId());
         }
     }
@@ -238,8 +236,6 @@ final class NetgenTagsBackendTest extends TestCase
         self::assertContainsOnlyInstancesOf(Item::class, $items);
 
         foreach ($items as $item) {
-            // Additional InstanceOf assertion to make PHPStan happy
-            self::assertInstanceOf(Item::class, $item);
             self::assertSame(1, $item->getParentId());
         }
     }
