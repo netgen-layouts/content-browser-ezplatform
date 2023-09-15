@@ -8,9 +8,7 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Item implements ItemInterface
 {
-    public function __construct(private int $value)
-    {
-    }
+    public function __construct(private int $value) {}
 
     public function getValue(): int
     {

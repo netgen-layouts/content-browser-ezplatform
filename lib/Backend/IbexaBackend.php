@@ -48,8 +48,7 @@ final class IbexaBackend implements BackendInterface
         private SearchService $searchService,
         private LocationService $locationService,
         private Configuration $config,
-    ) {
-    }
+    ) {}
 
     public function getSections(): iterable
     {

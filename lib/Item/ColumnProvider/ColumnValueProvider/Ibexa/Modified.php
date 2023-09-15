@@ -10,9 +10,7 @@ use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Modified implements ColumnValueProviderInterface
 {
-    public function __construct(private string $dateFormat)
-    {
-    }
+    public function __construct(private string $dateFormat) {}
 
     public function getValue(ItemInterface $item): ?string
     {

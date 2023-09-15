@@ -14,9 +14,7 @@ use function in_array;
 
 final class ParentTag implements ColumnValueProviderInterface
 {
-    public function __construct(private TagsService $tagsService, private TranslationHelper $translationHelper)
-    {
-    }
+    public function __construct(private TagsService $tagsService, private TranslationHelper $translationHelper) {}
 
     public function getValue(ItemInterface $item): ?string
     {

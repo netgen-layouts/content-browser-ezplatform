@@ -13,9 +13,7 @@ use function in_array;
 
 final class SetLocationContentTypesListener implements EventSubscriberInterface
 {
-    public function __construct(private ConfigResolverInterface $configResolver)
-    {
-    }
+    public function __construct(private ConfigResolverInterface $configResolver) {}
 
     public static function getSubscribedEvents(): array
     {

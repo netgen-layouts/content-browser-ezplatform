@@ -30,8 +30,7 @@ final class NetgenTagsBackend implements BackendInterface
         private TagsService $tagsService,
         private TranslationHelper $translationHelper,
         private ConfigResolverInterface $configResolver,
-    ) {
-    }
+    ) {}
 
     public function getSections(): iterable
     {

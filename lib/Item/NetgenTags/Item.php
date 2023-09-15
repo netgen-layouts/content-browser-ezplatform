@@ -10,9 +10,7 @@ use Netgen\TagsBundle\API\Repository\Values\Tags\Tag;
 
 final class Item implements ItemInterface, LocationInterface, NetgenTagsInterface
 {
-    public function __construct(private Tag $tag, private string $name)
-    {
-    }
+    public function __construct(private Tag $tag, private string $name) {}
 
     public function getLocationId(): int
     {
