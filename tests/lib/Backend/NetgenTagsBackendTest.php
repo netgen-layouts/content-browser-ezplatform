@@ -134,16 +134,15 @@ final class NetgenTagsBackendTest extends TestCase
             );
 
         $locations = [];
+
         foreach ($this->backend->getSubLocations(new Item($tag, 'tag')) as $location) {
+            self::assertSame(1, $location->getParentId());
+
             $locations[] = $location;
         }
 
         self::assertCount(2, $locations);
         self::assertContainsOnlyInstancesOf(Item::class, $locations);
-
-        foreach ($locations as $location) {
-            self::assertSame(1, $location->getParentId());
-        }
     }
 
     public function testGetSubLocationsWithInvalidItem(): void
@@ -201,16 +200,15 @@ final class NetgenTagsBackendTest extends TestCase
             );
 
         $items = [];
+
         foreach ($this->backend->getSubItems(new Item($tag, 'tag')) as $item) {
+            self::assertInstanceOf(Item::class, $item);
+            self::assertSame(1, $item->getParentId());
+
             $items[] = $item;
         }
 
         self::assertCount(2, $items);
-        self::assertContainsOnlyInstancesOf(Item::class, $items);
-
-        foreach ($items as $item) {
-            self::assertSame(1, $item->getParentId());
-        }
     }
 
     public function testGetSubItemsWithOffsetAndLimit(): void
@@ -228,16 +226,15 @@ final class NetgenTagsBackendTest extends TestCase
             ->willReturn(new TagList([$this->getTag(0, 1), $this->getTag(0, 1)]));
 
         $items = [];
+
         foreach ($this->backend->getSubItems(new Item($tag, 'tag'), 5, 10) as $item) {
+            self::assertInstanceOf(Item::class, $item);
+            self::assertSame(1, $item->getParentId());
+
             $items[] = $item;
         }
 
         self::assertCount(2, $items);
-        self::assertContainsOnlyInstancesOf(Item::class, $items);
-
-        foreach ($items as $item) {
-            self::assertSame(1, $item->getParentId());
-        }
     }
 
     public function testGetSubItemsWithInvalidItem(): void
