@@ -136,13 +136,13 @@ final class NetgenTagsBackendTest extends TestCase
         $locations = [];
 
         foreach ($this->backend->getSubLocations(new Item($tag, 'tag')) as $location) {
+            self::assertInstanceOf(Item::class, $location);
             self::assertSame(1, $location->getParentId());
 
             $locations[] = $location;
         }
 
         self::assertCount(2, $locations);
-        self::assertContainsOnlyInstancesOf(Item::class, $locations);
     }
 
     public function testGetSubLocationsWithInvalidItem(): void
