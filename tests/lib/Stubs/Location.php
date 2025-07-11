@@ -2,13 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Ibexa\Tests\Stubs;
+namespace Netgen\ContentBrowser\Ez\Tests\Stubs;
 
 use Netgen\ContentBrowser\Item\LocationInterface;
 
 final class Location implements LocationInterface
 {
-    public function __construct(private int $id, private ?int $parentId = null) {}
+    private int $id;
+
+    private ?int $parentId;
+
+    public function __construct(int $id, ?int $parentId = null)
+    {
+        $this->id = $id;
+        $this->parentId = $parentId;
+    }
 
     public function getLocationId(): int
     {

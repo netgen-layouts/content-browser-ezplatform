@@ -2,13 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Netgen\ContentBrowser\Ibexa\Tests\Stubs;
+namespace Netgen\ContentBrowser\Ez\Tests\Stubs;
 
 use Netgen\ContentBrowser\Item\ItemInterface;
 
 final class Item implements ItemInterface
 {
-    public function __construct(private int $value) {}
+    private int $value;
+
+    public function __construct(int $value)
+    {
+        $this->value = $value;
+    }
 
     public function getValue(): int
     {

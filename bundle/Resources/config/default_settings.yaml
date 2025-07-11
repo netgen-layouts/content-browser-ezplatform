@@ -1,6 +1,6 @@
 parameters:
-    netgen_content_browser.ibexa.item_template: '@@NetgenContentBrowserIbexa/ibexa/item.html.twig'
-    netgen_content_browser.ibexa.preview_template: '@@NetgenContentBrowserIbexa/ibexa/ngcb_preview.html.twig'
-    netgen_content_browser.ibexa.thumbnail_template: '@@NetgenContentBrowserIbexa/ibexa/columns/thumbnail.html.twig'
+    netgen_content_browser.ezplatform.item_template: '@@NetgenContentBrowserEzPlatform/ezplatform/item.html.twig'
+    netgen_content_browser.ezplatform.preview_template: '@@NetgenContentBrowserEzPlatform/ezplatform/ngcb_preview.html.twig'
+    netgen_content_browser.ezplatform.thumbnail_template: '@@NetgenContentBrowserEzPlatform/ezplatform/columns/thumbnail.html.twig'
 
-    netgen_content_browser.netgen_tags.item_template: '@@NetgenContentBrowserIbexa/netgen_tags/item.html.twig'
+    netgen_content_browser.eztags.item_template: '@@NetgenContentBrowserEzPlatform/eztags/item.html.twig'

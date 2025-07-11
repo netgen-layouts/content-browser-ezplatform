@@ -1,91 +1,91 @@
 item_types:
-    ibexa_location:
-        name: item_types.ibexa_location
+    ezlocation:
+        name: item_types.ezlocation
         preview:
-            template: '%netgen_content_browser.ibexa.item_template%'
+            template: '%netgen_content_browser.ezplatform.item_template%'
         columns:
             name:
                 name: columns.name
                 value_provider: name
             location_id:
-                name: columns.ibexa.location_id
-                value_provider: ibexa\location_id
+                name: columns.ezplatform.location_id
+                value_provider: ezplatform\location_id
             content_id:
-                name: columns.ibexa.content_id
-                value_provider: ibexa\content_id
+                name: columns.ezplatform.content_id
+                value_provider: ezplatform\content_id
             thumbnail:
-                name: columns.ibexa.thumbnail
-                template: '%netgen_content_browser.ibexa.thumbnail_template%'
+                name: columns.ezplatform.thumbnail
+                template: '%netgen_content_browser.ezplatform.thumbnail_template%'
             type:
-                name: columns.ibexa.type
-                value_provider: ibexa\content_type
+                name: columns.ezplatform.type
+                value_provider: ezplatform\content_type
             visible:
-                name: columns.ibexa.visible
-                value_provider: ibexa\visible
+                name: columns.ezplatform.visible
+                value_provider: ezplatform\visible
             owner:
-                name: columns.ibexa.owner
-                value_provider: ibexa\owner
+                name: columns.ezplatform.owner
+                value_provider: ezplatform\owner
             modified:
-                name: columns.ibexa.modified
-                value_provider: ibexa\modified
+                name: columns.ezplatform.modified
+                value_provider: ezplatform\modified
             published:
-                name: columns.ibexa.published
-                value_provider: ibexa\published
+                name: columns.ezplatform.published
+                value_provider: ezplatform\published
             priority:
-                name: columns.ibexa.priority
-                value_provider: ibexa\priority
+                name: columns.ezplatform.priority
+                value_provider: ezplatform\priority
             section:
-                name: columns.ibexa.section
-                value_provider: ibexa\section
+                name: columns.ezplatform.section
+                value_provider: ezplatform\section
             object_state:
-                name: columns.ibexa.object_state
-                value_provider: ibexa\object_state
+                name: columns.ezplatform.object_state
+                value_provider: ezplatform\object_state
         default_columns:
             - name
             - type
             - visible
 
-    ibexa_content:
-        name: item_types.ibexa_content
+    ezcontent:
+        name: item_types.ezcontent
         preview:
-            template: '%netgen_content_browser.ibexa.item_template%'
+            template: '%netgen_content_browser.ezplatform.item_template%'
         columns:
             name:
                 name: columns.name
                 value_provider: name
             location_id:
-                name: columns.ibexa.location_id
-                value_provider: ibexa\location_id
+                name: columns.ezplatform.location_id
+                value_provider: ezplatform\location_id
             content_id:
-                name: columns.ibexa.content_id
-                value_provider: ibexa\content_id
+                name: columns.ezplatform.content_id
+                value_provider: ezplatform\content_id
             thumbnail:
-                name: columns.ibexa.thumbnail
-                template: '%netgen_content_browser.ibexa.thumbnail_template%'
+                name: columns.ezplatform.thumbnail
+                template: '%netgen_content_browser.ezplatform.thumbnail_template%'
             type:
-                name: columns.ibexa.type
-                value_provider: ibexa\content_type
+                name: columns.ezplatform.type
+                value_provider: ezplatform\content_type
             visible:
-                name: columns.ibexa.visible
-                value_provider: ibexa\visible
+                name: columns.ezplatform.visible
+                value_provider: ezplatform\visible
             owner:
-                name: columns.ibexa.owner
-                value_provider: ibexa\owner
+                name: columns.ezplatform.owner
+                value_provider: ezplatform\owner
             modified:
-                name: columns.ibexa.modified
-                value_provider: ibexa\modified
+                name: columns.ezplatform.modified
+                value_provider: ezplatform\modified
             published:
-                name: columns.ibexa.published
-                value_provider: ibexa\published
+                name: columns.ezplatform.published
+                value_provider: ezplatform\published
             priority:
-                name: columns.ibexa.priority
-                value_provider: ibexa\priority
+                name: columns.ezplatform.priority
+                value_provider: ezplatform\priority
             section:
-                name: columns.ibexa.section
-                value_provider: ibexa\section
+                name: columns.ezplatform.section
+                value_provider: ezplatform\section
             object_state:
-                name: columns.ibexa.object_state
-                value_provider: ibexa\object_state
+                name: columns.ezplatform.object_state
+                value_provider: ezplatform\object_state
         default_columns:
             - name
             - type

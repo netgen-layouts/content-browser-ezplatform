@@ -13,10 +13,10 @@
     </php>
 
     <testsuites>
-        <testsuite name="Netgen\ContentBrowser\Ibexa">
+        <testsuite name="Netgen\ContentBrowser\Ez">
             <directory>tests/lib</directory>
         </testsuite>
-        <testsuite name="Netgen\Bundle\ContentBrowserIbexaBundle">
+        <testsuite name="Netgen\Bundle\ContentBrowserEzPlatformBundle">
             <directory>tests/bundle</directory>
         </testsuite>
     </testsuites>
@@ -28,8 +28,8 @@
         </include>
         <exclude>
             <directory>bundle/Resources</directory>
-            <file>bundle/NetgenContentBrowserIbexaBundle.php</file>
-            <file>bundle/DependencyInjection/NetgenContentBrowserIbexaExtension.php</file>
+            <file>bundle/NetgenContentBrowserEzPlatformBundle.php</file>
+            <file>bundle/DependencyInjection/NetgenContentBrowserEzPlatformExtension.php</file>
         </exclude>
     </source>
 </phpunit>

@@ -1,4 +1,4 @@
-# Netgen Content Browser & Ibexa CMS integration
+# Netgen Content Browser & eZ Platform integration
 
 ## Installation instructions
 
