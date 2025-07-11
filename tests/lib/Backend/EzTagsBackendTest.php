@@ -169,16 +169,15 @@ final class EzTagsBackendTest extends TestCase
             );
 
         $locations = [];
+
         foreach ($this->backend->getSubLocations(new Item($tag, 'tag')) as $location) {
+            self::assertInstanceOf(Item::class, $location);
+            self::assertSame(1, $location->getParentId());
+
             $locations[] = $location;
         }
 
         self::assertCount(2, $locations);
-        self::assertContainsOnlyInstancesOf(Item::class, $locations);
-
-        foreach ($locations as $location) {
-            self::assertSame(1, $location->getParentId());
-        }
     }
 
     /**
@@ -250,16 +249,15 @@ final class EzTagsBackendTest extends TestCase
             );
 
         $items = [];
+
         foreach ($this->backend->getSubItems(new Item($tag, 'tag')) as $item) {
+            self::assertInstanceOf(Item::class, $item);
+            self::assertSame(1, $item->getParentId());
+
             $items[] = $item;
         }
 
         self::assertCount(2, $items);
-        self::assertContainsOnlyInstancesOf(Item::class, $items);
-
-        foreach ($items as $item) {
-            self::assertSame(1, $item->getParentId());
-        }
     }
 
     /**
@@ -282,16 +280,15 @@ final class EzTagsBackendTest extends TestCase
             ->willReturn($this->getTagsList([$this->getTag(0, 1), $this->getTag(0, 1)]));
 
         $items = [];
+
         foreach ($this->backend->getSubItems(new Item($tag, 'tag'), 5, 10) as $item) {
+            self::assertInstanceOf(Item::class, $item);
+            self::assertSame(1, $item->getParentId());
+
             $items[] = $item;
         }
 
         self::assertCount(2, $items);
-        self::assertContainsOnlyInstancesOf(Item::class, $items);
-
-        foreach ($items as $item) {
-            self::assertSame(1, $item->getParentId());
-        }
     }
 
     /**
