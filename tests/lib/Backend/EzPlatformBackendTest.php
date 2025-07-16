@@ -37,7 +37,7 @@ final class EzPlatformBackendTest extends TestCase
     private MockObject $locationServiceMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\Core\MVC\ConfigResolverInterface,
+     * @var \PHPUnit\Framework\MockObject\MockObject&\eZ\Publish\Core\MVC\ConfigResolverInterface
      */
     private MockObject $configResolverMock;
 
